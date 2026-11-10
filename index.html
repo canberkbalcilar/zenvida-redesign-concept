@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZenVida Redesign Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFFEF8;--cream:#F7F2E8;--sand:#B0956A;--sand-700:#8A7350;--ink:#1E1B17;--ink-2:#4A443B;--muted:#7A7266;--line:#E6DECF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:64px 24px 80px}
+.logo{font:500 26px/1 "Cormorant Garamond",serif;letter-spacing:.14em}
+.logo small{display:block;font:400 9px Figtree;letter-spacing:.32em;color:var(--muted);margin-top:5px}
+.eyebrow{font:600 12px/1 Figtree;letter-spacing:.18em;text-transform:uppercase;color:var(--sand-700);display:block;margin-top:56px}
+h1{font:500 clamp(40px,6vw,64px)/1.05 "Cormorant Garamond",serif;margin:14px 0 16px;letter-spacing:-.01em}
+.lead{font-size:18px;color:var(--ink-2);max-width:640px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:20px;background:#fff;overflow:hidden;transition:box-shadow .2s,border-color .2s,transform .2s}
+a.card:hover{border-color:var(--sand);box-shadow:0 10px 34px rgba(30,27,23,.08);transform:translateY(-2px)}
+.thumb{aspect-ratio:16/10;background:var(--cream) center/cover no-repeat;position:relative}
+.thumb span{position:absolute;left:14px;top:14px;background:rgba(255,254,248,.92);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600}
+.body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.body h2{font:500 28px/1.1 "Cormorant Garamond",serif;margin:0 0 8px}
+.body p{margin:0 0 16px;color:var(--ink-2);font-size:15px;flex:1}
+.body b{font-size:14px;color:var(--sand-700)}
+.note{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+@media (max-width:860px){.grid{grid-template-columns:1fr}.wrap{padding:40px 16px 64px}.eyebrow{margin-top:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">ZENVIDA<small>FOOT &amp; BODY</small></div>
+  <span class="eyebrow">Redesign concepts · November 2026</span>
+  <h1>A calmer, clearer path from browsing to booking</h1>
+  <p class="lead">Three interactive prototypes for the ZenVida website. Open them on desktop or phone — filters, the ritual quiz and the booking card all work.</p>
+
+  <div class="grid">
+    <a class="card" href="rituals.html">
+      <div class="thumb" style="background-image:url('https://static.wixstatic.com/media/b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg/v1/fill/w_800,h_500,al_c,q_80,enc_auto/b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg')"><span>Page</span></div>
+      <div class="body"><h2>All Rituals</h2><p>Every ritual on one page with prices, filters by area and need, a 3-question "Help me choose" quiz and a price-list view.</p><b>Open prototype →</b></div>
+    </a>
+    <a class="card" href="deluxe-reflexology.html">
+      <div class="thumb" style="background-image:url('https://static.wixstatic.com/media/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg/v1/fill/w_800,h_500,al_c,q_80,enc_auto/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg')"><span>Page</span></div>
+      <div class="body"><h2>Deluxe Reflexology</h2><p>Ritual page with an inline booking card, a step-by-step "your 60 minutes", an interactive foot map and a clear FAQ.</p><b>Open prototype →</b></div>
+    </a>
+    <a class="card" href="category-tree.html">
+      <div class="thumb" style="background:linear-gradient(135deg,#F1EADC,#d9c8a9)"><span>Structure</span></div>
+      <div class="body"><h2>Category Tree</h2><p>Proposed site structure: navigation, need-based collections, issues in the current structure and a 301 redirect map.</p><b>Open proposal →</b></div>
+    </a>
+  </div>
+
+  <p class="note">Concept work for discussion. Photos are from zenvida.es; reviews and some photo slots are placeholders. Booking buttons are simulated.</p>
+</div>
+</body>
+</html>

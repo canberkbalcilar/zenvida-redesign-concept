@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZenVida Category Tree</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFFEF8;--cream:#F7F2E8;--sand-50:#F1EADC;--sand:#B0956A;--sand-700:#8A7350;--ink:#1E1B17;--ink-2:#4A443B;--muted:#7A7266;--line:#E6DECF;--red:#A4482C;--red-50:#F8EAE4;--ok:#4F7A4A;--ok-50:#EAF1E6;--blue:#4F6A86;--blue-50:#E8EEF4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.55 Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(36px,5vw,52px);line-height:1.05}
+h2{font-size:30px;margin-bottom:6px}
+.eyebrow{font:600 12px/1 Figtree;letter-spacing:.18em;text-transform:uppercase;color:var(--sand-700)}
+.lead{color:var(--ink-2);font-size:17px;max-width:760px;margin:12px 0 0}
+.tabs{display:flex;gap:6px;margin:32px 0 28px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:12px 16px;font:600 14px Figtree;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected=true]{color:var(--ink);border-color:var(--ink)}
+.panel[hidden]{display:none}
+
+/* Top nav preview */
+.navprev{border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px 18px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:28px}
+.navprev b{font:500 20px "Cormorant Garamond";letter-spacing:.14em}
+.navprev span{font-size:14px;color:var(--ink-2)}
+.navprev .cta{margin-left:auto;background:var(--ink);color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;font-size:12.5px;color:var(--muted);align-items:center}
+
+/* Tree */
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree ul{margin-left:22px;padding-left:20px;border-left:1px solid var(--line)}
+.tree li{position:relative}
+.tree ul>li::before{content:"";position:absolute;left:-20px;top:22px;width:16px;border-top:1px solid var(--line)}
+.node{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;margin:3px 0;border-radius:10px}
+.node:hover{background:var(--cream)}
+.node .t{font-weight:600}
+.lvl0>.node{background:var(--ink);color:#fff;padding:12px 16px;margin-top:14px}
+.lvl0>.node:hover{background:#000}
+.lvl0>.node .url{color:#bdb4a4}
+.lvl1>.node .t{font:600 20px/1.2 "Cormorant Garamond"}
+.url{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted)}
+.price{font-size:13px;color:var(--ink-2);margin-left:auto;white-space:nowrap;font-variant-numeric:tabular-nums}
+.lvl0>.node .price{color:#d9d0c0}
+.note{flex-basis:100%;font-size:13px;color:var(--muted);margin-top:-2px}
+.lvl0>.node .note{color:#bdb4a4}
+.tag{font-size:11px;font-weight:600;border-radius:6px;padding:2px 7px;letter-spacing:.02em;white-space:nowrap}
+.tag.sig{background:var(--sand-50);color:var(--sand-700)}
+.tag.new{background:var(--ok-50);color:var(--ok)}
+.tag.merge{background:var(--blue-50);color:var(--blue)}
+.tag.seas{background:#FFF1D6;color:#8a5a00}
+.tag.bad{background:var(--red-50);color:var(--red)}
+.tog{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:var(--paper);cursor:pointer;font-size:13px;line-height:1;display:grid;place-items:center;flex:0 0 auto;color:var(--ink-2)}
+.lvl0>.node .tog{background:transparent;border-color:#4a443b;color:#fff}
+.tog.leaf{visibility:hidden}
+li.closed>ul{display:none}
+.controls{display:flex;gap:8px;margin-bottom:8px}
+.controls button{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 14px;font:600 13px Figtree;cursor:pointer}
+
+/* Grid cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--cream);border-radius:16px;padding:18px 18px 16px}
+.card h3{font-size:22px;margin-bottom:4px}
+.card .url{display:block;margin-bottom:12px}
+.card ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.card li{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px}
+.card li.sig{border-color:var(--sand)}
+
+/* Issues */
+.issues{display:grid;gap:10px}
+.issue{display:grid;grid-template-columns:34px 1fr;gap:14px;border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.issue .n{width:34px;height:34px;border-radius:50%;background:var(--red-50);color:var(--red);display:grid;place-items:center;font-weight:600}
+.issue b{display:block;margin-bottom:2px}
+.issue p{margin:0;color:var(--ink-2);font-size:14px}
+.issue code{font:12.5px ui-monospace,Menlo,monospace;background:var(--cream);border-radius:5px;padding:1px 5px}
+
+/* Table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:680px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--cream);font-weight:600}
+td code{font:12.5px ui-monospace,Menlo,monospace}
+td.arrow{color:var(--sand-700);width:24px;padding-left:0;padding-right:0}
+tr:last-child td{border-bottom:0}
+
+.callout{background:var(--ink);color:#EDE6D8;border-radius:16px;padding:22px 24px;margin-top:28px}
+.callout h3{color:#fff;font-size:24px;margin-bottom:8px}
+.callout p{margin:0 0 8px;font-size:14.5px}
+.callout code{background:#2f2a24;border-radius:5px;padding:1px 6px;font:12.5px ui-monospace,Menlo,monospace;color:#fff}
+.sec{margin-top:44px}
+.sec>p{color:var(--ink-2);margin:4px 0 18px;max-width:760px}
+@media (max-width:640px){.wrap{padding:28px 16px 64px}.tree ul{margin-left:10px;padding-left:14px}.tree ul>li::before{left:-14px;width:10px}.price{margin-left:0;flex-basis:100%}}
+</style>
+</head>
+<body>
+<div style="background:#F1EADC;color:#4A443B;font:500 12.5px/1.4 Figtree,system-ui,sans-serif;text-align:center;padding:7px 16px;border-bottom:1px solid #E6DECF"><b style="color:#1E1B17">Redesign concept</b> · Interactive prototype, not the live site · <a href="index.html" style="color:#8A7350;font-weight:600">All concepts</a></div>
+<div class="wrap">
+  <span class="eyebrow">ZenVida · Information architecture proposal</span>
+  <h1>Category tree</h1>
+  <p class="lead">Built from the site's sitemap: 17 rituals and 35 pages. Guests get two ways in: <b>by body area</b> (Feet, Massage, Face, Spa) and <b>by need</b> (tired feet, stress, back pain…). "Signature" becomes a label, not a category.</p>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-p="p1">Proposed tree</button>
+    <button role="tab" aria-selected="false" data-p="p2">By need</button>
+    <button role="tab" aria-selected="false" data-p="p3">Issues today</button>
+    <button role="tab" aria-selected="false" data-p="p4">Redirect map (301)</button>
+  </div>
+
+  <!-- ============ PROPOSED ============ -->
+  <section class="panel" id="p1">
+    <div class="navprev" aria-label="Proposed main menu">
+      <b>ZENVIDA</b>
+      <span>Rituals ▾</span><span>Experiences</span><span>Offers &amp; Packs</span><span>Gift Cards</span><span>Journal</span><span>Visit</span>
+      <span class="cta">Book now</span>
+    </div>
+    <div class="legend">
+      <span class="tag sig">Signature</span> label / collection
+      <span class="tag new">New</span> new page
+      <span class="tag merge">Merged</span> pages merged
+      <span class="tag seas">Seasonal</span>
+    </div>
+    <div class="controls"><button id="openAll">Expand all</button><button id="closeAll">Collapse all</button></div>
+
+    <ul class="tree" id="tree"></ul>
+  </section>
+
+  <!-- ============ BY NEED ============ -->
+  <section class="panel" id="p2" hidden>
+    <h2>Collections by need</h2>
+    <p style="color:var(--ink-2);margin:4px 0 20px;max-width:760px">Each of these can be its own SEO landing page (e.g. "tired feet massage Madrid") and appears as the second column of the Rituals menu. A ritual can sit in several collections and still keeps one URL. The ritual-to-need matches are suggestions; confirm them with your therapists.</p>
+    <div class="grid" id="needs"></div>
+
+    <div class="callout">
+      <h3>Rituals mega menu</h3>
+      <p><b>Column 1 · By area:</b> Feet &amp; Legs · Massage · Face · Spa &amp; Body Treatments</p>
+      <p><b>Column 2 · By need:</b> Tired feet · Stress &amp; sleep · Back &amp; neck · Sports recovery · Travel &amp; jet lag · Glow &amp; skin · Pregnancy · For two</p>
+      <p style="margin:0"><b>Column 3 · Featured:</b> Signature Rituals card + a "Which ritual is right for me?" mini quiz</p>
+    </div>
+  </section>
+
+  <!-- ============ ISSUES ============ -->
+  <section class="panel" id="p3" hidden>
+    <h2>What I found in the current structure</h2>
+    <p style="color:var(--ink-2);margin:4px 0 20px">Found by crawling the sitemap and category pages.</p>
+    <div class="issues" id="issues"></div>
+  </section>
+
+  <!-- ============ REDIRECTS ============ -->
+  <section class="panel" id="p4" hidden>
+    <h2>Redirect map</h2>
+    <p style="color:var(--ink-2);margin:4px 0 20px;max-width:760px">Add these as 301s in Wix under <b>SEO → URL Redirect Manager</b>. Ritual pages are already dynamic pages, so you only need to add a <code>category</code> field to the CMS collection and set the dynamic page URL to <code>/rituals/{category}/{slug}</code>.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Old URL</th><th></th><th>New URL</th><th>Note</th></tr></thead>
+      <tbody id="redir"></tbody>
+    </table></div>
+    <div class="callout">
+      <h3>Lower-risk option</h3>
+      <p>If the ritual URLs (<code>/all-rituals/…</code>) rank well today, leave them alone. Move only the category pages and build breadcrumbs from the new tree. Breadcrumbs and internal links already carry most of the hierarchy signal.</p>
+      <p style="margin:0">Check clicks per page in Search Console first: keep the URLs that bring traffic and move the rest.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+// ---------- Data ----------
+const S='sig', N='new', M='merge', SE='seas';
+const T = [
+ {t:'Rituals', u:'/rituals', note:'All rituals, with filters for area, need, duration and price. /rituals-and-prices merges into this page.', tags:[M], c:[
+   {t:'Feet & Legs', u:'/rituals/feet-legs', note:'Your strongest category and the hub of the reflexology content cluster.', c:[
+     {t:'Reflexology', u:'…/reflexology', p:'30 min €40'},
+     {t:'Deluxe Reflexology', u:'…/deluxe-reflexology', p:'60 min €60', tags:[S]},
+     {t:'Foot Massage', u:'…/foot-massage', p:'25 min €25', tags:[N], note:'Sold in the promo bar but has no page of its own.'}
+   ]},
+   {t:'Massage', u:'/rituals/massage', note:'Replaces "Body Care"; people search for "massage".', c:[
+     {t:'Relaxing', u:'filter', c:[
+       {t:'Swedish Massage', u:'…/swedish-massage', p:'60 min €80 · 90 min €110'},
+       {t:'Lomi Lomi Massage', u:'…/lomi-lomi-massage', p:'60 min €80 · 90 min €110'},
+       {t:'Lymphatic Drainage', u:'…/lymphatic-drainage-massage', p:'60 min €80 · 90 min €110'},
+       {t:'Energy Balance', u:'…/energy-balance', p:'100 min €130', tags:[S]}
+     ]},
+     {t:'Therapeutic', u:'filter', c:[
+       {t:'Deep Tissue Massage', u:'…/deep-tissue-massage', p:'60 min €90 · 90 min €130'},
+       {t:'Sports Massage', u:'…/sports-massage', p:'60 min €90 · 90 min €125'},
+       {t:'Thai Massage', u:'…/thai-massage', p:'60 min €90 · 90 min €125'},
+       {t:'Thai Andaluz', u:'…/thai-andaluz', p:'110 min €145', tags:[S]},
+       {t:'Combined Massage', u:'…/combined-massage', p:'90 min €115'}
+     ]},
+     {t:'Full-body journeys', u:'filter', c:[
+       {t:'Full Body Reset', u:'…/full-body-reset', p:'120 min €160', tags:[S]},
+       {t:'Travel Recovery', u:'…/travel-recovery', p:'80 min €120', tags:[S]}
+     ]},
+     {t:'Special care', u:'filter', c:[
+       {t:'Pregnancy Massage', u:'…/pregnancy-massage', p:'60 min €90'},
+       {t:'Couples Massage', u:'…/couples-massage', p:'90 min €220 · 120 min €280', tags:[S]}
+     ]}
+   ]},
+   {t:'Face', u:'/rituals/face', c:[
+     {t:'Classic Facial Massage', u:'…/classic-facial-massage', p:'45 min €50 · 60 min €70'},
+     {t:'Kobido Facial Massage', u:'…/kobido-facial-massage', p:'45 min €60 · 60 min €80'}
+   ]},
+   {t:'Spa & Body Treatments', u:'/rituals/spa', note:'Replaces "Spa Rituals"; non-massage treatments grow here.', c:[
+     {t:'Ritual Levante', u:'…/ritual-levante', p:'50 min', tags:[SE], note:'Currently a root page at /ritual-levante; it should be a dynamic page like the other rituals.'}
+   ]},
+   {t:'Signature Rituals', u:'/rituals/signature', tags:[S], note:'A collection, not a category: each of the 6 rituals keeps its main URL in its own category.'},
+   {t:'By need', u:'/rituals/for/{need}', tags:[N], note:'8 need-based collections; see the "By need" tab.'}
+ ]},
+ {t:'Experiences', u:'/experiences', tags:[N], note:'For tourists and special occasions; more than a single ritual.', c:[
+   {t:'Madrid Wellness Trips', u:'/experiences/madrid-wellness-trip', note:'Currently /tourist-experiences', c:[
+     {t:'City Escape', u:'#city-escape'},
+     {t:'Duo Relax Experience', u:'#duo-relax'}
+   ]},
+   {t:'Seasonal & Occasions', u:'/experiences/seasonal', tags:[SE], note:'Father\'s Day and similar packages; same URL every year.'},
+   {t:'Events & Workshops', u:'/experiences/events'},
+   {t:'ZenVida Academy', u:'/experiences/academy', tags:[N], note:'Currently only a blog post.'}
+ ]},
+ {t:'Offers & Packs', u:'/offers', tags:[M], note:'/special-offers + /special-promotions as one page.', c:[
+   {t:'Current Offers', u:'/offers', tags:[M]},
+   {t:'Packs', u:'/offers/packs', tags:[M], note:'/massage-packs + /copy-of-reflexology-packs merged.', c:[
+     {t:'Zen Starter · 5 sessions', u:'#starter'},
+     {t:'Zen Balance · 10 sessions', u:'#balance', note:'Most popular'}
+   ]},
+   {t:'Membership', u:'/offers/membership', p:'€55 / month', tags:[M], note:'Currently on /pricing; /membership looks empty.'},
+   {t:'Loyalty Card', u:'/offers/loyalty-card'},
+   {t:'Refer a Friend', u:'/offers/refer-a-friend', note:'Currently /referral-rewards'},
+   {t:'Giveaway', u:'/offers/giveaway', tags:[SE]}
+ ]},
+ {t:'Gift Cards', u:'/gift-cards', note:'High purchase intent; keep it in the main menu.'},
+ {t:'Journal', u:'/journal', tags:[M], note:'Blog + Respiro under one name; 10 categories become 5.', c:[
+   {t:'Reflexology & Feet', u:'/journal/reflexology'},
+   {t:'Massage & Body', u:'/journal/massage', note:'thai-massage + athletes'},
+   {t:'Mind & Stress', u:'/journal/mind-stress', note:'wellness + mindfulness + stress-relief + self-care + natural-therapies + respiro'},
+   {t:'Madrid Guide', u:'/journal/madrid', tags:[N], note:'"Walking Madrid", "September in Madrid", "Beat the heat": tourist traffic'},
+   {t:'Studio News', u:'/journal/news', note:'announcement + opening-hour changes + events'}
+ ]},
+ {t:'Visit', u:'/visit', note:'Address, hours, map, how to get here, walk-in info.', c:[
+   {t:'About & Our Space', u:'/about'},
+   {t:'Book in the App', u:'/visit/app', note:'Currently /mindbodyapp'},
+   {t:'Contact', u:'/contact'},
+   {t:'Studio Guide', u:'/visit/studio-guide', tags:[M], note:'/spa-rules-and-customer-information + /code-of-conduct + /reservations-policy'}
+ ]},
+ {t:'Legal (footer)', u:'/legal/…', note:'In the footer, not the menu.', c:[
+   {t:'Privacy · Cookies · Terms of Use', u:'/legal/privacy …'},
+   {t:'Membership T&C · Refer a Friend T&C · Giveaway T&C', u:'/legal/…'}
+ ]}
+];
+
+const NEEDS = [
+ ['Tired feet & walking', '/rituals/for/tired-feet', ['Reflexology','Deluxe Reflexology*','Foot Massage','Travel Recovery*']],
+ ['Stress & sleep', '/rituals/for/stress-sleep', ['Deluxe Reflexology*','Swedish Massage','Lomi Lomi','Energy Balance*']],
+ ['Back, neck & shoulders', '/rituals/for/back-neck', ['Deep Tissue','Thai Massage','Combined Massage','Thai Andaluz*']],
+ ['Sports & muscle recovery', '/rituals/for/sports-recovery', ['Sports Massage','Deep Tissue','Lymphatic Drainage','Thai Massage']],
+ ['Travel & jet lag', '/rituals/for/travel', ['Travel Recovery*','Full Body Reset*','Lymphatic Drainage','Reflexology']],
+ ['Glow & skin', '/rituals/for/glow', ['Kobido Facial','Classic Facial','Ritual Levante']],
+ ['Pregnancy', '/rituals/for/pregnancy', ['Pregnancy Massage','Reflexology']],
+ ['For two', '/rituals/for/couples', ['Couples Massage*','Duo Relax Experience','Gift Cards']]
+];
+
+const ISSUES = [
+ ['Categories are not parents of the rituals', 'Rituals sit flat under <code>/all-rituals/…</code>, while category pages (<code>/feet-legs-care</code>, <code>/body-care</code>, <code>/face-care</code>) live separately at the root. Neither Google nor guests see a hierarchy, and breadcrumbs cannot be built.'],
+ ['"Signature" acts like a category', 'Deluxe Reflexology is under both Feet and Signature; Energy Balance, Full Body Reset, Thai Andaluz and Couples are under both Body and Signature. The same product in two "main" categories means duplicate content and confusion.'],
+ ['Price/ritual pages repeat three times', '<code>/rituals</code>, <code>/rituals-and-prices</code> and <code>/spa-rituals</code> do the same job. On top of that, <code>/pricing</code> is actually the membership page.'],
+ ['Two offers pages', '<code>/special-offers</code> and <code>/special-promotions</code> are separate; one has no headings, the other is a Father\'s Day campaign.'],
+ ['Pack pages are scattered and one has a bad URL', '<code>/massage-packs</code> and <code>/copy-of-reflexology-packs</code> ("Face &amp; Body Packs") are separate. "copy-of" is left over from a Wix page duplicate, and its meta description is the same as the Loyalty Card page.'],
+ ['/membership shows no content', 'It has no headings and its description is ritual copy. The real membership content is on <code>/pricing</code>.'],
+ ['Ritual Levante is a root page, not a dynamic page', 'The other 17 rituals come from the CMS; Levante is a hand-built page, so its price and booking flow are managed separately.'],
+ ['The promoted product has no page', '"Foot Massage 25 min €25" is at the top of every page but has no page in the sitemap.'],
+ ['Category pages share one meta description', 'Body Care, Face Care and Feet &amp; Legs Care all use the same "Melt tension…" description.'],
+ ['Blog categories are scattered', '10 categories; wellness / natural-therapies / self-care-tips / stress-relief / mindfulness overlap heavily. <code>mindfulness--relaxation</code> has a double hyphen. "Respiro" is a page, a category and a post at the same time.'],
+ ['No way in by need', 'The "Which ritual is right for you today" post shows the demand, but the site has no need-based navigation. Tourists search for "tired feet", not "reflexology".']
+];
+
+const REDIR = [
+ ['/all-rituals/deluxe-reflexology','/rituals/feet-legs/deluxe-reflexology','Same pattern for all 17 rituals'],
+ ['/feet-legs-care','/rituals/feet-legs',''],
+ ['/body-care','/rituals/massage','Category renamed'],
+ ['/face-care','/rituals/face',''],
+ ['/spa-rituals','/rituals/spa',''],
+ ['/signature-rituals','/rituals/signature',''],
+ ['/rituals-and-prices','/rituals','Merged'],
+ ['/ritual-levante','/rituals/spa/ritual-levante','Moves into the CMS'],
+ ['/tourist-experiences','/experiences/madrid-wellness-trip',''],
+ ['/events-workshops','/experiences/events',''],
+ ['/special-promotions','/offers','Merged'],
+ ['/special-offers','/offers','Merged'],
+ ['/massage-packs','/offers/packs','Merged'],
+ ['/copy-of-reflexology-packs','/offers/packs','Merged'],
+ ['/pricing','/offers/membership','The real membership content'],
+ ['/membership','/offers/membership','Merged'],
+ ['/loyalty-card','/offers/loyalty-card',''],
+ ['/referral-rewards','/offers/refer-a-friend',''],
+ ['/give-away','/offers/giveaway',''],
+ ['/blog','/journal',''],
+ ['/respiro','/journal','Merged'],
+ ['/blog/categories/*','/journal/{new-category}','10 → 5 mapping'],
+ ['/mindbodyapp','/visit/app',''],
+ ['/spa-rules-and-customer-information','/visit/studio-guide','Merged'],
+ ['/code-of-conduct','/visit/studio-guide#conduct','Merged'],
+ ['/reservations-policy','/visit/studio-guide#reservations','Merged']
+];
+
+// ---------- Render ----------
+const tagHTML = t => ({sig:'<span class="tag sig">Signature</span>',new:'<span class="tag new">New</span>',merge:'<span class="tag merge">Merged</span>',seas:'<span class="tag seas">Seasonal</span>'})[t];
+function nodeHTML(n, lvl){
+  const kids = n.c && n.c.length;
+  return `<li class="lvl${Math.min(lvl,2)}${lvl>=2&&kids?' closed':''}">
+    <div class="node">
+      <button class="tog ${kids?'':'leaf'}" aria-label="Expand/collapse">${lvl>=2&&kids?'+':'−'}</button>
+      <span class="t">${n.t}</span>${(n.tags||[]).map(tagHTML).join('')}
+      <span class="url">${n.u}</span>
+      ${n.p?`<span class="price">${n.p}</span>`:''}
+      ${n.note?`<span class="note">${n.note}</span>`:''}
+    </div>
+    ${kids?`<ul>${n.c.map(k=>nodeHTML(k,lvl+1)).join('')}</ul>`:''}
+  </li>`;
+}
+const tree = document.getElementById('tree');
+tree.innerHTML = T.map(n=>nodeHTML(n,0)).join('');
+tree.addEventListener('click', e => {
+  const b = e.target.closest('.tog'); if(!b || b.classList.contains('leaf')) return;
+  const li = b.closest('li'); li.classList.toggle('closed');
+  b.textContent = li.classList.contains('closed') ? '+' : '−';
+});
+const setAll = closed => tree.querySelectorAll('li').forEach(li => {
+  const b = li.querySelector(':scope>.node>.tog'); if(b.classList.contains('leaf')) return;
+  li.classList.toggle('closed', closed); b.textContent = closed?'+':'−';
+});
+document.getElementById('openAll').onclick = () => setAll(false);
+document.getElementById('closeAll').onclick = () => setAll(true);
+
+document.getElementById('needs').innerHTML = NEEDS.map(([t,u,items]) =>
+  `<div class="card"><h3>${t}</h3><span class="url">${u}</span><ul>${items.map(i=>`<li class="${i.endsWith('*')?'sig':''}">${i.replace('*','')}</li>`).join('')}</ul></div>`).join('');
+
+document.getElementById('issues').innerHTML = ISSUES.map(([b,p],i) =>
+  `<div class="issue"><span class="n">${i+1}</span><div><b>${b}</b><p>${p}</p></div></div>`).join('');
+
+document.getElementById('redir').innerHTML = REDIR.map(([a,b,n]) =>
+  `<tr><td><code>${a}</code></td><td class="arrow">→</td><td><code>${b}</code></td><td>${n}</td></tr>`).join('');
+
+// Tabs
+document.querySelectorAll('[role=tab]').forEach(t => t.onclick = () => {
+  document.querySelectorAll('[role=tab]').forEach(x => x.setAttribute('aria-selected', x===t));
+  document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== t.dataset.p);
+});
+</script>
+</body>
+</html>
