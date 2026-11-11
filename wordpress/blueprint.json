@@ -1,0 +1,33 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "meta": {
+    "title": "ZenVida redesign concept",
+    "description": "ZenVida Concept theme with 19 rituals, editable in WP admin.",
+    "author": "canberkbalcilar"
+  },
+  "landingPage": "/rituals/",
+  "preferredVersions": { "php": "8.3", "wp": "latest" },
+  "login": true,
+  "steps": [
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "ZenVida",
+        "blogdescription": "Foot & Body · Redesign concept",
+        "permalink_structure": "/%postname%/"
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "url",
+        "url": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip"
+      },
+      "options": { "activate": true }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; if ( function_exists( 'zv_seed' ) ) { zv_seed(); } flush_rewrite_rules();"
+    }
+  ]
+}

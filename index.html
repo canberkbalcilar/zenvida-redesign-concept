@@ -16,7 +16,11 @@ body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 Figtree
 .eyebrow{font:600 12px/1 Figtree;letter-spacing:.18em;text-transform:uppercase;color:var(--sand-700);display:block;margin-top:56px}
 h1{font:500 clamp(40px,6vw,64px)/1.05 "Cormorant Garamond",serif;margin:14px 0 16px;letter-spacing:-.01em}
 .lead{font-size:18px;color:var(--ink-2);max-width:640px;margin:0}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px}
+a.card.wp{background:var(--ink);border-color:var(--ink);color:#EDE6D8}
+a.card.wp h2{color:#fff}
+a.card.wp p{color:#bdb4a4}
+a.card.wp b{color:var(--sand)}
 a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:20px;background:#fff;overflow:hidden;transition:box-shadow .2s,border-color .2s,transform .2s}
 a.card:hover{border-color:var(--sand);box-shadow:0 10px 34px rgba(30,27,23,.08);transform:translateY(-2px)}
 .thumb{aspect-ratio:16/10;background:var(--cream) center/cover no-repeat;position:relative}
@@ -48,6 +52,10 @@ a.card:hover{border-color:var(--sand);box-shadow:0 10px 34px rgba(30,27,23,.08);
     <a class="card" href="category-tree.html">
       <div class="thumb" style="background:linear-gradient(135deg,#F1EADC,#d9c8a9)"><span>Structure</span></div>
       <div class="body"><h2>Category Tree</h2><p>Proposed site structure: navigation, need-based collections, issues in the current structure and a 301 redirect map.</p><b>Open proposal →</b></div>
+    </a>
+    <a class="card wp" href="https://playground.wordpress.net/?blueprint-url=https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/blueprint.json" target="_blank" rel="noopener">
+      <div class="thumb" style="background:linear-gradient(135deg,#2a2520,#4a443b)"><span>Live demo</span></div>
+      <div class="body"><h2>Running on WordPress</h2><p>The same pages as a real WordPress theme. All 19 rituals are editable in WP admin — change a price and the site updates. Opens in your browser; the first load takes about 20 seconds.</p><b>Open WordPress demo →</b></div>
     </a>
   </div>
 

@@ -1,0 +1,11 @@
+/*
+Theme Name: ZenVida Concept
+Theme URI: https://canberkbalcilar.github.io/zenvida-redesign-concept/
+Description: Redesign concept for ZenVida Foot & Body. Rituals are a custom post type with Area and Need taxonomies; prices and durations are editable in the admin.
+Version: 0.1.0
+Requires at least: 6.4
+Requires PHP: 8.0
+Text Domain: zenvida
+*/
+
+/* Page styles live in assets/css/archive.css and assets/css/single.css. */
