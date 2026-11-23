@@ -14,13 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.4.0' );
+define( 'ZV_VERSION', '0.5.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/blocks.php';
 require_once __DIR__ . '/inc/seed.php';
 require_once __DIR__ . '/inc/admin.php';
+require_once __DIR__ . '/inc/popups.php';
 
 /* -------------------------------------------------------------------------
  * Theme setup

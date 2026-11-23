@@ -72,6 +72,27 @@ jQuery(function ($) {
       .always(() => box.prop('disabled', false));
   });
 
+  /* Popups list: on / off switch */
+  $(document).on('change', '[data-zv-popup]', function () {
+    const box = $(this), row = box.closest('tr');
+    box.prop('disabled', true);
+    $.post(A.ajax, { action: 'zv_popup_active', _ajax_nonce: A.nonce, id: box.data('zv-popup'), on: box.is(':checked') ? 1 : 0 })
+      .done(r => {
+        if (!r.success) { box.prop('checked', !box.is(':checked')); return; }
+        row.find('.zvp-status').attr('class', 'zvp-status zvp-' + r.data.status).text(r.data.label);
+      })
+      .fail(() => { box.prop('checked', !box.is(':checked')); alert('Could not save. Please reload the page and try again.'); })
+      .always(() => box.prop('disabled', false));
+  });
+
+  /* Popup form: show the extra fields that belong to the chosen option */
+  const showIf = () => $('.zv-popup-form select').each(function () {
+    const td = $(this).closest('td');
+    td.find('[data-zv-show-if]').each(function () { $(this).toggle($(this).data('zv-show-if') === $(td.find('select')[0]).val()); });
+  });
+  $(document).on('change', '.zv-popup-form select', showIf);
+  showIf();
+
   /* Rituals list: drag to reorder (only on the plain, unfiltered list) */
   const list = $('body.post-type-ritual.edit-php #the-list');
   const q = new URLSearchParams(location.search);

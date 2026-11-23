@@ -215,6 +215,23 @@ function zv_seed() {
 	zv_seed_menu( 'Visit', 'footer-3', array( array( 'Calle de la Cruz, 16', zv_opt( 'maps_url' ) ), array( '+34 690 829 142', 'tel:+34690829142' ), array( 'hola@zenvida.es', 'mailto:hola@zenvida.es' ), array( 'Respiro Journal', get_permalink( $journal ) ) ) );
 	zv_seed_menu( 'Legal', 'legal', array( array( 'Privacy', '#' ), array( 'Cookies', '#' ), array( 'Terms', '#' ), array( 'Booking policy', '#' ) ) );
 
+	/* ---------- Sample event popup ---------- */
+	$today = new DateTimeImmutable( 'today', wp_timezone() );
+	$pop   = wp_insert_post( array( 'post_type' => 'zv_popup', 'post_status' => 'publish', 'post_title' => 'Christmas gift cards (sample)' ) );
+	update_post_meta( $pop, 'zv_popup', array_merge( zv_popup_defaults(), array(
+		'image'   => zv_img( 'b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg', 960, 600 ),
+		'eyebrow' => 'Christmas · until 6 January',
+		'heading' => 'Gift a ritual this Christmas',
+		'text'    => 'Gift cards for any ritual, sent by email in minutes. Valid for 12 months.',
+		'btn'     => 'Choose a ritual',
+		'url'     => $rituals_url,
+		'start'   => $today->format( 'Y-m-d\TH:i' ),
+		'end'     => $today->modify( '+45 days' )->format( 'Y-m-d\T23:59' ),
+		'where'   => 'home',
+		'delay'   => 6,
+		'freq'    => 'session',
+	) ) );
+
 	// Skip the block editor's welcome popup for administrators.
 	global $wpdb;
 	foreach ( get_users( array( 'role' => 'administrator', 'fields' => 'ID' ) ) as $uid ) {

@@ -105,3 +105,36 @@
   .post-type-ritual .column-zv_drag .zv-handle{display:none}
   .post-type-ritual td.column-zv_thumb::before,.post-type-ritual td.column-zv_drag::before{display:none}
 }
+
+/* Popups */
+.zv-popup-grid{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+.zv-popup-form .zv-big{font-size:17px;padding:6px 10px}
+.zv-popup-form .zv-inline input[type=text],.zv-popup-form .zv-inline input[type=datetime-local]{margin-left:6px}
+.zv-popup-table th{width:120px;padding-top:18px}
+.zv-popup-table select{min-width:260px;margin-right:8px}
+.zv-pages{margin-top:10px;max-height:220px;overflow:auto;border:1px solid #dcdcde;border-radius:6px;padding:8px 12px;background:#fff;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 16px}
+.zv-pages small{color:#787c82}
+.zv-layouts{display:flex;flex-wrap:wrap;gap:12px}
+.zv-layout{position:relative;width:190px;border:1px solid #dcdcde;border-radius:8px;padding:10px;cursor:pointer;background:#fff}
+.zv-layout input{position:absolute;opacity:0}
+.zv-layout:has(input:checked){border-color:#2271b1;box-shadow:0 0 0 1px #2271b1}
+.zv-layout b{display:block;margin-top:8px}
+.zv-layout small{color:#646970;display:block;line-height:1.35}
+.zv-layout .pic{display:block;position:relative;height:74px;border-radius:4px;background:#f0f0f1;overflow:hidden}
+.zv-layout .pic i{position:absolute;background:#8a7350;border-radius:3px}
+.zv-layout-center .pic{background:#c3c4c7}
+.zv-layout-center .pic i{left:32%;right:32%;top:14%;bottom:14%;background:#fff;box-shadow:0 0 0 2px #8a7350}
+.zv-layout-corner .pic i{right:8px;bottom:8px;width:38%;height:46%}
+.zv-layout-bar .pic i{left:0;right:0;bottom:0;height:18%;border-radius:0}
+.zvp-status{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:#f0f0f1;color:#50575e}
+.zvp-live{background:#edfaef;color:#00701a}
+.zvp-scheduled{background:#fcf9e8;color:#8a6d00}
+.zvp-ended,.zvp-off{background:#f0f0f1;color:#787c82}
+.post-type-zv_popup .column-zvp_on{width:60px}
+@media (max-width:782px){
+  .zv-popup-grid{grid-template-columns:1fr}
+  .zv-popup-table select{min-width:0;width:100%}
+  .zv-layout{width:100%}
+  .zv-popup-form .zv-inline input{margin:4px 0 0!important;width:100%}
+  .post-type-zv_popup .wp-list-table td.column-zvp_on{display:block!important;padding-left:35%!important}
+}
