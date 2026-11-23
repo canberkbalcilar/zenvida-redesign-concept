@@ -68,6 +68,10 @@ function zv_details_box( $post ) {
 	$hl     = $hl ? array_map( fn( $l ) => array_pad( array_map( 'trim', explode( '|', $l, 2 ) ), 2, '' ), $hl ) : array( array( '', '' ) );
 	$area   = get_the_terms( $post, 'area' );
 	$area   = ( $area && ! is_wp_error( $area ) ) ? $area[0]->term_id : 0;
+	if ( ! $area && 'auto-draft' === $post->post_status ) {
+		$first = zv_terms_ordered( 'area' );
+		$area  = $first ? $first[0]->term_id : 0; // New ritual: preselect the first area.
+	}
 	$needs  = wp_get_object_terms( $post->ID, 'need', array( 'fields' => 'ids' ) );
 	$needs  = is_wp_error( $needs ) ? array() : $needs;
 	$pop    = (int) $m( 'zv_popularity' );
@@ -76,6 +80,8 @@ function zv_details_box( $post ) {
 	$lead   = $m( 'zv_lead' ) ?: $post->post_excerpt;
 	?>
 	<div class="zv-box">
+		<p class="zv-name"><label class="zv-label" for="zv_title_sync">Ritual name</label>
+			<input type="text" id="zv_title_sync" class="widefat" value="<?php echo esc_attr( 'auto-draft' === $post->post_status ? '' : $post->post_title ); ?>" placeholder="e.g. Hot Stone Foot Ritual" autocomplete="off"></p>
 		<div class="zv-visible">
 			<label class="zv-switch"><input type="checkbox" name="zv_visible" value="1" <?php checked( ! $m( 'zv_hidden' ) ); ?>><span></span></label>
 			<div><b>Show on the website</b><br><span class="description">Switch off to hide this ritual everywhere (rituals page, homepage, its own page). You can switch it back on any time.</span></div>
@@ -135,7 +141,7 @@ function zv_details_box( $post ) {
 			<label>Area
 				<select name="zv_area">
 					<option value="0">— Choose —</option>
-					<?php foreach ( get_terms( array( 'taxonomy' => 'area', 'hide_empty' => false, 'meta_key' => 'zv_order', 'orderby' => 'meta_value_num' ) ) as $t ) : ?>
+					<?php foreach ( zv_terms_ordered( 'area' ) as $t ) : ?>
 						<option value="<?php echo (int) $t->term_id; ?>" <?php selected( $area, $t->term_id ); ?>><?php echo esc_html( $t->name ); ?></option>
 					<?php endforeach; ?>
 				</select>
@@ -151,7 +157,7 @@ function zv_details_box( $post ) {
 		<p class="description">Popular rituals are listed first in "Recommended" and on the homepage.</p>
 		<span class="zv-label">Good for (the "how do you feel" filters)</span>
 		<p class="zv-checks">
-			<?php foreach ( get_terms( array( 'taxonomy' => 'need', 'hide_empty' => false, 'meta_key' => 'zv_order', 'orderby' => 'meta_value_num' ) ) as $t ) : ?>
+			<?php foreach ( zv_terms_ordered( 'need' ) as $t ) : ?>
 				<label><input type="checkbox" name="zv_needs[]" value="<?php echo (int) $t->term_id; ?>" <?php checked( in_array( $t->term_id, $needs, true ) ); ?>> <?php echo esc_html( $t->name ); ?></label>
 			<?php endforeach; ?>
 		</p>
@@ -406,10 +412,10 @@ function zv_dashboard_guide() {
 	$rit   = (int) zv_opt( 'rituals_page' );
 	$deluxe = get_page_by_path( 'deluxe-reflexology', OBJECT, 'ritual' );
 	$tasks = array(
-		array( 'money-alt', 'Change a price or a photo of a ritual', 'Open the ritual, scroll to "Ritual details".', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
+		array( 'money-alt', 'Change a price or a photo of a ritual', 'Open the ritual: the form with prices and photos opens first.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
 		array( 'visibility', 'Hide or show a ritual', 'Use the switch in the "On website" column.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
 		array( 'sort', 'Change the order of rituals', 'Drag the ☰ handle in the rituals list.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
-		array( 'plus-alt', 'Add a new ritual', 'Fill in the name, then "Ritual details". Click Publish.', admin_url( 'post-new.php?post_type=ritual' ), 'Add ritual' ),
+		array( 'plus-alt', 'Add a new ritual', 'Type the name, price and texts, choose a photo, click Publish (top right). FAQ and "Visit us" are added for you.', admin_url( 'post-new.php?post_type=ritual' ), 'Add ritual' ),
 		array( 'edit', 'Change the homepage text, buttons or photos', 'Click any text to type. Click a photo or button to change it in the right panel.', $home ? get_edit_post_link( $home ) : admin_url( 'edit.php?post_type=page' ), 'Edit homepage' ),
 		array( 'editor-help', 'Add or remove an FAQ question', 'Click a question, then + below it to add, or ⋮ → Delete to remove.', $deluxe ? get_edit_post_link( $deluxe ) : admin_url( 'edit.php?post_type=ritual' ), 'Example page' ),
 		array( 'clock', 'Opening hours, phone, address, promo bar', 'One page for everything that appears on every page.', admin_url( 'admin.php?page=zv-settings' ), 'Site settings' ),

@@ -77,3 +77,9 @@
 .taxonomy-area .term-slug-wrap,.taxonomy-need .term-slug-wrap,
 .taxonomy-area .term-description-wrap .description,.taxonomy-need .term-description-wrap{display:none}
 .taxonomy-area .column-slug,.taxonomy-need .column-description{display:none}
+
+/* Ritual name field (required) */
+.zv-name input{font-size:18px;padding:8px 12px;max-width:560px}
+.zv-name.is-missing input{border-color:#d63638}
+.zv-name::after{content:"Shown as the page title and on the rituals page.";display:block;color:#646970;font-size:12px;margin-top:4px}
+.zv-name.is-missing::after{content:"Type a name to be able to publish.";color:#d63638}

@@ -75,6 +75,24 @@ add_action( 'wp_head', function () {
 	}
 }, 1 );
 
+/** Questions every ritual starts with (also used by the demo content). */
+function zv_basic_faq() {
+	return array(
+		array( 'Do I need to book?', 'No, walk-ins are welcome. Booking online guarantees your time; a €25 deposit secures it and the rest is paid after your ritual.', true ),
+		array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. No-shows and late cancellations are charged 50%." ),
+		array( 'Can I come with a friend?', 'Yes — many rituals can be booked for small groups so you can relax side by side. Choose the number of guests in the booking card.' ),
+	);
+}
+
+/** Page sections a new ritual starts with (block editor template). */
+function zv_ritual_template() {
+	$faq = array_map( fn( $q ) => array( 'zv/faq-item', array( 'question' => $q[0], 'answer' => $q[1], 'open' => ! empty( $q[2] ) ) ), zv_basic_faq() );
+	return array(
+		array( 'zv/section', array( 'eyebrow' => 'FAQ', 'title' => 'Good to know' ), array( array( 'zv/faq', array(), $faq ) ) ),
+		array( 'zv/section', array( 'background' => 'cream', 'anchor' => 'visit', 'eyebrow' => 'Visit us', 'title' => 'A sanctuary in the heart of Madrid', 'text' => "A private, calm studio five minutes' walk from Puerta del Sol." ), array( array( 'zv/visit', array( 'eyebrow' => '', 'title' => '', 'layout' => 'wide' ) ) ) ),
+	);
+}
+
 /* -------------------------------------------------------------------------
  * Content model: Area + Need taxonomies, Ritual post type.
  * ---------------------------------------------------------------------- */
@@ -116,6 +134,7 @@ add_action( 'init', function () {
 		'supports'      => array( 'title', 'editor', 'revisions' ),
 		'taxonomies'    => array( 'area', 'need' ),
 		'rewrite'       => array( 'slug' => 'rituals/%area%', 'with_front' => false ),
+		'template'      => zv_ritual_template(), // New rituals start with an FAQ and "Visit us".
 	) );
 
 	add_rewrite_tag( '%area%', '([^/]+)', 'area=' );

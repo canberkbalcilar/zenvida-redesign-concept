@@ -88,11 +88,7 @@ function zv_seed() {
 	/* ---------- Shared blocks ---------- */
 	$visit_section = zv_sec( array( 'background' => 'cream', 'anchor' => 'visit', 'eyebrow' => 'Visit us', 'title' => 'A sanctuary in the heart of Madrid', 'text' => "A private, calm studio five minutes' walk from Puerta del Sol." ),
 		array( zv_b( 'zv/visit', array( 'eyebrow' => '', 'title' => '', 'layout' => 'wide' ) ) ) );
-	$basic_faq = array(
-		array( 'Do I need to book?', 'No, walk-ins are welcome. Booking online guarantees your time; a €25 deposit secures it and the rest is paid after your ritual.', true ),
-		array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. No-shows and late cancellations are charged 50%." ),
-		array( 'Can I come with a friend?', 'Yes — many rituals can be booked for small groups so you can relax side by side. Choose the number of guests in the booking card.' ),
-	);
+	$basic_faq = zv_basic_faq();
 
 	/* ---------- Rituals ---------- */
 	// slug, name, area, card text, options, needs, flags, popularity, photo

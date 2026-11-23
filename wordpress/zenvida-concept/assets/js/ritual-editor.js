@@ -13,6 +13,34 @@
     if (!b && open) document.getElementById('zv_details')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const ed = () => wp.data.select('core/editor');
+  const edit = () => wp.data.dispatch('core/editor');
+
+  // Publish in one click (no "Are you ready to publish?" step).
+  wp.domReady(() => {
+    if (ed().isPublishSidebarEnabled && ed().isPublishSidebarEnabled()) edit().disablePublishSidebar();
+    wp.data.dispatch('core/edit-post').openGeneralSidebar('edit-post/document');
+  });
+
+  // "Ritual name" field in the details form ↔ the post title. No name, no publishing.
+  let lastTitle = null;
+  const syncName = () => {
+    const input = document.getElementById('zv_title_sync');
+    if (!input) return;
+    if (!input.dataset.bound) {
+      input.dataset.bound = '1';
+      input.addEventListener('input', () => edit().editPost({ title: input.value }));
+    }
+    const title = ed().getEditedPostAttribute('title') || '';
+    if (title !== lastTitle) {
+      lastTitle = title;
+      if (document.activeElement !== input && input.value !== title) input.value = title;
+      if (title.trim()) edit().unlockPostSaving('zv-name'); else edit().lockPostSaving('zv-name');
+      input.closest('.zv-name').classList.toggle('is-missing', !title.trim());
+    }
+  };
+  wp.data.subscribe(syncName);
+
   // Open the details form once the editor has rendered.
   let tries = 0;
   const t = setInterval(() => {
