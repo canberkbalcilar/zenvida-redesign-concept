@@ -183,6 +183,56 @@ function zv_seed() {
 	/* ---------- Pages ---------- */
 	$rituals_url = get_post_type_archive_link( 'ritual' );
 	$term_url    = fn( $s ) => get_term_link( $s, 'area' );
+
+	/* ---------- Offers & Packs, Gift Cards, Contact (created before the homepage, which links to them) ---------- */
+	$page = fn( $title, $slug, $blocks ) => wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => $title, 'post_name' => $slug, 'post_content' => wp_slash( serialize_blocks( $blocks ) ) ) );
+	$pack = fn( $a ) => zv_b( 'zv/pack', $a );
+	$step = fn( $t, $x ) => zv_b( 'zv/step', array( 'title' => $t, 'text' => $x ) );
+	$gift_page = $page( 'Gift Cards', 'gift-cards', array(
+		zv_sec( array( 'eyebrow' => 'Gift cards', 'title' => 'Give an hour of <em>calm</em>', 'text' => 'Any ritual or any amount, emailed in minutes. Valid for 12 months at our studio in Madrid Centro.' ), array( zv_b( 'zv/gift-builder' ) ) ),
+		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'How it works', 'title' => 'Simple for you, lovely to receive' ), array( zv_b( 'zv/steps', array(), array(
+			$step( 'Choose', 'An amount, or a specific ritual like Deluxe Reflexology or the Couples Massage.' ),
+			$step( 'Personalise', 'Add their name and a few words. We print nothing — it is all digital.' ),
+			$step( 'We email it', 'To you, or straight to them on the day you choose: birthdays, anniversaries, Christmas morning.' ),
+			$step( 'They book', 'Online, on WhatsApp or by walking in. Valid for 12 months.' ),
+		) ) ) ),
+		zv_sec( array(), array( zv_faq( array(
+			array( 'How long is a gift card valid?', '12 months from the day it is sent. The date is printed on the card.', true ),
+			array( 'Can they choose a different ritual?', 'Yes. A ritual card can be used for any ritual of the same value; if the new one costs more, they simply pay the difference at the studio.' ),
+			array( 'Can I get a printed card?', 'Gift cards are emailed as a PDF you can print. If you prefer, pick one up at the studio in a ZenVida envelope.' ),
+			array( 'Can a gift card be refunded?', 'Gift cards cannot be exchanged for cash, but we are happy to extend one if they could not come in time — just write to us.' ),
+		), array( 'eyebrow' => 'Questions', 'title' => 'Good to know' ) ) ) ),
+	) );
+	$offers_page = $page( 'Offers & Packs', 'offers', array(
+		zv_sec( array( 'anchor' => 'packs', 'eyebrow' => 'Packs', 'title' => 'Come back for <em>less</em>', 'text' => 'Buy several sessions at once and save. Every pack can be shared with family and friends and used for any ritual of the same length.' ), array( zv_b( 'zv/packs', array(), array(
+			$pack( array( 'kicker' => 'Express', 'title' => '5 × Foot Massage, 25 min', 'price' => '€110', 'was' => '€125', 'save' => 'Save 12%', 'items' => "Five 25-minute foot massages\nPerfect for a lunch break\nValid for 6 months", 'btnLabel' => 'Get the Express pack' ) ),
+			$pack( array( 'kicker' => 'Zen Balance', 'title' => '10 sessions of 60 min', 'price' => '€480', 'was' => '€600', 'save' => 'Save 20%', 'items' => "Ten 60-minute rituals: reflexology or massage\nShare with family and friends\nValid for 12 months\nFree foot-bath upgrade every visit", 'btnLabel' => 'Get Zen Balance', 'note' => 'Most popular with people who live in Madrid', 'featured' => true ) ),
+			$pack( array( 'kicker' => 'Zen Starter', 'title' => '5 sessions of 60 min', 'price' => '€255', 'was' => '€300', 'save' => 'Save 15%', 'items' => "Five 60-minute rituals: reflexology or massage\nShare with family and friends\nValid for 6 months", 'btnLabel' => 'Get Zen Starter' ) ),
+		) ) ) ),
+		zv_sec( array( 'anchor' => 'membership', 'background' => 'cream', 'eyebrow' => 'Membership', 'title' => 'A monthly ritual, for less', 'text' => 'For regulars who want an hour for themselves every month — with priority booking and member prices on everything else.' ), array( zv_b( 'zv/packs', array(), array(
+			$pack( array( 'kicker' => 'Monthly', 'title' => 'One ritual a month', 'price' => '€55 / month', 'items' => "One 60-minute ritual every month\n15% off extra rituals and products\nPriority booking, also at weekends\nNo sign-on fee · cancel any time", 'btnLabel' => 'Become a member', 'featured' => true ) ),
+			$pack( array( 'kicker' => 'Monthly for two', 'title' => 'Side by side, every month', 'price' => '€99 / month', 'items' => "One 60-minute Couples ritual every month\n15% off extra rituals for both of you\nNo sign-on fee · cancel any time", 'btnLabel' => 'Become members' ) ),
+		) ) ) ),
+		zv_sec( array( 'anchor' => 'loyalty', 'eyebrow' => 'Loyalty card', 'title' => 'Every visit counts' ), array( zv_b( 'zv/steps', array(), array(
+			$step( 'Ask for a card', 'Free at the studio, or added to your booking — no app needed.' ),
+			$step( 'Collect stamps', 'One stamp for every ritual of 45 minutes or more.' ),
+			$step( 'Eighth visit', 'Your next 60-minute ritual is on us.' ),
+			$step( 'Your birthday', 'A free foot-bath upgrade in your birthday month.' ),
+		) ) ) ),
+		zv_sec( array( 'padTop' => false ), array( zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Looking for a present?</strong> Gift cards for any ritual or amount, emailed in minutes.', 'price' => '', 'linkLabel' => 'Send a gift card', 'linkUrl' => get_permalink( $gift_page ) ) ) ) ),
+		zv_sec( array( 'background' => 'cream' ), array( zv_faq( array(
+			array( 'Can I share my pack?', 'Yes — packs can be used by family and friends. Just tell us the name of the pack holder when you book.', true ),
+			array( 'Can I use a pack for any ritual?', 'Any ritual of the same length. For a longer ritual you pay the difference at the studio.' ),
+			array( 'How do I pay?', 'At the studio by card or cash, or we send you a secure payment link.' ),
+			array( 'Can I cancel my membership?', 'Any time, with no fee. Rituals already paid for stay valid until the end of that month.' ),
+		), array( 'eyebrow' => 'Questions', 'title' => 'Good to know' ) ) ) ),
+	) );
+	$contact_page = $page( 'Contact', 'contact', array(
+		zv_sec( array( 'eyebrow' => 'Contact', 'title' => "We'd love to hear from you", 'text' => 'Questions about rituals, groups or gift cards? Write to us here — or send a WhatsApp for the quickest answer.' ), array( zv_b( 'zv/split', array(), array(
+			zv_b( 'zv/contact-form' ),
+			zv_b( 'zv/visit', array( 'eyebrow' => '', 'layout' => 'card' ) ),
+		) ) ) ),
+	) );
 	$journal     = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Journal', 'post_name' => 'journal' ) );
 	$home        = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Home', 'post_name' => 'home', 'post_content' => wp_slash( serialize_blocks( zv_home_blocks( $rituals_url, $term_url ) ) ) ) );
 	$rpage       = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Rituals', 'post_name' => 'rituals-page', 'post_content' => wp_slash( serialize_blocks( zv_rituals_blocks() ) ) ) );
@@ -203,8 +253,8 @@ function zv_seed() {
 	/* ---------- Menus ---------- */
 	$home_url = home_url( '/' );
 	zv_seed_menu( 'Main menu', 'primary', array(
-		array( 'Rituals', $rituals_url ), array( 'Events', get_post_type_archive_link( 'zv_event' ) ), array( 'Offers & Packs', $home_url . '#offers' ),
-		array( 'Gift Cards', $home_url . '#offers' ), array( 'Journal', get_permalink( $journal ) ), array( 'Visit', '#visit' ),
+		array( 'Rituals', $rituals_url ), array( 'Events', get_post_type_archive_link( 'zv_event' ) ), array( 'Offers & Packs', get_permalink( $offers_page ) ),
+		array( 'Gift Cards', get_permalink( $gift_page ) ), array( 'Journal', get_permalink( $journal ) ), array( 'Contact', get_permalink( $contact_page ) ),
 	) );
 	$area_links = array();
 	foreach ( $areas as $slug => $a ) {
@@ -212,8 +262,8 @@ function zv_seed() {
 	}
 	$area_links[] = array( 'All rituals & prices', $rituals_url );
 	zv_seed_menu( 'Rituals', 'footer-1', $area_links );
-	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', $home_url . '#offers' ), array( 'Packs', $home_url . '#offers' ), array( 'Gift Cards', $home_url . '#offers' ), array( 'Loyalty Card', $home_url . '#offers' ) ) );
-	zv_seed_menu( 'Visit', 'footer-3', array( array( 'Calle de la Cruz, 16', zv_opt( 'maps_url' ) ), array( '+34 690 829 142', 'tel:+34690829142' ), array( 'hola@zenvida.es', 'mailto:hola@zenvida.es' ), array( 'Respiro Journal', get_permalink( $journal ) ) ) );
+	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', get_permalink( $offers_page ) . '#membership' ), array( 'Packs', get_permalink( $offers_page ) . '#packs' ), array( 'Gift Cards', get_permalink( $gift_page ) ), array( 'Loyalty Card', get_permalink( $offers_page ) . '#loyalty' ) ) );
+	zv_seed_menu( 'Visit', 'footer-3', array( array( 'Calle de la Cruz, 16', zv_opt( 'maps_url' ) ), array( '+34 690 829 142', 'tel:+34690829142' ), array( 'hola@zenvida.es', 'mailto:hola@zenvida.es' ), array( 'Contact form', get_permalink( $contact_page ) ), array( 'Respiro Journal', get_permalink( $journal ) ) ) );
 	zv_seed_menu( 'Legal', 'legal', array( array( 'Privacy', '#' ), array( 'Cookies', '#' ), array( 'Terms', '#' ), array( 'Booking policy', '#' ) ) );
 
 	/* ---------- Sample events (dates relative to today, Madrid time) ---------- */
@@ -350,11 +400,15 @@ function zv_reviews_block( $quotes ) {
 }
 
 function zv_offers_block() {
+	$o = get_page_by_path( 'offers' );
+	$g = get_page_by_path( 'gift-cards' );
+	$o = $o ? get_permalink( $o ) : home_url( '/' );
+	$g = $g ? get_permalink( $g ) : home_url( '/' );
 	return zv_b( 'zv/offers', array(), array(
-		zv_b( 'zv/offer', array( 'kicker' => 'Membership', 'title' => '€55 / month', 'text' => 'A monthly ritual, priority booking and member discounts. No sign-on fee.', 'linkLabel' => 'Join →', 'featured' => true ) ),
-		zv_b( 'zv/offer', array( 'kicker' => 'Packs', 'title' => '5 or 10 sessions', 'text' => 'Zen Starter and Zen Balance. Save up to 20% on reflexology and massage.', 'linkLabel' => 'See packs →' ) ),
-		zv_b( 'zv/offer', array( 'kicker' => 'Gift cards', 'title' => 'Give calm', 'text' => 'Any ritual or amount, delivered by email in minutes.', 'linkLabel' => 'Send a gift →' ) ),
-		zv_b( 'zv/offer', array( 'kicker' => 'Loyalty card', 'title' => 'Earn stamps', 'text' => 'Every massage earns stamps toward a free ritual.', 'linkLabel' => 'How it works →' ) ),
+		zv_b( 'zv/offer', array( 'kicker' => 'Membership', 'title' => '€55 / month', 'text' => 'A monthly ritual, priority booking and member discounts. No sign-on fee.', 'linkLabel' => 'Join →', 'url' => $o . '#membership', 'featured' => true ) ),
+		zv_b( 'zv/offer', array( 'kicker' => 'Packs', 'title' => '5 or 10 sessions', 'text' => 'Zen Starter and Zen Balance. Save up to 20% on reflexology and massage.', 'linkLabel' => 'See packs →', 'url' => $o . '#packs' ) ),
+		zv_b( 'zv/offer', array( 'kicker' => 'Gift cards', 'title' => 'Give calm', 'text' => 'Any ritual or amount, delivered by email in minutes.', 'linkLabel' => 'Send a gift →', 'url' => $g ) ),
+		zv_b( 'zv/offer', array( 'kicker' => 'Loyalty card', 'title' => 'Earn stamps', 'text' => 'Every massage earns stamps toward a free ritual.', 'linkLabel' => 'How it works →', 'url' => $o . '#loyalty' ) ),
 	) );
 }
 

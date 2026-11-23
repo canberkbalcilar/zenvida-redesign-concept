@@ -10,7 +10,7 @@ jQuery(function ($) {
     const frame = wp.media({ title: 'Choose a photo', library: { type: 'image' }, button: { text: 'Use this photo' }, multiple: false });
     frame.on('select', () => {
       const m = frame.state().get('selection').first().toJSON();
-      const url = (m.sizes && (m.sizes.large || m.sizes.full) || m).url;
+      const url = m.url; // full size; the site serves smaller versions automatically
       box.find('input[type=hidden]').val(url).trigger('change');
       box.find('.zv-media-preview').prop('hidden', false).find('img').attr('src', url);
       box.find('.zv-media-empty').prop('hidden', true);

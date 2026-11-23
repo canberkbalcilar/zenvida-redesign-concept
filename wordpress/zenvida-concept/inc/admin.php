@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'admin_enqueue_scripts', function ( $hook ) {
 	$screen = get_current_screen();
-	$ours   = ( $screen && ( in_array( $screen->post_type, array( 'ritual', 'zv_popup', 'zv_event' ), true ) || in_array( $screen->taxonomy, array( 'area', 'need' ), true ) ) )
+	$ours   = ( $screen && ( in_array( $screen->post_type, array( 'ritual', 'zv_popup', 'zv_event', 'zv_message' ), true ) || in_array( $screen->taxonomy, array( 'area', 'need' ), true ) ) )
 		|| false !== strpos( $hook, 'zv-settings' ) || 'index.php' === $hook;
 	if ( ! $ours ) {
 		return;
@@ -45,6 +45,7 @@ function zv_media_field( $name, $value, $label, $help = '' ) {
 			<button type="button" class="button-link zv-remove" data-zv-clear<?php echo $value ? '' : ' hidden'; ?>>Remove</button>
 		</p>
 		<?php if ( $help ) : ?><p class="description"><?php echo esc_html( $help ); ?></p><?php endif; ?>
+		<p class="description zv-alt-tip">Tip: when choosing a photo, fill in "Alternative Text" on the right (e.g. "Reflexology foot bath with rose petals"). It helps Google and blind visitors.</p>
 	</div>
 	<?php
 }
@@ -252,7 +253,7 @@ add_action( 'manage_ritual_posts_custom_column', function ( $col, $id ) {
 		echo '<span class="zv-handle dashicons dashicons-menu" title="Drag to reorder"></span>';
 	} elseif ( 'zv_thumb' === $col ) {
 		$img = get_post_meta( $id, 'zv_image', true );
-		echo $img ? '<img class="zv-thumb" src="' . esc_url( $img ) . '" alt="">' : '<span class="zv-thumb empty"></span>';
+		echo $img ? '<img class="zv-thumb" src="' . esc_url( zv_thumb_url( $img ) ) . '" alt="">' : '<span class="zv-thumb empty"></span>';
 	} elseif ( 'zv_price' === $col ) {
 		echo esc_html( implode( ' · ', array_map( fn( $o ) => $o[0] . ' min ' . zv_eur( $o[1] ), zv_parse_options( get_post_meta( $id, 'zv_options', true ) ) ) ) );
 	} elseif ( 'zv_visible' === $col ) {
@@ -373,7 +374,7 @@ foreach ( array( 'area', 'need' ) as $zv_tax ) {
 	add_filter( "manage_{$zv_tax}_custom_column", function ( $out, $col, $id ) {
 		if ( 'zv_thumb' === $col ) {
 			$img = get_term_meta( $id, 'zv_image', true );
-			return $img ? '<img class="zv-thumb" src="' . esc_url( $img ) . '" alt="">' : '';
+			return $img ? '<img class="zv-thumb" src="' . esc_url( zv_thumb_url( $img ) ) . '" alt="">' : '';
 		}
 		return 'zv_order' === $col ? (string) (int) get_term_meta( $id, 'zv_order', true ) : $out;
 	}, 10, 3 );
@@ -414,7 +415,7 @@ add_filter( 'register_post_type_args', function ( $args, $type ) {
 
 // Menu order: the things an editor touches most come first.
 add_filter( 'custom_menu_order', '__return_true' );
-add_filter( 'menu_order', fn() => array( 'index.php', 'zv-settings', 'edit.php?post_type=ritual', 'edit.php?post_type=zv_event', 'edit.php?post_type=zv_popup', 'edit.php?post_type=page', 'edit.php', 'upload.php', 'separator1', 'themes.php' ) );
+add_filter( 'menu_order', fn() => array( 'index.php', 'edit.php?post_type=zv_message', 'zv-settings', 'edit.php?post_type=ritual', 'edit.php?post_type=zv_event', 'edit.php?post_type=zv_popup', 'edit.php?post_type=page', 'edit.php', 'upload.php', 'separator1', 'themes.php' ) );
 
 // Dashboard: a quick guide instead of WordPress news.
 add_action( 'wp_dashboard_setup', function () {
@@ -431,6 +432,7 @@ function zv_dashboard_guide() {
 	$rit   = (int) zv_opt( 'rituals_page' );
 	$deluxe = get_page_by_path( 'deluxe-reflexology', OBJECT, 'ritual' );
 	$tasks = array(
+		array( 'email-alt', 'Read messages and gift card requests', 'Everything sent through the website forms. New ones are counted next to "Messages".', admin_url( 'edit.php?post_type=zv_message' ), 'Messages' ),
 		array( 'money-alt', 'Change a price or a photo of a ritual', 'Open the ritual: the form with prices and photos opens first.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
 		array( 'visibility', 'Hide or show a ritual', 'Use the switch in the "On website" column.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
 		array( 'sort', 'Change the order of rituals', 'Drag the ☰ handle in the rituals list.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),

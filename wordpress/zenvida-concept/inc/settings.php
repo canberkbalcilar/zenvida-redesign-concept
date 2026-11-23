@@ -63,6 +63,10 @@ function zv_defaults() {
 				array( "I'm pregnant", 'Safe, adapted care', 'need:preg' ),
 			) ),
 		),
+		'contact_to'   => '',
+		'contact_success' => "Thank you! We'll reply within a day — usually much sooner.",
+		'gift_success' => "Thank you! We'll email you a secure payment link within the hour (10:00–21:00). Once paid, the gift card is emailed straight away.",
+		'gift_url'     => '',
 		'events_title' => 'Workshops, open days & special weeks',
 		'events_intro' => 'Small groups, seasonal rituals and evenings to learn something new about looking after yourself.',
 		'events_empty' => 'New events are coming soon. Follow us on Instagram or sign up to the newsletter to hear first.',
@@ -211,7 +215,9 @@ add_action( 'admin_init', function () {
 					$out['baths'] = $rows;
 				} elseif ( in_array( $k, array( 'promo_show', 'demo_mode' ), true ) ) {
 					$out[ $k ] = empty( $in[ $k ] ) ? '0' : '1';
-				} elseif ( in_array( $k, array( 'header_url', 'maps_url', 'promo_link_url' ), true ) ) {
+				} elseif ( 'contact_to' === $k ) {
+					$out[ $k ] = sanitize_email( $in[ $k ] ?? '' );
+				} elseif ( in_array( $k, array( 'header_url', 'maps_url', 'promo_link_url', 'gift_url' ), true ) ) {
 					$out[ $k ] = esc_url_raw( $in[ $k ] ?? '' );
 				} elseif ( 0 === strpos( $k, 'hours_' ) ) {
 					$raw    = sanitize_text_field( $in[ $k ] ?? '' );
@@ -322,6 +328,16 @@ function zv_settings_page() {
 					<p><button type="button" class="button" data-zv-add>+ Add foot bath</button></p>
 					<p class="description">Shown on rituals where "Offer foot-bath upgrades" is ticked.</p>
 				</td></tr>
+			</table>
+			<h2 class="title">Contact form &amp; gift cards</h2>
+			<p>Messages from the contact form and gift card requests are saved under <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=zv_message' ) ); ?>">Messages</a> and emailed to you.</p>
+			<table class="form-table" role="presentation">
+				<?php
+				$row( 'contact_to', 'Send messages to', 'Email address. Empty = the email in Contact above.' );
+				$row( 'contact_success', 'Thank-you text (contact form)', '', 'textarea' );
+				$row( 'gift_success', 'Thank-you text (gift card request)', '', 'textarea' );
+				$row( 'gift_url', 'Gift card payment page (optional)', 'If your booking system sells gift cards online, paste its link: visitors see a "Continue to payment" button after sending the request.' );
+				?>
 			</table>
 			<h2 class="title">Events page</h2>
 			<p>The top of <a href="<?php echo esc_url( get_post_type_archive_link( 'zv_event' ) ); ?>" target="_blank">/events/</a>. The events themselves are added under <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=zv_event' ) ); ?>">Events</a>.</p>

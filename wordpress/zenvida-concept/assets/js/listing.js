@@ -15,7 +15,7 @@ const plural = n => n + (n===1 ? ' ritual' : ' rituals');
 // Area tiles + segmented control
 const tiles = $('#areaTiles');
 if (tiles) tiles.innerHTML = Object.entries(AREAS).map(([k,a]) =>
-  `<button class="area-tile" style="--c:${a.c}" data-area="${k}">${a.img?`<img src="${a.img}" alt="" loading="lazy" onerror="this.remove()">`:''}<span><b>${a.name}</b><small>${plural(R.filter(r=>r.area===k).length)}</small></span></button>`).join('');
+  `<button class="area-tile" style="--c:${a.c}" data-area="${k}">${a.img?`<img src="${a.img}"${a.imgSet?` srcset="${a.imgSet}" sizes="(max-width: 760px) 50vw, 25vw"`:''} alt="" loading="lazy" onerror="this.remove()">`:''}<span><b>${a.name}</b><small>${plural(R.filter(r=>r.area===k).length)}</small></span></button>`).join('');
 $('#areaSeg').innerHTML = `<button data-area="all" aria-pressed="true">All<span class="n">${R.length}</span></button>` +
   Object.entries(AREAS).map(([k,a]) => `<button data-area="${k}" aria-pressed="false">${a.name}<span class="n">${R.filter(r=>r.area===k).length}</span></button>`).join('');
 document.querySelectorAll('#zvListing [data-area]').forEach(b => b.addEventListener('click', () => {
@@ -77,7 +77,7 @@ function render(){
       const g = list.filter(r=>r.area===k); if(!g.length) return '';
       return `<section class="group" id="g-${k}">
         <div class="ghead" style="--c:${a.c}">
-          <div class="gimg">${a.img?`<img src="${a.img}" alt="" loading="lazy" onerror="this.remove()">`:''}</div>
+          <div class="gimg">${a.img?`<img src="${a.img}"${a.imgSet?` srcset="${a.imgSet}" sizes="120px"`:''} alt="" loading="lazy" onerror="this.remove()">`:''}</div>
           <div><h2>${a.name}</h2><p>${a.intro}</p>${a.long?`<p class="long" hidden>${a.long}</p><button class="more" aria-expanded="false">Read more</button>`:''}</div>
           <span class="cnt">${plural(g.length)}${(p=>p.length?` · from €${Math.min(...p)}`:'')(g.map(minP).filter(x=>x<999))}</span>
         </div>

@@ -124,7 +124,7 @@ function zv_event_card( $row ) {
 	$meta  = array_filter( array( $e['label'], zv_event_when( $e, true ) ) );
 	$foot  = array_filter( array( $e['price'], $e['places'] && ! $e['soldout'] ? $e['places'] : '' ) );
 	return '<a class="ev ev-' . esc_attr( $state ) . '" href="' . esc_url( get_permalink( $p ) ) . '">'
-		. '<div class="ev-img">' . ( $img ? '<img src="' . esc_url( $img ) . '" alt="" loading="lazy" onerror="this.remove()">' : '' )
+		. '<div class="ev-img">' . zv_image( $img, array( 'sizes' => ZV_SIZES_CARD ) )
 		. ( $s ? '<span class="ev-date"><b>' . esc_html( wp_date( 'j', $s ) ) . '</b>' . esc_html( wp_date( 'M', $s ) ) . '</span>' : '' )
 		. ( $badge ? '<span class="ev-badge">' . zv_e( $badge ) . '</span>' : '' ) . '</div>'
 		. '<div class="ev-body"><span class="k">' . zv_e( implode( ' · ', $meta ) ) . '</span><h3>' . zv_e( get_the_title( $p ) ) . '</h3>'
@@ -346,7 +346,7 @@ add_filter( 'manage_zv_event_posts_columns', fn( $c ) => array( 'cb' => $c['cb']
 add_action( 'manage_zv_event_posts_custom_column', function ( $col, $id ) {
 	$e = zv_event( $id );
 	if ( 'zv_thumb' === $col ) {
-		echo $e['image'] ? '<img class="zv-thumb" src="' . esc_url( $e['image'] ) . '" alt="">' : '<span class="zv-thumb empty"></span>';
+		echo $e['image'] ? '<img class="zv-thumb" src="' . esc_url( zv_thumb_url( $e['image'] ) ) . '" alt="">' : '<span class="zv-thumb empty"></span>';
 	} elseif ( 'zve_when' === $col ) {
 		echo esc_html( zv_event_when( $e, true ) );
 	} elseif ( 'zve_state' === $col ) {

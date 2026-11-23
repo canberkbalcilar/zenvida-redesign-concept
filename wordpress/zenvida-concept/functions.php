@@ -14,15 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.7.0' );
+define( 'ZV_VERSION', '0.8.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
+require_once __DIR__ . '/inc/media.php';
 require_once __DIR__ . '/inc/blocks.php';
 require_once __DIR__ . '/inc/seed.php';
 require_once __DIR__ . '/inc/admin.php';
 require_once __DIR__ . '/inc/popups.php';
 require_once __DIR__ . '/inc/events.php';
+require_once __DIR__ . '/inc/messages.php';
+require_once __DIR__ . '/inc/offers.php';
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -284,6 +287,7 @@ function zv_areas() {
 			'name'  => $t->name,
 			'c'     => get_term_meta( $t->term_id, 'zv_color', true ) ?: '#B0956A',
 			'img'   => get_term_meta( $t->term_id, 'zv_image', true ) ?: null,
+			'imgSet' => ( $zv_i = get_term_meta( $t->term_id, 'zv_image', true ) ) ? zv_image_set( $zv_i )[1] : '',
 			'intro' => $t->description,
 			'long'  => (string) get_term_meta( $t->term_id, 'zv_long', true ),
 			'url'   => get_term_link( $t ),

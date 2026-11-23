@@ -150,3 +150,15 @@
   .post-type-zv_event .wp-list-table td.column-zv_visible{display:block!important;padding:4px 10px 10px 35%!important}
   .post-type-zv_event td.column-zv_thumb::before{display:none}
 }
+
+/* Messages inbox */
+.post-type-zv_message tr.zvm-unread .row-title{font-weight:700}
+.post-type-zv_message tr.zvm-unread{background:#fcf9e8}
+.zvm{max-width:760px}
+.zvm-meta{color:#50575e;margin-top:0}
+.zvm-table{border-collapse:collapse;margin:8px 0 16px}
+.zvm-table th{text-align:left;padding:6px 18px 6px 0;color:#50575e;font-weight:500;vertical-align:top;white-space:nowrap}
+.zvm-table td{padding:6px 0}
+.zvm-text{background:#f6f7f7;border-left:3px solid #8a7350;padding:14px 16px;font-size:14px;line-height:1.6;margin-bottom:16px}
+.zvm-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.zvm-actions .zv-remove{margin-left:auto}

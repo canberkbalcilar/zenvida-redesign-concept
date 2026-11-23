@@ -199,12 +199,32 @@
         h('div', { className: 'consent' }, h('input', { type: 'checkbox', disabled: true }), RT(p, 'consent', 'span', null, 'Consent text'))));
   });
 
+  ssrBlock('contact-form', 'Contact form', p => [F.area(p, 'topics', 'Topics', 'Comma separated. Leave empty to hide the "About" menu.'), F.text(p, 'buttonLabel', 'Button text'), F.toggle(p, 'showPhone', 'Ask for a phone number')], 'Messages arrive under Messages in the admin and by email (Site settings → Contact form).');
+  ssrBlock('gift-builder', 'Gift card builder', p => [F.text(p, 'amounts', 'Amounts (€)', 'Comma separated, e.g. 25, 50, 75, 100'), F.text(p, 'btnLabel', 'Button text'), F.area(p, 'note', 'Small print under the button')], 'Rituals and prices come from Rituals automatically. Requests arrive under Messages.');
+  container('packs', 'packs', 'zv/pack', 3);
+  reg('pack', function (p) {
+    const a = p.attributes;
+    const items = (a.items || '').split('\n').filter(s => s.trim());
+    return h(Fragment, null,
+      Side('Pricing card',
+        F.area(p, 'items', 'What is included', 'One line each'),
+        F.text(p, 'btnUrl', 'Button link', 'Empty = WhatsApp message with the card name'),
+        F.toggle(p, 'featured', 'Highlight this card')),
+      h('div', useBlockProps({ className: 'pack' + (a.featured ? ' featured' : '') }),
+        RT(p, 'save', 'span', 'pack-save', 'Badge, e.g. Save 20% (optional)', true),
+        RT(p, 'kicker', 'span', 'k', 'Name, e.g. Zen Starter', true),
+        RT(p, 'title', 'h3', null, 'Title, e.g. 5 sessions', true),
+        h('div', { className: 'pack-price' }, RT(p, 'price', 'b', null, '€240', true), RT(p, 'was', 's', null, 'old price (optional)', true)),
+        items.length ? h('ul', null, items.map((t, i) => h('li', { key: i }, Icon('check'), h('span', null, t)))) : F.note('Add what is included in the panel on the right →'),
+        RT(p, 'btnLabel', 'span', 'btn ' + (a.featured ? 'btn-sand' : 'btn-dark'), 'Button', true),
+        RT(p, 'note', 'small', null, 'Small print (optional)', true)));
+  });
   ssrBlock('events', 'Upcoming events', p => [F.num(p, 'count', 'How many events', 1, 9), F.area(p, 'empty', 'Text when nothing is planned')], 'Shows the next events from Events in the admin. Past events disappear by themselves.');
   ssrBlock('journal', 'Latest journal posts', p => [F.num(p, 'count', 'How many posts', 1, 9)], 'Shows your latest Posts with their featured image.');
 
   reg('split', function () {
     const ip = useInnerBlocksProps(useBlockProps({ className: 'fv' }), {
-      allowedBlocks: ['zv/faq', 'zv/visit'], template: [['zv/faq', { eyebrow: 'FAQ', title: 'Good to know' }, [['zv/faq-item'], ['zv/faq-item']]], ['zv/visit']],
+      allowedBlocks: ['zv/faq', 'zv/visit', 'zv/contact-form'], template: [['zv/faq', { eyebrow: 'FAQ', title: 'Good to know' }, [['zv/faq-item'], ['zv/faq-item']]], ['zv/visit']],
     });
     return h('div', ip);
   }, true);

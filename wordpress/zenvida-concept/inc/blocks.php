@@ -178,7 +178,7 @@ function zv_render_hero( $a ) {
 			$trust .= '<span>' . zv_e( $a[ $k ] ) . '</span>';
 		}
 	}
-	return '<section class="hero"><img src="' . esc_url( $img ) . '" alt="" onerror="this.remove()"><div class="wrap">'
+	return '<section class="hero">' . zv_image( $img, array( 'eager' => true ) ) . '<div class="wrap">'
 		. ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
 		. '<h1>' . zv_k( $a['title'] ) . '</h1>'
 		. ( $a['text'] ? '<p>' . zv_k( $a['text'] ) . '</p>' : '' )
@@ -237,7 +237,7 @@ function zv_render_section( $a, $content ) {
 
 function zv_render_area_tile( $a ) {
 	return '<a class="area" href="' . esc_url( $a['url'] ?: '#' ) . '" style="--c:' . esc_attr( sanitize_hex_color( $a['color'] ) ?: '#8E9A82' ) . '">'
-		. ( $a['image'] ? '<img src="' . esc_url( $a['image'] ) . '" alt="" loading="lazy" onerror="this.remove()">' : '' )
+		. zv_image( $a['image'], array( 'sizes' => '(max-width: 760px) 100vw, 50vw' ) )
 		. '<span class="t"><span><b>' . zv_e( $a['title'] ) . '</b><small>' . zv_e( $a['subtitle'] ) . '</small></span><span class="go">' . zv_icon( 'arrow' ) . '</span></span></a>';
 }
 
@@ -256,9 +256,9 @@ function zv_render_signature( $a ) {
 	foreach ( array_slice( $sig, 0, max( 1, (int) $a['count'] ) ) as $r ) {
 		$two   = in_array( 'two', $r['flags'], true );
 		$o     = $r['opts'][0];
-		$img   = str_replace( 'w_1600,h_1000', 'w_800,h_600', (string) get_post_meta( $r['id'], 'zv_image', true ) );
+		$img   = (string) get_post_meta( $r['id'], 'zv_image', true );
 		$out  .= '<a class="sig-card" href="' . esc_url( $r['url'] ) . '"><div class="img">'
-			. ( $img ? '<img src="' . esc_url( $img ) . '" alt="' . esc_attr( $r['name'] ) . ' at ZenVida" loading="lazy" onerror="this.remove()">' : '' )
+			. zv_image( $img, array( 'sizes' => ZV_SIZES_CARD, 'alt' => $r['name'] . ' at ZenVida' ) )
 			. '<span class="tag">' . zv_e( $two ? 'For two' : $r['areaName'] ) . '</span></div>'
 			. '<div class="body"><h3>' . zv_e( $r['name'] ) . '</h3><p>' . zv_e( $r['desc'] ) . '</p>'
 			. '<div class="foot"><span>' . (int) $o[0] . ' min · <b>' . zv_e( zv_eur( $o[1] ) . ( $two ? ' for two' : '' ) ) . '</b></span><span>' . zv_e( $a['cta'] ) . '</span></div></div></a>';
@@ -268,7 +268,7 @@ function zv_render_signature( $a ) {
 
 function zv_render_pillars( $a, $content ) {
 	$img = $a['image'] ?: zv_img( 'b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg', 1000, 1250 );
-	return '<div class="pillars"><div class="photo"><img src="' . esc_url( $img ) . '" alt="" loading="lazy" onerror="this.remove()">'
+	return '<div class="pillars"><div class="photo">' . zv_image( $img, array( 'sizes' => ZV_SIZES_HALF ) )
 		. ( $a['badgeTitle'] ? '<div class="badge"><b>' . zv_e( $a['badgeTitle'] ) . '</b>' . zv_e( $a['badgeText'] ) . '</div>' : '' )
 		. '</div><div>' . ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
 		. ( $a['title'] ? '<h2 style="margin-top:12px">' . zv_k( $a['title'] ) . '</h2>' : '' )
@@ -332,7 +332,7 @@ function zv_journal_cards( $posts ) {
 		$cat = get_the_category( $p->ID );
 		$img = zv_post_image( $p->ID );
 		$out .= '<a class="post" href="' . esc_url( get_permalink( $p ) ) . '"><div class="img">'
-			. ( $img ? '<img src="' . esc_url( $img ) . '" alt="" loading="lazy" onerror="this.remove()">' : '' ) . '</div>'
+			. zv_image( $img, array( 'sizes' => ZV_SIZES_CARD ) ) . '</div>'
 			. ( $cat ? '<span class="k">' . zv_e( $cat[0]->name ) . '</span>' : '' )
 			. '<h3>' . zv_e( get_the_title( $p ) ) . '</h3><p>' . zv_e( wp_trim_words( get_the_excerpt( $p ), 18 ) ) . '</p></a>';
 	}
@@ -395,7 +395,7 @@ function zv_render_ritual_hero( $a ) {
 		. zv_btn( str_replace( '{count}', (string) $cnt, $a['btn2Label'] ), '#results', 'ghost' ) . '</div>'
 		. '<div class="trust"><span><span class="stars">★★★★★</span><b>' . zv_e( zv_opt( 'rating' ) ) . '</b>&nbsp;from ' . zv_e( zv_opt( 'rating_count' ) ) . '</span>'
 		. '<span>' . zv_icon( 'pin' ) . zv_e( zv_opt( 'address1' ) ) . '</span><span class="open" data-open-now>Open 7 days a week</span></div></div>'
-		. '<div class="hero-img"><img src="' . esc_url( $img ) . '" alt="" onerror="this.remove()">'
+		. '<div class="hero-img">' . zv_image( $img, array( 'sizes' => ZV_SIZES_HALF, 'eager' => true ) )
 		. ( $f ? '<div class="float"><div><small style="color:var(--muted)">Most booked</small><b>' . zv_e( $f['name'] ) . '</b></div><span style="color:var(--ink-2)">' . (int) $f['opts'][0][0] . ' min · ' . zv_e( zv_eur( $f['opts'][0][1] ) ) . '</span><a href="' . esc_url( $f['url'] . '#book' ) . '">Book →</a></div>' : '' )
 		. '</div></section></div>';
 }
@@ -453,7 +453,7 @@ function zv_render_listing( $a ) {
 		  ?>
 		  <section class="group" id="g-<?php echo esc_attr( $slug ); ?>">
 			<div class="ghead" style="--c:<?php echo esc_attr( $ar['c'] ); ?>">
-			  <div class="gimg"><?php if ( $ar['img'] ) : ?><img src="<?php echo esc_url( $ar['img'] ); ?>" alt="" loading="lazy" onerror="this.remove()"><?php endif; ?></div>
+			  <div class="gimg"><?php echo zv_image( $ar['img'], array( 'sizes' => '120px' ) ); // phpcs:ignore ?></div>
 			  <div><h2><?php echo esc_html( $ar['name'] ); ?></h2><p><?php echo esc_html( $ar['intro'] ); ?></p></div>
 			  <span class="cnt"><?php echo count( $group ) . ( 1 === count( $group ) ? ' ritual' : ' rituals' ) . ( $prices ? ' · from €' . min( $prices ) : '' ); ?></span>
 			</div>

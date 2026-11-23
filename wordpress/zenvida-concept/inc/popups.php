@@ -349,7 +349,7 @@ add_action( 'wp_footer', function () {
 		}
 		$id    = 'zvp-' . $post->ID;
 		$tag   = 'center' === $p['layout'] ? 'dialog' : 'div';
-		$img   = ( $p['image'] && 'bar' !== $p['layout'] ) ? '<div class="zvp-img"><img src="' . esc_url( $p['image'] ) . '" alt="" loading="lazy"></div>' : '';
+		$img   = ( $p['image'] && 'bar' !== $p['layout'] ) ? '<div class="zvp-img">' . zv_image( $p['image'], array( 'sizes' => '(max-width: 760px) 100vw, 480px' ) ) . '</div>' : '';
 		$btn   = $p['btn'] ? '<a class="btn btn-dark zvp-go" href="' . esc_url( $p['url'] ?: zv_rituals_url() ) . '">' . zv_e( $p['btn'] ) . '</a>' : '';
 		$out[] = sprintf(
 			'<%1$s class="zvp zvp-%2$s" id="%3$s" aria-labelledby="%3$s-t" %4$s hidden>%5$s<div class="zvp-body">%6$s<h2 id="%3$s-t">%7$s</h2>%8$s%9$s</div><button type="button" class="zvp-x" aria-label="Close">×</button></%1$s>',

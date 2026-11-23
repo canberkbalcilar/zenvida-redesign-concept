@@ -25,6 +25,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 0.8.0 =
+* Offers & Packs and Gift Cards pages: pricing cards, gift card builder with live preview.
+* Contact form; form messages and gift card requests saved under Messages and emailed.
+* Responsive photos (srcset/sizes) and media-library alt text on every image.
+
 = 0.7.0 =
 * Closed days in opening hours, clearer hours validation.
 * Works with Yoast SEO and the Classic Editor plugin; search and 404 pages.

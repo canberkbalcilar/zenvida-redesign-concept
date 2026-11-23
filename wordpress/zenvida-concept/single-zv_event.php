@@ -29,7 +29,7 @@ get_header();
   <div class="product ev-single">
     <div>
       <?php if ( $zv_e['image'] ) : ?>
-      <div class="gallery"><figure><img src="<?php echo esc_url( $zv_e['image'] ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>" onerror="this.remove()"><?php if ( $zv_e['label'] ) : ?><span class="tag"><?php echo zv_e( $zv_e['label'] ); ?></span><?php endif; ?></figure></div>
+      <div class="gallery"><figure><?php echo zv_image( $zv_e['image'], array( 'sizes' => ZV_SIZES_MAIN, 'eager' => true, 'alt' => get_the_title() ) ); // phpcs:ignore ?><?php if ( $zv_e['label'] ) : ?><span class="tag"><?php echo zv_e( $zv_e['label'] ); ?></span><?php endif; ?></figure></div>
       <?php endif; ?>
       <div class="intro">
         <span class="eyebrow"><?php echo zv_e( zv_event_when( $zv_e, true ) ); ?></span>

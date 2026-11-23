@@ -32,11 +32,11 @@ get_header();
     <div>
       <div class="gallery">
         <figure>
-          <img src="<?php echo esc_url( $zv_img ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?> at ZenVida" onerror="this.remove()">
+          <?php echo zv_image( $zv_img, array( 'sizes' => ZV_SIZES_MAIN, 'eager' => true, 'alt' => get_the_title() . ' at ZenVida' ) ); // phpcs:ignore ?>
           <span class="tag"><?php echo $zv_sig ? 'Signature ritual' : esc_html( $zv_r['areaName'] ); ?></span>
         </figure>
         <?php foreach ( $zv_extra as $zv_x ) : ?>
-        <figure><img src="<?php echo esc_url( $zv_x ); ?>" alt="" loading="lazy" onerror="this.remove()"></figure>
+        <figure><?php echo zv_image( $zv_x, array( 'sizes' => '(max-width: 1040px) 50vw, 30vw' ) ); // phpcs:ignore ?></figure>
         <?php endforeach; ?>
       </div>
 
