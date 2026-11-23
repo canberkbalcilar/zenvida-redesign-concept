@@ -40,10 +40,10 @@ function zv_seed() {
 	update_option( 'zv_seeded', 1 );
 	kses_remove_filters();
 
-	// WordPress's own sample content would show up in the journal and page list.
+	// WordPress's untouched sample post/page would show up in the journal and page list.
 	foreach ( array( array( 'hello-world', 'post' ), array( 'sample-page', 'page' ) ) as $d ) {
 		$p = get_page_by_path( $d[0], OBJECT, $d[1] );
-		if ( $p && strtotime( $p->post_date_gmt ) > time() - DAY_IN_SECONDS ) {
+		if ( $p && ( false !== strpos( $p->post_content, 'Welcome to WordPress' ) || false !== strpos( $p->post_content, 'This is an example page' ) ) ) {
 			wp_delete_post( $p->ID, true );
 		}
 	}

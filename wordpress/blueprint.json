@@ -2,10 +2,10 @@
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "meta": {
     "title": "ZenVida redesign concept",
-    "description": "ZenVida Concept theme with 19 rituals, editable in WP admin.",
+    "description": "ZenVida Concept theme: every page section is an editable block; 19 rituals.",
     "author": "canberkbalcilar"
   },
-  "landingPage": "/rituals/",
+  "landingPage": "/",
   "preferredVersions": { "php": "8.3", "wp": "latest" },
   "login": true,
   "steps": [
