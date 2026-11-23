@@ -93,8 +93,8 @@ function zv_details_box( $post ) {
 			<tbody>
 			<?php foreach ( $opts as $o ) : ?>
 				<tr data-zv-row>
-					<td><input type="number" min="5" step="5" name="zv_opt_min[]" value="<?php echo esc_attr( $o[0] ); ?>"></td>
-					<td><input type="number" min="0" step="1" name="zv_opt_price[]" value="<?php echo esc_attr( $o[1] ?? '' ); ?>" placeholder="At studio"></td>
+					<td data-label="Minutes"><input type="number" min="5" step="5" name="zv_opt_min[]" value="<?php echo esc_attr( $o[0] ); ?>"></td>
+					<td data-label="Price (€)"><input type="number" min="0" step="1" name="zv_opt_price[]" value="<?php echo esc_attr( $o[1] ?? '' ); ?>" placeholder="At studio"></td>
 					<td><button type="button" class="button-link zv-remove" data-zv-del>Remove</button></td>
 				</tr>
 			<?php endforeach; ?>
@@ -127,8 +127,8 @@ function zv_details_box( $post ) {
 			<tbody>
 			<?php foreach ( $hl as $h ) : ?>
 				<tr data-zv-row>
-					<td><input type="text" name="zv_hl_title[]" value="<?php echo esc_attr( $h[0] ); ?>" placeholder="e.g. Hot stones"></td>
-					<td><input type="text" name="zv_hl_text[]" value="<?php echo esc_attr( $h[1] ); ?>" placeholder="e.g. warm basalt along the arches"></td>
+					<td data-label="Bold part"><input type="text" name="zv_hl_title[]" value="<?php echo esc_attr( $h[0] ); ?>" placeholder="e.g. Hot stones"></td>
+					<td data-label="Rest of the line"><input type="text" name="zv_hl_text[]" value="<?php echo esc_attr( $h[1] ); ?>" placeholder="e.g. warm basalt along the arches"></td>
 					<td><button type="button" class="button-link zv-remove" data-zv-del>Remove</button></td>
 				</tr>
 			<?php endforeach; ?>
@@ -260,7 +260,7 @@ add_filter( 'edit_ritual_per_page', fn() => 200 );
 add_action( 'admin_notices', function () {
 	$s = get_current_screen();
 	if ( $s && 'edit-ritual' === $s->id ) {
-		echo '<div class="notice notice-info zv-tip"><p><b>Tip:</b> drag <span class="dashicons dashicons-menu"></span> to change the order on the website · use the switch to show or hide a ritual · click a name to change its price, photos and texts.</p></div>';
+		echo '<div class="notice notice-info zv-tip"><p><b>Tip:</b> drag <span class="dashicons dashicons-menu"></span> to change the order on the website (on a computer) · use the switch to show or hide a ritual · click a name to change its price, photos and texts.</p></div>';
 	}
 } );
 

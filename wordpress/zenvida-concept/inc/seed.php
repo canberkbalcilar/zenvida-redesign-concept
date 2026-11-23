@@ -38,6 +38,7 @@ function zv_seed() {
 		return;
 	}
 	update_option( 'zv_seeded', 1 );
+	update_option( 'timezone_string', 'Europe/Madrid' );
 	kses_remove_filters();
 
 	// WordPress's untouched sample post/page would show up in the journal and page list.

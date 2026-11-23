@@ -36,7 +36,7 @@
   }
 
   // Days
-  const today = new Date();
+  const today = window.zvNow ? zvNow() : new Date(); // studio time, not the visitor's
   const days = [...Array(14)].map((_,i) => { const d = new Date(today); d.setDate(d.getDate()+i); return d; });
   const daysEl = $('#days');
   days.forEach((d,i) => {
@@ -74,7 +74,7 @@
     $('#priceMain').innerHTML = `${eur(p)}<small>${UNIT} · ${len()} min</small>`;
 
     const d = days[st.day], [o,c] = HOURS[d.getDay()];
-    $('#dayHours').textContent = `${DAYN[d.getDay()]} ${fmt(o)}–${fmt(c)}`;
+    $('#dayHours').textContent = `${DAYN[d.getDay()]} ${fmt(o)}–${fmt(c)} · Madrid time`;
     const all = slotsFor(st.day), list = st.showAll ? all : all.slice(0,8);
     const sl = $('#slots'); sl.innerHTML = '';
     if (!all.length) sl.innerHTML = '<p style="grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)">No times left today — try tomorrow.</p>';

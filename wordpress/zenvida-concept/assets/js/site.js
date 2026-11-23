@@ -34,12 +34,23 @@ const onScroll = () => {
 };
 addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
+// Clock of the studio (Europe/Madrid by default), not of the visitor's device.
+// Returns a Date whose local fields (day, hours…) are the studio's wall-clock time.
+window.zvNow = () => {
+  try {
+    const p = {};
+    new Intl.DateTimeFormat('en-US', { timeZone: S.tz || 'Europe/Madrid', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' })
+      .formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
+    return new Date(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute);
+  } catch (e) { return new Date(); }
+};
+
 // Opening hours (index 0 = Sunday, values in minutes)
 const H = S.hours || [];
 const DAYN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const fmt = m => String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
 if (H.length === 7) {
-  const now = new Date(), dow = now.getDay(), nm = now.getHours()*60 + now.getMinutes();
+  const now = zvNow(), dow = now.getDay(), nm = now.getHours()*60 + now.getMinutes();
   const [o, c] = H[dow], open = nm >= o && nm < c;
   const label = open ? `Open now · until ${fmt(c)}` : (nm < o ? `Opens today at ${fmt(o)}` : `Opens tomorrow at ${fmt(H[(dow+1)%7][0])}`);
   $$('[data-open-now]').forEach(el => { el.textContent = label; el.classList.toggle('closed', !open); });

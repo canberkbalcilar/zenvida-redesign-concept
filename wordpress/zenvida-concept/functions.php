@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.3.0' );
+define( 'ZV_VERSION', '0.4.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -184,12 +184,13 @@ add_action( 'wp_enqueue_scripts', function () {
 		wp_dequeue_style( $h );
 	}
 	$uri = get_template_directory_uri() . '/assets';
+	$ver = fn( $f ) => ZV_VERSION . '.' . filemtime( get_template_directory() . '/assets/' . $f ); // new file = new URL, no stale cache
 	wp_enqueue_style( 'zv-fonts', 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600&display=swap', array(), null );
-	wp_enqueue_style( 'zv-site', "$uri/css/zenvida.css", array(), ZV_VERSION );
-	wp_enqueue_script( 'zv-site', "$uri/js/site.js", array(), ZV_VERSION, true );
-	wp_add_inline_script( 'zv-site', 'window.ZV_SITE = ' . wp_json_encode( array( 'hours' => zv_hours() ) ) . ';', 'before' );
+	wp_enqueue_style( 'zv-site', "$uri/css/zenvida.css", array(), $ver( 'css/zenvida.css' ) );
+	wp_enqueue_script( 'zv-site', "$uri/js/site.js", array(), $ver( 'js/site.js' ), true );
+	wp_add_inline_script( 'zv-site', 'window.ZV_SITE = ' . wp_json_encode( array( 'hours' => zv_hours(), 'tz' => zv_tz() ) ) . ';', 'before' );
 	if ( is_singular( 'ritual' ) ) {
-		wp_enqueue_script( 'zv-single', "$uri/js/single.js", array( 'zv-site' ), ZV_VERSION, true );
+		wp_enqueue_script( 'zv-single', "$uri/js/single.js", array( 'zv-site' ), $ver( 'js/single.js' ), true );
 		wp_add_inline_script( 'zv-single', 'window.ZV_SINGLE = ' . wp_json_encode( zv_ritual_data( get_queried_object() ) ) . ';', 'before' );
 	}
 }, 20 );
@@ -307,6 +308,7 @@ function zv_archive_data() {
 		'needs'       => zv_needs(),
 		'rituals'     => zv_all_rituals(),
 		'initialArea' => $initial,
+		'quiz'        => array_map( fn( $q ) => array( 'q' => $q['q'], 'o' => array_map( fn( $a ) => array( $a[2], $a[0], $a[1] ), $q['a'] ) ), zv_quiz() ),
 	);
 }
 

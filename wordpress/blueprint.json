@@ -14,7 +14,8 @@
       "options": {
         "blogname": "ZenVida",
         "blogdescription": "Foot & Body · Redesign concept",
-        "permalink_structure": "/%postname%/"
+        "permalink_structure": "/%postname%/",
+        "timezone_string": "Europe/Madrid"
       }
     },
     {

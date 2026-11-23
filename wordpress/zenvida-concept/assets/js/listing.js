@@ -108,11 +108,9 @@ $('#zvListing').addEventListener('click', e => {
 });
 
 // Quiz
-const Q = [
-  {q:'What needs care today?', k:'need', o:[['feet','Tired feet','Walking, standing, long days'],['back','Back, neck & shoulders','Desk, screens, knots'],['stress','Stress & sleep','Busy mind, poor sleep'],['travel','Just travelled','Jet lag, swollen legs'],['sport','Sore muscles','Training or a race'],['glow','My face & skin','Puffiness, dull skin']]},
-  {q:'How much time do you have?', k:'time', o:[['short','Under 45 min','A quick reset'],['hour','About an hour','The classic choice'],['long','90 min or more','Fully switch off'],['any','Flexible','Show me everything']]},
-  {q:'Who is coming?', k:'who', o:[['me','Just me',''],['two','Two of us','Side by side'],['preg','I\'m pregnant','Safe, adapted care']]}
-];
+// Questions come from Site settings → "Help me choose" quiz. Each answer: [filter, label, small text];
+// filter is "need:<slug>", "time:<short|hour|long>" or "" (no filter).
+const Q = (D.quiz && D.quiz.length) ? D.quiz : [{q:'What needs care today?', o:Object.keys(NEEDS).map(k => ['need:'+k, NEEDS[k], ''])}];
 let qi = 0, ans = {};
 const dlg = $('#quiz');
 function drawQ(){
@@ -122,16 +120,20 @@ function drawQ(){
   $('#qzQ').textContent = q.q;
   $('#qzBack').hidden = qi===0;
   $('#qzOpts').innerHTML = q.o.map(([v,t,s]) => `<button data-v="${v}">${t}${s?`<small>${s}</small>`:''}</button>`).join('');
-  $('#qzOpts').querySelectorAll('button').forEach(b => b.onclick = () => { ans[q.k] = b.dataset.v; qi < Q.length-1 ? (qi++, drawQ()) : finishQuiz(); });
+  $('#qzOpts').querySelectorAll('button').forEach(b => b.onclick = () => { ans[qi] = b.dataset.v; qi < Q.length-1 ? (qi++, drawQ()) : finishQuiz(); });
 }
 function openQuiz(){ qi=0; ans={}; drawQ(); dlg.showModal(); }
 function finishQuiz(){
   dlg.close();
   st.area='all'; st.sort='rec'; st.view='cards';
-  st.need = ans.who==='two' ? 'two' : ans.who==='preg' ? 'preg' : ans.need;
-  if (!NEEDS[st.need]) st.need = null;
-  st.time = (ans.who==='two'||ans.who==='preg') ? 'any' : ans.time;
-  if (!filtered().length) st.time = 'any';
+  st.need = null; st.time = 'any';
+  Q.forEach((q, i) => {                       // later answers win (e.g. "Two of us" over "Tired feet")
+    const [kind, val] = (ans[i] || '').split(':');
+    if (kind === 'need' && NEEDS[val]) st.need = val;
+    if (kind === 'time' && ['short','hour','long'].includes(val)) st.time = val;
+  });
+  if (!filtered().length) st.time = 'any';   // nothing fits: relax the length, then the need
+  if (!filtered().length) st.need = null;
   st.pick = filtered()[0]?.slug || null; st.quiz = true;
   render();
   $('#results').scrollIntoView({behavior:'smooth'});

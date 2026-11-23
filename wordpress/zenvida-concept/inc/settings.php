@@ -42,6 +42,27 @@ function zv_defaults() {
 			array( 'name' => 'Recover', 'text' => 'Mar Menor salts for sore feet', 'price' => '5', 'color' => '#7FA392' ),
 		),
 		'bath_classic' => 'Herbal aromatherapy soak',
+		'quiz'         => array(
+			array( 'q' => 'What needs care today?', 'a' => array(
+				array( 'Tired feet', 'Walking, standing, long days', 'need:feet' ),
+				array( 'Back, neck & shoulders', 'Desk, screens, knots', 'need:back' ),
+				array( 'Stress & sleep', 'Busy mind, poor sleep', 'need:stress' ),
+				array( 'Just travelled', 'Jet lag, swollen legs', 'need:travel' ),
+				array( 'Sore muscles', 'Training or a race', 'need:sport' ),
+				array( 'My face & skin', 'Puffiness, dull skin', 'need:glow' ),
+			) ),
+			array( 'q' => 'How much time do you have?', 'a' => array(
+				array( 'Under 45 min', 'A quick reset', 'time:short' ),
+				array( 'About an hour', 'The classic choice', 'time:hour' ),
+				array( '90 min or more', 'Fully switch off', 'time:long' ),
+				array( 'Flexible', 'Show me everything', '' ),
+			) ),
+			array( 'q' => 'Who is coming?', 'a' => array(
+				array( 'Just me', '', '' ),
+				array( 'Two of us', 'Side by side', 'need:two' ),
+				array( "I'm pregnant", 'Safe, adapted care', 'need:preg' ),
+			) ),
+		),
 		'seo_home'     => 'Reflexology & Body Massage in Madrid Centro',
 		'seo_home_desc' => 'Foot reflexology and body massage rituals in Madrid Centro, 3 minutes from Sol. Open 7 days, walk in or book online.',
 		'seo_rituals'  => 'Massage & Reflexology Rituals in Madrid',
@@ -79,6 +100,28 @@ function zv_hours() {
 	return $out;
 }
 
+/** "Help me choose" questions: [ [ 'q' => text, 'a' => [ [label, small text, filter], … ] ], … ] */
+function zv_quiz() {
+	$o = get_option( 'zv_settings', array() );
+	$q = ( is_array( $o ) && isset( $o['quiz'] ) && is_array( $o['quiz'] ) ) ? $o['quiz'] : zv_defaults()['quiz'];
+	return array_values( array_filter( $q, fn( $x ) => '' !== trim( $x['q'] ?? '' ) && ! empty( $x['a'] ) ) );
+}
+
+/** What a quiz answer can do: filter by a need or by length, or nothing. */
+function zv_quiz_actions() {
+	$out = array( '' => '— No filter —' );
+	foreach ( zv_needs() as $slug => $name ) {
+		$out[ "need:$slug" ] = 'Show rituals good for: ' . $name;
+	}
+	return $out + array( 'time:short' => 'Length: under 45 min', 'time:hour' => 'Length: about an hour', 'time:long' => 'Length: 90 min or more' );
+}
+
+/** The studio's time zone (Settings → General), Madrid unless a named zone is set. */
+function zv_tz() {
+	$tz = wp_timezone_string();
+	return false !== strpos( $tz, '/' ) ? $tz : 'Europe/Madrid';
+}
+
 function zv_demo() {
 	return '1' === (string) zv_opt( 'demo_mode' );
 }
@@ -113,7 +156,22 @@ add_action( 'admin_init', function () {
 			$out = get_option( 'zv_settings', array() );
 			$out = is_array( $out ) ? $out : array();
 			foreach ( zv_defaults() as $k => $d ) {
-				if ( 'baths' === $k ) {
+				if ( 'quiz' === $k ) {
+					$qs = array();
+					foreach ( (array) ( $in['quiz'] ?? array() ) as $q ) {
+						$text = sanitize_text_field( $q['q'] ?? '' );
+						$ans  = array();
+						foreach ( (array) ( $q['label'] ?? array() ) as $i => $label ) {
+							$label = sanitize_text_field( $label );
+							if ( '' !== $label ) {
+								$act   = sanitize_text_field( $q['action'][ $i ] ?? '' );
+								$ans[] = array( $label, sanitize_text_field( $q['text'][ $i ] ?? '' ), preg_match( '/^(need|time):[a-z0-9_-]+$/', $act ) ? $act : '' );
+							}
+						}
+						$qs[] = array( 'q' => $text, 'a' => $ans );
+					}
+					$out['quiz'] = $qs;
+				} elseif ( 'baths' === $k ) {
 					$rows = array();
 					foreach ( (array) ( $in['baths']['name'] ?? array() ) as $i => $name ) {
 						$name = sanitize_text_field( $name );
@@ -218,10 +276,10 @@ function zv_settings_page() {
 						<tbody>
 						<?php foreach ( zv_baths() ?: array( array( 'name' => '', 'text' => '', 'price' => '', 'color' => '#B0956A' ) ) as $b ) : ?>
 							<tr data-zv-row>
-								<td><input type="text" name="zv_settings[baths][name][]" value="<?php echo esc_attr( $b['name'] ); ?>"></td>
-								<td><input type="text" name="zv_settings[baths][text][]" value="<?php echo esc_attr( $b['text'] ); ?>"></td>
-								<td><input type="number" min="0" name="zv_settings[baths][price][]" value="<?php echo esc_attr( $b['price'] ); ?>" style="width:80px"></td>
-								<td><input type="text" class="zv-color" name="zv_settings[baths][color][]" value="<?php echo esc_attr( $b['color'] ); ?>"></td>
+								<td data-label="Name"><input type="text" name="zv_settings[baths][name][]" value="<?php echo esc_attr( $b['name'] ); ?>"></td>
+								<td data-label="Description"><input type="text" name="zv_settings[baths][text][]" value="<?php echo esc_attr( $b['text'] ); ?>"></td>
+								<td data-label="Price (€)"><input type="number" min="0" name="zv_settings[baths][price][]" value="<?php echo esc_attr( $b['price'] ); ?>" style="width:80px"></td>
+								<td data-label="Colour"><input type="text" class="zv-color" name="zv_settings[baths][color][]" value="<?php echo esc_attr( $b['color'] ); ?>"></td>
 								<td><button type="button" class="button-link zv-remove" data-zv-del>Remove</button></td>
 							</tr>
 						<?php endforeach; ?>
@@ -231,6 +289,39 @@ function zv_settings_page() {
 					<p class="description">Shown on rituals where "Offer foot-bath upgrades" is ticked.</p>
 				</td></tr>
 			</table>
+			<h2 class="title">"Help me choose" quiz</h2>
+			<p>The short quiz on the rituals page. Each answer can narrow the list to rituals for a need, or to a length. Leave a question empty to skip it.</p>
+			<?php
+			$quiz    = zv_quiz();
+			$actions = zv_quiz_actions();
+			for ( $qi = 0; $qi < 4; $qi++ ) :
+				$q   = $quiz[ $qi ] ?? array( 'q' => '', 'a' => array() );
+				$ans = $q['a'] ?: array( array( '', '', '' ) );
+				$n   = 'zv_settings[quiz][' . $qi . ']';
+				?>
+			<div class="zv-quiz-q">
+				<p><label class="zv-label" for="zv_quiz_<?php echo (int) $qi; ?>">Question <?php echo (int) $qi + 1; ?></label>
+					<input type="text" class="regular-text" id="zv_quiz_<?php echo (int) $qi; ?>" name="<?php echo esc_attr( $n ); ?>[q]" value="<?php echo esc_attr( $q['q'] ); ?>" placeholder="<?php echo 3 === $qi ? 'Optional extra question' : ''; ?>"></p>
+				<table class="zv-rows wide" data-zv-repeat>
+					<thead><tr><th>Answer</th><th>Small text (optional)</th><th>What it does</th><th></th></tr></thead>
+					<tbody>
+					<?php foreach ( $ans as $a ) : ?>
+						<tr data-zv-row>
+							<td data-label="Answer"><input type="text" name="<?php echo esc_attr( $n ); ?>[label][]" value="<?php echo esc_attr( $a[0] ); ?>"></td>
+							<td data-label="Small text (optional)"><input type="text" name="<?php echo esc_attr( $n ); ?>[text][]" value="<?php echo esc_attr( $a[1] ); ?>"></td>
+							<td data-label="What it does"><select name="<?php echo esc_attr( $n ); ?>[action][]">
+								<?php foreach ( $actions as $v => $l ) : ?>
+									<option value="<?php echo esc_attr( $v ); ?>" <?php selected( $a[2], $v ); ?>><?php echo esc_html( $l ); ?></option>
+								<?php endforeach; ?>
+							</select></td>
+							<td><button type="button" class="button-link zv-remove" data-zv-del>Remove</button></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+				<p><button type="button" class="button" data-zv-add>+ Add answer</button></p>
+			</div>
+			<?php endfor; ?>
 			<h2 class="title">Google</h2>
 			<p>How the pages appear in Google search results. (If you install Yoast SEO or Rank Math, these are ignored and the plugin takes over.)</p>
 			<table class="form-table" role="presentation">

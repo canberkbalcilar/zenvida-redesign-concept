@@ -293,7 +293,7 @@ section.block.bg-dark{background:var(--ink);color:#EDE6D8}
 .view button svg{width:15px;height:15px}
 .view button[aria-pressed=true]{background:var(--cream);color:var(--ink)}
 .sp{flex:1}
-.results{padding:28px 0 72px;min-height:50vh}
+.results{padding-top:28px;padding-bottom:72px;min-height:50vh}
 .rhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;font-size:14px;color:var(--muted)}
 .rhead b{color:var(--ink)}
 .clear{background:none;border:0;color:var(--sand-700);font-weight:600;cursor:pointer;padding:0;font-size:14px;border-bottom:1px solid currentColor}
@@ -586,6 +586,12 @@ footer.site .about{margin:16px 0 0;max-width:300px}
   .mbar .p small{display:block;color:var(--muted);font-size:12.5px}
   body{padding-bottom:80px}
 }
+/* Tablets (portrait iPad up to small laptops): filters on two lines */
+@media (min-width:761px) and (max-width:1100px){
+  .frow.top{flex-wrap:wrap;row-gap:10px}
+  .frow.top .sp{flex:1 0 100%;height:0}
+}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 .mbar .p+.btn{flex:0 0 auto;padding:13px 22px}

@@ -75,7 +75,7 @@ add_filter( 'block_categories_all', function ( $cats ) {
 /* ------------------------------------------------------------- registration */
 
 add_action( 'init', function () {
-	wp_register_script( 'zv-blocks', get_template_directory_uri() . '/assets/js/blocks.js', array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-server-side-render', 'wp-data' ), ZV_VERSION, true );
+	wp_register_script( 'zv-blocks', get_template_directory_uri() . '/assets/js/blocks.js', array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-server-side-render', 'wp-data' ), ZV_VERSION . '.' . filemtime( get_template_directory() . '/assets/js/blocks.js' ), true );
 
 	$in_section = array( 'parent' => array( 'zv/section' ) );
 
@@ -407,7 +407,7 @@ function zv_render_listing( $a ) {
 	$rituals = $zv['rituals'];
 	$initial = $zv['initialArea'];
 	if ( ! $done && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
-		wp_enqueue_script( 'zv-listing', get_template_directory_uri() . '/assets/js/listing.js', array( 'zv-site' ), ZV_VERSION, true );
+		wp_enqueue_script( 'zv-listing', get_template_directory_uri() . '/assets/js/listing.js', array( 'zv-site' ), ZV_VERSION . '.' . filemtime( get_template_directory() . '/assets/js/listing.js' ), true );
 		wp_add_inline_script( 'zv-listing', 'window.ZV = ' . wp_json_encode( $zv ) . ';', 'before' );
 		$done = true;
 	}

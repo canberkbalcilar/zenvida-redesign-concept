@@ -83,3 +83,25 @@
 .zv-name.is-missing input{border-color:#d63638}
 .zv-name::after{content:"Shown as the page title and on the rituals page.";display:block;color:#646970;font-size:12px;margin-top:4px}
 .zv-name.is-missing::after{content:"Type a name to be able to publish.";color:#d63638}
+
+/* Phones and small tablets: rows stack, nothing runs off the screen */
+@media (max-width:782px){
+  .zv-rows,.zv-rows tbody,.zv-rows tr,.zv-rows td{display:block;width:100%}
+  .zv-rows thead{display:none}
+  .zv-rows tr{border:1px solid #dcdcde;border-radius:6px;padding:10px 12px;margin-bottom:10px;background:#fff;box-sizing:border-box}
+  .zv-rows td{padding:4px 0}
+  .zv-rows td input[type=text],.zv-rows td input[type=number],.zv-rows td select{width:100%!important;min-width:0!important;max-width:none}
+  .zv-rows td[data-label]::before{content:attr(data-label);display:block;font-size:12px;color:#50575e;margin-bottom:2px}
+  .zv-rows .wp-picker-container{display:block}
+  .zv-inline{display:block}
+  .zv-inline>label{display:block;margin-bottom:10px}
+  .zv-name input{max-width:none}
+  .zv-photos{grid-template-columns:1fr}
+  .zv-guide li{flex-wrap:wrap}
+  .zv-guide .button{margin-left:36px}
+  /* Rituals list: keep the show/hide switch visible on phones */
+  .post-type-ritual .wp-list-table td.column-zv_visible{display:block!important;padding:4px 10px 10px 35%!important}
+  .post-type-ritual .wp-list-table td.column-zv_visible::before{content:"On website";position:absolute;left:10px;display:block;font-weight:600}
+  .post-type-ritual .column-zv_drag .zv-handle{display:none}
+  .post-type-ritual td.column-zv_thumb::before,.post-type-ritual td.column-zv_drag::before{display:none}
+}
