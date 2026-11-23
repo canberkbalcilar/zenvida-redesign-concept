@@ -1,37 +1,38 @@
 <?php
-$zv_archive = get_post_type_archive_link( 'ritual' );
-$zv_foot    = get_page_by_path( 'foot-massage', OBJECT, 'ritual' );
-$zv_book    = is_singular( 'ritual' ) ? '#book' : '#results';
+$zv_book_url = is_singular( 'ritual' ) ? '#book' : ( zv_opt( 'header_url' ) ?: zv_rituals_url() );
+$zv_menu     = function ( $loc, $fallback_cls = '' ) {
+	if ( has_nav_menu( $loc ) ) {
+		wp_nav_menu( array( 'theme_location' => $loc, 'container' => false, 'depth' => 1, 'fallback_cb' => false ) );
+	} else {
+		echo '<ul><li><a href="' . esc_url( zv_rituals_url() ) . '">Rituals</a></li><li><a href="#visit">Visit</a></li></ul>';
+	}
+};
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div style="background:#F1EADC;color:#4A443B;font:500 12.5px/1.4 Figtree,system-ui,sans-serif;text-align:center;padding:7px 16px;border-bottom:1px solid #E6DECF"><b style="color:#1E1B17">Redesign concept</b> · Running on WordPress · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>" style="color:#8A7350;font-weight:600">Edit rituals in WP admin</a> · <a href="<?php echo esc_url( ZV_CONCEPTS_URL ); ?>" target="_blank" rel="noopener" style="color:#8A7350;font-weight:600">All concepts</a></div>
-
-<div class="promo">Short on time? <a href="<?php echo esc_url( $zv_foot ? get_permalink( $zv_foot ) : $zv_archive ); ?>">Foot Massage 25 min — €25</a> · add neck &amp; shoulders for €10
+<?php if ( zv_demo() ) : ?>
+<div class="concept"><b>Redesign concept</b> · Running on WordPress · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>">Edit pages</a> · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>">Edit rituals</a> · <a href="<?php echo esc_url( admin_url( 'themes.php?page=zv-settings' ) ); ?>">Settings</a> · <a href="<?php echo esc_url( ZV_CONCEPTS_URL ); ?>" target="_blank" rel="noopener">All concepts</a></div>
+<?php endif; ?>
+<?php if ( '1' === (string) zv_opt( 'promo_show' ) ) : ?>
+<div class="promo"><?php echo zv_k( zv_opt( 'promo_text' ) ); // phpcs:ignore ?>
   <button aria-label="Dismiss" onclick="this.parentElement.remove()">×</button></div>
+<?php endif; ?>
 
 <header class="site" id="hdr">
   <div class="wrap nav">
-    <a class="logo" href="<?php echo esc_url( $zv_archive ); ?>" aria-label="ZenVida home"><b>ZENVIDA</b><small>FOOT &amp; BODY</small></a>
-    <ul>
-      <li><a href="<?php echo esc_url( $zv_archive ); ?>" aria-current="page">Rituals</a></li>
-      <li><a href="#">Experiences</a></li>
-      <li><a href="#">Offers &amp; Packs</a></li>
-      <li><a href="#">Gift Cards</a></li>
-      <li><a href="#">Journal</a></li>
-      <li><a href="#visit">Visit</a></li>
-    </ul>
+    <a class="logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="ZenVida home"><b>ZENVIDA</b><small>FOOT &amp; BODY</small></a>
+    <?php $zv_menu( 'primary' ); ?>
     <div class="right">
       <div class="lang" role="group" aria-label="Language"><button aria-pressed="true">EN</button><button aria-pressed="false">ES</button></div>
-      <a class="btn btn-dark" href="<?php echo esc_attr( $zv_book ); ?>">Book now</a>
-      <button class="menu-btn" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="btn btn-dark" href="<?php echo esc_url( $zv_book_url ); ?>"><?php echo zv_e( zv_opt( 'header_label' ) ); ?></a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="mnav" id="mnav" hidden><div class="wrap"><?php $zv_menu( 'primary' ); ?><a class="btn btn-dark" href="<?php echo esc_url( $zv_book_url ); ?>"><?php echo zv_e( zv_opt( 'header_label' ) ); ?></a></div></div>
 </header>

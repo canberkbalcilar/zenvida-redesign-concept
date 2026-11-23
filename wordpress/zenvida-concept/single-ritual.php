@@ -53,7 +53,7 @@ get_header();
       </div>
     </div>
 
-    <aside class="book" id="book" aria-label="Book <?php echo esc_attr( get_the_title() ); ?>">
+    <aside class="book" id="book" data-mbar-anchor aria-label="Book <?php echo esc_attr( get_the_title() ); ?>">
       <div class="book-head">
         <div class="price" id="priceMain"><?php echo esc_html( zv_eur( $o[1] ) ); ?><small><?php echo esc_html( $unit . ' · ' . $o[0] . ' min' ); ?></small></div>
         <span class="dep">€<?php echo (int) $r['deposit']; ?> deposit today</span>
@@ -111,7 +111,7 @@ get_header();
         </div>
 
         <button class="btn btn-dark" id="cta">Choose a time to continue</button>
-        <p class="fine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Secure card payment · Free changes up to 24h before</p>
+        <p class="fine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Secure card payment · Free changes up to 4 hours before</p>
       </div>
       <div class="book-foot">
         <a href="https://wa.me/34690829142"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3z"/></svg>Ask on WhatsApp</a>
@@ -122,32 +122,6 @@ get_header();
 </div>
 
 <?php the_content(); ?>
-
-<!-- Visit -->
-<section class="block alt" id="visit">
-  <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Visit us</span><h2 style="margin-top:12px">A sanctuary in the heart of Madrid</h2><p class="lead">A private, calm studio five minutes' walk from Puerta del Sol.</p></div>
-    <div class="visit">
-      <div class="visit-card">
-        <span class="open-now" id="openNow">Open now</span>
-        <table class="hours" id="hours"></table>
-      </div>
-      <div class="visit-card">
-        <a class="map-tile" href="https://www.google.com/maps/search/?api=1&amp;query=Calle+de+la+Cruz+16+28012+Madrid" target="_blank" rel="noopener"><span class="pin">Get directions ↗</span></a>
-        <div class="contact-rows">
-          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Calle de la Cruz, 16<small>Centro, 28012 Madrid · Metro Sol</small></span></div>
-          <a href="tel:+34690829142"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>+34 690 829 142<small>Call or WhatsApp</small></span></a>
-          <a href="mailto:hola@zenvida.es"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>hola@zenvida.es<small>We reply within a day</small></span></a>
-        </div>
-      </div>
-    </div>
-    <div class="trust">
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l8-6 8 6v10z"/><path d="M10 20v-5h4v5"/></svg>Private, relaxing rooms</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="5"/><path d="M8.5 13 7 21l5-3 5 3-1.5-8"/></svg>Certified, experienced therapists</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l7-7"/></svg>High-quality Spanish products</div>
-    </div>
-  </div>
-</section>
 </main>
 
 <div class="mbar" id="mbar">

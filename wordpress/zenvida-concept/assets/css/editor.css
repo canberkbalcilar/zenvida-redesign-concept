@@ -1,0 +1,27 @@
+/* Editor-only tweaks (loaded inside the editor canvas together with zenvida.css). */
+.editor-styles-wrapper{padding:0!important}
+.editor-styles-wrapper .is-root-container>.wp-block,
+.editor-styles-wrapper .wp-block[data-type^="zv/"]{max-width:none!important;margin-left:0;margin-right:0}
+.editor-styles-wrapper .is-root-container>.wp-block{margin-top:0;margin-bottom:0}
+.editor-styles-wrapper .zv-section-inner>.wp-block{max-width:none;margin-left:0;margin-right:0}
+.editor-styles-wrapper .hero{min-height:560px}
+.editor-styles-wrapper .hero>img{pointer-events:none}
+.editor-styles-wrapper .hero .wrap{padding-bottom:96px}
+.editor-styles-wrapper .qb-wrap{margin-top:0;padding-top:24px}
+.editor-styles-wrapper .zv-ssr{pointer-events:none}
+.editor-styles-wrapper .zv-ssr a{pointer-events:none}
+.editor-styles-wrapper .area .t,.editor-styles-wrapper .area-tile span{pointer-events:auto}
+.editor-styles-wrapper .area{min-height:180px}
+.editor-styles-wrapper .areas .block-list-appender,.editor-styles-wrapper .steps .block-list-appender,
+.editor-styles-wrapper .offers .block-list-appender,.editor-styles-wrapper .benefits .block-list-appender{display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:var(--radius);min-height:80px}
+.editor-styles-wrapper .zv-faq-item{border-bottom:1px solid var(--line);padding:16px 0}
+.editor-styles-wrapper .zv-faq-item .q{font:500 22px/1.3 var(--serif);margin-bottom:6px}
+.editor-styles-wrapper .zv-faq-item p{margin:0;color:var(--ink-2)}
+.editor-styles-wrapper .zv-faq-items .block-list-appender{margin-top:14px}
+.editor-styles-wrapper .rev-list .block-list-appender,.editor-styles-wrapper .pillar-list .block-list-appender{display:flex;align-items:center}
+.editor-styles-wrapper .zv-hint{font-size:12.5px;color:var(--muted);font-style:italic}
+.editor-styles-wrapper .zv-ic svg{width:21px;height:21px}
+.editor-styles-wrapper .benefit .zv-ic svg{width:26px;height:26px;color:var(--sand-700);margin-bottom:18px;display:block}
+.editor-styles-wrapper .go .zv-ic svg{width:16px;height:16px}
+.editor-styles-wrapper [data-rich-text-placeholder]{opacity:.5}
+.editor-styles-wrapper .nrow input{pointer-events:none}
