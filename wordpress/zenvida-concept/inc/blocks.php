@@ -134,7 +134,7 @@ add_action( 'init', function () {
 	zv_register( 'faq', 'FAQ', 'editor-help', array( 'eyebrow' => '', 'title' => '' ), 'zv_render_faq', array( 'parent' => array( 'zv/section', 'zv/split' ) ) );
 	zv_register( 'faq-item', 'Question', 'editor-help', array( 'question' => '', 'answer' => '', 'open' => false ), 'zv_render_faq_item', array( 'parent' => array( 'zv/faq' ) ) );
 	zv_register( 'visit', 'Visit us', 'location', array(
-		'eyebrow' => 'Visit us', 'title' => 'Calle de la Cruz, 16', 'layout' => 'card',
+		'eyebrow' => 'Visit us', 'title' => '', 'layout' => 'card',
 		'bookLabel' => 'Book a time', 'bookUrl' => '', 'waLabel' => 'WhatsApp us',
 	), 'zv_render_visit', array( 'parent' => array( 'zv/section', 'zv/split' ) ) );
 	zv_register( 'foot-map', 'Foot map', 'location-alt', array(
@@ -236,7 +236,7 @@ function zv_render_section( $a, $content ) {
 }
 
 function zv_render_area_tile( $a ) {
-	return '<a class="area" href="' . esc_url( $a['url'] ?: '#' ) . '" style="--c:' . esc_attr( $a['color'] ) . '">'
+	return '<a class="area" href="' . esc_url( $a['url'] ?: '#' ) . '" style="--c:' . esc_attr( sanitize_hex_color( $a['color'] ) ?: '#8E9A82' ) . '">'
 		. ( $a['image'] ? '<img src="' . esc_url( $a['image'] ) . '" alt="" loading="lazy" onerror="this.remove()">' : '' )
 		. '<span class="t"><span><b>' . zv_e( $a['title'] ) . '</b><small>' . zv_e( $a['subtitle'] ) . '</small></span><span class="go">' . zv_icon( 'arrow' ) . '</span></span></a>';
 }
@@ -360,12 +360,12 @@ function zv_render_visit( $a ) {
 	$wide = 'wide' === $a['layout'];
 	$info = '<p class="addr">' . zv_e( zv_opt( 'address2' ) ) . '</p>'
 		. '<p class="addr">' . zv_e( zv_opt( 'phone' ) ) . ' · ' . zv_e( zv_opt( 'email' ) ) . '</p>'
-		. '<div style="margin-top:16px"><span class="open-now" data-open-now>Open 7 days a week</span></div>'
+		. '<div style="margin-top:16px"><span class="open-now" data-open-now></span></div>'
 		. '<table class="hours" data-hours-table>' . zv_hours_rows() . '</table>'
 		. '<div class="vrow">' . zv_btn( $a['bookLabel'], $a['bookUrl'] ?: zv_rituals_url(), 'dark' ) . zv_btn( $a['waLabel'], 'https://wa.me/' . preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) ), 'ghost' ) . '</div>';
 	$map  = '<a class="map-tile" href="' . esc_url( zv_opt( 'maps_url' ) ) . '" target="_blank" rel="noopener"><span class="pin">Get directions ↗</span></a>';
 	return '<div class="visit">' . ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
-		. ( $a['title'] ? '<h2>' . zv_e( $a['title'] ) . '</h2>' : '' )
+		. ( ( $a['title'] ?: zv_opt( 'address1' ) ) ? '<h2>' . zv_e( $a['title'] ?: zv_opt( 'address1' ) ) . '</h2>' : '' )
 		. '<div class="visit-card' . ( $wide ? ' wide' : '' ) . '">' . ( $wide ? $map . '<div>' . $info . '</div>' : $map . $info ) . '</div></div>';
 }
 
@@ -376,7 +376,8 @@ function zv_hours_rows() {
 	$fmt  = fn( $m ) => sprintf( '%02d:%02d', intdiv( $m, 60 ), $m % 60 );
 	$out  = '';
 	foreach ( $days as $i => $name ) {
-		$out .= '<tr><td>' . $name . '</td><td>' . $fmt( $h[ $i ][0] ) . ' – ' . $fmt( $h[ $i ][1] ) . '</td></tr>';
+		$closed = $h[ $i ][0] === $h[ $i ][1];
+		$out   .= '<tr><td>' . $name . '</td><td>' . ( $closed ? 'Closed' : $fmt( $h[ $i ][0] ) . ' – ' . $fmt( $h[ $i ][1] % 1440 ) ) . '</td></tr>';
 	}
 	return $out;
 }

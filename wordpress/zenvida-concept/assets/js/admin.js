@@ -68,7 +68,7 @@ jQuery(function ($) {
     box.prop('disabled', true);
     $.post(A.ajax, { action: 'zv_visible', _ajax_nonce: A.nonce, id: box.data('zv-visible'), on: box.is(':checked') ? 1 : 0 })
       .done(r => { if (!r.success) box.prop('checked', !box.is(':checked')); })
-      .fail(() => { box.prop('checked', !box.is(':checked')); alert('Could not save. Please reload the page and try again.'); })
+      .fail(x => { box.prop('checked', !box.is(':checked')); alert((x.responseJSON && x.responseJSON.data) || 'Could not save. Please reload the page and try again.'); })
       .always(() => box.prop('disabled', false));
   });
 
@@ -81,7 +81,7 @@ jQuery(function ($) {
         if (!r.success) { box.prop('checked', !box.is(':checked')); return; }
         row.find('.zvp-status').attr('class', 'zvp-status zvp-' + r.data.status).text(r.data.label);
       })
-      .fail(() => { box.prop('checked', !box.is(':checked')); alert('Could not save. Please reload the page and try again.'); })
+      .fail(x => { box.prop('checked', !box.is(':checked')); alert((x.responseJSON && x.responseJSON.data) || 'Could not save. Please reload the page and try again.'); })
       .always(() => box.prop('disabled', false));
   });
 

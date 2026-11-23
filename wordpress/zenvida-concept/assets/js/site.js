@@ -48,22 +48,33 @@ window.zvNow = () => {
 // Opening hours (index 0 = Sunday, values in minutes)
 const H = S.hours || [];
 const DAYN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const fmt = m => String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const fmt = m => String(Math.floor((m%1440)/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const isClosed = d => H[d][0] === H[d][1];          // a day marked "Closed" in Site settings
 if (H.length === 7) {
   const now = zvNow(), dow = now.getDay(), nm = now.getHours()*60 + now.getMinutes();
-  const [o, c] = H[dow], open = nm >= o && nm < c;
-  const label = open ? `Open now · until ${fmt(c)}` : (nm < o ? `Opens today at ${fmt(o)}` : `Opens tomorrow at ${fmt(H[(dow+1)%7][0])}`);
+  const [o, c] = H[dow], open = !isClosed(dow) && nm >= o && nm < c;
+  // Next opening: later today, or the first day that is not closed.
+  let next = '';
+  if (!open) {
+    if (!isClosed(dow) && nm < o) next = `Opens today at ${fmt(o)}`;
+    else for (let i = 1; i <= 7; i++) {
+      const d = (dow + i) % 7;
+      if (!isClosed(d)) { next = `Opens ${i === 1 ? 'tomorrow' : DAYN[d]} at ${fmt(H[d][0])}`; break; }
+    }
+  }
+  const label = open ? `Open now · until ${fmt(c)}` : (next || 'Closed');
   $$('[data-open-now]').forEach(el => { el.textContent = label; el.classList.toggle('closed', !open); });
   $$('[data-hours-table]').forEach(t => {
-    t.innerHTML = [1,2,3,4,5,6,0].map(i => `<tr class="${i===dow?'today':''}"><td>${DAYN[i]}${i===dow?' · today':''}</td><td>${fmt(H[i][0])} – ${fmt(H[i][1])}</td></tr>`).join('');
+    t.innerHTML = [1,2,3,4,5,6,0].map(i => `<tr class="${i===dow?'today':''}"><td>${DAYN[i]}${i===dow?' · today':''}</td><td>${isClosed(i) ? 'Closed' : fmt(H[i][0]) + ' – ' + fmt(H[i][1])}</td></tr>`).join('');
   });
-  $$('[data-hours-today]').forEach(el => el.textContent = `Today: ${fmt(o)} – ${fmt(c)}. Open 7 days a week.`);
+  const everyDay = [0,1,2,3,4,5,6].every(d => !isClosed(d));
+  $$('[data-hours-today]').forEach(el => el.textContent = (isClosed(dow) ? 'Closed today.' : `Today: ${fmt(o)} – ${fmt(c)}.`) + (everyDay ? ' Open 7 days a week.' : ''));
   // Quick book "When" options
   $$('[data-qb-when]').forEach(sel => {
     const opts = [];
     for (let i = 0; i < 7; i++) {
       const d = new Date(now); d.setDate(d.getDate()+i);
-      if (i === 0 && nm > c - 90) continue;
+      if (isClosed(d.getDay()) || (i === 0 && nm > c - 90)) continue;
       const name = i===0 ? 'Today' : i===1 ? 'Tomorrow' : d.toLocaleDateString('en',{weekday:'long'});
       opts.push(`<option value="${i}">${name}, ${d.toLocaleDateString('en',{day:'numeric',month:'short'})}</option>`);
     }

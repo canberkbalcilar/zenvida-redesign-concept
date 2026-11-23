@@ -2,10 +2,17 @@
 Theme Name: ZenVida Concept
 Theme URI: https://canberkbalcilar.github.io/zenvida-redesign-concept/
 Description: Redesign concept for ZenVida Foot & Body, built for non-technical editors. Rituals have a simple form (prices, photos from the media library, category, show/hide) and drag-and-drop order; page sections are blocks; contact details, hours, booking texts and the promo bar live in Site settings.
-Version: 0.6.0
+Version: 0.7.0
+Author: ZenVida Foot & Body
 Requires at least: 6.4
+Tested up to: 6.9
 Requires PHP: 8.0
 Text Domain: zenvida
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+ZenVida Concept, Copyright 2026 ZenVida Foot & Body.
+ZenVida Concept is distributed under the terms of the GNU GPL.
 */
 
 /* Styles live in assets/css/zenvida.css (site + block editor) and assets/css/editor.css. */

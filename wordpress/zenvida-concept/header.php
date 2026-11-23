@@ -17,7 +17,7 @@ $zv_menu     = function ( $loc, $fallback_cls = '' ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <?php if ( zv_demo() ) : ?>
-<div class="concept"><b>Redesign concept</b> · Running on WordPress · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>">Edit pages</a> · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>">Edit rituals</a> · <a href="<?php echo esc_url( admin_url( 'admin.php?page=zv-settings' ) ); ?>">Settings</a> · <a href="<?php echo esc_url( ZV_CONCEPTS_URL ); ?>" target="_blank" rel="noopener">All concepts</a></div>
+<div class="concept"><b>Redesign concept</b> · Running on WordPress · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>">Edit pages</a> · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>">Edit rituals</a> · <?php if ( current_user_can( 'edit_theme_options' ) ) : ?><a href="<?php echo esc_url( admin_url( 'admin.php?page=zv-settings' ) ); ?>">Settings</a> · <?php endif; ?><a href="<?php echo esc_url( ZV_CONCEPTS_URL ); ?>" target="_blank" rel="noopener">All concepts</a></div>
 <?php endif; ?>
 <?php if ( '1' === (string) zv_opt( 'promo_show' ) ) : ?>
 <div class="promo"><?php echo zv_e( zv_opt( 'promo_text' ) ); ?>

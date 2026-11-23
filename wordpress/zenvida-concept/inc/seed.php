@@ -183,9 +183,9 @@ function zv_seed() {
 	/* ---------- Pages ---------- */
 	$rituals_url = get_post_type_archive_link( 'ritual' );
 	$term_url    = fn( $s ) => get_term_link( $s, 'area' );
+	$journal     = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Journal', 'post_name' => 'journal' ) );
 	$home        = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Home', 'post_name' => 'home', 'post_content' => wp_slash( serialize_blocks( zv_home_blocks( $rituals_url, $term_url ) ) ) ) );
 	$rpage       = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Rituals', 'post_name' => 'rituals-page', 'post_content' => wp_slash( serialize_blocks( zv_rituals_blocks() ) ) ) );
-	$journal     = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Journal', 'post_name' => 'journal' ) );
 	update_option( 'show_on_front', 'page' );
 	update_option( 'page_on_front', $home );
 	update_option( 'page_for_posts', $journal );
@@ -194,6 +194,7 @@ function zv_seed() {
 	$foot = get_page_by_path( 'foot-massage', OBJECT, 'ritual' );
 	update_option( 'zv_settings', array_merge( zv_defaults(), array(
 		'rituals_page' => (string) $rpage,
+		'demo_mode'    => '1',
 		'promo_text'   => 'Short on time? Foot Massage 25 min — €25 · add neck & shoulders for €10',
 		'promo_link_label' => 'Book now',
 		'promo_link_url' => $foot ? get_permalink( $foot ) : $rituals_url,
@@ -202,7 +203,7 @@ function zv_seed() {
 	/* ---------- Menus ---------- */
 	$home_url = home_url( '/' );
 	zv_seed_menu( 'Main menu', 'primary', array(
-		array( 'Rituals', $rituals_url ), array( 'Events', home_url( '/events/' ) ), array( 'Offers & Packs', $home_url . '#offers' ),
+		array( 'Rituals', $rituals_url ), array( 'Events', get_post_type_archive_link( 'zv_event' ) ), array( 'Offers & Packs', $home_url . '#offers' ),
 		array( 'Gift Cards', $home_url . '#offers' ), array( 'Journal', get_permalink( $journal ) ), array( 'Visit', '#visit' ),
 	) );
 	$area_links = array();
@@ -325,9 +326,9 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 			"I walked in on a Tuesday afternoon and was on the recliner ten minutes later. Now it's my monthly ritual.",
 		) ) ) ),
 		zv_sec( array( 'anchor' => 'offers', 'padTop' => false, 'eyebrow' => 'Come back for less', 'title' => 'Make it a ritual' ), array( zv_offers_block() ) ),
-		zv_sec( array( 'padTop' => false, 'eyebrow' => 'Coming up', 'title' => 'Workshops & special weeks', 'linkLabel' => 'All events', 'linkUrl' => home_url( '/events/' ) ), array( zv_b( 'zv/events', array( 'count' => 3 ) ) ) ),
+		zv_sec( array( 'padTop' => false, 'eyebrow' => 'Coming up', 'title' => 'Workshops & special weeks', 'linkLabel' => 'All events', 'linkUrl' => get_post_type_archive_link( 'zv_event' ) ), array( zv_b( 'zv/events', array( 'count' => 3 ) ) ) ),
 		zv_sec( array( 'padTop' => false ), array( zv_b( 'zv/newsletter' ) ) ),
-		zv_sec( array( 'padTop' => false, 'eyebrow' => 'Respiro Journal', 'title' => 'Slow living in Madrid', 'linkLabel' => 'All stories', 'linkUrl' => home_url( '/journal/' ) ), array( zv_b( 'zv/journal' ) ) ),
+		zv_sec( array( 'padTop' => false, 'eyebrow' => 'Respiro Journal', 'title' => 'Slow living in Madrid', 'linkLabel' => 'All stories', 'linkUrl' => ( get_page_by_path( 'journal' ) ? get_permalink( get_page_by_path( 'journal' ) ) : home_url( '/' ) ) ), array( zv_b( 'zv/journal' ) ) ),
 		zv_sec( array( 'anchor' => 'visit', 'padTop' => false ), array(
 			zv_b( 'zv/split', array(), array(
 				zv_faq( array(
@@ -418,7 +419,7 @@ function zv_deluxe_blocks( $visit_section ) {
 				'Booked for four of us before a wedding. Calm room, lovely therapists, and the neck massage was a bonus.',
 				"Best sleep I've had in weeks. I'm coming back monthly as they recommended.",
 			) ),
-			zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Short on time? Foot Massage — 25 min.</strong> A quick, relaxing foot massage. Add neck & shoulders for 10 min (+€10).', 'price' => '€25', 'linkLabel' => 'View ritual', 'linkUrl' => home_url( '/rituals/feet-legs/foot-massage/' ) ) ),
+			zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Short on time? Foot Massage — 25 min.</strong> A quick, relaxing foot massage. Add neck & shoulders for 10 min (+€10).', 'price' => '€25', 'linkLabel' => 'View ritual', 'linkUrl' => get_permalink( get_page_by_path( 'foot-massage', OBJECT, 'ritual' ) ) ?: zv_rituals_url() ) ),
 		) ),
 		zv_sec( array( 'eyebrow' => 'FAQ', 'title' => 'Good to know' ), array( zv_faq( array(
 			array( 'What is foot reflexology?', 'It applies targeted pressure to specific reflex zones on the feet that correspond to different organs and systems throughout the body — supporting balance, circulation and whole-body relaxation.', true ),
@@ -433,4 +434,13 @@ function zv_deluxe_blocks( $visit_section ) {
 }
 
 // Fires on 'init' (priority 99) after the switch, so the post type and taxonomies exist.
-add_action( 'after_switch_theme', 'zv_seed' );
+// Demo content is only imported on purpose (the WordPress Playground demo calls zv_seed()).
+// Activating the theme on a real site never touches its content or settings; it only
+// refreshes the permalink rules so /rituals/ and /events/ work straight away.
+add_action( 'after_switch_theme', fn() => update_option( 'zv_flush_rewrite', 1 ) );
+add_action( 'init', function () {
+	if ( get_option( 'zv_flush_rewrite' ) ) {
+		delete_option( 'zv_flush_rewrite' );
+		flush_rewrite_rules();
+	}
+}, 99 );

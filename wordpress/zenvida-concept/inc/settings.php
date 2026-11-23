@@ -71,15 +71,45 @@ function zv_defaults() {
 		'seo_rituals'  => 'Massage & Reflexology Rituals in Madrid',
 		'seo_rituals_desc' => 'All ZenVida rituals with prices: reflexology, foot, back and body massage, couples rituals. Filter by area and how you feel.',
 		'seo_ritual_suffix' => 'in Madrid Centro',
-		'demo_mode'    => '1',
+		'demo_mode'    => '0', // the demo import switches it on; a real install starts without it
 		'rituals_page' => '',
 	);
 }
 
+/**
+ * A setting. Once the settings page has been saved, what the editor typed is used,
+ * including an empty field (e.g. "no promo link"); before that, the defaults apply.
+ * A few fields can never be empty and fall back to their default.
+ */
 function zv_opt( $key ) {
-	$o = get_option( 'zv_settings', array() );
-	$d = zv_defaults();
-	return ( is_array( $o ) && isset( $o[ $key ] ) && '' !== $o[ $key ] ) ? $o[ $key ] : ( $d[ $key ] ?? '' );
+	$o        = get_option( 'zv_settings', array() );
+	$d        = zv_defaults();
+	$required = array( 'header_label', 'whatsapp', 'seo_home', 'seo_rituals', 'events_title' );
+	if ( is_array( $o ) && array_key_exists( $key, $o ) && ( '' !== $o[ $key ] || ! in_array( $key, $required, true ) ) ) {
+		return $o[ $key ];
+	}
+	return $d[ $key ] ?? '';
+}
+
+/**
+ * Read one day's opening hours as written by an editor.
+ * Accepts "11:30-20:30", "11-20", "11.30 – 20.30", "11h-20h"; "Closed" (or empty) = closed.
+ * Returns [open, close] in minutes, [0, 0] when closed, or null when it cannot be read.
+ */
+function zv_parse_hours( $v ) {
+	$v = strtolower( trim( (string) $v ) );
+	if ( '' === $v || preg_match( '/^(closed|cerrado|kapal[ıi]|close|-|–)$/u', $v ) ) {
+		return array( 0, 0 );
+	}
+	if ( preg_match( '/^(\d{1,2})(?:[:.h](\d{2}))?\s*h?\s*(?:-|–|—|to|a)\s*(\d{1,2})(?:[:.h](\d{2}))?\s*h?$/u', $v, $m ) ) {
+		$o = (int) $m[1] * 60 + (int) ( $m[2] ?? 0 );
+		$c = (int) $m[3] * 60 + (int) ( $m[4] ?? 0 );
+		if ( $c <= $o ) {
+			$c += 1440; // closes after midnight
+		}
+		return ( $o < 1440 && $c <= 2880 ) ? array( $o, $c ) : null;
+	}
+	return null;
 }
 
 /** Foot-bath upgrades offered in the booking card. */
@@ -93,12 +123,7 @@ function zv_hours() {
 	$keys = array( 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat' );
 	$out  = array();
 	foreach ( $keys as $k ) {
-		$v = zv_opt( "hours_$k" );
-		if ( preg_match( '/^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/', trim( $v ), $m ) ) {
-			$out[] = array( $m[1] * 60 + $m[2], $m[3] * 60 + $m[4] );
-		} else {
-			$out[] = array( 600, 1260 );
-		}
+		$out[] = zv_parse_hours( zv_opt( "hours_$k" ) ) ?? zv_parse_hours( zv_defaults()[ "hours_$k" ] );
 	}
 	return $out;
 }
@@ -145,12 +170,8 @@ add_action( 'admin_menu', function () {
 	add_menu_page( 'Site settings', 'Site settings', 'edit_theme_options', 'zv-settings', 'zv_settings_page', 'dashicons-store', 3 );
 } );
 // Old address (Appearance → ZenVida settings) still works.
-add_action( 'admin_page_access_denied', function () {
-	if ( isset( $_GET['page'] ) && 'zv-settings' === $_GET['page'] ) { // phpcs:ignore
-		wp_safe_redirect( admin_url( 'admin.php?page=zv-settings' ) );
-		exit;
-	}
-} );
+// Saving uses the same permission as seeing the page (options.php would otherwise ask for manage_options).
+add_filter( 'option_page_capability_zv_settings', fn() => 'edit_theme_options' );
 
 add_action( 'admin_init', function () {
 	register_setting( 'zv_settings', 'zv_settings', array(
@@ -192,6 +213,16 @@ add_action( 'admin_init', function () {
 					$out[ $k ] = empty( $in[ $k ] ) ? '0' : '1';
 				} elseif ( in_array( $k, array( 'header_url', 'maps_url', 'promo_link_url' ), true ) ) {
 					$out[ $k ] = esc_url_raw( $in[ $k ] ?? '' );
+				} elseif ( 0 === strpos( $k, 'hours_' ) ) {
+					$raw    = sanitize_text_field( $in[ $k ] ?? '' );
+					$parsed = zv_parse_hours( $raw );
+					if ( null === $parsed ) {
+						$out[ $k ] = $out[ $k ] ?? zv_defaults()[ $k ];
+						add_settings_error( 'zv_settings', 'zv_' . $k, sprintf( 'Opening hours for %s were not changed: "%s" is not a time range. Write it like 11:30-20:30, or Closed. Your other changes were saved.', array( 'mon' => 'Monday', 'tue' => 'Tuesday', 'wed' => 'Wednesday', 'thu' => 'Thursday', 'fri' => 'Friday', 'sat' => 'Saturday', 'sun' => 'Sunday' )[ substr( $k, 6 ) ] ?? $k, $raw ) );
+					} else {
+						$fmt       = fn( $m ) => sprintf( '%02d:%02d', intdiv( $m % 1440, 60 ), $m % 60 );
+						$out[ $k ] = array( 0, 0 ) === $parsed ? 'Closed' : $fmt( $parsed[0] ) . '-' . $fmt( $parsed[1] );
+					}
 				} elseif ( 'rituals_page' === $k ) {
 					$out[ $k ] = isset( $in[ $k ] ) ? (string) absint( $in[ $k ] ) : ( $out[ $k ] ?? '' );
 				} else {
@@ -247,7 +278,7 @@ function zv_settings_page() {
 				?>
 			</table>
 			<h2 class="title">Opening hours</h2>
-			<p>Format: 11:30-20:30. Used for "Open now", the hours tables and booking times.</p>
+			<p>Write each day like <code>11:30-20:30</code> (or <code>11-20</code>). Write <b>Closed</b> for a day you are closed. Used for "Open now", the hours tables and booking times.</p>
 			<table class="form-table" role="presentation">
 				<?php
 				foreach ( array( 'mon' => 'Monday', 'tue' => 'Tuesday', 'wed' => 'Wednesday', 'thu' => 'Thursday', 'fri' => 'Friday', 'sat' => 'Saturday', 'sun' => 'Sunday' ) as $k => $l ) {

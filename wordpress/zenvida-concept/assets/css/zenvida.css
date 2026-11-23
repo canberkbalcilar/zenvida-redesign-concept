@@ -717,3 +717,42 @@ dialog.zvp-center::backdrop{background:rgba(30,27,23,.5);backdrop-filter:blur(3p
   .ev-single .gallery figure:first-child{aspect-ratio:16/10}
   .ev-facts div{grid-template-columns:84px 1fr}
 }
+
+/* Logged-in editors: keep sticky header, filters and booking card below the WordPress admin bar */
+.admin-bar header.site{top:32px}
+.admin-bar .filters{top:100px}
+.admin-bar .book{top:120px}
+@media (max-width:782px){
+  .admin-bar header.site{top:46px}
+  .admin-bar .filters{top:114px}
+}
+@media (max-width:760px){.admin-bar .filters{top:106px}}
+@media (max-width:600px){                     /* the admin bar scrolls away on phones */
+  .admin-bar header.site{top:0}
+  .admin-bar .filters{top:60px}
+}
+
+
+/* ---------- Search results and 404 ---------- */
+.zv-search{padding-top:56px}
+.zv-search .lead{max-width:640px}
+.search-form{display:flex;gap:10px;max-width:560px;margin:24px 0 8px}
+.search-form label{flex:1;display:flex}
+.search-form .search-field{flex:1;width:100%;font:400 16px var(--sans);border:1px solid var(--line);background:#fff;border-radius:999px;padding:13px 20px;color:var(--ink)}
+.search-form .search-field:focus{outline:2px solid var(--sand);outline-offset:1px}
+.search-form .search-submit{border:0;border-radius:999px;background:var(--ink);color:var(--paper);font:600 15px var(--sans);padding:0 24px;cursor:pointer}
+.sr-count{color:var(--muted);font-size:14px;margin:20px 0 8px}
+.sr-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.sr-list li{border-bottom:1px solid var(--line)}
+.sr-list a{display:block;padding:20px 4px;text-decoration:none;color:inherit}
+.sr-list a:hover h2{color:var(--sand-700)}
+.sr-list .k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sand-700)}
+.sr-list h2{font:500 28px/1.15 var(--serif);margin:6px 0 4px}
+.sr-list p{margin:0;color:var(--muted);font-size:15px}
+.nf-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.screen-reader-text{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+@media (max-width:760px){
+  .zv-search{padding-top:32px}
+  .search-form .search-submit{padding:0 18px}
+  .sr-list h2{font-size:24px}
+}

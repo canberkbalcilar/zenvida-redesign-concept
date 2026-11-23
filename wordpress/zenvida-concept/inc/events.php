@@ -218,7 +218,7 @@ add_action( 'wp_head', function () {
 	if ( preg_match( '/(\d+(?:[.,]\d+)?)/', (string) $e['price'], $m ) || preg_match( '/free|gratis/i', (string) $e['price'] ) ) {
 		$data['offers'] = array( '@type' => 'Offer', 'price' => isset( $m[1] ) ? str_replace( ',', '.', $m[1] ) : '0', 'priceCurrency' => 'EUR', 'url' => get_permalink( $p ), 'availability' => $e['soldout'] ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock' );
 	}
-	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>' . "\n";
 } );
 
 // Hidden events are not shown to visitors.
@@ -300,10 +300,7 @@ add_action( 'edit_form_after_title', function ( $post ) {
 } );
 
 add_action( 'save_post_zv_event', function ( $id ) {
-	if ( ! isset( $_POST['zv_event_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['zv_event_nonce'] ), 'zv_event' ) ) {
-		return;
-	}
-	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $id ) ) {
+	if ( ! zv_box_can_save( $id, 'zv_event_nonce', 'zv_event' ) ) {
 		return;
 	}
 	$in = (array) wp_unslash( $_POST['zv_event'] ?? array() );
@@ -363,8 +360,11 @@ add_action( 'manage_zv_event_posts_custom_column', function ( $col, $id ) {
 // Admin list: newest dates first.
 add_action( 'pre_get_posts', function ( $q ) {
 	if ( is_admin() && $q->is_main_query() && 'zv_event' === $q->get( 'post_type' ) && ! $q->get( 'orderby' ) ) {
-		$q->set( 'meta_key', 'zv_event_start' );
-		$q->set( 'orderby', 'meta_value_num' );
-		$q->set( 'order', 'DESC' );
+		$q->set( 'meta_query', array(
+			'relation' => 'OR',
+			'zv_start' => array( 'key' => 'zv_event_start', 'compare' => 'EXISTS', 'type' => 'NUMERIC' ),
+			array( 'key' => 'zv_event_start', 'compare' => 'NOT EXISTS' ),
+		) );
+		$q->set( 'orderby', array( 'zv_start' => 'DESC', 'date' => 'DESC' ) );
 	}
 } );

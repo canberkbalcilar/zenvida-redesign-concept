@@ -218,10 +218,7 @@ function zv_popup_preview_url( $p ) {
 }
 
 add_action( 'save_post_zv_popup', function ( $id ) {
-	if ( ! isset( $_POST['zv_popup_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['zv_popup_nonce'] ), 'zv_popup' ) ) {
-		return;
-	}
-	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $id ) ) {
+	if ( ! zv_box_can_save( $id, 'zv_popup_nonce', 'zv_popup' ) ) {
 		return;
 	}
 	$in  = (array) wp_unslash( $_POST['zv_popup'] ?? array() );
@@ -292,11 +289,14 @@ add_action( 'wp_ajax_zv_popup_active', function () {
 	}
 	$on        = ! empty( $_POST['on'] ) && '0' !== $_POST['on'];
 	$m         = zv_popup( $id );
-	$m['active'] = $on ? '1' : '';
-	update_post_meta( $id, 'zv_popup', $m );
 	if ( $on && 'publish' !== get_post_status( $id ) ) {
+		if ( ! in_array( get_post_status( $id ), array( 'draft', 'pending' ), true ) || ! current_user_can( get_post_type_object( 'zv_popup' )->cap->publish_posts ) ) {
+			wp_send_json_error( 'This popup is not published yet. Open it and click Publish.', 400 );
+		}
 		wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
 	}
+	$m['active'] = $on ? '1' : '';
+	update_post_meta( $id, 'zv_popup', $m );
 	list( $k, $label ) = zv_popup_status( $id );
 	wp_send_json_success( array( 'status' => $k, 'label' => $label ) );
 } );

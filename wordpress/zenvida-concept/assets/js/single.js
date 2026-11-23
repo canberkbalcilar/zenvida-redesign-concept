@@ -10,7 +10,8 @@
   const UNIT = TWO ? 'for two' : '/ person';
   const HOURS = (window.ZV_SITE && window.ZV_SITE.hours) || [[720,1290],[690,1230],[690,1230],[690,1230],[690,1290],[660,1290],[630,1290]];
   const DAYN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const fmt = m => String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+  const fmt = m => String(Math.floor((m%1440)/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+  const closedDay = d => HOURS[d.getDay()][0] === HOURS[d.getDay()][1];
   const eur = n => n == null ? 'Price at studio' : '€' + n;
 
   const st = { opt:0, bath:'none', bathP:0, guests:1, day:0, time:null, showAll:false };
@@ -52,6 +53,7 @@
 
   function slotsFor(i){
     const d = days[i], [o,c] = HOURS[d.getDay()];
+    if (closedDay(d)) return [];
     const nowM = i===0 ? today.getHours()*60 + today.getMinutes() + 30 : 0;
     const out = [];
     for (let m = o; m <= c - len(); m += 30) if (m >= nowM) out.push({m, off: busy(i,m) || (st.guests > 3 && busy(i+1,m))});
@@ -74,10 +76,10 @@
     $('#priceMain').innerHTML = `${eur(p)}<small>${UNIT} · ${len()} min</small>`;
 
     const d = days[st.day], [o,c] = HOURS[d.getDay()];
-    $('#dayHours').textContent = `${DAYN[d.getDay()]} ${fmt(o)}–${fmt(c)} · Madrid time`;
+    $('#dayHours').textContent = closedDay(d) ? `${DAYN[d.getDay()]} · closed` : `${DAYN[d.getDay()]} ${fmt(o)}–${fmt(c)} · Madrid time`;
     const all = slotsFor(st.day), list = st.showAll ? all : all.slice(0,8);
     const sl = $('#slots'); sl.innerHTML = '';
-    if (!all.length) sl.innerHTML = '<p style="grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)">No times left today — try tomorrow.</p>';
+    if (!all.length) sl.innerHTML = `<p style="grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)">${closedDay(d) ? 'We are closed this day — please pick another.' : 'No times left today — try tomorrow.'}</p>`;
     list.forEach(s => {
       const b = document.createElement('button');
       b.className='slot'; b.textContent = fmt(s.m); b.disabled = s.off;

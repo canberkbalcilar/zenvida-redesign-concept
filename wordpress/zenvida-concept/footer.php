@@ -19,7 +19,7 @@ $zv_col = function ( $loc ) {
       <?php $zv_col( 'footer-1' ); $zv_col( 'footer-2' ); $zv_col( 'footer-3' ); ?>
     </div>
     <div class="fbottom">
-      <span>© <?php echo esc_html( gmdate( 'Y' ) . ' ' . zv_opt( 'copyright' ) ); ?></span>
+      <span>© <?php echo esc_html( wp_date( 'Y' ) . ' ' . zv_opt( 'copyright' ) ); ?></span>
       <?php if ( has_nav_menu( 'legal' ) ) { wp_nav_menu( array( 'theme_location' => 'legal', 'container' => false, 'depth' => 1, 'fallback_cb' => false ) ); } ?>
     </div>
   </div>

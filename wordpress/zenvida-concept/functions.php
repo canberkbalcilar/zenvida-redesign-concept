@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.6.0' );
+define( 'ZV_VERSION', '0.7.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -30,6 +30,7 @@ require_once __DIR__ . '/inc/events.php';
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'custom-logo', array( 'height' => 120, 'width' => 400, 'flex-height' => true, 'flex-width' => true ) );
 	add_theme_support( 'editor-styles' );
 	add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
@@ -170,9 +171,14 @@ add_action( 'template_redirect', function () {
 		nocache_headers();
 		return;
 	}
+	// Author archives only list journal posts and reveal user names: send them to the journal.
+	if ( is_author() ) {
+		wp_safe_redirect( get_permalink( (int) get_option( 'page_for_posts' ) ) ?: home_url( '/' ), 301 );
+		exit;
+	}
 	// The page that holds the Rituals blocks is shown at /rituals/, not at its own URL.
 	$rp = (int) zv_opt( 'rituals_page' );
-	if ( $rp && is_page( $rp ) ) {
+	if ( $rp && is_page( $rp ) && ! is_preview() ) {
 		wp_safe_redirect( zv_rituals_url(), 301 );
 		exit;
 	}
@@ -245,7 +251,7 @@ function zv_ritual_data( $post ) {
 	return array(
 		'id'       => $post->ID,
 		'slug'     => $post->post_name,
-		'name'     => get_the_title( $post ),
+		'name'     => html_entity_decode( get_the_title( $post ), ENT_QUOTES, 'UTF-8' ), // plain text; escaped where printed
 		'area'     => ( $area && ! is_wp_error( $area ) ) ? $area[0]->slug : '',
 		'areaName' => ( $area && ! is_wp_error( $area ) ) ? $area[0]->name : '',
 		'desc'     => (string) get_post_meta( $post->ID, 'zv_desc', true ),
@@ -253,7 +259,7 @@ function zv_ritual_data( $post ) {
 		'needs'    => ( $needs && ! is_wp_error( $needs ) ) ? wp_list_pluck( $needs, 'slug' ) : array(),
 		'flags'    => $flags,
 		'pop'      => (int) get_post_meta( $post->ID, 'zv_popularity', true ),
-		'deposit'  => (int) ( get_post_meta( $post->ID, 'zv_deposit', true ) ?: 25 ),
+		'deposit'  => metadata_exists( 'post', $post->ID, 'zv_deposit' ) ? (int) get_post_meta( $post->ID, 'zv_deposit', true ) : 25,
 		'baths'    => (bool) get_post_meta( $post->ID, 'zv_baths', true ),
 		'hidden'   => (bool) get_post_meta( $post->ID, 'zv_hidden', true ),
 		'url'      => get_permalink( $post ),
@@ -371,3 +377,44 @@ add_action( 'pre_get_posts', function ( $q ) {
 		$q->set( 'posts_per_page', -1 );
 	}
 } );
+
+/* -------------------------------------------------------------------------
+ * Rituals and events switched off in the admin: out of search, feeds and sitemaps too.
+ * ---------------------------------------------------------------------- */
+function zv_hidden_ids() {
+	static $ids = null;
+	if ( null === $ids ) {
+		$ids = get_posts( array( 'post_type' => array( 'ritual', 'zv_event' ), 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids', 'meta_key' => 'zv_hidden', 'meta_value' => '1', 'suppress_filters' => false ) );
+	}
+	return $ids;
+}
+add_action( 'pre_get_posts', function ( $q ) {
+	if ( ! is_admin() && $q->is_main_query() && ( $q->is_search() || $q->is_feed() ) ) {
+		$exclude = zv_hidden_ids();
+		if ( (int) zv_opt( 'rituals_page' ) ) {
+			$exclude[] = (int) zv_opt( 'rituals_page' ); // helper page, shown at /rituals/
+		}
+		if ( $exclude ) {
+			$q->set( 'post__not_in', array_merge( (array) $q->get( 'post__not_in' ), $exclude ) );
+		}
+	}
+} );
+add_filter( 'wp_sitemaps_posts_query_args', function ( $args, $type ) {
+	if ( in_array( $type, array( 'ritual', 'zv_event' ), true ) && zv_hidden_ids() ) {
+		$args['post__not_in'] = array_merge( (array) ( $args['post__not_in'] ?? array() ), zv_hidden_ids() );
+	}
+	return $args;
+}, 10, 2 );
+// Yoast SEO sitemaps.
+add_filter( 'wpseo_exclude_from_sitemap_by_post_ids', fn( $ids ) => array_merge( (array) $ids, zv_hidden_ids(), array_filter( array( (int) zv_opt( 'rituals_page' ) ) ) ) );
+
+/* -------------------------------------------------------------------------
+ * Sitemap: no user list, no helper page that only redirects to /rituals/.
+ * ---------------------------------------------------------------------- */
+add_filter( 'wp_sitemaps_add_provider', fn( $provider, $name ) => 'users' === $name ? false : $provider, 10, 2 );
+add_filter( 'wp_sitemaps_posts_query_args', function ( $args, $type ) {
+	if ( 'page' === $type && (int) zv_opt( 'rituals_page' ) ) {
+		$args['post__not_in'] = array_merge( (array) ( $args['post__not_in'] ?? array() ), array( (int) zv_opt( 'rituals_page' ) ) );
+	}
+	return $args;
+}, 10, 2 );

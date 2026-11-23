@@ -49,6 +49,20 @@ function zv_media_field( $name, $value, $label, $help = '' ) {
 	<?php
 }
 
+/**
+ * May a meta box save? Only when its fields were part of the submitted form, and either the
+ * box's own nonce or WordPress's post nonce (kept fresh by the editor) is valid. A long-open
+ * edit screen therefore still saves prices, photos and dates instead of silently dropping them.
+ */
+function zv_box_can_save( $post_id, $field, $action ) {
+	if ( ! isset( $_POST[ $field ] ) || ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $post_id ) ) { // phpcs:ignore
+		return false;
+	}
+	$own  = wp_verify_nonce( sanitize_key( $_POST[ $field ] ), $action ); // phpcs:ignore
+	$core = isset( $_POST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'update-post_' . $post_id ); // phpcs:ignore
+	return (bool) ( $own || $core );
+}
+
 /* ------------------------------------------------------ ritual details form */
 
 add_action( 'add_meta_boxes', function () {
@@ -140,7 +154,6 @@ function zv_details_box( $post ) {
 		<p class="zv-inline">
 			<label>Area
 				<select name="zv_area">
-					<option value="0">— Choose —</option>
 					<?php foreach ( zv_terms_ordered( 'area' ) as $t ) : ?>
 						<option value="<?php echo (int) $t->term_id; ?>" <?php selected( $area, $t->term_id ); ?>><?php echo esc_html( $t->name ); ?></option>
 					<?php endforeach; ?>
@@ -171,10 +184,7 @@ function zv_details_box( $post ) {
 }
 
 add_action( 'save_post_ritual', function ( $post_id ) {
-	if ( ! isset( $_POST['zv_details_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['zv_details_nonce'] ), 'zv_details' ) ) {
-		return;
-	}
-	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $post_id ) ) {
+	if ( ! zv_box_can_save( $post_id, 'zv_details_nonce', 'zv_details' ) ) {
 		return;
 	}
 	$in = wp_unslash( $_POST );
@@ -271,10 +281,15 @@ add_action( 'wp_ajax_zv_visible', function () {
 		wp_send_json_error( 'Not allowed', 403 );
 	}
 	$on = ! empty( $_POST['on'] ) && '0' !== $_POST['on'];
-	update_post_meta( $id, 'zv_hidden', $on ? '' : '1' );
 	if ( $on && 'publish' !== get_post_status( $id ) ) {
+		$type = get_post_type_object( get_post_type( $id ) );
+		if ( ! in_array( get_post_status( $id ), array( 'draft', 'pending' ), true ) || ! current_user_can( $type->cap->publish_posts ) ) {
+			wp_send_json_error( 'This item is not published yet. Open it and click Publish.', 400 );
+		}
 		wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
 	}
+	update_post_meta( $id, 'zv_hidden', $on ? '' : '1' );
+	clean_post_cache( $id );
 	wp_send_json_success( array( 'on' => $on ) );
 } );
 
@@ -310,7 +325,7 @@ function zv_term_fields( $term, $tax ) {
 		} );
 	}
 	$rows[] = array( 'Position', function () use ( $v ) {
-		echo '<input type="number" name="zv_order" min="0" value="' . esc_attr( $v( 'zv_order', 0 ) ) . '" style="width:80px"><p class="description">1 = first. Controls the order of filters and tiles.</p>';
+		echo '<input type="number" name="zv_order" min="0" value="' . esc_attr( $v( 'zv_order', '' ) ) . '" style="width:80px"><p class="description">1 = first. Leave empty to put it last. Controls the order of filters and tiles.</p>';
 	} );
 	foreach ( $rows as $r ) {
 		if ( $term ) {
@@ -343,7 +358,11 @@ foreach ( array( 'area', 'need' ) as $zv_tax ) {
 		if ( isset( $in['zv_long'] ) ) {
 			update_term_meta( $term_id, 'zv_long', sanitize_textarea_field( $in['zv_long'] ) );
 		}
-		update_term_meta( $term_id, 'zv_order', absint( $in['zv_order'] ?? 0 ) );
+		$pos = absint( $in['zv_order'] ?? 0 );
+		if ( ! $pos ) { // empty: put it last
+			$pos = 1 + max( array_map( fn( $t ) => (int) get_term_meta( $t, 'zv_order', true ), get_terms( array( 'taxonomy' => get_term( $term_id )->taxonomy, 'hide_empty' => false, 'fields' => 'ids', 'exclude' => array( $term_id ) ) ) ?: array( 0 ) ) );
+		}
+		update_term_meta( $term_id, 'zv_order', $pos );
 	};
 	add_action( "created_{$zv_tax}", $zv_save );
 	add_action( "edited_{$zv_tax}", $zv_save );
@@ -444,8 +463,11 @@ add_filter( 'allowed_block_types_all', function ( $allowed, $ctx ) {
 	if ( ! in_array( $type, array( 'page', 'ritual' ), true ) ) {
 		return $allowed;
 	}
-	$zv = array_keys( array_filter( WP_Block_Type_Registry::get_instance()->get_all_registered(), fn( $b ) => 0 === strpos( $b->name, 'zv/' ) ) );
-	return array_merge( $zv, array( 'core/paragraph', 'core/heading', 'core/list', 'core/list-item', 'core/image', 'core/quote', 'core/separator' ) );
+	// Hide WordPress's site-building blocks (navigation, query loops, widgets…) that do not fit this
+	// theme; keep content blocks, embeds and every block that comes from a plugin (forms, booking…).
+	$core_ok = array( 'paragraph', 'heading', 'list', 'list-item', 'image', 'gallery', 'quote', 'separator', 'spacer', 'buttons', 'button', 'columns', 'column', 'group', 'table', 'video', 'audio', 'file', 'embed', 'html', 'shortcode', 'block', 'details', 'pullquote', 'media-text' );
+	$names   = array_keys( WP_Block_Type_Registry::get_instance()->get_all_registered() );
+	return array_values( array_filter( $names, fn( $n ) => 0 !== strpos( $n, 'core/' ) || in_array( substr( $n, 5 ), $core_ok, true ) ) );
 }, 10, 2 );
 
 add_action( 'after_setup_theme', function () {
@@ -458,6 +480,31 @@ remove_action( 'enqueue_block_editor_assets', 'wp_enqueue_editor_block_directory
 add_action( 'enqueue_block_editor_assets', function () {
 	$s = get_current_screen();
 	if ( $s && 'ritual' === $s->post_type ) {
-		wp_enqueue_script( 'zv-ritual-editor', get_template_directory_uri() . '/assets/js/ritual-editor.js', array( 'wp-plugins', 'wp-editor', 'wp-element', 'wp-components' ), ZV_VERSION . '.' . filemtime( get_template_directory() . '/assets/js/ritual-editor.js' ), true );
+		wp_enqueue_script( 'zv-ritual-editor', get_template_directory_uri() . '/assets/js/ritual-editor.js', array( 'wp-plugins', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-dom-ready' ), ZV_VERSION . '.' . filemtime( get_template_directory() . '/assets/js/ritual-editor.js' ), true );
 	}
 } );
+
+/* ------------------------------------------------ compatibility guards */
+
+// Pages and rituals are built from ZenVida blocks. If the Classic Editor plugin is
+// installed they would open as an empty text box, so they always use the block editor.
+// (Journal posts and events still follow the Classic Editor setting.)
+add_filter( 'use_block_editor_for_post_type', fn( $use, $type ) => in_array( $type, array( 'page', 'ritual' ), true ) ? true : $use, 200, 2 );
+add_filter( 'use_block_editor_for_post', fn( $use, $post ) => ( $post && in_array( $post->post_type, array( 'page', 'ritual' ), true ) ) ? true : $use, 200, 2 );
+
+// Old address of the settings page (Appearance → ZenVida settings).
+add_action( 'admin_init', function () {
+	global $pagenow;
+	if ( 'themes.php' === $pagenow && isset( $_GET['page'] ) && 'zv-settings' === $_GET['page'] ) { // phpcs:ignore
+		wp_safe_redirect( admin_url( 'admin.php?page=zv-settings' ) );
+		exit;
+	}
+} );
+
+// Customizer: the logo markup is the theme's own, so refresh the preview when it changes.
+add_action( 'customize_register', function ( $wp_customize ) {
+	if ( $wp_customize->get_setting( 'custom_logo' ) ) {
+		$wp_customize->get_setting( 'custom_logo' )->transport = 'refresh';
+		$wp_customize->selective_refresh->remove_partial( 'custom_logo' );
+	}
+}, 20 );
