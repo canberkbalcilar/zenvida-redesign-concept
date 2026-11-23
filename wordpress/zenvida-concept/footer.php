@@ -13,13 +13,13 @@ $zv_col = function ( $loc ) {
   <div class="wrap">
     <div class="fgrid">
       <div>
-        <a class="logo" href="<?php echo esc_url( home_url( '/' ) ); ?>"><b>ZENVIDA</b><small>FOOT &amp; BODY</small></a>
+        <?php zv_logo(); ?>
         <p class="about"><?php echo zv_e( zv_opt( 'footer_about' ) ); ?></p>
       </div>
       <?php $zv_col( 'footer-1' ); $zv_col( 'footer-2' ); $zv_col( 'footer-3' ); ?>
     </div>
     <div class="fbottom">
-      <span>© <?php echo esc_html( gmdate( 'Y' ) ); ?> ZenVida Foot &amp; Body · Madrid</span>
+      <span>© <?php echo esc_html( gmdate( 'Y' ) . ' ' . zv_opt( 'copyright' ) ); ?></span>
       <?php if ( has_nav_menu( 'legal' ) ) { wp_nav_menu( array( 'theme_location' => 'legal', 'container' => false, 'depth' => 1, 'fallback_cb' => false ) ); } ?>
     </div>
   </div>

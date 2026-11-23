@@ -1,0 +1,79 @@
+/* ZenVida admin: ritual details form, rituals list, term fields, dashboard guide. */
+
+.zv-box{max-width:900px}
+.zv-box h3{font-size:15px;margin:28px 0 10px;padding-top:18px;border-top:1px solid #e2e4e7}
+.zv-box h3:first-of-type{border-top:0}
+.zv-label{display:block;font-weight:600;margin:0 0 6px}
+.zv-inline{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+.zv-inline select,.zv-inline input[type=number]{margin-left:6px}
+.zv-euro{position:relative;display:inline-block}
+.zv-euro input{width:90px;padding-left:22px!important}
+.zv-euro::before{content:"€";position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#646970;z-index:1}
+.zv-checks{display:flex;flex-wrap:wrap;gap:10px 22px}
+.zv-remove{color:#b32d2e!important;text-decoration:none!important}
+
+.zv-visible{display:flex;gap:14px;align-items:flex-start;background:#f6f7f7;border:1px solid #dcdcde;border-radius:6px;padding:14px 16px}
+
+/* Rows (+ Add / Remove) */
+.zv-rows{border-collapse:collapse;margin:4px 0 6px}
+.zv-rows th{text-align:left;font-weight:500;color:#50575e;padding:0 10px 4px 0;font-size:12px}
+.zv-rows td{padding:4px 10px 4px 0;vertical-align:middle}
+.zv-rows input[type=number]{width:100px}
+.zv-rows.wide{width:100%;max-width:900px}
+.zv-rows.wide input[type=text]{width:100%}
+
+/* Photos */
+.zv-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.zv-media-preview img,.zv-media-empty{display:block;width:100%;max-width:320px;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:#f0f0f1}
+.zv-media-empty{display:flex;align-items:center;justify-content:center;color:#787c82;border:1px dashed #c3c4c7}
+.zv-media-preview[hidden],.zv-media-empty[hidden],[data-zv-clear][hidden]{display:none!important}
+.zv-media p{margin:8px 0 0;display:flex;gap:12px;align-items:center}
+.form-field .zv-media{max-width:320px}
+
+/* Switch */
+.zv-switch{position:relative;display:inline-block;width:40px;height:22px;flex:0 0 auto}
+.zv-switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+.zv-switch span{position:absolute;inset:0;border-radius:22px;background:#c3c4c7;transition:background .15s}
+.zv-switch span::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.zv-switch input:checked+span{background:#00a32a}
+.zv-switch input:checked+span::after{transform:translateX(18px)}
+.zv-switch input:focus-visible+span{outline:2px solid #2271b1;outline-offset:2px}
+.zv-switch input:disabled+span{opacity:.5}
+
+/* Rituals list */
+.post-type-ritual .column-zv_drag{width:28px}
+.post-type-ritual .column-zv_thumb{width:72px}
+.post-type-ritual .column-zv_visible{width:96px}
+.zv-handle{cursor:grab;color:#8c8f94;margin-top:12px}
+.zv-handle.off{cursor:not-allowed;opacity:.35}
+.zv-thumb{display:block;width:64px;height:48px;object-fit:cover;border-radius:4px;background:#f0f0f1}
+.zv-thumb.empty{border:1px dashed #c3c4c7}
+#the-list tr.ui-sortable-helper{background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.15);display:table}
+#the-list tr.ui-sortable-placeholder{visibility:visible!important;background:#f0f6fc;outline:1px dashed #72aee6}
+.zv-saved{margin-left:12px;font-size:13px;color:#00a32a;font-weight:500}
+.zv-tip .dashicons{font-size:16px;vertical-align:text-bottom}
+.edit-tags-php .column-zv_thumb{width:72px}
+.edit-tags-php .column-zv_order{width:80px}
+
+/* Dashboard guide */
+#zv_guide .inside{padding:0;margin:0}
+.zv-guide{margin:0}
+.zv-guide li{display:flex;align-items:center;gap:14px;padding:12px 16px;margin:0;border-bottom:1px solid #f0f0f1}
+.zv-guide .dashicons{color:#8a7350;font-size:22px;width:22px;height:22px}
+.zv-guide div{flex:1}
+.zv-guide b{display:block}
+.zv-guide small{color:#646970}
+.zv-guide-foot{margin:0;padding:12px 16px;background:#f6f7f7;color:#50575e}
+#dashboard-widgets #zv_guide{grid-column:1/-1}
+@media (min-width:800px){#dashboard-widgets .postbox-container:first-child{width:100%!important}}
+
+/* Settings page */
+.zv-settings .zv-rows td input[type=text]{min-width:120px}
+.zv-settings .zv-rows.wide td:nth-child(2) input{min-width:280px}
+.zv-settings .zv-rows.wide td:last-child{width:70px}
+
+/* Area / Need screens: hide technical fields */
+.taxonomy-area .term-parent-wrap,.taxonomy-need .term-parent-wrap,
+.taxonomy-area .term-slug-wrap,.taxonomy-need .term-slug-wrap,
+.taxonomy-area .term-description-wrap .description,.taxonomy-need .term-description-wrap{display:none}
+.taxonomy-area .column-slug,.taxonomy-need .column-description{display:none}

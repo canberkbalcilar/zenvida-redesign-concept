@@ -14,12 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.2.0' );
+define( 'ZV_VERSION', '0.3.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/blocks.php';
 require_once __DIR__ . '/inc/seed.php';
+require_once __DIR__ . '/inc/admin.php';
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -27,6 +28,7 @@ require_once __DIR__ . '/inc/seed.php';
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'custom-logo', array( 'height' => 120, 'width' => 400, 'flex-height' => true, 'flex-width' => true ) );
 	add_theme_support( 'editor-styles' );
 	add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
 	add_editor_style( array( 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600&display=swap', 'assets/css/zenvida.css', 'assets/css/editor.css' ) );
@@ -41,37 +43,60 @@ add_action( 'after_setup_theme', function () {
 
 add_filter( 'document_title_separator', fn() => '|' );
 add_filter( 'document_title_parts', function ( $parts ) {
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
+		return $parts; // An SEO plugin manages titles.
+	}
 	if ( is_post_type_archive( 'ritual' ) ) {
-		$parts['title'] = 'Massage & Reflexology Rituals in Madrid';
+		$parts['title'] = zv_opt( 'seo_rituals' );
 	} elseif ( is_singular( 'ritual' ) ) {
-		$parts['title'] = get_the_title() . ' in Madrid Centro';
+		$parts['title'] = trim( get_the_title() . ' ' . zv_opt( 'seo_ritual_suffix' ) );
 	} elseif ( is_front_page() ) {
-		$parts['title'] = 'Reflexology & Body Massage in Madrid Centro';
+		$parts['title'] = zv_opt( 'seo_home' );
 	}
 	unset( $parts['tagline'] );
 	return $parts;
 } );
+add_action( 'wp_head', function () {
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
+		return;
+	}
+	$d = '';
+	if ( is_front_page() ) {
+		$d = zv_opt( 'seo_home_desc' );
+	} elseif ( is_singular( 'ritual' ) ) {
+		$d = get_post_meta( get_queried_object_id(), 'zv_desc', true );
+	} elseif ( is_post_type_archive( 'ritual' ) ) {
+		$d = zv_opt( 'seo_rituals_desc' );
+	} elseif ( is_tax( 'area' ) ) {
+		$d = term_description();
+	}
+	if ( $d ) {
+		echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $d ) ) . '">' . "\n";
+	}
+}, 1 );
 
 /* -------------------------------------------------------------------------
  * Content model: Area + Need taxonomies, Ritual post type.
  * ---------------------------------------------------------------------- */
 add_action( 'init', function () {
 	register_taxonomy( 'area', 'ritual', array(
-		'labels'            => array( 'name' => 'Areas', 'singular_name' => 'Area', 'menu_name' => 'Areas' ),
+		'labels'            => array( 'name' => 'Areas', 'singular_name' => 'Area', 'menu_name' => 'Areas', 'edit_item' => 'Edit area', 'add_new_item' => 'Add new area', 'update_item' => 'Save area', 'search_items' => 'Search areas', 'back_to_items' => '← Back to areas', 'not_found' => 'No areas yet.' ),
 		'public'            => true,
 		'hierarchical'      => true,
 		'show_admin_column' => true,
-		'show_in_rest'      => true,
+		'show_in_rest'      => false, // Chosen in "Ritual details".
+		'meta_box_cb'       => false,
 		'rewrite'           => array( 'slug' => 'rituals', 'with_front' => false ),
 	) );
 
 	register_taxonomy( 'need', 'ritual', array(
-		'labels'             => array( 'name' => 'Needs', 'singular_name' => 'Need', 'menu_name' => 'Needs' ),
+		'labels'             => array( 'name' => 'Needs', 'singular_name' => 'Need', 'menu_name' => 'Needs ("how do you feel")', 'edit_item' => 'Edit need', 'add_new_item' => 'Add new need', 'update_item' => 'Save need', 'search_items' => 'Search needs', 'back_to_items' => '← Back to needs', 'not_found' => 'No needs yet.' ),
 		'public'             => true,
 		'publicly_queryable' => false,
 		'hierarchical'       => true,
-		'show_admin_column'  => true,
-		'show_in_rest'       => true,
+		'show_admin_column'  => false,
+		'show_in_rest'       => false, // Chosen in "Ritual details".
+		'meta_box_cb'        => false,
 		'rewrite'            => false,
 	) );
 
@@ -88,7 +113,7 @@ add_action( 'init', function () {
 		'menu_position' => 5,
 		'has_archive'   => 'rituals',
 		'show_in_rest'  => true,
-		'supports'      => array( 'title', 'editor', 'excerpt' ),
+		'supports'      => array( 'title', 'editor', 'revisions' ),
 		'taxonomies'    => array( 'area', 'need' ),
 		'rewrite'       => array( 'slug' => 'rituals/%area%', 'with_front' => false ),
 	) );
@@ -115,6 +140,14 @@ add_action( 'template_redirect', function () {
 			wp_safe_redirect( get_permalink( get_queried_object() ), 301 );
 			exit;
 		}
+	}
+	// A ritual switched off in the admin is not shown to visitors.
+	if ( is_singular( 'ritual' ) && get_post_meta( get_queried_object_id(), 'zv_hidden', true ) && ! current_user_can( 'edit_post', get_queried_object_id() ) ) {
+		global $wp_query;
+		$wp_query->set_404();
+		status_header( 404 );
+		nocache_headers();
+		return;
 	}
 	// The page that holds the Rituals blocks is shown at /rituals/, not at its own URL.
 	$rp = (int) zv_opt( 'rituals_page' );
@@ -200,17 +233,25 @@ function zv_ritual_data( $post ) {
 		'pop'      => (int) get_post_meta( $post->ID, 'zv_popularity', true ),
 		'deposit'  => (int) ( get_post_meta( $post->ID, 'zv_deposit', true ) ?: 25 ),
 		'baths'    => (bool) get_post_meta( $post->ID, 'zv_baths', true ),
+		'hidden'   => (bool) get_post_meta( $post->ID, 'zv_hidden', true ),
 		'url'      => get_permalink( $post ),
 	);
 }
 
-function zv_areas() {
-	$out   = array();
-	$terms = get_terms( array( 'taxonomy' => 'area', 'hide_empty' => false, 'meta_key' => 'zv_order', 'orderby' => 'meta_value_num' ) );
+/** Terms of a taxonomy by their "Position" field (terms without one go last). */
+function zv_terms_ordered( $tax ) {
+	$terms = get_terms( array( 'taxonomy' => $tax, 'hide_empty' => false ) );
 	if ( is_wp_error( $terms ) ) {
-		return $out;
+		return array();
 	}
-	foreach ( $terms as $t ) {
+	$pos = fn( $t ) => metadata_exists( 'term', $t->term_id, 'zv_order' ) ? (int) get_term_meta( $t->term_id, 'zv_order', true ) : PHP_INT_MAX;
+	usort( $terms, fn( $a, $b ) => $pos( $a ) <=> $pos( $b ) ?: strcmp( $a->name, $b->name ) );
+	return $terms;
+}
+
+function zv_areas() {
+	$out = array();
+	foreach ( zv_terms_ordered( 'area' ) as $t ) {
 		$out[ $t->slug ] = array(
 			'name'  => $t->name,
 			'c'     => get_term_meta( $t->term_id, 'zv_color', true ) ?: '#B0956A',
@@ -224,12 +265,8 @@ function zv_areas() {
 }
 
 function zv_needs() {
-	$out   = array();
-	$terms = get_terms( array( 'taxonomy' => 'need', 'hide_empty' => false, 'meta_key' => 'zv_order', 'orderby' => 'meta_value_num' ) );
-	if ( is_wp_error( $terms ) ) {
-		return $out;
-	}
-	foreach ( $terms as $t ) {
+	$out = array();
+	foreach ( zv_terms_ordered( 'need' ) as $t ) {
 		$out[ $t->slug ] = $t->name;
 	}
 	return $out;
@@ -239,7 +276,7 @@ function zv_all_rituals() {
 	static $cache = null;
 	if ( null === $cache ) {
 		$posts = get_posts( array( 'post_type' => 'ritual', 'numberposts' => -1, 'orderby' => 'menu_order', 'order' => 'ASC' ) );
-		$cache = array_map( 'zv_ritual_data', $posts );
+		$cache = array_values( array_filter( array_map( 'zv_ritual_data', $posts ), fn( $r ) => ! $r['hidden'] ) );
 	}
 	return $cache;
 }
@@ -252,6 +289,18 @@ function zv_archive_data() {
 		'rituals'     => zv_all_rituals(),
 		'initialArea' => $initial,
 	);
+}
+
+/** Logo: the uploaded one (Customize → Site Identity), otherwise the ZenVida wordmark. */
+function zv_logo() {
+	$id = (int) get_theme_mod( 'custom_logo' );
+	echo '<a class="logo" href="' . esc_url( home_url( '/' ) ) . '" aria-label="' . esc_attr( get_bloginfo( 'name' ) ) . ' home">';
+	if ( $id ) {
+		echo wp_get_attachment_image( $id, 'medium', false, array( 'class' => 'logo-img', 'alt' => get_bloginfo( 'name' ) ) );
+	} else {
+		echo '<b>ZENVIDA</b><small>FOOT &amp; BODY</small>';
+	}
+	echo '</a>';
 }
 
 function zv_eur( $n ) {
@@ -289,61 +338,6 @@ function zv_render_page_content( $page_id ) {
 	return apply_filters( 'the_content', $page->post_content ); // phpcs:ignore
 }
 
-/* -------------------------------------------------------------------------
- * Admin: "Ritual details" box for prices, durations and labels.
- * ---------------------------------------------------------------------- */
-add_action( 'add_meta_boxes', function () {
-	add_meta_box( 'zv_details', 'Ritual details', 'zv_details_box', 'ritual', 'normal', 'high' );
-} );
-
-function zv_details_box( $post ) {
-	wp_nonce_field( 'zv_details', 'zv_details_nonce' );
-	$v = fn( $k ) => esc_attr( get_post_meta( $post->ID, $k, true ) );
-	$c = fn( $k ) => checked( (bool) get_post_meta( $post->ID, $k, true ), true, false );
-	?>
-	<p><label><strong>Durations &amp; prices</strong><br>
-		<input type="text" name="zv_options" value="<?php echo $v( 'zv_options' ); ?>" class="widefat" placeholder="60:80, 90:110">
-	</label><br><span class="description">Minutes:price, separated by commas. Leave the price empty to show "Price at studio".</span></p>
-	<p><label><strong>Card description</strong> (one sentence on the rituals page)<br>
-		<textarea name="zv_desc" rows="2" class="widefat"><?php echo esc_textarea( get_post_meta( $post->ID, 'zv_desc', true ) ); ?></textarea>
-	</label></p>
-	<p><label><strong>Photo URL</strong><br><input type="url" name="zv_image" value="<?php echo $v( 'zv_image' ); ?>" class="widefat"></label></p>
-	<p><label><strong>Highlights</strong> (one per line, "Title | text")<br>
-		<textarea name="zv_highlights" rows="3" class="widefat"><?php echo esc_textarea( get_post_meta( $post->ID, 'zv_highlights', true ) ); ?></textarea>
-	</label></p>
-	<p style="display:flex;gap:18px;flex-wrap:wrap">
-		<label><input type="checkbox" name="zv_signature" value="1" <?php echo $c( 'zv_signature' ); ?>> Signature</label>
-		<label><input type="checkbox" name="zv_seasonal" value="1" <?php echo $c( 'zv_seasonal' ); ?>> Seasonal</label>
-		<label><input type="checkbox" name="zv_couples" value="1" <?php echo $c( 'zv_couples' ); ?>> Priced for two</label>
-		<label><input type="checkbox" name="zv_baths" value="1" <?php echo $c( 'zv_baths' ); ?>> Offer foot-bath upgrades</label>
-	</p>
-	<p style="display:flex;gap:18px">
-		<label>Deposit (€) <input type="number" name="zv_deposit" value="<?php echo $v( 'zv_deposit' ); ?>" style="width:80px"></label>
-		<label>Popularity (0–10) <input type="number" name="zv_popularity" value="<?php echo $v( 'zv_popularity' ); ?>" style="width:80px" min="0" max="10"></label>
-	</p>
-	<p class="description">The page sections below the booking card (steps, FAQ, visit…) are edited as blocks in the editor above.</p>
-	<?php
-}
-
-add_action( 'save_post_ritual', function ( $post_id ) {
-	if ( ! isset( $_POST['zv_details_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['zv_details_nonce'] ), 'zv_details' ) ) {
-		return;
-	}
-	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
-	foreach ( array( 'zv_options', 'zv_desc', 'zv_highlights' ) as $k ) {
-		update_post_meta( $post_id, $k, sanitize_textarea_field( wp_unslash( $_POST[ $k ] ?? '' ) ) );
-	}
-	update_post_meta( $post_id, 'zv_image', esc_url_raw( wp_unslash( $_POST['zv_image'] ?? '' ) ) );
-	foreach ( array( 'zv_signature', 'zv_seasonal', 'zv_couples', 'zv_baths' ) as $k ) {
-		update_post_meta( $post_id, $k, empty( $_POST[ $k ] ) ? '' : '1' );
-	}
-	foreach ( array( 'zv_deposit', 'zv_popularity' ) as $k ) {
-		update_post_meta( $post_id, $k, absint( $_POST[ $k ] ?? 0 ) );
-	}
-} );
-
 // Admin list: same order as the site, with a price column.
 add_action( 'pre_get_posts', function ( $q ) {
 	if ( is_admin() && $q->is_main_query() && 'ritual' === $q->get( 'post_type' ) && ! $q->get( 'orderby' ) ) {
@@ -354,12 +348,3 @@ add_action( 'pre_get_posts', function ( $q ) {
 		$q->set( 'posts_per_page', -1 );
 	}
 } );
-add_filter( 'manage_ritual_posts_columns', function ( $cols ) {
-	$cols['zv_price'] = 'Durations & prices';
-	return $cols;
-} );
-add_action( 'manage_ritual_posts_custom_column', function ( $col, $id ) {
-	if ( 'zv_price' === $col ) {
-		echo esc_html( implode( ' · ', array_map( fn( $o ) => $o[0] . ' min ' . zv_eur( $o[1] ), zv_parse_options( get_post_meta( $id, 'zv_options', true ) ) ) ) );
-	}
-}, 10, 2 );

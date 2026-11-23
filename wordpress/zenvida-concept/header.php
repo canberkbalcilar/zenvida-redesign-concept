@@ -17,16 +17,17 @@ $zv_menu     = function ( $loc, $fallback_cls = '' ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <?php if ( zv_demo() ) : ?>
-<div class="concept"><b>Redesign concept</b> · Running on WordPress · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>">Edit pages</a> · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>">Edit rituals</a> · <a href="<?php echo esc_url( admin_url( 'themes.php?page=zv-settings' ) ); ?>">Settings</a> · <a href="<?php echo esc_url( ZV_CONCEPTS_URL ); ?>" target="_blank" rel="noopener">All concepts</a></div>
+<div class="concept"><b>Redesign concept</b> · Running on WordPress · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>">Edit pages</a> · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>">Edit rituals</a> · <a href="<?php echo esc_url( admin_url( 'admin.php?page=zv-settings' ) ); ?>">Settings</a> · <a href="<?php echo esc_url( ZV_CONCEPTS_URL ); ?>" target="_blank" rel="noopener">All concepts</a></div>
 <?php endif; ?>
 <?php if ( '1' === (string) zv_opt( 'promo_show' ) ) : ?>
-<div class="promo"><?php echo zv_k( zv_opt( 'promo_text' ) ); // phpcs:ignore ?>
+<div class="promo"><?php echo zv_e( zv_opt( 'promo_text' ) ); ?>
+  <?php if ( zv_opt( 'promo_link_label' ) ) : ?> <a href="<?php echo esc_url( zv_opt( 'promo_link_url' ) ?: zv_rituals_url() ); ?>"><?php echo zv_e( zv_opt( 'promo_link_label' ) ); ?> →</a><?php endif; ?>
   <button aria-label="Dismiss" onclick="this.parentElement.remove()">×</button></div>
 <?php endif; ?>
 
 <header class="site" id="hdr">
   <div class="wrap nav">
-    <a class="logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="ZenVida home"><b>ZENVIDA</b><small>FOOT &amp; BODY</small></a>
+    <?php zv_logo(); ?>
     <?php $zv_menu( 'primary' ); ?>
     <div class="right">
       <div class="lang" role="group" aria-label="Language"><button aria-pressed="true">EN</button><button aria-pressed="false">ES</button></div>

@@ -590,3 +590,9 @@ footer.site .about{margin:16px 0 0;max-width:300px}
 
 .mbar .p+.btn{flex:0 0 auto;padding:13px 22px}
 .nav ul .current-menu-item>a[href*="#"]{box-shadow:none;color:var(--ink-2)}
+
+/* v0.3: uploaded logo, hidden-ritual note for logged-in editors */
+.logo .logo-img{display:block;height:auto;max-height:46px;width:auto;max-width:200px}
+footer.site .logo .logo-img{max-height:52px}
+.zv-hidden-note{background:#FFF4D6;border-bottom:1px solid #EBD9A6;color:#5c4a1a;font-size:14px;padding:10px 24px;text-align:center}
+.zv-hidden-note a{color:inherit;font-weight:600}

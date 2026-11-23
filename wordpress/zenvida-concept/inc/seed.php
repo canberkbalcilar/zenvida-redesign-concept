@@ -63,7 +63,7 @@ function zv_seed() {
 			"Seasonal body treatments made with Spain's natural ingredients.",
 			'Limited-edition rituals that change with the seasons, from salt scrubs to herbal soaks.' ),
 	);
-	$i = 0;
+	$i = 1;
 	foreach ( $areas as $slug => $a ) {
 		$t   = term_exists( $slug, 'area' ) ?: wp_insert_term( $a[0], 'area', array( 'slug' => $slug, 'description' => $a[3] ) );
 		$tid = is_array( $t ) ? (int) $t['term_id'] : (int) $t;
@@ -78,7 +78,7 @@ function zv_seed() {
 		'feet' => 'Tired feet', 'stress' => 'Stress & sleep', 'back' => 'Back & neck', 'sport' => 'Sports recovery',
 		'travel' => 'Travel & jet lag', 'glow' => 'Glow & skin', 'preg' => 'Pregnancy', 'two' => 'For two',
 	);
-	$i = 0;
+	$i = 1;
 	foreach ( $needs as $slug => $name ) {
 		$t   = term_exists( $slug, 'need' ) ?: wp_insert_term( $name, 'need', array( 'slug' => $slug ) );
 		$tid = is_array( $t ) ? (int) $t['term_id'] : (int) $t;
@@ -134,7 +134,7 @@ function zv_seed() {
 			'post_status'  => 'publish',
 			'post_title'   => $name,
 			'post_name'    => $slug,
-			'menu_order'   => $order,
+			'menu_order'   => $order + 1,
 			'post_excerpt' => $deluxe
 				? 'Our signature 60-minute ritual: an aromatherapy herbal foot spa, deep reflexology for the feet and calves, and a neck, shoulder and upper-back massage — a complete release from head to toe.'
 				: $desc,
@@ -197,7 +197,9 @@ function zv_seed() {
 	$foot = get_page_by_path( 'foot-massage', OBJECT, 'ritual' );
 	update_option( 'zv_settings', array_merge( zv_defaults(), array(
 		'rituals_page' => (string) $rpage,
-		'promo_text'   => 'Short on time? <a href="' . esc_url( $foot ? get_permalink( $foot ) : $rituals_url ) . '">Foot Massage 25 min — €25</a> · add neck &amp; shoulders for €10',
+		'promo_text'   => 'Short on time? Foot Massage 25 min — €25 · add neck & shoulders for €10',
+		'promo_link_label' => 'Book now',
+		'promo_link_url' => $foot ? get_permalink( $foot ) : $rituals_url,
 	) ) );
 
 	/* ---------- Menus ---------- */

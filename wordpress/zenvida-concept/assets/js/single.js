@@ -90,9 +90,9 @@
 
     $('#sLine').textContent = `${Z.name || 'Ritual'} · ${len()} min${TWO ? '' : ' × ' + g}`;
     $('#sBase').textContent = p == null ? 'At studio' : '€' + p*g;
-    $('#sBathRow').hidden = !st.bathP;
+    $('#sBathRow').hidden = st.bath === 'none';
     $('#sBath').textContent = `${st.bath} foot bath × ${g}`;
-    $('#sBathP').textContent = '+€' + st.bathP*g;
+    $('#sBathP').textContent = st.bathP ? '+€' + st.bathP*g : 'Free';
     $('#sWhen').textContent = st.time == null ? 'No time selected' :
       `${d.toLocaleDateString('en',{weekday:'long',day:'numeric',month:'long'})} · ${fmt(st.time)}–${fmt(st.time+len())}`;
     $('#sDep').textContent = '€' + DEPOSIT*g;
