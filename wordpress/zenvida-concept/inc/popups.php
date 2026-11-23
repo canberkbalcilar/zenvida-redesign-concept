@@ -125,7 +125,7 @@ function zv_popup_box( $post ) {
 		}
 		echo '</select>';
 	};
-	$pages = get_posts( array( 'post_type' => array( 'page', 'ritual' ), 'numberposts' => -1, 'orderby' => 'type menu_order title', 'order' => 'ASC' ) );
+	$pages = get_posts( array( 'post_type' => array( 'page', 'ritual', 'zv_event' ), 'numberposts' => -1, 'orderby' => 'type menu_order title', 'order' => 'ASC' ) );
 	?>
 	<div class="zv-box zv-popup-form">
 		<div class="zv-visible">
@@ -163,10 +163,10 @@ function zv_popup_box( $post ) {
 		<h3>3. Where and how</h3>
 		<table class="form-table zv-popup-table" role="presentation">
 			<tr><th>Show on</th><td>
-				<?php $opt( $n( 'where' ), $p['where'], array( 'all' => 'Every page', 'home' => 'Homepage only', 'rituals' => 'Rituals pages (list and every ritual)', 'pages' => 'Only the pages I choose…' ) ); ?>
+				<?php $opt( $n( 'where' ), $p['where'], array( 'all' => 'Every page', 'home' => 'Homepage only', 'rituals' => 'Rituals pages (list and every ritual)', 'events' => 'Events pages (list and every event)', 'pages' => 'Only the pages I choose…' ) ); ?>
 				<div class="zv-pages" data-zv-show-if="pages">
 					<?php foreach ( $pages as $pg ) : ?>
-						<label><input type="checkbox" name="<?php echo esc_attr( $n( 'pages' ) ); ?>[]" value="<?php echo (int) $pg->ID; ?>" <?php checked( in_array( $pg->ID, array_map( 'intval', (array) $p['pages'] ), true ) ); ?>> <?php echo esc_html( $pg->post_title ); ?><?php echo 'ritual' === $pg->post_type ? ' <small>ritual</small>' : ''; ?></label>
+						<label><input type="checkbox" name="<?php echo esc_attr( $n( 'pages' ) ); ?>[]" value="<?php echo (int) $pg->ID; ?>" <?php checked( in_array( $pg->ID, array_map( 'intval', (array) $p['pages'] ), true ) ); ?>> <?php echo esc_html( $pg->post_title ); ?><?php echo 'page' !== $pg->post_type ? ' <small>' . ( 'ritual' === $pg->post_type ? 'ritual' : 'event' ) . '</small>' : ''; ?></label>
 					<?php endforeach; ?>
 				</div>
 			</td></tr>
@@ -208,6 +208,9 @@ function zv_popup_preview_url( $p ) {
 	if ( 'rituals' === $p['where'] ) {
 		return zv_rituals_url();
 	}
+	if ( 'events' === $p['where'] ) {
+		return get_post_type_archive_link( 'zv_event' );
+	}
 	if ( 'pages' === $p['where'] && ! empty( $p['pages'] ) ) {
 		return get_permalink( (int) reset( $p['pages'] ) ) ?: home_url( '/' );
 	}
@@ -236,7 +239,7 @@ add_action( 'save_post_zv_popup', function ( $id ) {
 		'layout'  => $one( $in['layout'] ?? '', array( 'center', 'corner', 'bar' ), $d['layout'] ),
 		'start'   => $dt( $in['start'] ?? '' ),
 		'end'     => $dt( $in['end'] ?? '' ),
-		'where'   => $one( $in['where'] ?? '', array( 'all', 'home', 'rituals', 'pages' ), $d['where'] ),
+		'where'   => $one( $in['where'] ?? '', array( 'all', 'home', 'rituals', 'events', 'pages' ), $d['where'] ),
 		'pages'   => array_values( array_filter( array_map( 'absint', (array) ( $in['pages'] ?? array() ) ) ) ),
 		'trigger' => $one( $in['trigger'] ?? '', array( 'delay', 'scroll', 'exit' ), $d['trigger'] ),
 		'delay'   => min( 120, absint( $in['delay'] ?? 5 ) ),
@@ -270,7 +273,7 @@ add_action( 'manage_zv_popup_posts_custom_column', function ( $col, $id ) {
 		list( $k, $label ) = zv_popup_status( $id );
 		echo '<span class="zvp-status zvp-' . esc_attr( $k ) . '">' . esc_html( $label ) . '</span>';
 	} elseif ( 'zvp_where' === $col ) {
-		$w = array( 'all' => 'Every page', 'home' => 'Homepage', 'rituals' => 'Rituals pages', 'pages' => count( (array) $p['pages'] ) . ' chosen page(s)' );
+		$w = array( 'all' => 'Every page', 'home' => 'Homepage', 'rituals' => 'Rituals pages', 'events' => 'Events pages', 'pages' => count( (array) $p['pages'] ) . ' chosen page(s)' );
 		echo esc_html( $w[ $p['where'] ] ?? '' ) . ( 'all' !== $p['device'] ? ' · ' . esc_html( 'mobile' === $p['device'] ? 'phones' : 'computers' ) : '' );
 	} elseif ( 'zvp_how' === $col ) {
 		$t = array( 'delay' => 'After ' . (int) $p['delay'] . ' s', 'scroll' => 'At ' . (int) $p['scroll'] . '% scroll', 'exit' => 'When leaving' );
@@ -306,6 +309,8 @@ function zv_popup_matches( $p ) {
 			return is_front_page();
 		case 'rituals':
 			return is_post_type_archive( 'ritual' ) || is_tax( 'area' ) || is_singular( 'ritual' );
+		case 'events':
+			return is_post_type_archive( 'zv_event' ) || is_singular( 'zv_event' );
 		case 'pages':
 			$ids = array_map( 'intval', (array) $p['pages'] );
 			if ( is_post_type_archive( 'ritual' ) && in_array( (int) zv_opt( 'rituals_page' ), $ids, true ) ) {

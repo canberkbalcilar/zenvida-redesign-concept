@@ -63,6 +63,9 @@ function zv_defaults() {
 				array( "I'm pregnant", 'Safe, adapted care', 'need:preg' ),
 			) ),
 		),
+		'events_title' => 'Workshops, open days & special weeks',
+		'events_intro' => 'Small groups, seasonal rituals and evenings to learn something new about looking after yourself.',
+		'events_empty' => 'New events are coming soon. Follow us on Instagram or sign up to the newsletter to hear first.',
 		'seo_home'     => 'Reflexology & Body Massage in Madrid Centro',
 		'seo_home_desc' => 'Foot reflexology and body massage rituals in Madrid Centro, 3 minutes from Sol. Open 7 days, walk in or book online.',
 		'seo_rituals'  => 'Massage & Reflexology Rituals in Madrid',
@@ -288,6 +291,15 @@ function zv_settings_page() {
 					<p><button type="button" class="button" data-zv-add>+ Add foot bath</button></p>
 					<p class="description">Shown on rituals where "Offer foot-bath upgrades" is ticked.</p>
 				</td></tr>
+			</table>
+			<h2 class="title">Events page</h2>
+			<p>The top of <a href="<?php echo esc_url( get_post_type_archive_link( 'zv_event' ) ); ?>" target="_blank">/events/</a>. The events themselves are added under <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=zv_event' ) ); ?>">Events</a>.</p>
+			<table class="form-table" role="presentation">
+				<?php
+				$row( 'events_title', 'Title' );
+				$row( 'events_intro', 'Intro', '', 'textarea' );
+				$row( 'events_empty', 'Text when nothing is planned', '', 'textarea' );
+				?>
 			</table>
 			<h2 class="title">"Help me choose" quiz</h2>
 			<p>The short quiz on the rituals page. Each answer can narrow the list to rituals for a need, or to a length. Leave a question empty to skip it.</p>

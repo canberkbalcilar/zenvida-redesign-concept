@@ -202,7 +202,7 @@ function zv_seed() {
 	/* ---------- Menus ---------- */
 	$home_url = home_url( '/' );
 	zv_seed_menu( 'Main menu', 'primary', array(
-		array( 'Rituals', $rituals_url ), array( 'Experiences', '#' ), array( 'Offers & Packs', $home_url . '#offers' ),
+		array( 'Rituals', $rituals_url ), array( 'Events', home_url( '/events/' ) ), array( 'Offers & Packs', $home_url . '#offers' ),
 		array( 'Gift Cards', $home_url . '#offers' ), array( 'Journal', get_permalink( $journal ) ), array( 'Visit', '#visit' ),
 	) );
 	$area_links = array();
@@ -214,6 +214,32 @@ function zv_seed() {
 	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', $home_url . '#offers' ), array( 'Packs', $home_url . '#offers' ), array( 'Gift Cards', $home_url . '#offers' ), array( 'Loyalty Card', $home_url . '#offers' ) ) );
 	zv_seed_menu( 'Visit', 'footer-3', array( array( 'Calle de la Cruz, 16', zv_opt( 'maps_url' ) ), array( '+34 690 829 142', 'tel:+34690829142' ), array( 'hola@zenvida.es', 'mailto:hola@zenvida.es' ), array( 'Respiro Journal', get_permalink( $journal ) ) ) );
 	zv_seed_menu( 'Legal', 'legal', array( array( 'Privacy', '#' ), array( 'Cookies', '#' ), array( 'Terms', '#' ), array( 'Booking policy', '#' ) ) );
+
+	/* ---------- Sample events (dates relative to today, Madrid time) ---------- */
+	$d0     = new DateTimeImmutable( 'today', wp_timezone() );
+	$at     = fn( $days, $hm ) => $d0->modify( "$days days" )->format( 'Y-m-d' ) . 'T' . $hm;
+	$events = array(
+		array( 'Reflexology for beginners', 'reflexology-for-beginners', 'Workshop', $at( 12, '18:30' ), $at( 12, '20:00' ), '€35', '8 places', '', 'b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png',
+			'Learn the basic foot map and three simple techniques to relax yourself and the people you love.',
+			"<p>A relaxed, hands-on evening with our senior therapist. You will learn how the zones of the foot relate to the rest of the body and practise three simple techniques you can use at home.</p><h3>What happens</h3><ul><li>A short introduction to reflexology and the foot map</li><li>Hands-on practice in pairs, with herbal foot baths</li><li>Tea and a printed foot map to take home</li></ul><h3>Good to know</h3><p>No experience needed. Come in comfortable clothes; we provide towels and oils. Places are limited so everyone gets attention.</p>" ),
+		array( 'Christmas gift card week', 'christmas-gift-card-week', 'Special week', $at( 8, '10:00' ), $at( 21, '21:30' ), 'Gift cards from €25', '', '', 'b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg',
+			'Buy any gift card and we add a free foot-bath upgrade for the person you give it to.',
+			'<p>Looking for a calm gift? During gift card week every card comes with a free aromatherapy foot-bath upgrade (Relax, Revive or Recover). Cards are sent by email in minutes and are valid for 12 months.</p><p>Buy online or at the studio, Calle de la Cruz 16.</p>' ),
+		array( 'Couples evening', 'couples-evening', 'Couples evening', $at( 26, '19:00' ), $at( 26, '21:30' ), '€190 for two', '4 couples', '1', 'b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg',
+			'A side-by-side massage after hours, with cava and a quiet studio just for you.',
+			'<p>We open the studio after hours for four couples only: a 60-minute side-by-side massage, a herbal foot ritual and a glass of cava in our relaxation corner.</p>' ),
+		array( 'Autumn open day', 'autumn-open-day', 'Open day', $at( -20, '11:00' ), $at( -20, '19:00' ), 'Free', '', '', 'b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg',
+			'Free 10-minute foot massages, tea and a look around the studio.',
+			'<p>Thank you to everyone who came by! Short free foot massages, tea and a tour of the studio.</p>' ),
+	);
+	foreach ( $events as $ev ) {
+		$eid = wp_insert_post( wp_slash( array( 'post_type' => 'zv_event', 'post_status' => 'publish', 'post_title' => $ev[0], 'post_name' => $ev[1], 'post_content' => $ev[10] ) ) );
+		update_post_meta( $eid, 'zv_event', array_merge( zv_event_defaults(), array(
+			'label' => $ev[2], 'start' => $ev[3], 'end' => $ev[4], 'price' => $ev[5], 'places' => $ev[6], 'soldout' => $ev[7],
+			'image' => zv_img( $ev[8], 1200, 750 ), 'summary' => $ev[9],
+		) ) );
+		update_post_meta( $eid, 'zv_event_start', zv_popup_time( $ev[3] ) );
+	}
 
 	/* ---------- Sample event popup ---------- */
 	$today = new DateTimeImmutable( 'today', wp_timezone() );
@@ -299,6 +325,7 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 			"I walked in on a Tuesday afternoon and was on the recliner ten minutes later. Now it's my monthly ritual.",
 		) ) ) ),
 		zv_sec( array( 'anchor' => 'offers', 'padTop' => false, 'eyebrow' => 'Come back for less', 'title' => 'Make it a ritual' ), array( zv_offers_block() ) ),
+		zv_sec( array( 'padTop' => false, 'eyebrow' => 'Coming up', 'title' => 'Workshops & special weeks', 'linkLabel' => 'All events', 'linkUrl' => home_url( '/events/' ) ), array( zv_b( 'zv/events', array( 'count' => 3 ) ) ) ),
 		zv_sec( array( 'padTop' => false ), array( zv_b( 'zv/newsletter' ) ) ),
 		zv_sec( array( 'padTop' => false, 'eyebrow' => 'Respiro Journal', 'title' => 'Slow living in Madrid', 'linkLabel' => 'All stories', 'linkUrl' => home_url( '/journal/' ) ), array( zv_b( 'zv/journal' ) ) ),
 		zv_sec( array( 'anchor' => 'visit', 'padTop' => false ), array(

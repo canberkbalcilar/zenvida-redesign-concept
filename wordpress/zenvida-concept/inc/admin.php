@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'admin_enqueue_scripts', function ( $hook ) {
 	$screen = get_current_screen();
-	$ours   = ( $screen && ( in_array( $screen->post_type, array( 'ritual', 'zv_popup' ), true ) || in_array( $screen->taxonomy, array( 'area', 'need' ), true ) ) )
+	$ours   = ( $screen && ( in_array( $screen->post_type, array( 'ritual', 'zv_popup', 'zv_event' ), true ) || in_array( $screen->taxonomy, array( 'area', 'need' ), true ) ) )
 		|| false !== strpos( $hook, 'zv-settings' ) || 'index.php' === $hook;
 	if ( ! $ours ) {
 		return;
@@ -267,7 +267,7 @@ add_action( 'admin_notices', function () {
 add_action( 'wp_ajax_zv_visible', function () {
 	check_ajax_referer( 'zv_admin' );
 	$id = absint( $_POST['id'] ?? 0 );
-	if ( ! $id || 'ritual' !== get_post_type( $id ) || ! current_user_can( 'edit_post', $id ) ) {
+	if ( ! $id || ! in_array( get_post_type( $id ), array( 'ritual', 'zv_event' ), true ) || ! current_user_can( 'edit_post', $id ) ) {
 		wp_send_json_error( 'Not allowed', 403 );
 	}
 	$on = ! empty( $_POST['on'] ) && '0' !== $_POST['on'];
@@ -395,7 +395,7 @@ add_filter( 'register_post_type_args', function ( $args, $type ) {
 
 // Menu order: the things an editor touches most come first.
 add_filter( 'custom_menu_order', '__return_true' );
-add_filter( 'menu_order', fn() => array( 'index.php', 'zv-settings', 'edit.php?post_type=ritual', 'edit.php?post_type=zv_popup', 'edit.php?post_type=page', 'edit.php', 'upload.php', 'separator1', 'themes.php' ) );
+add_filter( 'menu_order', fn() => array( 'index.php', 'zv-settings', 'edit.php?post_type=ritual', 'edit.php?post_type=zv_event', 'edit.php?post_type=zv_popup', 'edit.php?post_type=page', 'edit.php', 'upload.php', 'separator1', 'themes.php' ) );
 
 // Dashboard: a quick guide instead of WordPress news.
 add_action( 'wp_dashboard_setup', function () {
@@ -418,6 +418,7 @@ function zv_dashboard_guide() {
 		array( 'plus-alt', 'Add a new ritual', 'Type the name, price and texts, choose a photo, click Publish (top right). FAQ and "Visit us" are added for you.', admin_url( 'post-new.php?post_type=ritual' ), 'Add ritual' ),
 		array( 'edit', 'Change the homepage text, buttons or photos', 'Click any text to type. Click a photo or button to change it in the right panel.', $home ? get_edit_post_link( $home ) : admin_url( 'edit.php?post_type=page' ), 'Edit homepage' ),
 		array( 'editor-help', 'Add or remove an FAQ question', 'Click a question, then + below it to add, or ⋮ → Delete to remove.', $deluxe ? get_edit_post_link( $deluxe ) : admin_url( 'edit.php?post_type=ritual' ), 'Example page' ),
+		array( 'calendar-alt', 'Add an event (workshop, open day, special week)', 'Name, dates, photo, price and a description. It moves to "Past events" by itself.', admin_url( 'post-new.php?post_type=zv_event' ), 'Add event' ),
 		array( 'megaphone', 'Create a popup for an event', 'Photo, title, button, start and end date. It switches on and off by itself.', admin_url( 'post-new.php?post_type=zv_popup' ), 'Add popup' ),
 		array( 'clock', 'Opening hours, phone, address, promo bar', 'One page for everything that appears on every page.', admin_url( 'admin.php?page=zv-settings' ), 'Site settings' ),
 		array( 'menu', 'Change the menu', 'Add, remove or drag menu items.', admin_url( 'nav-menus.php' ), 'Menus' ),

@@ -199,6 +199,7 @@
         h('div', { className: 'consent' }, h('input', { type: 'checkbox', disabled: true }), RT(p, 'consent', 'span', null, 'Consent text'))));
   });
 
+  ssrBlock('events', 'Upcoming events', p => [F.num(p, 'count', 'How many events', 1, 9), F.area(p, 'empty', 'Text when nothing is planned')], 'Shows the next events from Events in the admin. Past events disappear by themselves.');
   ssrBlock('journal', 'Latest journal posts', p => [F.num(p, 'count', 'How many posts', 1, 9)], 'Shows your latest Posts with their featured image.');
 
   reg('split', function () {

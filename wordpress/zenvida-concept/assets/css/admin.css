@@ -138,3 +138,15 @@
   .zv-popup-form .zv-inline input{margin:4px 0 0!important;width:100%}
   .post-type-zv_popup .wp-list-table td.column-zvp_on{display:block!important;padding-left:35%!important}
 }
+
+/* Events: details form under the event name */
+.zv-event-box{margin:16px 0 20px}
+.zv-event-box .inside{padding:6px 16px 4px}
+.zv-event-box .zv-inline input[type=text],.zv-event-box .zv-inline input[type=datetime-local]{margin-left:6px}
+.post-type-zv_event .column-zv_thumb{width:72px}
+.post-type-zv_event .column-zv_visible{width:96px}
+@media (max-width:782px){
+  .zv-event-box .zv-inline input{margin:4px 0 0!important;width:100%}
+  .post-type-zv_event .wp-list-table td.column-zv_visible{display:block!important;padding:4px 10px 10px 35%!important}
+  .post-type-zv_event td.column-zv_thumb::before{display:none}
+}
