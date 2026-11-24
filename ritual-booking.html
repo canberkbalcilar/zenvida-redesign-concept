@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZenVida · Ritual page &amp; booking concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFFEF8;--cream:#F7F2E8;--sand-50:#F1EADC;--sand:#B0956A;--sand-700:#8A7350;--ink:#1E1B17;--ink-2:#4A443B;--muted:#7A7266;--line:#E6DECF;--ctl:#C9BFAE;--ok:#4F7A4A;--serif:"Cormorant Garamond",Georgia,serif;--sans:Figtree,system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#EEE8DC;color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer;color:inherit}
+img{display:block;max-width:100%}
+.serif{font-family:var(--serif);font-weight:500}
+.eyebrow{font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--sand-700)}
+.muted{color:var(--ink-2)}
+
+/* ---------- showcase chrome ---------- */
+.intro{max-width:1080px;margin:0 auto;padding:56px 24px 28px}
+.logo{font:500 26px/1 var(--serif);letter-spacing:.14em}
+.logo small{display:block;font:400 9px var(--sans);letter-spacing:.32em;color:var(--muted);margin-top:5px}
+.back{display:inline-block;margin-top:28px;font-size:14px;font-weight:600;color:var(--sand-700);text-decoration:none}
+.intro h1{font:500 clamp(38px,5.5vw,60px)/1.05 var(--serif);margin:14px 0 14px;letter-spacing:-.01em}
+.intro .lead{font-size:18px;color:var(--ink-2);max-width:680px;margin:0}
+.points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:28px 0 0;padding:0;list-style:none}
+.points li{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:14px;line-height:1.45;color:var(--ink-2)}
+.points b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+.sec-title{max-width:1080px;margin:36px auto 0;padding:0 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.sec-title h2{font:500 36px/1 var(--serif);margin:0}
+.sec-title span{font-size:14px;color:var(--ink-2)}
+.rail{display:flex;gap:40px;overflow-x:auto;scroll-snap-type:x mandatory;padding:28px max(24px,calc((100vw - 1780px)/2)) 40px;scroll-padding:0 24px}
+.rail::-webkit-scrollbar{height:8px}.rail::-webkit-scrollbar-thumb{background:var(--ctl);border-radius:8px}
+.device{flex:none;scroll-snap-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+.device figcaption{font-size:14px;font-weight:600;color:var(--ink-2)}
+.device figcaption b{color:var(--ink)}
+.phone{width:390px;height:844px;border-radius:46px;background:var(--paper);border:10px solid #1b1814;box-shadow:0 30px 60px rgba(30,27,23,.22);overflow:hidden;position:relative;transition:box-shadow .3s,transform .3s}
+.phone.lit{box-shadow:0 0 0 4px var(--sand),0 30px 60px rgba(30,27,23,.22)}
+.phone .screen{position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column}
+.phone .scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+.phone .scroll::-webkit-scrollbar{display:none}
+.tip{font-size:12.5px;color:var(--muted);text-align:center;margin:-4px 0 0}
+.foot{max-width:1080px;margin:0 auto;padding:24px 24px 72px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+@media (max-width:900px){.points{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){
+  .intro{padding:36px 16px 20px}.sec-title{padding:0 16px}
+  .points{grid-template-columns:1fr}
+  .rail{gap:20px;padding:20px 16px 32px}
+  .phone{width:calc(100vw - 32px);height:min(844px,calc(100svh - 120px));border-width:0;border-radius:24px}
+}
+
+/* ---------- phone UI ---------- */
+.m-head{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 20px;border-bottom:1px solid var(--line);background:var(--paper);flex:none}
+.m-logo{font:500 21px/1 var(--serif);letter-spacing:.14em}
+.m-logo small{display:block;font:400 8px var(--sans);letter-spacing:.32em;color:var(--ink-2);margin-top:3px}
+.m-head .r{display:flex;align-items:center;gap:4px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;font-size:12px;font-weight:600}
+.lang a{text-decoration:none;padding:5px 10px;border-radius:999px;color:var(--ink-2)}
+.lang a.on{background:var(--ink);color:var(--paper)}
+.icon-btn{width:44px;height:44px;border:0;background:transparent;display:grid;place-items:center;padding:0;border-radius:50%}
+.icon-btn.soft{background:var(--cream)}
+.hero{height:262px;position:relative;background:#EFE6D6}
+.hero img{width:100%;height:100%;object-fit:cover}
+.pill{position:absolute;background:var(--paper);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600}
+.pill.dark{background:rgba(30,27,23,.72);color:var(--paper);padding:5px 10px;font-size:12px}
+.m-main{padding:18px 20px 28px;display:flex;flex-direction:column;gap:28px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.rating{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2)}
+.stars{color:var(--sand-700);letter-spacing:2px;font-size:13px}
+.rating b{color:var(--ink)}
+.m-h1{margin:0;font:500 42px/1 var(--serif)}
+.m-lead{margin:0;font-size:15px;line-height:1.5;color:var(--ink-2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:13px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px}
+.next{padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;margin-top:-12px}
+.next .row{display:flex;align-items:baseline;justify-content:space-between}
+.live{font-size:12.5px;color:var(--ok);font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.slot{display:block;text-decoration:none;text-align:center;border:1px solid var(--line);border-radius:12px;padding:11px 0;font-size:15px;font-weight:600;background:#fff;min-height:44px}
+.slot:hover{border-color:var(--ink)}
+.more{font-size:13px;font-weight:600;color:var(--sand-700);text-decoration:none}
+.trust{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.trust li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.45}
+.trust .ic{width:36px;height:36px;border-radius:50%;background:var(--sand-50);display:grid;place-items:center;flex:none;color:var(--sand-700)}
+.trust b{font-weight:600}
+.h2{margin:0;font:500 30px/1.1 var(--serif)}
+.steps{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.steps li{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.5}
+.steps .n{font:500 24px/1 var(--serif);color:var(--sand-700);width:22px}
+.upsell{background:var(--cream);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.upsell .opt{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14.5px;line-height:1.35}
+.cross{text-decoration:none;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;gap:14px;align-items:center}
+.cross img{width:72px;height:72px;border-radius:12px;object-fit:cover;flex:none}
+.quote{margin:0;padding:18px;display:flex;flex-direction:column;gap:10px}
+.quote blockquote{margin:0;font:500 21px/1.3 var(--serif)}
+.quote figcaption{font-size:12.5px;color:var(--ink-2)}
+.seo{position:relative;max-height:196px;overflow:hidden;transition:max-height .4s}
+.seo.open{max-height:1200px}
+.seo p{margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--ink-2)}
+.seo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:72px;background:linear-gradient(rgba(255,254,248,0),var(--paper));transition:opacity .3s}
+.seo.open::after{opacity:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;border-radius:999px;min-height:46px;padding:0 20px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid transparent}
+.btn.dark{background:var(--ink);color:var(--paper)}
+.btn.dark:hover{background:#000}
+.btn.line{border-color:var(--line);background:#fff;color:var(--ink)}
+.btn.line:hover{border-color:var(--sand)}
+.btn.block{display:flex;width:100%}
+.faq details{border-bottom:1px solid var(--line);padding:14px 0}
+.faq summary{list-style:none;display:flex;justify-content:space-between;gap:12px;font-size:15px;font-weight:600;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-weight:500}
+.faq details[open] summary::after{content:"−"}
+.faq p{margin:10px 0 0;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+.visit{overflow:hidden}
+.visit iframe{display:block;width:100%;height:170px;border:0;background:#EFE6D6}
+.visit .in{padding:16px;display:flex;flex-direction:column;gap:12px}
+.open-now{display:inline-flex;align-items:center;gap:8px;font-size:14.5px}
+.open-now::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.open-now b{color:var(--ok);font-weight:600}
+.hours{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;font-size:13.5px;color:var(--ink-2)}
+.hours li{display:flex;justify-content:space-between;gap:8px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.g3 .btn{padding:0 6px;font-size:14px}
+.sticky{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(30,27,23,.08);padding:10px 16px 18px;display:flex;flex-direction:column;gap:7px;z-index:2}
+.sticky .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sticky .row>div{min-width:0}
+.price{font:600 30px/1 var(--serif)}
+.sub{font-size:12px;color:var(--ink-2)}
+.ok-line{font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+
+/* sheet screens */
+.dim{height:40px;background:#6E675D;flex:none}
+.sheet{flex:1;background:var(--paper);border-radius:24px 24px 0 0;display:flex;flex-direction:column;min-height:0}
+.grab{display:flex;justify-content:center;padding-top:8px}.grab span{width:40px;height:4px;border-radius:4px;background:var(--line)}
+.sh-head{display:flex;align-items:center;justify-content:space-between;padding:6px 12px 0 20px}
+.sh-body{flex:1;overflow-y:auto;scrollbar-width:none;padding:14px 0 12px;display:flex;flex-direction:column;gap:16px;min-height:0}
+.sh-body::-webkit-scrollbar{display:none}
+.px{padding:0 20px}
+.bar2{display:flex;gap:6px;padding:12px 20px 0}.bar2 span{flex:1;height:3px;border-radius:3px;background:var(--line)}.bar2 span.on{background:var(--ink)}
+.stepnote{padding:6px 20px 0;font-size:12px;color:var(--ink-2)}
+.days{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 20px}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;width:46px;height:64px;border-radius:14px;border:1px solid var(--line);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0}
+.day small{font-size:11px;font-weight:600}.day b{font-size:18px;font-weight:600}.day i{font-size:10px;font-style:normal;color:var(--muted);min-height:12px}
+.day[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.day[aria-pressed=true] i{color:#cfc6b6}
+.day:disabled{background:var(--cream);color:var(--muted);cursor:default}
+.seg{margin:0 20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--cream);border-radius:999px;padding:4px}
+.seg button{border:0;border-radius:999px;min-height:38px;font-size:13.5px;font-weight:600;background:transparent;color:var(--ink-2)}
+.seg button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(30,27,23,.12)}
+.times{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 20px}
+.times[hidden]{display:none}
+.times button{min-height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:15px;font-weight:600;padding:0}
+.times button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.add{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px;border-radius:14px;background:#fff;border:1px solid var(--line);width:100%;font-size:14px;text-align:left}
+.add .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--ctl);display:grid;place-items:center;flex:none}
+.add .box svg{opacity:0}
+.add[aria-pressed=true]{border-color:var(--ink)}
+.add[aria-pressed=true] .box{background:var(--ink);border-color:var(--ink)}
+.add[aria-pressed=true] .box svg{opacity:1}
+.add span.t{flex:1}
+.sh-foot{border-top:1px solid var(--line);padding:12px 16px 18px;display:flex;flex-direction:column;gap:9px;background:var(--paper);flex:none}
+.sh-foot .sum{display:flex;justify-content:space-between;font-size:13.5px;gap:8px}
+.center{text-align:center}
+.recap{background:var(--cream);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.wallet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.wallet a{text-decoration:none;border-radius:12px;min-height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600}
+.or{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-2)}.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.field{display:flex;flex-direction:column;gap:5px;font-size:12.5px;font-weight:600}
+.field em{font-style:normal;font-weight:400;color:var(--ink-2)}
+.input{height:46px;border:1px solid var(--ctl);border-radius:12px;padding:0 12px;font:400 16px var(--sans);background:#fff;width:100%;color:var(--ink)}
+.input:focus{outline:2px solid var(--ink);outline-offset:1px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--ink-2)}
+.check input{width:20px;height:20px;margin:0;accent-color:var(--ink);flex:none}
+.done-top{padding:8px 24px 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.tick{width:64px;height:64px;border-radius:50%;background:#E3EBDF;display:grid;place-items:center;color:var(--ok)}
+.lines{padding:14px 18px;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.lines div{display:flex;justify-content:space-between;gap:8px}
+
+/* ---------- desktop ---------- */
+.desk{max-width:1440px;margin:28px auto 64px;background:var(--paper);border-radius:22px;box-shadow:0 30px 60px rgba(30,27,23,.16);overflow:hidden}
+.d-head{border-bottom:1px solid var(--line)}
+.d-head .in{max-width:1240px;margin:0 auto;padding:0 24px;min-height:76px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.d-nav{display:flex;flex-wrap:wrap;gap:28px;font-size:14.5px}
+.d-nav a{text-decoration:none;color:var(--ink-2)}.d-nav a.on{color:var(--ink);box-shadow:inset 0 -1.5px 0 var(--sand)}
+.d-main{max-width:1240px;margin:0 auto;padding:20px 24px 80px}
+.crumbs{font-size:13px;color:var(--ink-2);display:flex;gap:8px;margin-bottom:20px}
+.crumbs a{text-decoration:none}
+.cols{display:flex;flex-wrap:wrap;gap:56px;align-items:flex-start}
+.left{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:48px}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.gallery img{width:100%;height:100%;object-fit:cover;border-radius:18px;min-height:200px}
+.gallery img:first-child{grid-column:span 2;grid-row:span 2;border-radius:22px;min-height:420px}
+.d-h1{margin:0;font:500 64px/1 var(--serif)}
+.d-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.d-steps div{border-top:1px solid var(--ink);padding-top:16px;display:flex;flex-direction:column;gap:6px;font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.d-steps .n{font:500 28px/1 var(--serif);color:var(--sand-700)}
+.d-steps b{font-size:16px;color:var(--ink);font-weight:600}
+.two{display:flex;flex-wrap:wrap;gap:16px}
+.two>*{flex:1 1 300px}
+.d-h2{margin:0;font:500 40px/1 var(--serif)}
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.aside{flex:1 1 340px;max-width:400px;position:sticky;top:24px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 1px 2px rgba(30,27,23,.04),0 8px 30px rgba(30,27,23,.07);overflow:hidden}
+.aside .top{padding:22px 24px 18px;border-bottom:1px solid var(--line);display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.aside .body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px}
+.aside .bot{display:flex;justify-content:center;gap:22px;padding:14px;border-top:1px solid var(--line);background:var(--paper);font-size:13.5px}
+.aside .bot a{text-decoration:none;color:var(--ink-2)}
+.d-visit{margin-top:88px;display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff}
+.d-visit iframe{flex:1 1 520px;min-height:380px;border:0;background:#EFE6D6}
+.d-visit .in{flex:1 1 420px;padding:40px;display:flex;flex-direction:column;gap:18px}
+@media (max-width:700px){.d-h1{font-size:44px}.gallery img:first-child{min-height:260px}.d-steps,.qgrid{grid-template-columns:1fr}.aside{max-width:none}.d-visit .in{padding:24px}}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div class="logo">ZENVIDA<small>FOOT &amp; BODY</small></div>
+  <a class="back" href="index.html">← All concepts</a>
+  <span class="eyebrow" style="display:block;margin-top:28px">Concept · Ritual page and booking</span>
+  <h1>From ritual page to booked, in a few taps</h1>
+  <p class="lead">A mobile-first ritual page with the booking flow built in. Example: Reflexology. Tap a time or "Book a time" on the first phone and follow the flow.</p>
+  <ul class="points">
+    <li><b>Book is always in reach</b>Price and "Book a time" stay pinned to the bottom of the screen.</li>
+    <li><b>Times on the page</b>The next free times show right away; one tap starts the booking.</li>
+    <li><b>Two steps, not four</b>Time, then details and payment, with Apple Pay and Google Pay first.</li>
+    <li><b>No surprises</b>"€25 now, €15 after" and free changes up to 4 hours before, next to every button.</li>
+  </ul>
+</header>
+
+<div class="sec-title"><h2>Mobile</h2><span>Scroll sideways to see all four screens. The first phone scrolls like a real page.</span></div>
+
+<div class="rail" id="rail">
+
+  <!-- 1 · Ritual page -->
+  <figure class="device" id="p1">
+    <div class="phone">
+      <div class="scroll">
+        <div class="m-head">
+          <div class="m-logo">ZENVIDA<small>FOOT &amp; BODY</small></div>
+          <div class="r">
+            <div class="lang"><a class="on" href="#p1">EN</a><a href="#p1">ES</a></div>
+            <button class="icon-btn" type="button" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+          </div>
+        </div>
+        <div class="hero">
+          <img src="https://static.wixstatic.com/media/b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png/v1/fill/w_800,h_540,al_c,q_80,enc_auto/b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png" alt="Reflexology on feet and calves at ZenVida">
+          <span class="pill" style="left:16px;top:16px">Feet &amp; Legs</span>
+          <span class="pill dark" style="right:16px;bottom:14px">1 / 4</span>
+        </div>
+        <main class="m-main">
+          <div class="stack">
+            <div class="rating"><span class="stars" aria-hidden="true">★★★★★</span><b>5.0</b><span>· 450+ guests on Google</span></div>
+            <h2 class="m-h1">Reflexology</h2>
+            <p class="m-lead">Quick relief when you are short on time: focused reflexology with a calf treatment for aching feet and tired legs.</p>
+            <div class="chips"><span class="chip">30 minutes</span><span class="chip">5 min from Sol</span><span class="chip">English-speaking team</span></div>
+          </div>
+          <section class="card next" aria-label="Next free times">
+            <div class="row"><b style="font-size:14px;font-weight:600">Next free times</b><span class="live">Tomorrow, Wed 25</span></div>
+            <div class="g4">
+              <a class="slot" href="#p2" data-go="p2" data-time="11:30">11:30</a>
+              <a class="slot" href="#p2" data-go="p2" data-time="12:00">12:00</a>
+              <a class="slot" href="#p2" data-go="p2" data-time="14:10">14:10</a>
+              <a class="slot" href="#p2" data-go="p2" data-time="18:00">18:00</a>
+            </div>
+            <a class="more" href="#p2" data-go="p2">See all times and days →</a>
+          </section>
+          <ul class="trust">
+            <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>€25 deposit secures your time.</b><br><span class="muted">The other €15 is paid after your ritual.</span></span></li>
+            <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v4h4"/></svg></span><span><b>Free changes up to 4 hours before.</b><br><span class="muted">Reschedule in one message on WhatsApp.</span></span></li>
+            <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><b>Calle de la Cruz, 16.</b><br><span class="muted">Metro Sol, 3 minutes' walk.</span></span></li>
+          </ul>
+          <section class="stack" style="gap:14px">
+            <span class="eyebrow">What happens</span>
+            <h3 class="h2">30 minutes for tired feet and legs</h3>
+            <ol class="steps">
+              <li><span class="n">1</span><span><b>Calf treatment</b><br><span class="muted">Releases tight calves and heavy legs.</span></span></li>
+              <li><span class="n">2</span><span><b>Focused reflexology</b><br><span class="muted">Pressure-point work on the soles to ease aching feet.</span></span></li>
+              <li><span class="n">3</span><span><b>Walk out lighter</b><br><span class="muted">Ideal between sightseeing, after a flight or after work.</span></span></li>
+            </ol>
+          </section>
+          <section class="upsell">
+            <div><b style="font-size:16px;font-weight:600">Make it longer</b><br><span class="muted" style="font-size:13.5px">Add when you book. Your deposit stays €25.</span></div>
+            <div class="opt"><span>+10 min reflexology<br><span class="muted" style="font-size:12.5px">40 minutes in total</span></span><b>+€10</b></div>
+            <div class="opt"><span>+10 min neck, back &amp; shoulders<br><span class="muted" style="font-size:12.5px">Quick upper-body relief</span></span><b>+€10</b></div>
+          </section>
+          <a class="cross" href="deluxe-reflexology.html">
+            <img src="https://static.wixstatic.com/media/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg/v1/fill/w_160,h_160,al_c,q_80,enc_auto/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg" alt="">
+            <span style="display:flex;flex-direction:column;gap:3px;flex:1">
+              <span class="eyebrow" style="font-size:11px;letter-spacing:.14em">Signature · more time</span>
+              <span class="serif" style="font-size:22px;line-height:1.1">Deluxe Reflexology</span>
+              <span class="muted" style="font-size:13px">60 min · foot spa, reflexology, neck &amp; shoulders · €60</span>
+            </span>
+          </a>
+          <section class="stack" style="gap:14px">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between"><h3 class="h2">Guests say</h3><span class="muted" style="font-size:13px"><b style="color:var(--ink)">5.0</b> · 450+ on Google</span></div>
+            <figure class="card quote"><span class="stars" aria-hidden="true">★★★★★</span><blockquote>"After three days walking Madrid my feet were done. I floated out of here."</blockquote><figcaption>Google review</figcaption></figure>
+          </section>
+          <section class="stack" style="gap:12px">
+            <span class="eyebrow">About this ritual</span>
+            <h3 class="h2">Foot reflexology in Madrid Centro</h3>
+            <div class="seo" id="seo1">
+              <p>Foot reflexology in Madrid focuses on specific pressure points on the feet and calves that correspond to different parts of the body, including the head, lungs, stomach and lower back.</p>
+              <p>By working these reflex zones with precise pressure, our therapists help the whole body relax. This is the long text area: it is written in WordPress, read by search engines and opened by guests who want the detail.</p>
+              <p>It can hold headings, lists and links, so each ritual can explain who it is for, what to expect and how it compares with other rituals.</p>
+            </div>
+            <button class="btn line" type="button" style="align-self:flex-start" data-more="seo1" aria-expanded="false">Read more</button>
+          </section>
+          <section class="faq">
+            <h3 class="h2" style="margin-bottom:6px">Good to know</h3>
+            <details><summary>What is your cancellation policy?</summary><p>Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full.</p></details>
+            <details><summary>Can I walk in without booking?</summary><p>Yes, walk-ins are welcome when a therapist is free. Booking guarantees your time.</p></details>
+            <details><summary>Is it good after a long flight?</summary><p>Yes. Reflexology helps heavy, swollen legs and tired feet after flying or a day of sightseeing.</p></details>
+          </section>
+          <section class="stack" style="gap:14px">
+            <span class="eyebrow">Visit us</span>
+            <h3 class="h2">3 minutes from Puerta del Sol</h3>
+            <div class="card visit">
+              <iframe title="Map: ZenVida, Calle de la Cruz 16, Madrid" loading="lazy" src="https://maps.google.com/maps?q=Calle%20de%20la%20Cruz%2016%2C%2028012%20Madrid&amp;z=16&amp;output=embed"></iframe>
+              <div class="in">
+                <div><b style="font-size:16px">Calle de la Cruz, 16</b><br><span class="muted" style="font-size:14px">Centro, 28012 Madrid · Metro Sol (lines 1, 2, 3), 3 min walk</span></div>
+                <span class="open-now"><b>Open now</b><span class="muted">· today 11:30 to 20:30</span></span>
+                <div class="g3"><a class="btn dark" href="https://maps.google.com/?q=ZenVida+Calle+de+la+Cruz+16+Madrid" target="_blank" rel="noopener">Directions</a><a class="btn line" href="#p1">WhatsApp</a><a class="btn line" href="#p1">Call</a></div>
+              </div>
+            </div>
+            <ul class="hours"><li><span>Mon to Wed</span><span>11:30 to 20:30</span></li><li><span>Thursday</span><span>11:30 to 21:30</span></li><li><span>Friday</span><span>11:00 to 21:30</span></li><li><span>Sat, Sun</span><span>10:30 to 21:30</span></li></ul>
+          </section>
+        </main>
+        <div class="sticky">
+          <div class="row">
+            <div><div class="price">€40</div><div class="sub">30 min · €25 deposit, rest after</div></div>
+            <a class="btn dark" href="#p2" data-go="p2" style="min-height:50px;padding:0 26px;font-size:16px">Book a time</a>
+          </div>
+          <span class="ok-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F7A4A" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Free changes up to 4 hours before</span>
+        </div>
+      </div>
+    </div>
+    <figcaption><b>1</b> · Ritual page</figcaption>
+  </figure>
+
+  <!-- 2 · Choose a time -->
+  <figure class="device" id="p2">
+    <div class="phone">
+      <div class="screen">
+        <div class="dim" aria-hidden="true"></div>
+        <section class="sheet" aria-label="Book Reflexology: choose a time">
+          <div class="grab"><span></span></div>
+          <div class="sh-head">
+            <div><div class="serif" style="font-size:26px;line-height:1.05">Reflexology</div><div class="muted" style="font-size:13px">30 min · €40 · <a href="#p1" data-go="p1" style="color:var(--sand-700);font-weight:600">Change</a></div></div>
+            <a class="icon-btn soft" href="#p1" data-go="p1" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a>
+          </div>
+          <div class="bar2" aria-hidden="true"><span class="on"></span><span></span></div>
+          <div class="stepnote">Step 1 of 2 · Choose a time</div>
+          <div class="sh-body">
+            <div class="days" role="group" aria-label="Day">
+              <button class="day" type="button" disabled><small>Today</small><b>24</b><i>Full</i></button>
+              <button class="day" type="button" aria-pressed="true" data-day="Wed 25"><small>Wed</small><b>25</b><i></i></button>
+              <button class="day" type="button" aria-pressed="false" data-day="Thu 26"><small>Thu</small><b>26</b><i></i></button>
+              <button class="day" type="button" aria-pressed="false" data-day="Fri 27"><small>Fri</small><b>27</b><i></i></button>
+              <button class="day" type="button" aria-pressed="false" data-day="Sat 28"><small>Sat</small><b>28</b><i>Busy</i></button>
+              <button class="day" type="button" aria-pressed="false" data-day="Sun 29"><small>Sun</small><b>29</b><i></i></button>
+              <button class="day" type="button" aria-pressed="false" data-day="Mon 30"><small>Mon</small><b>30</b><i></i></button>
+            </div>
+            <div class="seg" role="group" aria-label="Time of day">
+              <button type="button" aria-pressed="false" data-period="0">Morning</button>
+              <button type="button" aria-pressed="true" data-period="1">Afternoon</button>
+              <button type="button" aria-pressed="false" data-period="2">Evening</button>
+            </div>
+            <div class="times" data-times="0" hidden role="group" aria-label="Morning times"><button type="button">11:30</button><button type="button">11:40</button><button type="button">11:50</button></div>
+            <div class="times" data-times="1" role="group" aria-label="Afternoon times"><button type="button">12:00</button><button type="button">12:10</button><button type="button">12:20</button><button type="button">12:30</button><button type="button">12:40</button><button type="button">12:50</button><button type="button">13:00</button><button type="button">13:10</button><button type="button">13:20</button><button type="button">14:10</button><button type="button">14:20</button><button type="button">14:30</button></div>
+            <div class="times" data-times="2" hidden role="group" aria-label="Evening times"><button type="button">18:00</button><button type="button">18:10</button><button type="button">18:20</button><button type="button">18:30</button><button type="button">18:40</button><button type="button">18:50</button><button type="button">19:00</button><button type="button">19:10</button><button type="button">19:20</button><button type="button">19:30</button><button type="button">19:40</button><button type="button">19:50</button></div>
+            <div class="px stack" style="gap:8px">
+              <span style="font-size:13px;font-weight:600">Make it longer <span class="muted" style="font-weight:400">· paid at the studio</span></span>
+              <button class="add" type="button" aria-pressed="false" data-add="10"><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFEF8" stroke-width="3" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><span class="t">+10 min reflexology</span><b>+€10</b></button>
+              <button class="add" type="button" aria-pressed="false" data-add="10"><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFEF8" stroke-width="3" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><span class="t">+10 min neck, back &amp; shoulders</span><b>+€10</b></button>
+            </div>
+          </div>
+          <div class="sh-foot">
+            <div class="sum"><b id="sumWhen" style="font-weight:600">Choose a time</b><span class="muted" id="sumTotal">€40 total</span></div>
+            <a class="btn dark block" href="#p3" data-go="p3" style="min-height:52px;font-size:16px">Continue</a>
+            <span class="center sub">€25 deposit today · free changes up to 4 hours before</span>
+          </div>
+        </section>
+      </div>
+    </div>
+    <figcaption><b>2</b> · Choose a time</figcaption>
+  </figure>
+
+  <!-- 3 · Details & payment -->
+  <figure class="device" id="p3">
+    <div class="phone">
+      <div class="screen">
+        <div class="dim" aria-hidden="true"></div>
+        <section class="sheet" aria-label="Your details and payment">
+          <div class="grab"><span></span></div>
+          <div class="sh-head" style="padding-left:8px">
+            <a href="#p2" data-go="p2" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 10px;font-size:14px;font-weight:600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Back</a>
+            <span class="sub">Step 2 of 2</span>
+            <a class="icon-btn soft" href="#p1" data-go="p1" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a>
+          </div>
+          <div class="sh-body" style="padding:8px 20px 12px;gap:14px">
+            <div class="recap">
+              <span><span class="serif" style="font-size:20px;font-weight:600;display:block;line-height:1.1">Reflexology</span><span class="muted" style="font-size:13px" id="recapWhen">Wed 25 Nov · 12:00 · 30 min</span></span>
+              <span style="text-align:right"><b style="font-size:15px;display:block">€25 today</b><span class="sub" id="recapRest">€15 after</span></span>
+            </div>
+            <div class="wallet"><a href="#p4" data-go="p4" style="background:#000;color:#fff">Apple Pay</a><a href="#p4" data-go="p4" style="background:#fff;border:1px solid var(--ctl)">Google Pay</a></div>
+            <div class="or">or fill in your details</div>
+            <div class="g2">
+              <label class="field">First name<input class="input" type="text" autocomplete="given-name"></label>
+              <label class="field">Last name<input class="input" type="text" autocomplete="family-name"></label>
+            </div>
+            <label class="field"><span>WhatsApp number <em>· confirmation and reminder arrive here</em></span>
+              <span style="display:flex;gap:8px"><span class="input" style="width:auto;display:flex;align-items:center;font-weight:500">+34</span><input class="input" type="tel" autocomplete="tel-national" placeholder="612 345 678" style="flex:1;min-width:0"></span></label>
+            <label class="field"><span>Email <em>· for your receipt</em></span><input class="input" type="email" autocomplete="email"></label>
+            <div class="field"><span>Card <em>· secure payment by Stripe</em></span><div class="input" style="display:flex;align-items:center;justify-content:space-between;color:#8C857A;font-size:15px"><span>Card number</span><span>MM / YY · CVC</span></div></div>
+            <label class="check"><input type="checkbox"><span>I agree to the <a href="#p3">terms &amp; cancellation policy</a> and have read the <a href="#p3">privacy notice</a>.</span></label>
+          </div>
+          <div class="sh-foot">
+            <a class="btn dark block" href="#p4" data-go="p4" style="min-height:52px;font-size:16px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pay €25 and book</a>
+            <span class="center sub">Your time is held while you pay · free changes up to 4 hours before</span>
+          </div>
+        </section>
+      </div>
+    </div>
+    <figcaption><b>3</b> · Details &amp; payment</figcaption>
+  </figure>
+
+  <!-- 4 · Booked -->
+  <figure class="device" id="p4">
+    <div class="phone">
+      <div class="screen" style="overflow-y:auto">
+        <div style="display:flex;justify-content:flex-end;padding:12px 12px 0"><a class="icon-btn soft" href="#p1" data-go="p1" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a></div>
+        <div class="done-top">
+          <span class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span>
+          <h2 class="m-h1" style="font-size:40px">You're booked</h2>
+          <p class="m-lead">We sent your confirmation to WhatsApp and a receipt to your email.</p>
+        </div>
+        <div class="card" style="margin:22px 20px 0;overflow:hidden">
+          <div style="padding:16px 18px;border-bottom:1px solid var(--line)">
+            <span class="eyebrow" style="font-size:11px;letter-spacing:.16em">Booking ZV-1042</span>
+            <div class="serif" style="font-size:24px;font-weight:600">Reflexology</div>
+            <div style="font-size:14.5px" id="doneWhen">Wednesday 25 November · 12:00 to 12:30</div>
+          </div>
+          <div class="lines"><div><span class="muted">Deposit paid</span><b>€25</b></div><div><span class="muted">Pay after your ritual</span><b id="doneRest">€15</b></div><div><span class="muted">Where</span><span>Calle de la Cruz, 16</span></div></div>
+        </div>
+        <div class="g2" style="margin:16px 20px 0">
+          <a class="btn line" href="#p4" style="min-height:56px;border-radius:14px;font-size:14px">Add to calendar</a>
+          <a class="btn line" href="https://maps.google.com/?q=ZenVida+Calle+de+la+Cruz+16+Madrid" target="_blank" rel="noopener" style="min-height:56px;border-radius:14px;font-size:14px">Directions</a>
+        </div>
+        <div style="margin:16px 20px 0;background:var(--cream);border-radius:16px;padding:14px 16px"><b style="font-size:14px">Before you come</b><p class="muted" style="margin:4px 0 0;font-size:13.5px;line-height:1.5">Arrive 5 minutes early. Need to change? Message us on WhatsApp up to 4 hours before, free of charge.</p></div>
+        <div style="padding:24px 20px 26px"><a class="btn line block" href="#p4" style="border-color:var(--ink);min-height:50px">Give a ritual as a gift</a></div>
+      </div>
+    </div>
+    <figcaption><b>4</b> · Booked</figcaption>
+  </figure>
+</div>
+
+<div class="sec-title"><h2>Desktop</h2><span>The booking card shows the next free times; "Continue" opens the same two steps in a side panel.</span></div>
+
+<div style="padding:0 24px">
+<div class="desk">
+  <header class="d-head"><div class="in">
+    <div class="logo" style="font-size:26px">ZENVIDA<small>FOOT &amp; BODY</small></div>
+    <nav class="d-nav" aria-label="Main"><a class="on" href="rituals.html">Rituals</a><a href="#desk">Offers &amp; Packs</a><a href="#desk">Gift Cards</a><a href="#desk">Events</a><a href="#desk">Journal</a><a href="#desk">Contact</a></nav>
+    <div style="display:flex;align-items:center;gap:10px"><div class="lang"><a class="on" href="#desk">EN</a><a href="#desk">ES</a></div><a class="btn dark" href="#desk" style="min-height:44px">Book now</a></div>
+  </div></header>
+  <main class="d-main" id="desk">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="rituals.html">Rituals</a><span>/</span><a href="rituals.html">Feet &amp; Legs</a><span>/</span><span style="color:var(--ink)">Reflexology</span></nav>
+    <div class="cols">
+      <div class="left">
+        <div class="gallery">
+          <img src="https://static.wixstatic.com/media/b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png/v1/fill/w_1300,h_880,al_c,q_80,enc_auto/b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png" alt="Reflexology on feet and calves at ZenVida">
+          <img src="https://static.wixstatic.com/media/b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg/v1/fill/w_640,h_440,al_c,q_80,enc_auto/b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg" alt="The reflexology room at ZenVida">
+          <img src="https://static.wixstatic.com/media/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg/v1/fill/w_640,h_440,al_c,q_80,enc_auto/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg" alt="Aromatherapy foot spa">
+        </div>
+        <div class="stack" style="gap:14px;max-width:640px">
+          <span class="eyebrow">Feet &amp; Legs</span>
+          <h2 class="d-h1">Reflexology</h2>
+          <div class="rating" style="font-size:14px"><span class="stars" aria-hidden="true">★★★★★</span><b>5.0</b> · 450+ guests on Google</div>
+          <p style="margin:0;font-size:18px;line-height:1.6;color:var(--ink-2)">Quick relief when you are short on time: focused reflexology with a calf treatment for aching feet and tired legs. Perfect between sightseeing, after a flight or after work.</p>
+          <div class="chips"><span class="chip" style="padding:8px 14px;font-size:14px">30 minutes</span><span class="chip" style="padding:8px 14px;font-size:14px">5 min from Puerta del Sol</span><span class="chip" style="padding:8px 14px;font-size:14px">English-speaking team</span><span class="chip" style="padding:8px 14px;font-size:14px">Walk-ins welcome</span></div>
+        </div>
+        <section class="d-steps">
+          <div><span class="n">1</span><b>Calf treatment</b>Releases tight calves and heavy legs.</div>
+          <div><span class="n">2</span><b>Focused reflexology</b>Pressure-point work on the soles to ease aching feet.</div>
+          <div><span class="n">3</span><b>Walk out lighter</b>Back on your feet in 30 minutes.</div>
+        </section>
+        <section class="two">
+          <div class="upsell" style="border-radius:22px;padding:22px">
+            <div><b style="font-size:17px;font-weight:600">Make it longer</b><br><span class="muted" style="font-size:14px">Add when you book. Your deposit stays €25.</span></div>
+            <div class="opt" style="font-size:15px"><span>+10 min reflexology</span><b>+€10</b></div>
+            <div class="opt" style="font-size:15px"><span>+10 min neck, back &amp; shoulders</span><b>+€10</b></div>
+          </div>
+          <a class="cross" href="deluxe-reflexology.html" style="border-radius:22px;padding:22px;flex-direction:column;align-items:flex-start;gap:10px">
+            <span class="eyebrow">Signature · more time</span>
+            <span class="serif" style="font-size:32px;line-height:1.05">Deluxe Reflexology</span>
+            <span class="muted" style="font-size:14.5px;line-height:1.5">60 minutes: aromatherapy foot spa, reflexology, calf work and a neck &amp; shoulder massage.</span>
+            <b style="margin-top:auto">€60 · See the ritual →</b>
+          </a>
+        </section>
+        <section class="stack" style="gap:18px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px"><h3 class="d-h2">Guests say</h3><span class="muted" style="font-size:14px"><b style="color:var(--ink)">5.0</b> · 450+ reviews on Google</span></div>
+          <div class="qgrid">
+            <figure class="card quote" style="padding:20px"><span class="stars" aria-hidden="true">★★★★★</span><blockquote style="font-size:22px">"After three days walking Madrid my feet were done. I floated out of here."</blockquote><figcaption>Google review</figcaption></figure>
+            <figure class="card quote" style="padding:20px"><span class="stars" aria-hidden="true">★★★★★</span><blockquote style="font-size:22px">"I walked in on a Tuesday afternoon and was on the recliner ten minutes later."</blockquote><figcaption>Google review</figcaption></figure>
+          </div>
+        </section>
+        <section class="stack" style="gap:14px;max-width:720px">
+          <span class="eyebrow">About this ritual</span>
+          <h3 class="d-h2">Foot reflexology in Madrid Centro</h3>
+          <div class="seo" id="seo2" style="max-height:210px">
+            <p style="font-size:16px;line-height:1.7">Foot reflexology in Madrid focuses on specific pressure points on the feet and calves that correspond to different parts of the body, including the head, lungs, stomach and lower back.</p>
+            <p style="font-size:16px;line-height:1.7">By working these reflex zones with precise pressure, our therapists help the whole body relax. This is the long text area: it is written in WordPress, read by search engines and opened by guests who want the detail.</p>
+            <p style="font-size:16px;line-height:1.7">It can hold headings, lists and links, so each ritual can explain who it is for, what to expect and how it compares with other rituals.</p>
+          </div>
+          <button class="btn line" type="button" style="align-self:flex-start" data-more="seo2" aria-expanded="false">Read more</button>
+        </section>
+        <section class="faq" style="max-width:720px">
+          <h3 class="d-h2" style="margin-bottom:10px">Good to know</h3>
+          <details open><summary style="font-size:16px">What is your cancellation policy?</summary><p style="font-size:15px">Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full.</p></details>
+          <details><summary style="font-size:16px">Can I walk in without booking?</summary><p style="font-size:15px">Yes, walk-ins are welcome when a therapist is free. Booking guarantees your time.</p></details>
+          <details><summary style="font-size:16px">Is ZenVida suitable for tourists?</summary><p style="font-size:15px">Absolutely. Our rituals restore tired legs and feet after exploring Madrid or a long flight. All our staff speak English.</p></details>
+        </section>
+      </div>
+      <aside class="aside" aria-label="Book Reflexology">
+        <div class="top"><span class="serif" style="font-size:44px;line-height:1">€40<span style="font:400 14px var(--sans);color:var(--ink-2);margin-left:6px">· 30 min</span></span><span style="font-size:12.5px;background:var(--cream);border-radius:999px;padding:6px 10px">€25 deposit</span></div>
+        <div class="body">
+          <b style="font-size:14px;font-weight:600">Next free times</b>
+          <div class="seg" style="margin:0" role="group" aria-label="Day"><button type="button" aria-pressed="true">Wed 25</button><button type="button" aria-pressed="false">Thu 26</button><button type="button" aria-pressed="false">Fri 27</button></div>
+          <div class="g4"><a class="slot" href="#desk" style="font-size:14.5px">11:30</a><a class="slot" href="#desk" style="font-size:14.5px;background:var(--ink);border-color:var(--ink);color:var(--paper)">12:00</a><a class="slot" href="#desk" style="font-size:14.5px">12:30</a><a class="slot" href="#desk" style="font-size:14.5px">14:10</a><a class="slot" href="#desk" style="font-size:14.5px">18:00</a><a class="slot" href="#desk" style="font-size:14.5px">18:30</a><a class="slot" href="#desk" style="font-size:14.5px">19:00</a><a class="slot" href="#desk" style="font-size:13px;border-style:dashed;border-color:var(--ctl);color:var(--sand-700)">More</a></div>
+          <div class="recap" style="flex-direction:column;align-items:stretch;gap:6px;font-size:13.5px"><span>Wed 25 Nov · 12:00 to 12:30</span><div style="display:flex;justify-content:space-between"><span class="muted">Due today (deposit)</span><b>€25</b></div><div style="display:flex;justify-content:space-between"><span class="muted">After your ritual</span><span>€15</span></div></div>
+          <a class="btn dark block" href="#desk" style="min-height:54px;font-size:16px">Continue: book 12:00</a>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ink-2)">
+            <li class="ok-line" style="font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F7A4A" stroke-width="2.2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Free changes up to 4 hours before</li>
+            <li class="ok-line" style="font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F7A4A" stroke-width="2.2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Card, Apple Pay or Google Pay</li>
+            <li class="ok-line" style="font-size:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F7A4A" stroke-width="2.2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Confirmation on WhatsApp</li>
+          </ul>
+        </div>
+        <div class="bot"><a href="#desk">Ask on WhatsApp</a><a href="#desk">Call us</a></div>
+      </aside>
+    </div>
+    <section class="d-visit" aria-labelledby="dv-h">
+      <iframe title="Map: ZenVida, Calle de la Cruz 16, Madrid" loading="lazy" src="https://maps.google.com/maps?q=Calle%20de%20la%20Cruz%2016%2C%2028012%20Madrid&amp;z=16&amp;output=embed"></iframe>
+      <div class="in">
+        <span class="eyebrow">Visit us</span>
+        <h3 id="dv-h" class="d-h2" style="font-size:44px">3 minutes from<br>Puerta del Sol</h3>
+        <div style="font-size:16px"><b>Calle de la Cruz, 16</b><br><span class="muted">Centro, 28012 Madrid · Metro Sol (lines 1, 2, 3)</span></div>
+        <span class="open-now" style="font-size:15px"><b>Open now</b><span class="muted">· today 11:30 to 20:30</span></span>
+        <ul class="hours" style="padding-top:14px;border-top:1px solid var(--line);gap:8px 32px;font-size:14.5px"><li><span>Mon to Wed</span><span>11:30 to 20:30</span></li><li><span>Thursday</span><span>11:30 to 21:30</span></li><li><span>Friday</span><span>11:00 to 21:30</span></li><li><span>Sat, Sun</span><span>10:30 to 21:30</span></li></ul>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn dark" href="https://maps.google.com/?q=ZenVida+Calle+de+la+Cruz+16+Madrid" target="_blank" rel="noopener">Get directions</a><a class="btn line" href="#desk">WhatsApp us</a><a class="btn line" href="#desk">+34 690 829 142</a></div>
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
+<p class="foot">Concept for discussion. Prices, add-ons and deposit come from ZenVida's booking system; times and the booking number are examples. Reviews are sample texts until Google reviews are connected. Payment buttons are simulated.</p>
+
+<script>
+(() => {
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const rail = document.getElementById('rail');
+  // Jump between the phones (the flow), and light up the one you land on.
+  const go = id => {
+    const fig = document.getElementById(id);
+    if (!fig) return;
+    rail.scrollTo({ left: fig.offsetLeft - (rail.clientWidth - fig.offsetWidth) / 2, behavior: 'smooth' });
+    const ph = fig.querySelector('.phone');
+    $$('.phone.lit').forEach(p => p.classList.remove('lit'));
+    ph.classList.add('lit');
+    setTimeout(() => ph.classList.remove('lit'), 1600);
+  };
+  $$('[data-go]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    if (a.dataset.time) pickTime(a.dataset.time);
+    go(a.dataset.go);
+  }));
+
+  // Phone 2: day, part of day, time, add-ons
+  const st = { day: 'Wed 25', time: null, add: 0 };
+  const p2 = document.getElementById('p2');
+  const sync = () => {
+    const mins = 30 + st.add;
+    const dayLong = { 'Wed 25': 'Wednesday 25', 'Thu 26': 'Thursday 26', 'Fri 27': 'Friday 27', 'Sat 28': 'Saturday 28', 'Sun 29': 'Sunday 29', 'Mon 30': 'Monday 30' }[st.day];
+    const end = t => { const [h, m] = t.split(':').map(Number); const x = h * 60 + m + mins; return String(Math.floor(x / 60)).padStart(2, '0') + ':' + String(x % 60).padStart(2, '0'); };
+    document.getElementById('sumWhen').textContent = st.time ? `${st.day} Nov · ${st.time} · ${mins} min` : 'Choose a time';
+    document.getElementById('sumTotal').textContent = `€${40 + st.add} total`;
+    const t = st.time || '12:00';
+    document.getElementById('recapWhen').textContent = `${st.day} Nov · ${t} · ${mins} min`;
+    document.getElementById('recapRest').textContent = `€${15 + st.add} after`;
+    document.getElementById('doneWhen').textContent = `${dayLong} November · ${t} to ${end(t)}`;
+    document.getElementById('doneRest').textContent = `€${15 + st.add}`;
+  };
+  const pickTime = t => {
+    const period = t < '12:00' ? 0 : t < '18:00' ? 1 : 2;
+    setPeriod(period);
+    st.time = t;
+    $$('.times button', p2).forEach(b => b.setAttribute('aria-pressed', b.textContent === t));
+    sync();
+  };
+  const setPeriod = i => {
+    $$('[data-period]', p2).forEach(b => b.setAttribute('aria-pressed', b.dataset.period == i));
+    $$('[data-times]', p2).forEach(g => g.hidden = g.dataset.times != i);
+  };
+  $$('.day[data-day]', p2).forEach(b => b.addEventListener('click', () => {
+    $$('.day[data-day]', p2).forEach(x => x.setAttribute('aria-pressed', x === b));
+    st.day = b.dataset.day; st.time = null;
+    $$('.times button', p2).forEach(x => x.setAttribute('aria-pressed', 'false'));
+    sync();
+  }));
+  $$('[data-period]', p2).forEach(b => b.addEventListener('click', () => setPeriod(b.dataset.period)));
+  $$('.times button', p2).forEach(b => b.addEventListener('click', () => pickTime(b.textContent)));
+  $$('.add', p2).forEach(b => b.addEventListener('click', () => {
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', on);
+    st.add += on ? 10 : -10;
+    sync();
+  }));
+
+  // "Read more" on the long text
+  $$('[data-more]').forEach(b => b.addEventListener('click', () => {
+    const box = document.getElementById(b.dataset.more);
+    const open = box.classList.toggle('open');
+    b.textContent = open ? 'Read less' : 'Read more';
+    b.setAttribute('aria-expanded', open);
+  }));
+  sync();
+})();
+</script>
+</body>
+</html>
