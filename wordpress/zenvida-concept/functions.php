@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '1.3.0' );
+define( 'ZV_VERSION', '1.4.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -30,6 +30,7 @@ require_once __DIR__ . '/inc/careers.php';
 require_once __DIR__ . '/inc/bodymap.php';
 require_once __DIR__ . '/inc/findus.php';
 require_once __DIR__ . '/inc/pricing.php';
+require_once __DIR__ . '/inc/referral.php';
 
 /* -------------------------------------------------------------------------
  * Theme setup

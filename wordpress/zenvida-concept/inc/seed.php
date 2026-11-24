@@ -1,11 +1,11 @@
 <?php
 /**
  * Starter content: areas, needs, 19 rituals, all pages (built from ZenVida blocks), policy
- * pages, events, journal posts, a popup, menus and settings.
+ * pages, events, the 18 journal posts from zenvida.es, a popup, menus and settings.
  *
  * - Real install ("live"): runs by itself when the theme is activated on an empty WordPress,
  *   or from the "Install starter content" button. Photos are downloaded into the media
- *   library; sample events, journal posts and the popup arrive as drafts / switched off;
+ *   library; sample events and the popup arrive as drafts / switched off;
  *   demo mode stays off.
  * - Online demo ("demo"): the Playground blueprint calls zv_seed(); photos stay on Wix and
  *   everything is published, with the "Redesign concept" bar.
@@ -81,6 +81,7 @@ function zv_faq( $items, $attrs = array() ) {
 }
 
 require_once __DIR__ . '/seed-pages.php';
+require_once __DIR__ . '/seed-journal.php';
 
 function zv_seed( $mode = 'demo' ) {
 	if ( get_option( 'zv_seeded' ) || defined( 'ZV_SKIP_SEED' ) ) {
@@ -92,7 +93,7 @@ function zv_seed( $mode = 'demo' ) {
 	kses_remove_filters();
 	if ( $live ) {
 		if ( function_exists( 'set_time_limit' ) ) {
-			@set_time_limit( 300 ); // phpcs:ignore -- downloading ~10 photos
+			@set_time_limit( 600 ); // phpcs:ignore -- downloading ~35 photos
 		}
 		wp_raise_memory_limit( 'admin' );
 		$GLOBALS['zv_import_images'] = true;
@@ -106,7 +107,7 @@ function zv_seed( $mode = 'demo' ) {
 			update_option( 'blogdescription', 'Foot & Body Massage in Madrid' );
 		}
 	}
-	$sample_status = $live ? 'draft' : 'publish'; // sample journal posts and events: drafts on a real site
+	$sample_status = $live ? 'draft' : 'publish'; // sample events and popup: drafts on a real site
 
 	// WordPress's untouched sample post/page would show up in the journal and page list.
 	foreach ( array( array( 'hello-world', 'post' ), array( 'sample-page', 'page' ) ) as $d ) {
@@ -228,25 +229,6 @@ function zv_seed( $mode = 'demo' ) {
 		update_post_meta( $id, 'zv_zones', zv_seed_zones()[ $slug ] ?? array() );
 	}
 
-	/* ---------- Journal posts ---------- */
-	$posts = array(
-		array( 'Walking Madrid? What tired feet are telling you', 'Reflexology', 'b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg', 'Why a city made for walking is the perfect place for reflexology.' ),
-		array( "September in Madrid: the locals' secret season", 'Madrid guide', 'b84849_4e8d66b9b6d145ca963603d3e50950ee~mv2.jpg', 'Softer light, shorter queues and the city at its best.' ),
-		array( 'The 5pm slump: what your body needs after work', 'Mind & stress', 'b84849_3c6a459dcd71493ea41290b153870b6c~mv2.jpg', 'Small resets for the most tired hour of the day.' ),
-	);
-	foreach ( array_reverse( $posts ) as $n => $p ) {
-		$cat = term_exists( $p[1], 'category' ) ?: wp_insert_term( $p[1], 'category' );
-		$pid = wp_insert_post( array(
-			'post_status'   => $sample_status,
-			'post_title'    => $p[0],
-			'post_excerpt'  => $p[3],
-			'post_date'     => gmdate( 'Y-m-d H:i:s', time() - ( 3 - $n ) * DAY_IN_SECONDS ),
-			'post_content'  => wp_slash( serialize_blocks( array( zv_p( $p[3] ), zv_p( 'Sample article for the redesign concept. The real Respiro Journal posts would appear here.' ) ) ) ),
-			'post_category' => array( is_array( $cat ) ? (int) $cat['term_id'] : (int) $cat ),
-		) );
-		update_post_meta( $pid, 'zv_image', zv_img( $p[2], 1200, 800 ) );
-	}
-
 	/* ---------- Pages ---------- */
 	$rituals_url = get_post_type_archive_link( 'ritual' );
 	$term_url    = fn( $s ) => get_term_link( $s, 'area' );
@@ -321,6 +303,7 @@ function zv_seed( $mode = 'demo' ) {
 	/* ---------- Customer information, legal, groups, jobs ---------- */
 	$legal  = zv_seed_policy_pages();
 	$extra  = zv_seed_group_and_jobs_pages();
+	$refer  = zv_seed_referral_pages();
 	$plink  = fn( $slug ) => get_permalink( $legal[ $slug ] );
 
 	/* ---------- Menus ---------- */
@@ -335,7 +318,7 @@ function zv_seed( $mode = 'demo' ) {
 	}
 	$area_links[] = array( 'All rituals & prices', $rituals_url );
 	zv_seed_menu( 'Rituals', 'footer-1', $area_links );
-	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', get_permalink( $offers_page ) . '#membership' ), array( 'Packs', get_permalink( $offers_page ) . '#packs' ), array( 'Gift Cards', get_permalink( $gift_page ) ), array( 'Loyalty Card', get_permalink( $offers_page ) . '#loyalty' ) ) );
+	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', get_permalink( $offers_page ) . '#membership' ), array( 'Packs', get_permalink( $offers_page ) . '#packs' ), array( 'Gift Cards', get_permalink( $gift_page ) ), array( 'Loyalty Card', get_permalink( $offers_page ) . '#loyalty' ), array( 'Refer a friend', get_permalink( $refer['refer'] ) ) ) );
 	zv_seed_menu( 'Customer info', 'footer-3', array(
 		array( 'Contact us', get_permalink( $contact_page ) ),
 		array( 'How to find us', get_permalink( $contact_page ) . '#find-us' ),
@@ -401,6 +384,7 @@ function zv_seed( $mode = 'demo' ) {
 		update_user_meta( $uid, $key, $prefs );
 	}
 
+	zv_seed_journal(); // the 18 real journal posts, after the pages they link to
 	flush_rewrite_rules();
 }
 
@@ -642,7 +626,7 @@ add_action( 'admin_notices', function () {
 	}
 	if ( get_transient( 'zv_import_done' ) ) {
 		delete_transient( 'zv_import_done' );
-		echo '<div class="notice notice-success is-dismissible"><p><b>ZenVida starter content is installed:</b> 19 rituals, all pages, policies, menus and photos. Sample events, journal posts and the sample popup are saved as drafts, ready for you to edit. <a href="' . esc_url( home_url( '/' ) ) . '">View the website →</a></p></div>';
+		echo '<div class="notice notice-success is-dismissible"><p><b>ZenVida starter content is installed:</b> 19 rituals, all pages, policies, menus, the 18 journal posts and photos. Sample events and the sample popup are saved as drafts, ready for you to edit. <a href="' . esc_url( home_url( '/' ) ) . '">View the website →</a></p></div>';
 		return;
 	}
 	if ( get_option( 'zv_seeded' ) || get_posts( array( 'post_type' => 'ritual', 'post_status' => 'any', 'numberposts' => 1, 'fields' => 'ids' ) ) ) {

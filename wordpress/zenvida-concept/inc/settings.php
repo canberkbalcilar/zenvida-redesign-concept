@@ -68,6 +68,7 @@ function zv_defaults() {
 		'gift_success' => "Thank you! We'll email you a secure payment link within the hour (10:00–21:00). Once paid, the gift card is emailed straight away.",
 		'gift_url'     => '',
 		'job_success'  => "Thank you for applying! We read every application and reply within a week if there is a good fit.",
+		'referral_success' => "Thank you for recommending us! One of our membership advisors will contact your friend soon.",
 		'events_title' => 'Workshops, open days & special weeks',
 		'events_intro' => 'Small groups, seasonal rituals and evenings to learn something new about looking after yourself.',
 		'events_empty' => 'New events are coming soon. Follow us on Instagram or sign up to the newsletter to hear first.',
@@ -346,6 +347,7 @@ function zv_settings_page() {
 				$row( 'contact_success', 'Thank-you text (contact form)', '', 'textarea' );
 				$row( 'gift_success', 'Thank-you text (gift card request)', '', 'textarea' );
 				$row( 'job_success', 'Thank-you text (job application)', '', 'textarea' );
+				$row( 'referral_success', 'Thank-you text (refer a friend)', '', 'textarea' );
 				$row( 'gift_url', 'Gift card payment page (optional)', 'If your booking system sells gift cards online, paste its link: visitors see a "Continue to payment" button after sending the request.' );
 				?>
 			</table>

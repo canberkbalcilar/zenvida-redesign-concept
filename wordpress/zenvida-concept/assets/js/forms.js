@@ -87,6 +87,11 @@
       if (!f('name').value.trim()) return bad(f('name'), 'Please add your name.');
       if (!/^\S+@\S+\.\S+$/.test(f('email').value.trim())) return bad(f('email'), 'Please check your email address.');
       if (kind === 'contact' && !f('message').value.trim()) return bad(f('message'), 'Please write your message.');
+      if (kind === 'referral') {
+        if (!f('phone').value.trim()) return bad(f('phone'), 'Please add your phone number.');
+        if (!detail("Friend's name")) return bad(form.querySelector(`[data-k="Friend's name"]`), "Please add your friend's name.");
+        if (!/^\S+@\S+\.\S+$/.test(detail("Friend's email"))) return bad(form.querySelector(`[data-k="Friend's email"]`), "Please check your friend's email address.");
+      }
       if (kind === 'job') {
         const cv = f('cv') && f('cv').files[0];
         if (cv && cv.size > 5 * 1024 * 1024) return bad(f('cv'), 'The CV is larger than 5 MB. Please send a smaller file.');
@@ -106,7 +111,8 @@
       fd.append('kind', kind);
       fd.append('page', location.href);
       if (kind === 'job') ['Experience', 'Availability', 'Languages'].forEach(k => detail(k) && fd.append(`details[${k}]`, detail(k)));
-      if (kind === 'contact') form.querySelectorAll('[data-k]').forEach(el => el.value.trim() && fd.append(`details[${el.dataset.k}]`, el.value.trim()));
+      if (kind === 'contact' || kind === 'referral') form.querySelectorAll('[data-k]').forEach(el => el.value.trim() && fd.append(`details[${el.dataset.k}]`, el.value.trim()));
+      if (kind === 'referral') fd.append('topic', 'Referral: ' + detail("Friend's name"));
       if (kind === 'gift') {
         fd.append('topic', 'Gift card');
         fd.append('details[Gift]', what());
@@ -127,7 +133,7 @@
         const done = document.createElement('div');
         done.className = 'zf-done';
         done.setAttribute('role', 'status');
-        done.innerHTML = '<span class="zf-tick">✓</span><h3>' + ({ gift: 'Request received', job: 'Application sent' }[kind] || 'Message sent') + '</h3><p></p>';
+        done.innerHTML = '<span class="zf-tick">✓</span><h3>' + ({ gift: 'Request received', job: 'Application sent', referral: 'Referral sent' }[kind] || 'Message sent') + '</h3><p></p>';
         done.querySelector('p').textContent = j.data.message;
         if (j.data.payUrl) {
           const a = document.createElement('a');

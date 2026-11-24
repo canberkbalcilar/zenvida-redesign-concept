@@ -37,7 +37,7 @@ add_action( 'init', function () {
 /* ------------------------------------------------------------- receiving */
 
 function zv_message_kinds() {
-	return array( 'contact' => 'Contact form', 'gift' => 'Gift card request', 'pack' => 'Pack / membership request', 'job' => 'Job application' );
+	return array( 'contact' => 'Contact form', 'gift' => 'Gift card request', 'pack' => 'Pack / membership request', 'job' => 'Job application', 'referral' => 'Refer a friend' );
 }
 
 add_action( 'wp_ajax_zv_message', 'zv_receive_message' );
@@ -71,6 +71,9 @@ function zv_receive_message() {
 	}
 	if ( 'contact' === $kind && '' === trim( $message ) ) {
 		$fail( 'Please write your message.', 'message' );
+	}
+	if ( 'referral' === $kind ) {
+		zv_referral_check( $in, $fail );
 	}
 	if ( empty( $in['consent'] ) ) {
 		$fail( 'Please tick the box so we may keep your message to reply to you.', 'consent' );
@@ -140,7 +143,7 @@ function zv_receive_message() {
 		wp_mail( $to, '[ZenVida] ' . $title, implode( "\n", $lines ), array( 'Reply-To: ' . $name . ' <' . $email . '>' ), $cv[0] ? array( $cv[0] ) : array() );
 	}
 
-	$thanks = array( 'gift' => zv_opt( 'gift_success' ), 'job' => zv_opt( 'job_success' ) );
+	$thanks = array( 'gift' => zv_opt( 'gift_success' ), 'job' => zv_opt( 'job_success' ), 'referral' => zv_opt( 'referral_success' ) );
 	wp_send_json_success( array( 'message' => $thanks[ $kind ] ?? zv_opt( 'contact_success' ), 'payUrl' => 'gift' === $kind ? zv_opt( 'gift_url' ) : '' ) );
 }
 

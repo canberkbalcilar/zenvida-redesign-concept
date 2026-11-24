@@ -231,6 +231,7 @@
         RT(p, 'text', 'p', null, 'A few words about the role'),
         needs.length ? h('ul', null, needs.map((t, i) => h('li', { key: i }, Icon('check'), h('span', null, t)))) : F.note('Add "What we look for" in the panel on the right →')));
   });
+  ssrBlock('referral-form', 'Refer a friend form', p => [F.text(p, 'buttonLabel', 'Button text'), F.text(p, 'termsLabel', 'Terms link text', 'Leave empty to hide the link.'), F.text(p, 'termsUrl', 'Terms page address', 'Empty = the "Refer a Friend: Terms & Conditions" page.')], 'Referrals arrive under Messages and by email.');
   ssrBlock('job-form', 'Job application form', p => [F.area(p, 'roles', 'Roles to choose from', 'Comma separated'), F.text(p, 'buttonLabel', 'Button text')], 'Applications (with CV) arrive under Messages and by email.');
   ssrBlock('directions', 'Directions & maps', p => [F.area(p, 'transport', 'How to get here', 'One per line, e.g. "Metro: Sol (lines 1, 2 and 3)"')], 'The address and map links come from Site settings.');
   container('route', 'route', 'zv/route-step', 4);

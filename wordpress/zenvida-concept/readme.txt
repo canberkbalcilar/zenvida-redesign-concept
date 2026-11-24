@@ -25,6 +25,10 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.4.0 =
+* Journal: the 18 Respiro posts from zenvida.es are now part of the starter content (texts, photos, headings, lists, buttons, tables, questions), with their original dates and addresses. Links to old zenvida.es pages point to the matching new pages. The 3 sample posts are gone.
+* Refer a friend: new page with a form (your details + your friend's), saved under Messages and emailed; its own terms page; link in the footer "Offers" menu. Thank-you text in Site settings.
+
 = 1.3.0 =
 * Keyboard and screen readers: quiz, popups and booking card work fully with the keyboard (arrow keys for durations, foot bath and days; focus kept on the chosen time; Esc closes and returns focus). Skip link, visible focus rings everywhere, mobile menu closes with Esc.
 * Duplicate: copy a ritual, event or popup as a draft from the list (or from the ritual form).
