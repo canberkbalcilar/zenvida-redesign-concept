@@ -7,7 +7,7 @@ $zv_up   = zv_events( 'upcoming' );
 $zv_past = zv_events( 'past', 9 );
 get_header();
 ?>
-<main>
+<main id="main">
 <section class="block ev-page">
   <div class="wrap">
     <div class="sec-head">

@@ -31,7 +31,7 @@ h2{font-size:clamp(34px,4.4vw,50px);line-height:1.05}
 .btn-glass{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .btn-glass:hover{background:rgba(255,255,255,.22)}
 .link{font-weight:600;color:var(--sand-700);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
-:focus-visible{outline:2px solid var(--sand-700);outline-offset:3px}
+:focus-visible{outline:3px solid var(--sand-700);outline-offset:3px}
 
 /* ---------- Concept bar, promo, header ---------- */
 .concept{background:#F1EADC;color:#4A443B;font:500 12.5px/1.4 var(--sans);text-align:center;padding:7px 16px;border-bottom:1px solid #E6DECF}
@@ -103,6 +103,7 @@ section.block.bg-dark{background:var(--ink);color:#EDE6D8}
 .qf label{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .qf select{border:0;background:transparent;font-size:16px;font-weight:500;padding:4px 22px 2px 0;margin:0;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237A7266' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right center;background-size:14px;width:100%;text-overflow:ellipsis}
 .qf select:focus{outline:none}
+.qf:focus-within{box-shadow:inset 0 0 0 3px var(--sand-700);border-radius:inherit}
 .qb .btn{border-radius:16px;padding:0 30px;margin:2px}
 .qb-note{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:14px;font-size:13.5px;color:var(--muted)}
 .qb-note span{display:inline-flex;gap:6px;align-items:center}
@@ -200,7 +201,7 @@ section.block.bg-dark{background:var(--ink);color:#EDE6D8}
 .nrow{display:flex;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 20px;align-items:center}
 .nrow input{border:0;flex:1;min-width:0;font-size:16px;background:transparent;padding:8px 0}
 .nrow input:focus{outline:none}
-.nrow:focus-within{border-color:var(--sand)}
+.nrow:focus-within{border-color:var(--sand-700);box-shadow:0 0 0 3px rgba(138,115,80,.35)}
 .nrow .btn{padding:12px 22px}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)}
 .consent input{margin-top:3px;accent-color:var(--ink)}
@@ -951,3 +952,13 @@ dialog.taxi::backdrop{background:rgba(30,27,23,.6)}
 @media (max-width:760px){.route{grid-template-columns:1fr}.route-img{aspect-ratio:16/9}.dir-addr{font-size:28px}.dir-map{min-height:220px}.dir-btns .btn{flex:1 1 auto}}
 
 .dir+.taxi+.route,.dir+.route{margin-top:40px}
+
+/* ---------- Keyboard and screen readers ---------- */
+.skip-link{position:absolute;left:12px;top:-60px;z-index:100;background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 12px 12px;font-weight:600;text-decoration:none;transition:top .15s}
+.skip-link:focus{top:0}
+/* light ring on dark backgrounds */
+footer.site :focus-visible,.bg-dark :focus-visible,.promo :focus-visible,.pack.featured :focus-visible,.zvp-bar :focus-visible,.concept :focus-visible,.btn-dark:focus-visible,.gcard :focus-visible{outline-color:#F1EADC}
+.btn-dark:focus-visible{box-shadow:0 0 0 3px var(--sand-700)}
+.slot:focus-visible,.day:focus-visible,.bath:focus-visible,.chip:focus-visible,.bm-chip:focus-visible{outline-offset:2px}
+#qzQ:focus,#results:focus,.zvp h2:focus{outline:none}
+#qzQ:focus-visible{outline:3px solid var(--sand-700);outline-offset:4px;border-radius:6px}

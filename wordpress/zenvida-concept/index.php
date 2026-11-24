@@ -5,7 +5,7 @@
 get_header();
 global $wp_query;
 ?>
-<main>
+<main id="main">
 <section class="block">
   <div class="wrap">
     <div class="sec-head"><div><span class="eyebrow">Respiro Journal</span><h2><?php echo is_category() ? esc_html( single_cat_title( '', false ) ) : 'Slow living in Madrid'; ?></h2></div></div>

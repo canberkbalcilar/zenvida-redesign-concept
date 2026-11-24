@@ -20,6 +20,24 @@
   const len = () => OPTS[st.opt][0];
   const price = () => OPTS[st.opt][1];
 
+  // Radio groups (duration, foot bath): one tab stop, arrow keys move the choice (WAI-ARIA radio pattern)
+  const radioKeys = group => {
+    if (!group) return;
+    const items = [...group.querySelectorAll('[role=radio]')];
+    const sync = () => items.forEach(x => x.tabIndex = x.getAttribute('aria-checked') === 'true' ? 0 : -1);
+    group.addEventListener('keydown', e => {
+      const i = items.indexOf(document.activeElement);
+      if (i < 0) return;
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      const to = e.key === 'Home' ? 0 : e.key === 'End' ? items.length - 1 : step ? (i + step + items.length) % items.length : -1;
+      if (to < 0) return;
+      e.preventDefault(); items[to].click(); items[to].focus();
+    });
+    group.addEventListener('click', () => setTimeout(sync));
+    sync();
+  };
+  radioKeys($('#durations')); radioKeys($('#bathGroup'));
+
   // Duration
   document.querySelectorAll('#durations .dur').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('#durations .dur').forEach(x => x.setAttribute('aria-checked', x === b));
@@ -45,9 +63,17 @@
   days.forEach((d,i) => {
     const b = document.createElement('button');
     b.className = 'day'; b.setAttribute('aria-pressed', i===0);
+    b.setAttribute('aria-label', (i===0 ? 'Today, ' : i===1 ? 'Tomorrow, ' : '') + d.toLocaleDateString('en',{weekday:'long',day:'numeric',month:'long'}) + (closedDay(d) ? ', closed' : ''));
     b.innerHTML = `${i===0?'Today':i===1?'Tmrw':d.toLocaleDateString('en',{weekday:'short'})}<b>${d.getDate()}</b>${d.toLocaleDateString('en',{month:'short'})}`;
     b.onclick = () => { st.day = i; st.time = null; st.showAll = false; daysEl.querySelectorAll('.day').forEach((x,j)=>x.setAttribute('aria-pressed', j===i)); render(); };
     daysEl.appendChild(b);
+  });
+
+  daysEl.addEventListener('keydown', e => {
+    const all = [...daysEl.querySelectorAll('.day')], i = all.indexOf(document.activeElement);
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (i < 0 || !step || !all[i + step]) return;
+    e.preventDefault(); all[i + step].focus(); all[i + step].scrollIntoView({ block: 'nearest', inline: 'nearest' });
   });
 
   // Deterministic "availability" for the demo
@@ -80,16 +106,21 @@
     const d = days[st.day], [o,c] = HOURS[d.getDay()];
     $('#dayHours').textContent = closedDay(d) ? `${DAYN[d.getDay()]} · closed` : `${DAYN[d.getDay()]} ${fmt(o)}–${fmt(c)} · Madrid time`;
     const all = slotsFor(st.day), list = st.showAll ? all : all.slice(0,8);
-    const sl = $('#slots'); sl.innerHTML = '';
+    const sl = $('#slots');
+    const focusedTime = document.activeElement && document.activeElement.classList.contains('slot') ? document.activeElement.textContent : null;
+    sl.innerHTML = '';
     if (!all.length) sl.innerHTML = `<p style="grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)">${closedDay(d) ? 'We are closed this day. Please pick another.' : 'No times left today. Try tomorrow.'}</p>`;
     list.forEach(s => {
       const b = document.createElement('button');
       b.className='slot'; b.textContent = fmt(s.m); b.disabled = s.off;
       b.setAttribute('aria-pressed', st.time === s.m);
       b.onclick = () => { st.time = s.m; render(); };
+      if (s.off) b.setAttribute('aria-label', fmt(s.m) + ', booked');
       sl.appendChild(b);
     });
+    if (focusedTime) [...sl.querySelectorAll('.slot')].find(x => x.textContent === focusedTime)?.focus();
     $('#moreSlots').hidden = all.length <= 8;
+    $('#moreSlots').setAttribute('aria-expanded', st.showAll);
     $('#moreSlots').textContent = st.showAll ? 'Show fewer times' : `Show all ${all.length} times`;
 
     $('#sLine').textContent = `${Z.name || 'Ritual'} · ${len()} min${TWO ? '' : ' × ' + g}`;
@@ -119,7 +150,7 @@
       window.open(WA + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
       return;
     }
-    if (st.time == null) { $('#slots').scrollIntoView({behavior:'smooth',block:'center'}); window.zvToast && zvToast('Pick a time slot first'); }
+    if (st.time == null) { $('#slots').scrollIntoView({behavior:'smooth',block:'center'}); $('#slots .slot:not([disabled])')?.focus({preventScroll:true}); window.zvToast && zvToast('Pick a time slot first'); }
     else window.zvToast && zvToast('Prototype: next step is "Your details", then card deposit.');
   };
 })();

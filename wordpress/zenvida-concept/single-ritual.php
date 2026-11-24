@@ -23,7 +23,7 @@ $zv_unit   = $zv_two ? 'for two' : '/ person';
 
 get_header();
 ?>
-<main>
+<main id="main">
 <?php if ( $zv_r['hidden'] ) : ?><div class="zv-hidden-note">This ritual is switched off. Only you can see it, because you are logged in. <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>">Switch it on</a></div><?php endif; ?>
 <div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="<?php echo esc_url( get_post_type_archive_link( 'ritual' ) ); ?>">Rituals</a><span>/</span><?php if ( $zv_area ) : ?><a href="<?php echo esc_url( get_term_link( $zv_area ) ); ?>"><?php echo esc_html( $zv_area->name ); ?></a><span>/</span><?php endif; ?><?php the_title(); ?></nav>
@@ -105,8 +105,8 @@ get_header();
         <div>
           <div class="field-label">Date &amp; time <span id="dayHours"></span></div>
           <div class="days" id="days" role="group" aria-label="Choose a day"></div>
-          <div class="slots" id="slots" role="group" aria-label="Choose a time"></div>
-          <button class="more-slots" id="moreSlots">Show all times</button>
+          <div class="slots" id="slots" role="group" aria-label="Choose a time" aria-live="polite"></div>
+          <button class="more-slots" id="moreSlots" aria-controls="slots" aria-expanded="false">Show all times</button>
         </div>
 
         <div class="summary" aria-live="polite">

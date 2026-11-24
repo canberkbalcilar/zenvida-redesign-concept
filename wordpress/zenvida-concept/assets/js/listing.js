@@ -121,9 +121,15 @@ function drawQ(){
   $('#qzBack').hidden = qi===0;
   $('#qzOpts').innerHTML = q.o.map(([v,t,s]) => `<button data-v="${v}">${t}${s?`<small>${s}</small>`:''}</button>`).join('');
   $('#qzOpts').querySelectorAll('button').forEach(b => b.onclick = () => { ans[qi] = b.dataset.v; qi < Q.length-1 ? (qi++, drawQ()) : finishQuiz(); });
+  // New question: move focus to it so screen readers read it, then Tab reaches the answers
+  if (dlg.open) $('#qzQ').focus();
 }
-function openQuiz(){ qi=0; ans={}; drawQ(); dlg.showModal(); }
+let quizOpener = null, quizDone = false;
+function openQuiz(){ quizOpener = document.activeElement; quizDone = false; qi=0; ans={}; drawQ(); dlg.showModal(); $('#qzQ').focus(); }
+// Closed without finishing: back to the button that opened it
+dlg.addEventListener('close', () => { if (!quizDone && quizOpener && quizOpener.focus) quizOpener.focus(); });
 function finishQuiz(){
+  quizDone = true;
   dlg.close();
   st.area='all'; st.sort='rec'; st.view='cards';
   st.need = null; st.time = 'any';
@@ -137,6 +143,7 @@ function finishQuiz(){
   st.pick = filtered()[0]?.slug || null; st.quiz = true;
   render();
   $('#results').scrollIntoView({behavior:'smooth'});
+  $('#results').focus({preventScroll:true}); // keyboard and screen reader users land on the suggestions
 }
 document.querySelectorAll('[data-open-quiz]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); openQuiz(); }));
 $('#qzClose').onclick = () => dlg.close();

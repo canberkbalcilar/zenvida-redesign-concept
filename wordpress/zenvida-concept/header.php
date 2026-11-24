@@ -16,6 +16,7 @@ $zv_menu     = function ( $loc, $fallback_cls = '' ) {
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<a class="skip-link" href="#main">Skip to content</a>
 <?php if ( zv_demo() ) : ?>
 <div class="concept"><b>Redesign concept</b> · Running on WordPress · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>">Edit pages</a> · <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ritual' ) ); ?>">Edit rituals</a> · <?php if ( current_user_can( 'edit_theme_options' ) ) : ?><a href="<?php echo esc_url( admin_url( 'admin.php?page=zv-settings' ) ); ?>">Settings</a> · <?php endif; ?><a href="<?php echo esc_url( ZV_CONCEPTS_URL ); ?>" target="_blank" rel="noopener">All concepts</a></div>
 <?php endif; ?>

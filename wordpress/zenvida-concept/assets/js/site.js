@@ -15,9 +15,15 @@ window.zvToast = t => {
 // Header border, mobile menu
 const hdr = $('#hdr');
 const mnav = $('#mnav'), mbtn = $('.menu-btn');
-if (mbtn && mnav) mbtn.addEventListener('click', () => {
-  const open = mnav.hidden; mnav.hidden = !open; mbtn.setAttribute('aria-expanded', open);
-});
+if (mbtn && mnav) {
+  const setMenu = open => {
+    mnav.hidden = !open; mbtn.setAttribute('aria-expanded', open);
+    mbtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) mnav.querySelector('a')?.focus();
+  };
+  mbtn.addEventListener('click', () => setMenu(mnav.hidden));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !mnav.hidden) { setMenu(false); mbtn.focus(); } });
+}
 
 // Mobile bar: hidden while an anchor (quick book / booking card / filters) is on screen
 const mbar = $('#mbar');

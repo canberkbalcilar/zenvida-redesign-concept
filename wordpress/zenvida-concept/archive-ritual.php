@@ -5,7 +5,7 @@
  */
 get_header();
 ?>
-<main>
+<main id="main">
 <?php
 $zv_page = (int) zv_opt( 'rituals_page' );
 if ( $zv_page && 'publish' === get_post_status( $zv_page ) ) {

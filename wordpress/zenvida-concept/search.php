@@ -7,7 +7,7 @@ $zv_q     = get_search_query();
 $zv_types = array( 'ritual' => 'Ritual', 'zv_event' => 'Event', 'post' => 'Journal', 'page' => 'Page' );
 get_header();
 ?>
-<main>
+<main id="main">
 <section class="block zv-search">
   <div class="wrap">
     <span class="eyebrow">Search</span>

@@ -436,7 +436,7 @@ function zv_render_listing( $a ) {
 	    <div class="frow"><span class="flabel">I need</span><div class="scroller" role="group" aria-label="Need" id="needChips"></div></div>
 	  </div>
 	</div>
-	<div class="wrap results" id="results">
+	<div class="wrap results" id="results" tabindex="-1">
 	  <div class="rhead" id="rhead"><span><b><?php echo count( $rituals ); ?></b> rituals</span></div>
 	  <div id="out">
 	  <?php
@@ -462,12 +462,12 @@ function zv_render_listing( $a ) {
 	  <?php endforeach; ?>
 	  </div>
 	</div>
-	<dialog id="quiz" class="quiz" aria-label="Find your ritual">
+	<dialog id="quiz" class="quiz" aria-labelledby="qzQ" aria-describedby="qzStep">
 	  <div class="qz">
-	    <div class="qz-top"><div class="qz-bar"><i id="qzBar" style="width:33%"></i></div><button class="qz-x" id="qzClose" aria-label="Close">×</button></div>
+	    <div class="qz-top"><div class="qz-bar" aria-hidden="true"><i id="qzBar" style="width:33%"></i></div><button class="qz-x" id="qzClose" aria-label="Close the quiz">×</button></div>
 	    <span class="eyebrow" id="qzStep">Question 1 of 3</span>
-	    <h3 id="qzQ"></h3>
-	    <div class="qz-opts" id="qzOpts"></div>
+	    <h3 id="qzQ" tabindex="-1"></h3>
+	    <div class="qz-opts" id="qzOpts" role="group" aria-labelledby="qzQ"></div>
 	    <button class="qz-back" id="qzBack" hidden>← Back</button>
 	  </div>
 	</dialog>

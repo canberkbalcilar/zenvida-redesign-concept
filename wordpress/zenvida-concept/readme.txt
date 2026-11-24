@@ -25,6 +25,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.3.0 =
+* Keyboard and screen readers: quiz, popups and booking card work fully with the keyboard (arrow keys for durations, foot bath and days; focus kept on the chosen time; Esc closes and returns focus). Skip link, visible focus rings everywhere, mobile menu closes with Esc.
+* Duplicate: copy a ritual, event or popup as a draft from the list (or from the ritual form).
+* Rituals → Change prices: raise or lower prices for all rituals, one area or picked ones, by % or €, with rounding. Apply now or from a date (00:00 Madrid). Live preview, cancel scheduled changes, undo applied ones.
+
 = 1.2.0 =
 * How to find us merged into the Contact page (Getting here section, #find-us); I have a gift card page removed. Old addresses redirect.
 

@@ -40,7 +40,7 @@
     shown = true;
     remember(p);
     el.hidden = false;
-    if (el.tagName === 'DIALOG') { el.showModal(); }
+    if (el.tagName === 'DIALOG') { el.showModal(); el.querySelector('h2')?.setAttribute('tabindex', '-1'); el.querySelector('h2')?.focus(); }
     else { requestAnimationFrame(() => el.classList.add('open')); }
     document.documentElement.classList.add('zvp-on-' + (el.classList.contains('zvp-bar') ? 'bar' : 'other'));
     cleanup();

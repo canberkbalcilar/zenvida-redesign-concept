@@ -4,7 +4,7 @@
  */
 get_header();
 ?>
-<main>
+<main id="main">
 <section class="block zv-search">
   <div class="wrap">
     <span class="eyebrow">Page not found</span>

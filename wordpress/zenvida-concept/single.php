@@ -7,7 +7,7 @@ the_post();
 $zv_cat = get_the_category();
 $zv_img = zv_post_image( get_the_ID() );
 ?>
-<main>
+<main id="main">
 <article <?php post_class( 'prose-page' ); ?>>
 	<?php if ( $zv_cat ) : ?><span class="eyebrow"><?php echo esc_html( $zv_cat[0]->name ); ?></span><?php endif; ?>
 	<h1><?php the_title(); ?></h1>

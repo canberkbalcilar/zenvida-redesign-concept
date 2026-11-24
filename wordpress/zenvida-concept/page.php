@@ -6,7 +6,7 @@ get_header();
 the_post();
 $zv_blocks = false !== strpos( get_post()->post_content, '<!-- wp:zv/' );
 ?>
-<main>
+<main id="main">
 <?php if ( $zv_blocks ) : ?>
 	<?php the_content(); ?>
 <?php else : ?>

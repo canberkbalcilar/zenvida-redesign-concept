@@ -442,6 +442,8 @@ function zv_dashboard_guide() {
 		array( 'visibility', 'Hide or show a ritual', 'Use the switch in the "On website" column.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
 		array( 'sort', 'Change the order of rituals', 'Drag the ☰ handle in the rituals list.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
 		array( 'plus-alt', 'Add a new ritual', 'Type the name, price and texts, choose a photo, click Publish (top right). FAQ and "Visit us" are added for you.', admin_url( 'post-new.php?post_type=ritual' ), 'Add ritual' ),
+		array( 'admin-page', 'Add a ritual similar to an existing one', 'In the rituals list, hover a ritual and click "Duplicate". Change what is different and Publish.', admin_url( 'edit.php?post_type=ritual' ), 'Rituals' ),
+		array( 'chart-line', 'Raise or lower all prices (for example +5% from 1 January)', 'Choose the rituals, the change and the day. Check the preview, then confirm. You can undo it.', admin_url( 'edit.php?post_type=ritual&page=zv-prices' ), 'Change prices' ),
 		array( 'edit', 'Change the homepage text, buttons or photos', 'Click any text to type. Click a photo or button to change it in the right panel.', $home ? get_edit_post_link( $home ) : admin_url( 'edit.php?post_type=page' ), 'Edit homepage' ),
 		array( 'editor-help', 'Add or remove an FAQ question', 'Click a question, then + below it to add, or ⋮ → Delete to remove.', $deluxe ? get_edit_post_link( $deluxe ) : admin_url( 'edit.php?post_type=ritual' ), 'Example page' ),
 		array( 'calendar-alt', 'Add an event (workshop, open day, special week)', 'Name, dates, photo, price and a description. It moves to "Past events" by itself.', admin_url( 'post-new.php?post_type=zv_event' ), 'Add event' ),
