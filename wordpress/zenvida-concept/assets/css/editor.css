@@ -25,3 +25,8 @@
 .editor-styles-wrapper .go .zv-ic svg{width:16px;height:16px}
 .editor-styles-wrapper [data-rich-text-placeholder]{opacity:.5}
 .editor-styles-wrapper .nrow input{pointer-events:none}
+
+/* Booking widget placeholder */
+.zvw-placeholder{display:grid;gap:6px;place-items:center;text-align:center;min-height:260px;border:1px dashed #c9b991;border-radius:22px;background:#fbf8f1;padding:24px;color:#4a443b}
+.zvw-placeholder b{font-size:18px}
+.zvw-placeholder em{color:#8a4b00}

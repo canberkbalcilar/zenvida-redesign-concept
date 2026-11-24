@@ -175,3 +175,11 @@
 .zv-prices h2{margin-top:28px}
 .zv-dup{margin-top:18px;padding-top:14px;border-top:1px solid #e5e5e5}
 @media (max-width:960px){.zv-pc-grid{grid-template-columns:1fr}}
+
+/* Ritual details: Online booking */
+.zv-widget-check{margin:8px 0 4px;padding:0;list-style:none}
+.zv-widget-check li{margin:4px 0;padding-left:22px;position:relative}
+.zv-widget-check li::before{position:absolute;left:0;top:0;font-weight:700}
+.zv-widget-check .ok::before{content:"\2713";color:#00a32a}
+.zv-widget-check .bad::before{content:"!";color:#b26200}
+.zv-widget-check .bad{color:#8a4b00}

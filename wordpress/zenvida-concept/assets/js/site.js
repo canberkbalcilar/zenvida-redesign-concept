@@ -145,4 +145,23 @@ $$('.story').forEach(s => {
   });
 });
 
+// Booking widget on ritual pages: the duration buttons switch the widget's service (e.g. ...-60 to ...-90).
+$$('[data-widget-durations]').forEach(group => {
+  const items = [...group.querySelectorAll('[role=radio]')];
+  const widget = group.closest('.book')?.querySelector('zenvida-widget');
+  const pick = b => {
+    items.forEach(x => { x.setAttribute('aria-checked', x === b); x.tabIndex = x === b ? 0 : -1; });
+    if (widget && b.dataset.service && widget.getAttribute('service-id') !== b.dataset.service) widget.setAttribute('service-id', b.dataset.service);
+  };
+  items.forEach(b => b.addEventListener('click', () => pick(b)));
+  group.addEventListener('keydown', e => {
+    const i = items.indexOf(document.activeElement);
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (i < 0 || !step) return;
+    e.preventDefault();
+    const to = items[(i + step + items.length) % items.length];
+    pick(to); to.focus();
+  });
+});
+
 })();

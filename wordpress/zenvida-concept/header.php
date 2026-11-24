@@ -1,5 +1,5 @@
 <?php
-$zv_book_url = is_singular( 'ritual' ) ? '#book' : ( zv_opt( 'header_url' ) ?: zv_rituals_url() );
+$zv_book_url = zv_book_url();
 $zv_menu     = function ( $loc, $fallback_cls = '' ) {
 	if ( has_nav_menu( $loc ) ) {
 		wp_nav_menu( array( 'theme_location' => $loc, 'container' => false, 'depth' => 1, 'fallback_cb' => false ) );

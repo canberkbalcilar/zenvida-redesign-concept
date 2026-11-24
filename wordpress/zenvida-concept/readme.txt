@@ -26,6 +26,14 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.8.0 =
+* Online booking with ZenVida's own booking widget, the same one as on zenvida.es: live free times, client details and the card deposit. Ritual pages show it opened on that ritual, and the duration buttons switch it (for example 60 or 90 minutes).
+* New "Rituals & Prices" page, at the same address as on Wix, with the full booking menu. The header "Book now" button goes there. A "Booking widget" block can be added to any page (full menu, one service, one category or group booking).
+* Ritual details, section 5 "Online booking": choose the ritual's service in the booking system. It warns when a duration or a price does not match. Rituals without a service show a "Book on WhatsApp" card.
+* Site settings, "Online booking": switch the widget on or off, Google Tag Manager ID (the widget reports bookings to Google Ads, Analytics and Meta), widget addresses.
+* Sites updated from an earlier version: the rituals are connected and the page is added automatically.
+* The booking system only answers requests from zenvida.es. On another address, such as a test domain, the widget can't load the menu until ZenVida's developer adds that address. The online demo keeps the prototype booking card for this reason.
+
 = 1.7.0 =
 * Updates from the dashboard: when a new version is published, Dashboard → Updates and Appearance → Themes show "Update available" with what is new, and one click installs it. Automatic updates are switched on, so new versions also install by themselves within about 12 hours.
 * An update only replaces the theme files. Rituals, pages, prices, photos, messages and settings are not changed.

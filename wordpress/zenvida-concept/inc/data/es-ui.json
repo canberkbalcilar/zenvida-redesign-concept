@@ -120,5 +120,9 @@
 "1 result": "1 resultado",
 "{n} results": "{n} resultados",
 "past event": "evento pasado",
-"Chat with us on WhatsApp": "Escríbenos por WhatsApp"
+"Chat with us on WhatsApp": "Escríbenos por WhatsApp",
+"Online booking needs JavaScript.": "La reserva online necesita JavaScript.",
+"Book on WhatsApp": "Reservar por WhatsApp",
+"Online booking is switched off. Message us on WhatsApp and we will find you a time.": "La reserva online está desactivada. Escríbenos por WhatsApp y te buscamos una hora.",
+"Hi! I'd like to book {ritual}.": "¡Hola! Me gustaría reservar {ritual}."
 }

@@ -20,6 +20,9 @@ $zv_wa     = 'https://wa.me/' . preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) )
 $zv_tel    = 'tel:' . preg_replace( '/[^\d+]/', '', zv_opt( 'phone' ) );
 $zv_hl     = array_filter( array_map( 'trim', explode( "\n", (string) get_post_meta( get_the_ID(), 'zv_highlights', true ) ) ) );
 $zv_unit   = $zv_two ? 'for two' : '/ person';
+// Booking: the live booking widget, a WhatsApp card (ritual not bookable online), or the prototype card (online booking off).
+$zv_mode   = ! zv_widget_on() ? 'demo' : ( get_post_meta( get_the_ID(), 'zv_widget', true ) ? 'widget' : 'contact' );
+$zv_wa_msg = $zv_wa . '?text=' . rawurlencode( zv__( "Hi! I'd like to book {ritual}.", array( 'ritual' => zv_tr( get_the_title() ) ) ) );
 
 get_header();
 ?>
@@ -59,6 +62,46 @@ get_header();
       </div>
     </div>
 
+    <?php if ( 'widget' === $zv_mode ) : ?>
+    <aside class="book has-widget" id="book" data-mbar-anchor aria-label="Book <?php echo esc_attr( get_the_title() ); ?>">
+      <?php if ( count( $zv_r['opts'] ) > 1 ) : ?>
+      <div class="book-durs">
+        <div class="field-label">Duration <span>Choose your length</span></div>
+        <div class="baths" role="radiogroup" aria-label="Duration" data-widget-durations>
+          <?php foreach ( $zv_r['opts'] as $zv_j => $zv_op ) : ?>
+          <button class="bath dur" role="radio" aria-checked="<?php echo 0 === $zv_j ? 'true' : 'false'; ?>" tabindex="<?php echo 0 === $zv_j ? '0' : '-1'; ?>" data-service="<?php echo esc_attr( zv_widget_slug( get_the_ID(), $zv_op[0] ) ); ?>"><b><?php echo (int) $zv_op[0]; ?> minutes</b><i><?php echo esc_html( zv_eur( $zv_op[1] ) . ' ' . $zv_unit ); ?></i></button>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <?php endif; ?>
+      <div class="zvw-frame"><?php echo zv_widget_tag( array( 'service' => zv_widget_slug( get_the_ID(), $zv_o[0] ) ) ); // phpcs:ignore ?></div>
+      <div class="book-foot">
+        <a href="<?php echo esc_url( $zv_wa ); ?>"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3z"/></svg>Ask on WhatsApp</a>
+        <a href="<?php echo esc_url( $zv_tel ); ?>"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call us</a>
+      </div>
+    </aside>
+    <?php elseif ( 'contact' === $zv_mode ) : ?>
+    <aside class="book" id="book" data-mbar-anchor aria-label="Book <?php echo esc_attr( get_the_title() ); ?>">
+      <div class="book-head">
+        <div class="price"><?php echo esc_html( zv_eur( $zv_o[1] ) ); ?><small><?php echo esc_html( $zv_unit . ' · ' . $zv_o[0] . ' min' ); ?></small></div>
+      </div>
+      <div class="book-body">
+        <?php if ( count( $zv_r['opts'] ) > 1 ) : ?>
+        <ul class="book-prices">
+          <?php foreach ( $zv_r['opts'] as $zv_op ) : ?>
+          <li><span><?php echo (int) $zv_op[0]; ?> minutes</span><b><?php echo esc_html( zv_eur( $zv_op[1] ) . ' ' . $zv_unit ); ?></b></li>
+          <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+        <p class="book-note">Book this ritual with our team on WhatsApp. We usually reply within minutes.</p>
+        <a class="btn btn-dark" href="<?php echo esc_url( $zv_wa_msg ); ?>" target="_blank" rel="noopener">Book on WhatsApp</a>
+      </div>
+      <div class="book-foot">
+        <a href="<?php echo esc_url( $zv_wa ); ?>"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3z"/></svg>Ask on WhatsApp</a>
+        <a href="<?php echo esc_url( $zv_tel ); ?>"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call us</a>
+      </div>
+    </aside>
+    <?php else : ?>
     <aside class="book" id="book" data-mbar-anchor aria-label="Book <?php echo esc_attr( get_the_title() ); ?>">
       <div class="book-head">
         <div class="price" id="priceMain"><?php echo esc_html( zv_eur( $zv_o[1] ) ); ?><small><?php echo esc_html( $zv_unit . ' · ' . $zv_o[0] . ' min' ); ?></small></div>
@@ -125,6 +168,7 @@ get_header();
         <a href="<?php echo esc_url( $zv_tel ); ?>"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call us</a>
       </div>
     </aside>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -133,7 +177,7 @@ get_header();
 
 <div class="mbar" id="mbar">
   <div class="p"><b><?php echo esc_html( zv_eur( $zv_o[1] ) ); ?></b><small><?php echo (int) $zv_o[0]; ?> min · €<?php echo (int) zv_deposit( $zv_o[1], $zv_r['deposit'] ); ?> deposit</small></div>
-  <a class="btn btn-dark" href="#book">Book a time</a>
+  <a class="btn btn-dark" href="<?php echo 'contact' === $zv_mode ? esc_url( $zv_wa_msg ) : '#book'; ?>"<?php echo 'contact' === $zv_mode ? ' target="_blank" rel="noopener"' : ''; ?>><?php echo 'contact' === $zv_mode ? 'Book on WhatsApp' : 'Book a time'; ?></a>
 </div>
 <?php
 get_footer();

@@ -1,10 +1,21 @@
 {
-  "version": "1.7.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.7.0",
+  "version": "1.8.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.8.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.8.0",
+      "items": [
+        "Online booking with ZenVida's own booking widget, the same one as on zenvida.es: live free times, client details and the card deposit. Ritual pages show it opened on that ritual, and the duration buttons switch it (for example 60 or 90 minutes).",
+        "New \"Rituals & Prices\" page, at the same address as on Wix, with the full booking menu. The header \"Book now\" button goes there. A \"Booking widget\" block can be added to any page (full menu, one service, one category or group booking).",
+        "Ritual details, section 5 \"Online booking\": choose the ritual's service in the booking system. It warns when a duration or a price does not match. Rituals without a service show a \"Book on WhatsApp\" card.",
+        "Site settings, \"Online booking\": switch the widget on or off, Google Tag Manager ID (the widget reports bookings to Google Ads, Analytics and Meta), widget addresses.",
+        "Sites updated from an earlier version: the rituals are connected and the page is added automatically.",
+        "The booking system only answers requests from zenvida.es. On another address, such as a test domain, the widget can't load the menu until ZenVida's developer adds that address. The online demo keeps the prototype booking card for this reason."
+      ]
+    },
     {
       "version": "1.7.0",
       "items": [
@@ -42,12 +53,6 @@
         "Keyboard and screen readers: quiz, popups and booking card work fully with the keyboard (arrow keys for durations, foot bath and days; focus kept on the chosen time; Esc closes and returns focus). Skip link, visible focus rings everywhere, mobile menu closes with Esc.",
         "Duplicate: copy a ritual, event or popup as a draft from the list (or from the ritual form).",
         "Rituals → Change prices: raise or lower prices for all rituals, one area or picked ones, by % or €, with rounding. Apply now or from a date (00:00 Madrid). Live preview, cancel scheduled changes, undo applied ones."
-      ]
-    },
-    {
-      "version": "1.2.0",
-      "items": [
-        "How to find us merged into the Contact page (Getting here section, #find-us); I have a gift card page removed. Old addresses redirect."
       ]
     }
   ]

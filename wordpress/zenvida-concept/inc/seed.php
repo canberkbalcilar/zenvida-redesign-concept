@@ -295,6 +295,7 @@ function zv_seed( $mode = 'demo' ) {
 	update_option( 'zv_settings', array_merge( zv_defaults(), array(
 		'rituals_page' => (string) $rpage,
 		'demo_mode'    => $live ? '0' : '1',
+		'widget_on'    => $live ? '1' : '0', // the booking system only answers zenvida.es, so the online demo keeps the prototype card
 		'promo_text'   => 'Short on time? Foot Massage, 25 min for €25 · add neck & shoulders for €10',
 		'promo_link_label' => 'Book now',
 		'promo_link_url' => $foot ? get_permalink( $foot ) : $rituals_url,
@@ -385,6 +386,9 @@ function zv_seed( $mode = 'demo' ) {
 	}
 
 	zv_seed_journal(); // the 18 real journal posts, after the pages they link to
+	zv_widget_autofill(); // rituals → booking-system services
+	zv_seed_booking_page();
+	update_option( 'zv_booking_setup', '1', false );
 	if ( zv_trp() ) {
 		zv_es_import(); // Spanish version, when TranslatePress is installed
 	}

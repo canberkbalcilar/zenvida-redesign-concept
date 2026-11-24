@@ -306,4 +306,31 @@
       h('div', null, RT(p, 'eyebrow', 'span', 'eyebrow', 'Eyebrow', true), RT(p, 'title', 'h2', null, 'Title'), RT(p, 'quote', 'blockquote', 'quote', 'Pull quote (optional)')),
       h('div', null, h('div', ip), h('p', { className: 'zv-hint' }, 'Visitors see the first two paragraphs, then "Read more".')));
   }, true);
+
+  /* Booking widget: the live widget only runs on the website, so the editor shows a placeholder. */
+  reg('booking-widget', function (p) {
+    const W = window.ZV_WIDGET || { services: [], programs: [] };
+    const a = p.attributes;
+    const svc = W.services.length
+      ? F.select(p, 'service', 'Open on one service', [['', 'No: show the full menu']].concat(W.services))
+      : F.text(p, 'service', 'Open on one service', 'Service name in the booking system, e.g. deluxe-reflexology-60. Empty = full menu.');
+    const cat = W.programs.length
+      ? F.select(p, 'category', 'Only one category', [['', 'All categories']].concat(W.programs))
+      : F.text(p, 'category', 'Only one category', 'Category number, e.g. 2. Empty = all.');
+    const what = a.service ? 'Opens on: ' + ((W.services.find(x => x[0] === a.service) || [0, a.service])[1])
+      : a.category ? 'Shows one category: ' + ((W.programs.find(x => x[0] === a.category) || [0, a.category])[1])
+      : 'Shows the full menu';
+    return h(Fragment, null,
+      Side('Booking widget', F.note('Live booking from the ZenVida booking system: free times, client details and the card deposit. It appears on the website, not in the editor.'), svc, cat,
+        F.toggle(p, 'group', 'Start with a group booking (2 to 6 guests)'), F.toggle(p, 'welcome', 'Start with the welcome screen')),
+      h('div', useBlockProps({ className: 'zvw-page' }), h('div', { className: 'wrap' },
+        h('header', { className: 'zvw-head' },
+          RT(p, 'eyebrow', 'span', 'eyebrow', 'Eyebrow (optional)', true),
+          RT(p, 'title', 'h1', null, 'Title (optional)'),
+          RT(p, 'text', 'p', null, 'Intro text (optional)', true)),
+        h('div', { className: 'zvw-frame zvw-placeholder' },
+          h('b', null, 'ZenVida booking widget'),
+          h('span', null, what + (a.group ? ' · group booking' : '') + (a.welcome ? ' · welcome screen' : '')),
+          W.on ? null : h('em', null, 'Online booking is switched off in Site settings: visitors see a WhatsApp button.')))));
+  });
 })(window.wp);

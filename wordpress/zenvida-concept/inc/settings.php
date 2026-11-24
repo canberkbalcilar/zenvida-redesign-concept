@@ -80,6 +80,10 @@ function zv_defaults() {
 		'seo_rituals_desc' => 'All ZenVida rituals with prices: reflexology, foot, back and body massage, couples rituals. Filter by area and how you feel.',
 		'seo_ritual_suffix' => 'in Madrid Centro',
 		'demo_mode'    => '0', // the demo import switches it on; a real install starts without it
+		'widget_on'    => '1',
+		'widget_js'    => 'https://storage.googleapis.com/zenvida-widget-staging/zenvida-widget.js',
+		'widget_api'   => 'https://zenvida-api-gateway-daa7d74i.ew.gateway.dev',
+		'gtm_id'       => '',
 		'rituals_page' => '',
 	);
 }
@@ -225,11 +229,11 @@ add_action( 'admin_init', function () {
 						}
 					}
 					$out['baths'] = $rows;
-				} elseif ( in_array( $k, array( 'promo_show', 'demo_mode', 'wa_float' ), true ) ) {
+				} elseif ( in_array( $k, array( 'promo_show', 'demo_mode', 'wa_float', 'widget_on' ), true ) ) {
 					$out[ $k ] = empty( $in[ $k ] ) ? '0' : '1';
 				} elseif ( 'contact_to' === $k ) {
 					$out[ $k ] = sanitize_email( $in[ $k ] ?? '' );
-				} elseif ( in_array( $k, array( 'header_url', 'maps_url', 'promo_link_url', 'gift_url' ), true ) ) {
+				} elseif ( in_array( $k, array( 'header_url', 'maps_url', 'promo_link_url', 'gift_url', 'widget_js', 'widget_api' ), true ) ) {
 					$out[ $k ] = esc_url_raw( $in[ $k ] ?? '' );
 				} elseif ( 0 === strpos( $k, 'hours_' ) ) {
 					$raw    = sanitize_text_field( $in[ $k ] ?? '' );
@@ -240,6 +244,12 @@ add_action( 'admin_init', function () {
 					} else {
 						$fmt       = fn( $m ) => sprintf( '%02d:%02d', intdiv( $m % 1440, 60 ), $m % 60 );
 						$out[ $k ] = array( 0, 0 ) === $parsed ? 'Closed' : $fmt( $parsed[0] ) . '-' . $fmt( $parsed[1] );
+					}
+				} elseif ( 'gtm_id' === $k ) {
+					$v         = strtoupper( sanitize_text_field( $in[ $k ] ?? '' ) );
+					$out[ $k ] = preg_match( '/^GTM-[A-Z0-9]{4,12}$/', $v ) ? $v : '';
+					if ( '' !== $v && '' === $out[ $k ] ) {
+						add_settings_error( 'zv_settings', 'zv_gtm', 'The Google Tag Manager ID was not saved: it looks like GTM-XXXXXXX. Your other changes were saved.' );
 					}
 				} elseif ( 'rituals_page' === $k ) {
 					$out[ $k ] = isset( $in[ $k ] ) ? (string) absint( $in[ $k ] ) : ( $out[ $k ] ?? '' );
@@ -281,7 +291,7 @@ function zv_settings_page() {
 				$row( 'promo_link_label', 'Promo link text', 'Leave empty for no link.' );
 				$row( 'promo_link_url', 'Promo link goes to', 'Copy the address of a page from your browser, e.g. ' . home_url( '/rituals/' ) . '. Empty = rituals page' );
 				$row( 'header_label', 'Header button label' );
-				$row( 'header_url', 'Header button link', 'Empty = rituals page' );
+				$row( 'header_url', 'Header button link', 'Empty = the Rituals & Prices booking page (or the rituals page when online booking is off)' );
 				?>
 			</table>
 			<h2 class="title">Contact</h2>
@@ -313,6 +323,16 @@ function zv_settings_page() {
 				$row( 'rating_count', 'Rating count', 'e.g. 450+ guests' );
 				$row( 'footer_about', 'Footer text', '', 'textarea' );
 				$row( 'copyright', 'Copyright line', 'The year is added automatically.' );
+				?>
+			</table>
+			<h2 class="title">Online booking</h2>
+			<p>Ritual pages and the <a href="<?php echo esc_url( ( $zv_bp = zv_booking_page() ) ? get_permalink( $zv_bp ) : home_url( '/rituals-and-prices/' ) ); ?>">Rituals &amp; Prices</a> page show ZenVida's booking widget: live free times, client details and the card deposit. Which service each ritual opens is set in the ritual (Ritual details → 5. Online booking).</p>
+			<table class="form-table" role="presentation">
+				<?php
+				$row( 'widget_on', 'Booking widget', 'Show the booking widget. Switched off: ritual pages show the price and a WhatsApp button instead.', 'checkbox' );
+				$row( 'gtm_id', 'Google Tag Manager ID', 'e.g. GTM-TG8CFXX9. The widget reports bookings to it (Google Ads, Analytics, Meta). Add it together with a cookie banner.' );
+				$row( 'widget_js', 'Widget script address', 'Only change this if ZenVida\'s developer gives you a new address.' );
+				$row( 'widget_api', 'Booking system address', 'Used to list the services in the ritual form. Only change this if the developer asks.' );
 				?>
 			</table>
 			<h2 class="title">Booking card on ritual pages</h2>
