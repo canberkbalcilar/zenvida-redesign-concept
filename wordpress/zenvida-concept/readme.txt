@@ -25,6 +25,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.1.0 =
+* Body map block: tap an area of the body to see the rituals that help there ("Where it helps" per ritual).
+* How to find us page: route steps with photos, Google / Apple Maps, copy address, show-to-taxi card.
+* I have a gift card page: how to use it, book on WhatsApp, questions form with a gift card code field.
+
 = 1.0.0 =
 * Starter content on real installs: automatic on an empty WordPress, button otherwise; photos imported into the media library; demo mode off; samples as drafts.
 * Fix: foot-bath list and quiz questions were emptied when content was saved from the admin.

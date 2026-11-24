@@ -873,3 +873,79 @@ footer.site .fcontact a:hover{color:#fff}
 .prose-page ul{padding-left:20px;color:var(--ink-2)}
 .prose-page li{margin-bottom:6px}
 .prose-page a{color:var(--ink)}
+
+/* ---------- Body map (inc/bodymap.php, assets/js/bodymap.js) ---------- */
+.bodymap{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.2fr);gap:48px;align-items:start}
+.bm-left{display:flex;flex-direction:column;align-items:center;gap:16px;position:sticky;top:96px}
+.bm-prompt{margin:0;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sand-700);min-height:1.4em}
+.bm-figure{width:100%;max-width:250px;height:auto;overflow:visible}
+.bm-base>*{fill:#E9DFCC}
+.bm-zone{cursor:pointer;outline:none}
+.bm-zone>*{fill:transparent;stroke:transparent;stroke-width:2;transition:fill .2s,stroke .2s}
+.bm-zone:hover>*,.bm-zone:focus-visible>*{fill:rgba(176,149,106,.35);stroke:rgba(138,115,80,.55)}
+.bm-zone.on>*,.bm-figure.whole .bm-zone>*{fill:rgba(138,115,80,.72);stroke:var(--sand-700)}
+.bm-zone:focus-visible>*{stroke:var(--ink);stroke-width:2.5}
+.bm-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:340px}
+.bm-chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 13px;font:500 13.5px var(--sans);cursor:pointer;color:var(--ink-2)}
+.bm-chip:hover{border-color:var(--sand)}
+.bm-chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.bm-head h3{font:500 34px/1.1 var(--serif);margin:8px 0 6px}
+.bm-head p{margin:0 0 22px;color:var(--ink-2)}
+.bm-list{display:grid;gap:12px}
+.bm-card{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s,transform .2s;animation:bm-in .3s ease-out both}
+.bm-card:nth-child(2){animation-delay:.04s}.bm-card:nth-child(3){animation-delay:.08s}.bm-card:nth-child(4){animation-delay:.12s}
+.bm-card:hover{border-color:var(--sand);box-shadow:var(--shadow);transform:translateY(-1px)}
+.bm-img{background:linear-gradient(135deg,#e9dfcc,#cdb994);min-height:110px}
+.bm-img img{width:100%;height:100%;object-fit:cover}
+.bm-body{display:flex;flex-direction:column;gap:3px;padding:14px 16px 14px 0}
+.bm-body small{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--sand-700)}
+.bm-body b{font:500 22px/1.15 var(--serif)}
+.bm-body>span{font-size:14px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bm-body em{font-style:normal;font-weight:600;font-size:14px;margin-top:auto;padding-top:6px}
+.bm-all{display:inline-block;margin-top:18px}
+.bm-none{color:var(--muted)}
+@keyframes bm-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.bm-card{animation:none}}
+@media (max-width:900px){
+  .bodymap{grid-template-columns:1fr;gap:24px}
+  .bm-left{position:static}
+  .bm-figure{max-width:190px}
+}
+@media (max-width:760px){
+  .bm-card{grid-template-columns:96px minmax(0,1fr);gap:12px}
+  .bm-body{padding:12px 12px 12px 0}
+  .bm-body b{font-size:20px}
+  .bm-head h3{font-size:28px}
+}
+
+/* ---------- How to find us (inc/findus.php) ---------- */
+.dir{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:stretch}
+.dir-map{min-height:320px;border-radius:var(--radius);margin-bottom:0;aspect-ratio:auto}
+.dir-info{display:flex;flex-direction:column;gap:18px}
+.dir-addr{font:500 34px/1.1 var(--serif);margin:0}
+.dir-addr small{display:block;font:400 15px/1.5 var(--sans);color:var(--ink-2);margin-top:8px}
+.dir-btns{display:flex;flex-wrap:wrap;gap:8px}
+.dir-btns .btn{padding:11px 18px;font-size:14px}
+.dir-ways{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.dir-ways li{display:flex;gap:10px;align-items:flex-start;color:var(--ink-2);font-size:15px}
+.dir-ways svg{width:18px;height:18px;flex:0 0 auto;margin-top:2px;color:var(--sand-700)}
+.dir-taxi{background:none;border:0;padding:0;cursor:pointer;font:600 15px var(--sans);color:var(--ink);text-decoration:underline;text-underline-offset:4px;align-self:flex-start}
+dialog.taxi{border:0;border-radius:24px;padding:40px 28px;width:min(560px,calc(100% - 24px));text-align:center;background:var(--paper);color:var(--ink)}
+dialog.taxi::backdrop{background:rgba(30,27,23,.6)}
+.taxi-k{margin:0;font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sand-700)}
+.taxi-addr{margin:14px 0 6px;font:500 clamp(40px,9vw,64px)/1.05 var(--serif)}
+.taxi-sub{margin:0 0 26px;font-size:20px;color:var(--ink-2)}
+.block .wrap>.route,.route{max-width:none;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:route}
+.route-step{counter-increment:route;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.route-img{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,#efe6d4,#d9c8a9)}
+.route-img img{width:100%;height:100%;object-fit:cover}
+.route-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--sand-700)}
+.route-ph svg{width:44px;height:44px;opacity:.75}
+.route-img::before{content:counter(route);position:absolute;left:12px;top:12px;z-index:1;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font:600 14px/32px var(--sans);text-align:center}
+.route-time{position:absolute;right:12px;top:12px;background:rgba(255,254,248,.92);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700}
+.route-time:empty{display:none}
+.route-body{padding:16px 18px 18px}
+.route-body h3{font:500 23px/1.15 var(--serif);margin:0 0 6px}
+.route-body p{margin:0;font-size:14.5px;color:var(--ink-2)}
+@media (max-width:1040px){.route{grid-template-columns:repeat(2,minmax(0,1fr))}.dir{grid-template-columns:1fr}}
+@media (max-width:760px){.route{grid-template-columns:1fr}.route-img{aspect-ratio:16/9}.dir-addr{font-size:28px}.dir-map{min-height:220px}.dir-btns .btn{flex:1 1 auto}}

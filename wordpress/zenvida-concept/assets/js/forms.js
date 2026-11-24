@@ -106,6 +106,7 @@
       fd.append('kind', kind);
       fd.append('page', location.href);
       if (kind === 'job') ['Experience', 'Availability', 'Languages'].forEach(k => detail(k) && fd.append(`details[${k}]`, detail(k)));
+      if (kind === 'contact') form.querySelectorAll('[data-k]').forEach(el => el.value.trim() && fd.append(`details[${el.dataset.k}]`, el.value.trim()));
       if (kind === 'gift') {
         fd.append('topic', 'Gift card');
         fd.append('details[Gift]', what());

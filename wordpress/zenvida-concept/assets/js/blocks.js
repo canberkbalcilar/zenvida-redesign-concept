@@ -199,7 +199,7 @@
         h('div', { className: 'consent' }, h('input', { type: 'checkbox', disabled: true }), RT(p, 'consent', 'span', null, 'Consent text'))));
   });
 
-  ssrBlock('contact-form', 'Contact form', p => [F.area(p, 'topics', 'Topics', 'Comma separated. Leave empty to hide the "About" menu.'), F.text(p, 'buttonLabel', 'Button text'), F.toggle(p, 'showPhone', 'Ask for a phone number')], 'Messages arrive under Messages in the admin and by email (Site settings → Contact form).');
+  ssrBlock('contact-form', 'Contact form', p => [F.area(p, 'topics', 'Topics', 'Comma separated. Leave empty to hide the "About" menu.'), F.text(p, 'buttonLabel', 'Button text'), F.toggle(p, 'showPhone', 'Ask for a phone number'), F.text(p, 'codeLabel', 'Extra field (optional)', 'e.g. "Gift card code". Leave empty for none.')], 'Messages arrive under Messages in the admin and by email (Site settings → Contact form).');
   ssrBlock('gift-builder', 'Gift card builder', p => [F.text(p, 'amounts', 'Amounts (€)', 'Comma separated, e.g. 25, 50, 75, 100'), F.text(p, 'btnLabel', 'Button text'), F.area(p, 'note', 'Small print under the button')], 'Rituals and prices come from Rituals automatically. Requests arrive under Messages.');
   container('packs', 'packs', 'zv/pack', 3);
   reg('pack', function (p) {
@@ -232,6 +232,17 @@
         needs.length ? h('ul', null, needs.map((t, i) => h('li', { key: i }, Icon('check'), h('span', null, t)))) : F.note('Add "What we look for" in the panel on the right →')));
   });
   ssrBlock('job-form', 'Job application form', p => [F.area(p, 'roles', 'Roles to choose from', 'Comma separated'), F.text(p, 'buttonLabel', 'Button text')], 'Applications (with CV) arrive under Messages and by email.');
+  ssrBlock('directions', 'Directions & maps', p => [F.area(p, 'transport', 'How to get here', 'One per line, e.g. "Metro: Sol (lines 1, 2 and 3)"')], 'The address and map links come from Site settings.');
+  container('route', 'route', 'zv/route-step', 4);
+  reg('route-step', function (p) {
+    const a = p.attributes;
+    return h(Fragment, null,
+      Side('Route step', F.img(p, 'image', 'Photo of this spot'), F.select(p, 'icon', 'Icon (shown until there is a photo)', ICONS)),
+      h('li', useBlockProps({ className: 'route-step' }),
+        h('div', { className: 'route-img' }, a.image ? h('img', { src: a.image, alt: '' }) : h('span', { className: 'route-ph' }, Icon(a.icon)), RT(p, 'time', 'span', 'route-time', 'time', true)),
+        h('div', { className: 'route-body' }, RT(p, 'title', 'h3', null, 'Step title', true), RT(p, 'text', 'p', null, 'What to do'))));
+  });
+  ssrBlock('body-map', 'Body map', p => [F.text(p, 'prompt', 'Text above the figure'), F.num(p, 'count', 'How many rituals to show', 2, 8)], 'Which rituals appear for each area is set in each ritual: Ritual details → "Where it helps".');
   ssrBlock('events', 'Upcoming events', p => [F.num(p, 'count', 'How many events', 1, 9), F.area(p, 'empty', 'Text when nothing is planned')], 'Shows the next events from Events in the admin. Past events disappear by themselves.');
   ssrBlock('journal', 'Latest journal posts', p => [F.num(p, 'count', 'How many posts', 1, 9)], 'Shows your latest Posts with their featured image.');
 

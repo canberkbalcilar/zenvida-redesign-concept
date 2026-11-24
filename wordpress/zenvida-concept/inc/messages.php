@@ -151,6 +151,7 @@ add_action( 'init', function () {
 		'topics'      => 'Booking question, Gift cards, Groups & events, Feedback, Other',
 		'buttonLabel' => 'Send message',
 		'showPhone'   => true,
+		'codeLabel'   => '',
 	), 'zv_render_contact_form', array( 'parent' => array( 'zv/section', 'zv/split' ) ) );
 }, 20 );
 
@@ -178,6 +179,9 @@ function zv_render_contact_form( $a ) {
 	$out    = '<form class="zform" data-zv-form="contact" novalidate>'
 		. '<div class="zf-row"><label>Your name<input type="text" name="name" required autocomplete="name" maxlength="100"></label>'
 		. '<label>Email<input type="email" name="email" required autocomplete="email" maxlength="120"></label></div>';
+	if ( '' !== trim( (string) $a['codeLabel'] ) ) {
+		$out .= '<label>' . zv_e( $a['codeLabel'] ) . '<input type="text" data-k="' . esc_attr( $a['codeLabel'] ) . '" maxlength="40" autocomplete="off" spellcheck="false"></label>';
+	}
 	if ( $a['showPhone'] || $topics ) {
 		$out .= '<div class="zf-row">'
 			. ( $a['showPhone'] ? '<label>Phone or WhatsApp <small>(optional)</small><input type="tel" name="phone" autocomplete="tel" maxlength="40"></label>' : '' )

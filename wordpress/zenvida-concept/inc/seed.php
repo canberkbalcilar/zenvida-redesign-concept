@@ -225,6 +225,7 @@ function zv_seed( $mode = 'demo' ) {
 		foreach ( $meta as $k => $v ) {
 			update_post_meta( $id, $k, $v );
 		}
+		update_post_meta( $id, 'zv_zones', zv_seed_zones()[ $slug ] ?? array() );
 	}
 
 	/* ---------- Journal posts ---------- */
@@ -255,7 +256,7 @@ function zv_seed( $mode = 'demo' ) {
 	$pack = fn( $a ) => zv_b( 'zv/pack', $a );
 	$step = fn( $t, $x ) => zv_b( 'zv/step', array( 'title' => $t, 'text' => $x ) );
 	$gift_page = $page( 'Gift Cards', 'gift-cards', array(
-		zv_sec( array( 'eyebrow' => 'Gift cards', 'title' => 'Give an hour of <em>calm</em>', 'text' => 'Any ritual or any amount, emailed in minutes. Valid for 12 months at our studio in Madrid Centro.' ), array( zv_b( 'zv/gift-builder' ) ) ),
+		zv_sec( array( 'eyebrow' => 'Gift cards', 'title' => 'Give an hour of <em>calm</em>', 'text' => 'Any ritual or any amount, emailed in minutes. Valid for 12 months at our studio in Madrid Centro.', 'linkLabel' => 'I already have a gift card', 'linkUrl' => home_url( '/redeem-gift-card/' ) ), array( zv_b( 'zv/gift-builder' ) ) ),
 		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'How it works', 'title' => 'Simple for you, lovely to receive' ), array( zv_b( 'zv/steps', array(), array(
 			$step( 'Choose', 'An amount, or a specific ritual like Deluxe Reflexology or the Couples Massage.' ),
 			$step( 'Personalise', 'Add their name and a few words. We print nothing: it is all digital.' ),
@@ -294,7 +295,7 @@ function zv_seed( $mode = 'demo' ) {
 		), array( 'eyebrow' => 'Questions', 'title' => 'Good to know' ) ) ) ),
 	) );
 	$contact_page = $page( 'Contact', 'contact', array(
-		zv_sec( array( 'eyebrow' => 'Contact', 'title' => "We'd love to hear from you", 'text' => 'Questions about rituals, groups or gift cards? Write to us here, or send a WhatsApp for the quickest answer.' ), array( zv_b( 'zv/split', array(), array(
+		zv_sec( array( 'eyebrow' => 'Contact', 'title' => "We'd love to hear from you", 'text' => 'Questions about rituals, groups or gift cards? Write to us here, or send a WhatsApp for the quickest answer.', 'linkLabel' => 'How to find us', 'linkUrl' => home_url( '/how-to-find-us/' ) ), array( zv_b( 'zv/split', array(), array(
 			zv_b( 'zv/contact-form' ),
 			zv_b( 'zv/visit', array( 'eyebrow' => '', 'layout' => 'card' ) ),
 		) ) ) ),
@@ -320,6 +321,8 @@ function zv_seed( $mode = 'demo' ) {
 	$legal  = zv_seed_policy_pages();
 	$extra  = zv_seed_group_and_jobs_pages();
 	$plink  = fn( $slug ) => get_permalink( $legal[ $slug ] );
+	$findus = zv_seed_findus_page();
+	$redeem = zv_seed_redeem_page( $gift_page );
 
 	/* ---------- Menus ---------- */
 	$home_url = home_url( '/' );
@@ -336,6 +339,8 @@ function zv_seed( $mode = 'demo' ) {
 	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', get_permalink( $offers_page ) . '#membership' ), array( 'Packs', get_permalink( $offers_page ) . '#packs' ), array( 'Gift Cards', get_permalink( $gift_page ) ), array( 'Loyalty Card', get_permalink( $offers_page ) . '#loyalty' ) ) );
 	zv_seed_menu( 'Customer info', 'footer-3', array(
 		array( 'Contact us', get_permalink( $contact_page ) ),
+		array( 'How to find us', get_permalink( $findus ) ),
+		array( 'I have a gift card', get_permalink( $redeem ) ),
 		array( 'Group appointments', get_permalink( $extra['group'] ) ),
 		array( 'Reservations policy', $plink( 'reservations-policy' ) ),
 		array( 'Spa rules', $plink( 'spa-rules-and-customer-information' ) ),
@@ -401,6 +406,31 @@ function zv_seed( $mode = 'demo' ) {
 	flush_rewrite_rules();
 }
 
+/** Body map: where each ritual helps. Editable per ritual in "Ritual details". */
+function zv_seed_zones() {
+	return array(
+		'foot-massage'               => array( 'feet' ),
+		'reflexology'                => array( 'feet', 'mind' ),
+		'deluxe-reflexology'         => array( 'feet', 'legs', 'neck', 'mind' ),
+		'swedish-massage'            => array( 'back', 'whole', 'mind' ),
+		'deep-tissue-massage'        => array( 'back', 'neck', 'legs' ),
+		'thai-massage'               => array( 'back', 'legs', 'whole' ),
+		'sports-massage'             => array( 'legs', 'back' ),
+		'lomi-lomi-massage'          => array( 'whole', 'mind' ),
+		'lymphatic-drainage-massage' => array( 'legs', 'whole' ),
+		'combined-massage'           => array( 'back', 'neck', 'feet' ),
+		'pregnancy-massage'          => array( 'back', 'legs' ),
+		'travel-recovery'            => array( 'legs', 'feet' ),
+		'energy-balance'             => array( 'mind', 'whole' ),
+		'thai-andaluz'               => array( 'whole', 'back' ),
+		'full-body-reset'            => array( 'whole', 'face', 'feet' ),
+		'couples-massage'            => array( 'whole' ),
+		'classic-facial-massage'     => array( 'face', 'mind' ),
+		'kobido-facial-massage'      => array( 'face' ),
+		'ritual-levante'             => array( 'whole' ),
+	);
+}
+
 function zv_seed_menu( $name, $location, $items ) {
 	$menu = wp_get_nav_menu_object( $name );
 	$id   = $menu ? $menu->term_id : wp_create_nav_menu( $name );
@@ -420,7 +450,8 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 	return array(
 		zv_b( 'zv/hero', array( 'image' => zv_img( 'b84849_1f76460dcaab4a9d9b293ecf6b206bf4~mv2.jpg', 2000, 1200 ) ) ),
 		zv_b( 'zv/quick-book' ),
-		zv_sec( array( 'eyebrow' => 'Our rituals', 'title' => 'Where do you feel it today?', 'linkLabel' => 'See all rituals with prices', 'linkUrl' => $rituals_url ), array(
+		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'Body map', 'title' => 'Where do you feel it <em>today</em>?', 'text' => 'Tap the body and we show the rituals that help there.' ), array( zv_b( 'zv/body-map' ) ) ),
+		zv_sec( array( 'eyebrow' => 'Our rituals', 'title' => 'Or choose by area', 'linkLabel' => 'See all rituals with prices', 'linkUrl' => $rituals_url ), array(
 			zv_b( 'zv/area-grid', array(), array(
 				$tile( 'Feet & Legs', 'Reflexology from €25 · our speciality', $term_url( 'feet-legs' ), zv_img( 'b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png', 900, 1100 ), '#C9A97A' ),
 				$tile( 'Massage', '13 rituals · from €80', $term_url( 'massage' ), zv_img( 'b84849_053fa3c0ce6547089bbdce2b11a786e6~mv2.png', 700, 520 ), '#8E9A82' ),

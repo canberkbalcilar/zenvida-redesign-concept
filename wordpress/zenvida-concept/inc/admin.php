@@ -179,6 +179,7 @@ function zv_details_box( $post ) {
 			<label><input type="checkbox" name="zv_signature" value="1" <?php checked( (bool) $m( 'zv_signature' ) ); ?>> <b>Signature</b>: badge, and shown on the homepage</label>
 			<label><input type="checkbox" name="zv_seasonal" value="1" <?php checked( (bool) $m( 'zv_seasonal' ) ); ?>> <b>Seasonal</b>: badge</label>
 		</p>
+		<?php do_action( 'zv_ritual_details_extra', $post ); ?>
 		<p class="description">The sections further down this page (steps, FAQ, visit…) are edited in the editor above: click a text to change it, use + to add a question.</p>
 	</div>
 	<?php
