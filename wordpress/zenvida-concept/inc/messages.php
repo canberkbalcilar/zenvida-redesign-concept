@@ -37,7 +37,7 @@ add_action( 'init', function () {
 /* ------------------------------------------------------------- receiving */
 
 function zv_message_kinds() {
-	return array( 'contact' => 'Contact form', 'gift' => 'Gift card request', 'pack' => 'Pack / membership request' );
+	return array( 'contact' => 'Contact form', 'gift' => 'Gift card request', 'pack' => 'Pack / membership request', 'job' => 'Job application' );
 }
 
 add_action( 'wp_ajax_zv_message', 'zv_receive_message' );
@@ -84,6 +84,14 @@ function zv_receive_message() {
 		}
 	}
 
+	$cv = array( '', '' );
+	if ( 'job' === $kind && ! empty( $_FILES['cv'] ) ) { // phpcs:ignore
+		$cv = zv_store_cv( $_FILES['cv'] ); // phpcs:ignore
+		if ( is_wp_error( $cv ) ) {
+			$fail( $cv->get_error_message(), 'cv' );
+		}
+	}
+
 	$kinds = zv_message_kinds();
 	$title = $name . ' — ' . ( $topic ?: $kinds[ $kind ] );
 	$id    = wp_insert_post( array(
@@ -103,6 +111,8 @@ function zv_receive_message() {
 		'details' => $details,
 		'page'    => esc_url_raw( $in['page'] ?? '' ),
 		'consent' => current_time( 'mysql' ),
+		'cv_path' => $cv[0],
+		'cv_name' => $cv[1],
 	) );
 	update_post_meta( $id, 'zv_unread', '1' );
 	set_transient( $key, $count + 1, HOUR_IN_SECONDS );
@@ -123,11 +133,15 @@ function zv_receive_message() {
 		array_push( $lines, '', $message );
 	}
 	array_push( $lines, '', 'Open in WordPress: ' . admin_url( 'post.php?post=' . $id . '&action=edit' ) );
+	if ( $cv[0] ) {
+		$lines[] = 'CV attached: ' . $cv[1];
+	}
 	if ( is_email( $to ) ) {
-		wp_mail( $to, '[ZenVida] ' . $title, implode( "\n", $lines ), array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
+		wp_mail( $to, '[ZenVida] ' . $title, implode( "\n", $lines ), array( 'Reply-To: ' . $name . ' <' . $email . '>' ), $cv[0] ? array( $cv[0] ) : array() );
 	}
 
-	wp_send_json_success( array( 'message' => 'gift' === $kind ? zv_opt( 'gift_success' ) : zv_opt( 'contact_success' ), 'payUrl' => 'gift' === $kind ? zv_opt( 'gift_url' ) : '' ) );
+	$thanks = array( 'gift' => zv_opt( 'gift_success' ), 'job' => zv_opt( 'job_success' ) );
+	wp_send_json_success( array( 'message' => $thanks[ $kind ] ?? zv_opt( 'contact_success' ), 'payUrl' => 'gift' === $kind ? zv_opt( 'gift_url' ) : '' ) );
 }
 
 /* ------------------------------------------------------------- the form */
@@ -245,6 +259,7 @@ function zv_message_box( $post ) {
 			<?php if ( $m['phone'] ) : ?><tr><th>Phone</th><td><?php echo esc_html( $m['phone'] ); ?></td></tr><?php endif; ?>
 			<?php if ( $m['topic'] ) : ?><tr><th>About</th><td><?php echo esc_html( $m['topic'] ); ?></td></tr><?php endif; ?>
 			<?php foreach ( (array) $m['details'] as $l => $v ) : ?><tr><th><?php echo esc_html( $l ); ?></th><td><?php echo nl2br( esc_html( $v ) ); ?></td></tr><?php endforeach; ?>
+			<?php if ( ! empty( $m['cv_name'] ) ) : ?><tr><th>CV</th><td><a class="button button-small" href="<?php echo esc_url( zv_cv_link( $post->ID ) ); ?>">Download <?php echo esc_html( $m['cv_name'] ); ?></a></td></tr><?php endif; ?>
 		</table>
 		<?php if ( $post->post_content ) : ?><div class="zvm-text"><?php echo nl2br( esc_html( $post->post_content ) ); ?></div><?php endif; ?>
 		<p class="zvm-actions">
@@ -252,7 +267,7 @@ function zv_message_box( $post ) {
 			<?php if ( $wa ) : ?><a class="button" href="<?php echo esc_url( $wa ); ?>" target="_blank" rel="noopener">Reply on WhatsApp</a><?php endif; ?>
 			<a class="button-link zv-remove" href="<?php echo esc_url( get_delete_post_link( $post->ID ) ); ?>">Delete message</a>
 		</p>
-		<p class="description">Sent from <?php echo $m['page'] ? '<a href="' . esc_url( $m['page'] ) . '" target="_blank">' . esc_html( wp_parse_url( $m['page'], PHP_URL_PATH ) ?: '/' ) . '</a>' : 'the website'; ?>. The visitor agreed to us keeping it on <?php echo esc_html( $m['consent'] ); ?>. Delete messages you no longer need.</p>
+		<p class="description">Sent from <?php echo $m['page'] ? '<a href="' . esc_url( $m['page'] ) . '" target="_blank">' . esc_html( wp_parse_url( $m['page'], PHP_URL_PATH ) ?: '/' ) . '</a>' : 'the website'; ?>. The visitor agreed to us keeping it on <?php echo esc_html( $m['consent'] ); ?>. Delete messages you no longer need<?php echo ! empty( $m['cv_name'] ) ? ' — deleting it also deletes the CV' : ''; ?>.</p>
 	</div>
 	<?php
 }

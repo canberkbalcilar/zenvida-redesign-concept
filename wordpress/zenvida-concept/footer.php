@@ -15,6 +15,10 @@ $zv_col = function ( $loc ) {
       <div>
         <?php zv_logo(); ?>
         <p class="about"><?php echo zv_e( zv_opt( 'footer_about' ) ); ?></p>
+        <p class="fcontact">
+          <a href="<?php echo esc_url( zv_opt( 'maps_url' ) ); ?>" target="_blank" rel="noopener"><?php echo zv_e( zv_opt( 'address1' ) ); ?>, Madrid</a><br>
+          <a href="<?php echo esc_url( 'tel:' . preg_replace( '/[^\d+]/', '', zv_opt( 'phone' ) ) ); ?>"><?php echo zv_e( zv_opt( 'phone' ) ); ?></a> · <a href="mailto:<?php echo esc_attr( zv_opt( 'email' ) ); ?>"><?php echo zv_e( zv_opt( 'email' ) ); ?></a>
+        </p>
       </div>
       <?php $zv_col( 'footer-1' ); $zv_col( 'footer-2' ); $zv_col( 'footer-3' ); ?>
     </div>

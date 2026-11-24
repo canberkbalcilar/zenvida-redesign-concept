@@ -33,6 +33,8 @@ function zv_faq( $items, $attrs = array() ) {
 	return zv_b( 'zv/faq', $attrs, array_map( fn( $q ) => zv_b( 'zv/faq-item', array( 'question' => $q[0], 'answer' => $q[1] ) + ( ! empty( $q[2] ) ? array( 'open' => true ) : array() ) ), $items ) );
 }
 
+require_once __DIR__ . '/seed-pages.php';
+
 function zv_seed() {
 	if ( get_option( 'zv_seeded' ) || defined( 'ZV_SKIP_SEED' ) ) {
 		return;
@@ -146,7 +148,6 @@ function zv_seed() {
 			'zv_desc'       => $desc,
 			'zv_options'    => $opts,
 			'zv_popularity' => $pop,
-			'zv_deposit'    => 25,
 			'zv_signature'  => in_array( 'sig', $flags, true ) ? '1' : '',
 			'zv_seasonal'   => in_array( 'seas', $flags, true ) ? '1' : '',
 			'zv_couples'    => in_array( 'two', $flags, true ) ? '1' : '',
@@ -200,7 +201,7 @@ function zv_seed() {
 			array( 'How long is a gift card valid?', '12 months from the day it is sent. The date is printed on the card.', true ),
 			array( 'Can they choose a different ritual?', 'Yes. A ritual card can be used for any ritual of the same value; if the new one costs more, they simply pay the difference at the studio.' ),
 			array( 'Can I get a printed card?', 'Gift cards are emailed as a PDF you can print. If you prefer, pick one up at the studio in a ZenVida envelope.' ),
-			array( 'Can a gift card be refunded?', 'Gift cards cannot be exchanged for cash, but we are happy to extend one if they could not come in time — just write to us.' ),
+			array( 'Can a gift card be refunded?', 'You can cancel a gift card purchase within 14 days, as long as it has not been used. After that it cannot be exchanged for cash, but write to us if they could not come in time.' ),
 		), array( 'eyebrow' => 'Questions', 'title' => 'Good to know' ) ) ) ),
 	) );
 	$offers_page = $page( 'Offers & Packs', 'offers', array(
@@ -250,6 +251,11 @@ function zv_seed() {
 		'promo_link_url' => $foot ? get_permalink( $foot ) : $rituals_url,
 	) ) );
 
+	/* ---------- Customer information, legal, groups, jobs ---------- */
+	$legal  = zv_seed_policy_pages();
+	$extra  = zv_seed_group_and_jobs_pages();
+	$plink  = fn( $slug ) => get_permalink( $legal[ $slug ] );
+
 	/* ---------- Menus ---------- */
 	$home_url = home_url( '/' );
 	zv_seed_menu( 'Main menu', 'primary', array(
@@ -263,8 +269,15 @@ function zv_seed() {
 	$area_links[] = array( 'All rituals & prices', $rituals_url );
 	zv_seed_menu( 'Rituals', 'footer-1', $area_links );
 	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', get_permalink( $offers_page ) . '#membership' ), array( 'Packs', get_permalink( $offers_page ) . '#packs' ), array( 'Gift Cards', get_permalink( $gift_page ) ), array( 'Loyalty Card', get_permalink( $offers_page ) . '#loyalty' ) ) );
-	zv_seed_menu( 'Visit', 'footer-3', array( array( 'Calle de la Cruz, 16', zv_opt( 'maps_url' ) ), array( '+34 690 829 142', 'tel:+34690829142' ), array( 'hola@zenvida.es', 'mailto:hola@zenvida.es' ), array( 'Contact form', get_permalink( $contact_page ) ), array( 'Respiro Journal', get_permalink( $journal ) ) ) );
-	zv_seed_menu( 'Legal', 'legal', array( array( 'Privacy', '#' ), array( 'Cookies', '#' ), array( 'Terms', '#' ), array( 'Booking policy', '#' ) ) );
+	zv_seed_menu( 'Customer info', 'footer-3', array(
+		array( 'Contact us', get_permalink( $contact_page ) ),
+		array( 'Group appointments', get_permalink( $extra['group'] ) ),
+		array( 'Reservations policy', $plink( 'reservations-policy' ) ),
+		array( 'Spa rules', $plink( 'spa-rules-and-customer-information' ) ),
+		array( 'Code of conduct', $plink( 'code-of-conduct' ) ),
+		array( 'Work with us', get_permalink( $extra['jobs'] ) ),
+	) );
+	zv_seed_menu( 'Legal', 'legal', array( array( 'Privacy policy', $plink( 'privacy-policy' ) ), array( 'Cookies policy', $plink( 'cookies-policy' ) ), array( 'Terms of use', $plink( 'terms-of-use' ) ) ) );
 
 	/* ---------- Sample events (dates relative to today, Madrid time) ---------- */
 	$d0     = new DateTimeImmutable( 'today', wp_timezone() );
@@ -384,7 +397,7 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 				zv_faq( array(
 					array( 'What is ZenVida?', 'A wellness studio for restorative foot reflexology and full-body massage — luxurious, culturally immersive rituals rooted in Spanish heritage.', true ),
 					array( 'Do I need to book?', 'No, walk-ins are welcome. Booking online guarantees your time; a €25 deposit secures it and the rest is paid after your ritual.' ),
-					array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. No-shows and late cancellations are charged 50%." ),
+					array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full." ),
 					array( 'Do you offer couples or group rituals?', 'Yes. Couples Massage has two therapists in one shared room, and many rituals can be booked for groups of up to six.' ),
 					array( 'Are your rituals suitable for pregnancy?', "Our Pregnancy Massage is adapted for every trimester. Tell us you're pregnant when you book so we can guide you." ),
 					array( 'Is ZenVida suitable for tourists?', 'Absolutely. Our rituals restore tired legs and feet after exploring Madrid or a long flight. All our staff speak English.' ),
@@ -434,7 +447,7 @@ function zv_rituals_blocks() {
 
 function zv_deluxe_blocks( $visit_section ) {
 	return array(
-		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'Your 60 minutes', 'title' => 'What happens during the ritual', 'text' => 'Arrive a few minutes early, slip off your shoes, and leave the rest to your therapist.' ), array(
+		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'Your 60 minutes', 'title' => 'What happens during the ritual', 'text' => 'Arrive 15 minutes early to fill in a short health form, slip off your shoes, and leave the rest to your therapist.' ), array(
 			zv_b( 'zv/steps', array(), array(
 				zv_b( 'zv/step', array( 'title' => 'Welcome', 'text' => 'A short chat about how you feel, any sore spots, and the pressure you prefer.' ) ),
 				zv_b( 'zv/step', array( 'title' => 'Herbal foot spa', 'text' => 'A warm Spanish aromatherapy soak softens the skin and lets the muscles let go.' ) ),
@@ -479,7 +492,7 @@ function zv_deluxe_blocks( $visit_section ) {
 			array( 'What is foot reflexology?', 'It applies targeted pressure to specific reflex zones on the feet that correspond to different organs and systems throughout the body — supporting balance, circulation and whole-body relaxation.', true ),
 			array( 'How is it different from a foot massage?', 'A foot massage relaxes the muscles and tissue of the foot itself. Reflexology works on pressure points that correspond to the rest of the body, aiming for whole-body balance and wellbeing — not just local relaxation.' ),
 			array( 'How does the deposit work?', 'You pay a €25 deposit per guest by card when you book. The rest — plus any foot bath upgrade — is paid at the studio after your treatment.' ),
-			array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. No-shows and late cancellations are charged 50%." ),
+			array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full." ),
 			array( 'Can I book for a group?', "Yes. Set the number of guests (2–6) in the booking box and we'll schedule your treatments together." ),
 			array( 'How often should I come?', 'We recommend every two weeks or monthly for best results, though this can vary with your needs.' ),
 		) ) ) ),

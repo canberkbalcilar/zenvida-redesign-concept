@@ -5,7 +5,9 @@
   if (!$('#book') || !$('#days')) return;
 
   const OPTS = Z.opts || [[60, 60]];
-  const DEPOSIT = Z.deposit || 25;
+  // Reservations Policy: €25 per person, €45 for services of €90 or more (unless the ritual sets its own).
+  const dep = () => (Z.deposit != null ? Z.deposit : ((price() || 0) >= 90 ? 45 : 25));
+  const WA = 'https://wa.me/' + String((window.ZV_SITE && window.ZV_SITE.whatsapp) || '').replace(/\D/g, '');
   const TWO = (Z.flags || []).includes('two');
   const UNIT = TWO ? 'for two' : '/ person';
   const HOURS = (window.ZV_SITE && window.ZV_SITE.hours) || [[720,1290],[690,1230],[690,1230],[690,1230],[690,1290],[660,1290],[630,1290]];
@@ -97,17 +99,26 @@
     $('#sBathP').textContent = st.bathP ? '+€' + st.bathP*g : 'Free';
     $('#sWhen').textContent = st.time == null ? 'No time selected' :
       `${d.toLocaleDateString('en',{weekday:'long',day:'numeric',month:'long'})} · ${fmt(st.time)}–${fmt(st.time+len())}`;
-    $('#sDep').textContent = '€' + DEPOSIT*g;
-    $('#sRest').textContent = p == null ? 'Balance at studio' : '€' + ((p-DEPOSIT)*g + st.bathP*g);
+    const D = dep();
+    if ($('#depHead')) $('#depHead').textContent = `€${D} deposit${TWO ? '' : ' / person'}`;
+    $('#sDep').textContent = '€' + D*g;
+    $('#sRest').textContent = p == null ? 'Balance at studio' : '€' + (Math.max(0, p-D)*g + st.bathP*g);
+    if ($('#groupNote')) $('#groupNote').hidden = g < 2;
 
     const cta = $('#cta');
-    cta.textContent = st.time == null ? 'Choose a time to continue' : `Continue — pay €${DEPOSIT*g} deposit`;
+    cta.textContent = g > 1 ? 'Arrange a group on WhatsApp' : (st.time == null ? 'Choose a time to continue' : `Continue — pay €${D*g} deposit`);
     cta.classList.toggle('btn-sand', st.time != null);
     cta.classList.toggle('btn-dark', st.time == null);
   }
   render();
 
   $('#cta').onclick = () => {
+    if (st.guests > 1) {
+      const d = days[st.day];
+      const msg = `Hi! We are ${st.guests} people and would like ${Z.name || 'a ritual'} (${len()} min) side by side` + (st.time != null ? ` on ${d.toLocaleDateString('en',{weekday:'long',day:'numeric',month:'long'})} around ${fmt(st.time)}.` : '.');
+      window.open(WA + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      return;
+    }
     if (st.time == null) { $('#slots').scrollIntoView({behavior:'smooth',block:'center'}); window.zvToast && zvToast('Pick a time slot first'); }
     else window.zvToast && zvToast('Prototype: next step is "Your details", then card deposit.');
   };

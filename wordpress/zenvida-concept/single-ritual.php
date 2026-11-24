@@ -62,7 +62,7 @@ get_header();
     <aside class="book" id="book" data-mbar-anchor aria-label="Book <?php echo esc_attr( get_the_title() ); ?>">
       <div class="book-head">
         <div class="price" id="priceMain"><?php echo esc_html( zv_eur( $zv_o[1] ) ); ?><small><?php echo esc_html( $zv_unit . ' · ' . $zv_o[0] . ' min' ); ?></small></div>
-        <span class="dep">€<?php echo (int) $zv_r['deposit']; ?> deposit today</span>
+        <span class="dep" id="depHead">€<?php echo (int) zv_deposit( $zv_o[1], $zv_r['deposit'] ); ?> deposit<?php echo $zv_two ? '' : ' / person'; ?></span>
       </div>
       <div class="book-body">
         <?php if ( count( $zv_r['opts'] ) > 1 ) : ?>
@@ -98,6 +98,7 @@ get_header();
               <button id="gPlus" aria-label="More guests">+</button>
             </div>
           </div>
+          <p class="group-note" id="groupNote" hidden>Groups of two or more are arranged by our reception team, so everyone is treated at the same time. Send us a WhatsApp and we'll find side-by-side times.</p>
         </div>
         <?php endif; ?>
 
@@ -131,7 +132,7 @@ get_header();
 </main>
 
 <div class="mbar" id="mbar">
-  <div class="p"><b><?php echo esc_html( zv_eur( $zv_o[1] ) ); ?></b><small><?php echo (int) $zv_o[0]; ?> min · €<?php echo (int) $zv_r['deposit']; ?> deposit</small></div>
+  <div class="p"><b><?php echo esc_html( zv_eur( $zv_o[1] ) ); ?></b><small><?php echo (int) $zv_o[0]; ?> min · €<?php echo (int) zv_deposit( $zv_o[1], $zv_r['deposit'] ); ?> deposit</small></div>
   <a class="btn btn-dark" href="#book">Book a time</a>
 </div>
 <?php

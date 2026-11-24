@@ -769,7 +769,8 @@ img{height:auto}
 .zform textarea{resize:vertical}
 .zform :is(input,select,textarea):focus{outline:2px solid var(--sand);outline-offset:1px;border-color:var(--sand)}
 .zform [aria-invalid=true]{border-color:#b54a3a;outline-color:#b54a3a}
-.zf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.zf-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.zform,.zform label{min-width:0}
 .zf-consent{display:flex!important;grid-template-columns:none;gap:10px!important;align-items:flex-start;font-weight:400!important;font-size:13.5px!important;color:var(--muted)!important}
 .zf-consent input{margin-top:3px;accent-color:var(--ink);width:18px;height:18px;flex:0 0 auto}
 .zf-consent a{color:var(--ink)}
@@ -838,9 +839,37 @@ img{height:auto}
 .gift-preview-note{text-align:center;color:var(--muted);font-size:13px;margin:14px 0 0}
 @media (max-width:1040px){.gift{grid-template-columns:1fr;gap:28px}.gift-preview{position:static;order:-1;max-width:460px}}
 @media (max-width:760px){
-  .zf-row{grid-template-columns:1fr}
+  .zf-row{grid-template-columns:minmax(0,1fr)}
   .gc-what{font-size:40px}
   .gcard{padding:20px}
   .gift legend{font-size:23px}
   .zf-foot .btn{width:100%}
 }
+
+/* ---------- Work with us (inc/careers.php) ---------- */
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.job{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:8px}
+.job.closed{opacity:.6}
+.job-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.job h3{font:500 28px/1.1 var(--serif);margin:0}
+.job-badge{flex:0 0 auto;background:#EAF1E6;color:var(--ok);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700}
+.job.closed .job-badge{background:var(--cream);color:var(--muted)}
+.job-meta{margin:0;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--sand-700)}
+.job p{margin:0;color:var(--ink-2)}
+.job ul{list-style:none;margin:6px 0 8px;padding:0;display:grid;gap:8px}
+.job li{display:flex;gap:10px;font-size:15px;color:var(--ink-2)}
+.job li svg{width:18px;height:18px;flex:0 0 auto;margin-top:2px;color:var(--sand)}
+.job .link{margin-top:auto;font-weight:600}
+.zf-file input[type=file]{font:400 14px var(--sans);padding:10px;border:1px dashed var(--line);border-radius:12px;background:#fff;width:100%;min-width:0;max-width:100%;box-sizing:border-box}
+#apply{scroll-margin-top:110px}
+
+.group-note{margin:10px 0 0;background:var(--sand-50);border-radius:12px;padding:10px 12px;font-size:13.5px;color:var(--ink-2)}
+
+footer.site .fcontact{margin:14px 0 0;font-size:14px;line-height:1.7}
+footer.site .fcontact a{color:#d8cfbf;text-decoration:none}
+footer.site .fcontact a:hover{color:#fff}
+/* Policy pages (plain text pages) */
+.prose-page h2{font:500 30px/1.15 var(--serif);margin:36px 0 10px}
+.prose-page ul{padding-left:20px;color:var(--ink-2)}
+.prose-page li{margin-bottom:6px}
+.prose-page a{color:var(--ink)}

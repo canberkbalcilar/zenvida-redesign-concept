@@ -219,6 +219,19 @@
         RT(p, 'btnLabel', 'span', 'btn ' + (a.featured ? 'btn-sand' : 'btn-dark'), 'Button', true),
         RT(p, 'note', 'small', null, 'Small print (optional)', true)));
   });
+  container('jobs', 'jobs', 'zv/job', 2);
+  reg('job', function (p) {
+    const a = p.attributes;
+    const needs = (a.needs || '').split('\n').filter(s => s.trim());
+    return h(Fragment, null,
+      Side('Job', F.toggle(p, 'open', 'We are hiring for this role'), F.area(p, 'needs', 'What we look for', 'One line each')),
+      h('article', useBlockProps({ className: 'job' + (a.open ? '' : ' closed') }),
+        h('div', { className: 'job-head' }, RT(p, 'title', 'h3', null, 'Role, e.g. Massage therapist', true), h('span', { className: 'job-badge' }, a.open ? 'Hiring' : 'Not hiring right now')),
+        RT(p, 'meta', 'p', 'job-meta', 'e.g. Full time · Madrid Centro', true),
+        RT(p, 'text', 'p', null, 'A few words about the role'),
+        needs.length ? h('ul', null, needs.map((t, i) => h('li', { key: i }, Icon('check'), h('span', null, t)))) : F.note('Add "What we look for" in the panel on the right →')));
+  });
+  ssrBlock('job-form', 'Job application form', p => [F.area(p, 'roles', 'Roles to choose from', 'Comma separated'), F.text(p, 'buttonLabel', 'Button text')], 'Applications (with CV) arrive under Messages and by email.');
   ssrBlock('events', 'Upcoming events', p => [F.num(p, 'count', 'How many events', 1, 9), F.area(p, 'empty', 'Text when nothing is planned')], 'Shows the next events from Events in the admin. Past events disappear by themselves.');
   ssrBlock('journal', 'Latest journal posts', p => [F.num(p, 'count', 'How many posts', 1, 9)], 'Shows your latest Posts with their featured image.');
 

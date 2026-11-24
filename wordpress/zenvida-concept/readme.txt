@@ -25,6 +25,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 0.9.0 =
+* Work with us page: job cards and application form with private CV upload.
+* Customer information and legal pages: Reservations Policy, Spa Rules, Code of Conduct, Terms of Use, Privacy and Cookies Policies, Group Appointments.
+* Booking card follows the Reservations Policy: deposit EUR 25, or EUR 45 from EUR 90; groups arranged by reception.
+
 = 0.8.0 =
 * Offers & Packs and Gift Cards pages: pricing cards, gift card builder with live preview.
 * Contact form; form messages and gift card requests saved under Messages and emailed.

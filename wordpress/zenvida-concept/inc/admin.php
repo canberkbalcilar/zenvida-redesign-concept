@@ -115,9 +115,9 @@ function zv_details_box( $post ) {
 			<?php endforeach; ?>
 			</tbody>
 		</table>
-		<p><button type="button" class="button" data-zv-add>+ Add another duration</button> <span class="description">Leave the price empty to show "Price at studio".</span></p>
+		<p><button type="button" class="button" data-zv-add>+ Add another duration</button> <span class="description">Leave the price empty to show "Price at studio". Deposit: leave empty for the standard rule (€25, or €45 for prices from €90).</span></p>
 		<p class="zv-inline">
-			<label>Deposit paid online <span class="zv-euro"><input type="number" min="0" name="zv_deposit" value="<?php echo esc_attr( $m( 'zv_deposit' ) ?: 25 ); ?>"></span></label>
+			<label>Deposit per person <span class="zv-euro"><input type="number" min="0" name="zv_deposit" value="<?php echo esc_attr( $m( 'zv_deposit' ) ); ?>" placeholder="auto"></span></label>
 			<label><input type="checkbox" name="zv_couples" value="1" <?php checked( (bool) $m( 'zv_couples' ) ); ?>> Price is for two people (couples ritual)</label>
 			<label><input type="checkbox" name="zv_baths" value="1" <?php checked( (bool) $m( 'zv_baths' ) ); ?>> Offer foot-bath upgrades when booking</label>
 		</p>
@@ -221,7 +221,11 @@ add_action( 'save_post_ritual', function ( $post_id ) {
 		update_post_meta( $post_id, $k, empty( $in[ $k ] ) ? '' : '1' );
 	}
 	update_post_meta( $post_id, 'zv_hidden', empty( $in['zv_visible'] ) ? '1' : '' );
-	update_post_meta( $post_id, 'zv_deposit', absint( $in['zv_deposit'] ?? 25 ) );
+	if ( '' === trim( (string) ( $in['zv_deposit'] ?? '' ) ) ) {
+		delete_post_meta( $post_id, 'zv_deposit' ); // standard rule: €25, or €45 from €90
+	} else {
+		update_post_meta( $post_id, 'zv_deposit', absint( $in['zv_deposit'] ) );
+	}
 	update_post_meta( $post_id, 'zv_popularity', min( 10, absint( $in['zv_popularity'] ?? 5 ) ) );
 
 	$area = absint( $in['zv_area'] ?? 0 );

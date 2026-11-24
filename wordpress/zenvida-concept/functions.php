@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.8.0' );
+define( 'ZV_VERSION', '0.9.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -26,6 +26,7 @@ require_once __DIR__ . '/inc/popups.php';
 require_once __DIR__ . '/inc/events.php';
 require_once __DIR__ . '/inc/messages.php';
 require_once __DIR__ . '/inc/offers.php';
+require_once __DIR__ . '/inc/careers.php';
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -84,9 +85,9 @@ add_action( 'wp_head', function () {
 /** Questions every ritual starts with (also used by the demo content). */
 function zv_basic_faq() {
 	return array(
-		array( 'Do I need to book?', 'No, walk-ins are welcome. Booking online guarantees your time; a €25 deposit secures it and the rest is paid after your ritual.', true ),
-		array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. No-shows and late cancellations are charged 50%." ),
-		array( 'Can I come with a friend?', 'Yes — many rituals can be booked for small groups so you can relax side by side. Choose the number of guests in the booking card.' ),
+		array( 'Do I need to book?', 'No, walk-ins are welcome. Booking ahead guarantees your time, especially at weekends; a €25 deposit per person (€45 for rituals from €90) secures it and counts towards the price.', true ),
+		array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full." ),
+		array( 'Can I come with a friend?', 'Yes — you can relax side by side. Groups of two or more are arranged by our reception team: send us a WhatsApp or call and we will find times for everyone.' ),
 	);
 }
 
@@ -199,7 +200,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'zv-fonts', 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600&display=swap', array(), null );
 	wp_enqueue_style( 'zv-site', "$uri/css/zenvida.css", array(), $ver( 'css/zenvida.css' ) );
 	wp_enqueue_script( 'zv-site', "$uri/js/site.js", array(), $ver( 'js/site.js' ), true );
-	wp_add_inline_script( 'zv-site', 'window.ZV_SITE = ' . wp_json_encode( array( 'hours' => zv_hours(), 'tz' => zv_tz() ) ) . ';', 'before' );
+	wp_add_inline_script( 'zv-site', 'window.ZV_SITE = ' . wp_json_encode( array( 'hours' => zv_hours(), 'tz' => zv_tz(), 'whatsapp' => preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) ) ) ) . ';', 'before' );
 	if ( is_singular( 'ritual' ) ) {
 		wp_enqueue_script( 'zv-single', "$uri/js/single.js", array( 'zv-site' ), $ver( 'js/single.js' ), true );
 		wp_add_inline_script( 'zv-single', 'window.ZV_SINGLE = ' . wp_json_encode( zv_ritual_data( get_queried_object() ) ) . ';', 'before' );
@@ -262,7 +263,7 @@ function zv_ritual_data( $post ) {
 		'needs'    => ( $needs && ! is_wp_error( $needs ) ) ? wp_list_pluck( $needs, 'slug' ) : array(),
 		'flags'    => $flags,
 		'pop'      => (int) get_post_meta( $post->ID, 'zv_popularity', true ),
-		'deposit'  => metadata_exists( 'post', $post->ID, 'zv_deposit' ) ? (int) get_post_meta( $post->ID, 'zv_deposit', true ) : 25,
+		'deposit'  => '' !== (string) get_post_meta( $post->ID, 'zv_deposit', true ) ? (int) get_post_meta( $post->ID, 'zv_deposit', true ) : null, // null = standard rule
 		'baths'    => (bool) get_post_meta( $post->ID, 'zv_baths', true ),
 		'hidden'   => (bool) get_post_meta( $post->ID, 'zv_hidden', true ),
 		'url'      => get_permalink( $post ),
@@ -334,6 +335,17 @@ function zv_logo() {
 		echo '<b>ZENVIDA</b><small>FOOT &amp; BODY</small>';
 	}
 	echo '</a>';
+}
+
+/**
+ * Deposit per person (Reservations Policy): €25, or €45 for services of €90 or more.
+ * A ritual can set its own amount in "Ritual details".
+ */
+function zv_deposit( $price, $custom = null ) {
+	if ( null !== $custom ) {
+		return (int) $custom;
+	}
+	return ( null !== $price && (int) $price >= 90 ) ? 45 : 25;
 }
 
 function zv_eur( $n ) {

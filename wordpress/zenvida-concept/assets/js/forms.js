@@ -65,6 +65,14 @@
       paint();
     }
 
+    if (kind === 'job') {
+      document.querySelectorAll('[data-apply-role]').forEach(a => a.addEventListener('click', () => {
+        const sel = form.querySelector('[name=topic]');
+        const opt = [...sel.options].find(o => o.value.toLowerCase() === a.dataset.applyRole.toLowerCase());
+        if (opt) sel.value = opt.value;
+      }));
+    }
+
     /* ---------- validation and sending ---------- */
     const say = (msg, ok) => { status.textContent = msg; status.className = 'zf-status ' + (ok ? 'ok' : 'err'); };
     const bad = (el, msg) => { if (el) { el.setAttribute('aria-invalid', 'true'); el.focus(); } say(msg, false); return false; };
@@ -79,6 +87,12 @@
       if (!f('name').value.trim()) return bad(f('name'), 'Please add your name.');
       if (!/^\S+@\S+\.\S+$/.test(f('email').value.trim())) return bad(f('email'), 'Please check your email address.');
       if (kind === 'contact' && !f('message').value.trim()) return bad(f('message'), 'Please write your message.');
+      if (kind === 'job') {
+        const cv = f('cv') && f('cv').files[0];
+        if (cv && cv.size > 5 * 1024 * 1024) return bad(f('cv'), 'The CV is larger than 5 MB. Please send a smaller file.');
+        if (cv && !/\.(pdf|docx?)$/i.test(cv.name)) return bad(f('cv'), 'Please send your CV as a PDF or Word file.');
+        if (!f('message').value.trim() && !cv) return bad(f('message'), 'Tell us a little about yourself, or attach your CV.');
+      }
       if (!f('consent').checked) return bad(f('consent'), 'Please tick the box so we may keep your message to reply to you.');
       return true;
     }
@@ -91,6 +105,7 @@
       fd.append('action', 'zv_message');
       fd.append('kind', kind);
       fd.append('page', location.href);
+      if (kind === 'job') ['Experience', 'Availability', 'Languages'].forEach(k => detail(k) && fd.append(`details[${k}]`, detail(k)));
       if (kind === 'gift') {
         fd.append('topic', 'Gift card');
         fd.append('details[Gift]', what());
@@ -111,7 +126,7 @@
         const done = document.createElement('div');
         done.className = 'zf-done';
         done.setAttribute('role', 'status');
-        done.innerHTML = '<span class="zf-tick">✓</span><h3>' + (kind === 'gift' ? 'Request received' : 'Message sent') + '</h3><p></p>';
+        done.innerHTML = '<span class="zf-tick">✓</span><h3>' + ({ gift: 'Request received', job: 'Application sent' }[kind] || 'Message sent') + '</h3><p></p>';
         done.querySelector('p').textContent = j.data.message;
         if (j.data.payUrl) {
           const a = document.createElement('a');
