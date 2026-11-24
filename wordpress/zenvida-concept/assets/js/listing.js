@@ -4,19 +4,20 @@ const D = window.ZV || {};
 const AREAS = D.areas || {}, NEEDS = D.needs || {}, R = D.rituals || [];
 const $ = s => document.querySelector(s);
 if (!$('#zvListing')) return;
+const T = (s, v) => (window.zvT ? zvT(s, v) : s);
 
 const st = {area: AREAS[D.initialArea] ? D.initialArea : 'all', need:null, time:'any', sort:'rec', view:'cards', pick:null, quiz:null, sel:{}};
-const eur = n => n==null ? 'Price at studio' : '€'+n;
+const eur = n => n==null ? T('Price at studio') : T('€{n}', { n });
 const minP = r => Math.min(...r.opts.map(o=>o[1] ?? 999));
 const minT = r => Math.min(...r.opts.map(o=>o[0]));
 const fitsTime = (r,t) => t==='any' || r.opts.some(([m]) => t==='short' ? m<45 : t==='hour' ? m>=45&&m<=80 : m>=90);
-const plural = n => n + (n===1 ? ' ritual' : ' rituals');
+const plural = n => n===1 ? T('1 ritual') : T('{n} rituals', { n });
 
 // Area tiles + segmented control
 const tiles = $('#areaTiles');
 if (tiles) tiles.innerHTML = Object.entries(AREAS).map(([k,a]) =>
   `<button class="area-tile" style="--c:${a.c}" data-area="${k}">${a.img?`<img src="${a.img}"${a.imgSet?` srcset="${a.imgSet}" sizes="(max-width: 760px) 50vw, 25vw"`:''} alt="" loading="lazy" onerror="this.remove()">`:''}<span><b>${a.name}</b><small>${plural(R.filter(r=>r.area===k).length)}</small></span></button>`).join('');
-$('#areaSeg').innerHTML = `<button data-area="all" aria-pressed="true">All<span class="n">${R.length}</span></button>` +
+$('#areaSeg').innerHTML = `<button data-area="all" aria-pressed="true">${T('All')}<span class="n">${R.length}</span></button>` +
   Object.entries(AREAS).map(([k,a]) => `<button data-area="${k}" aria-pressed="false">${a.name}<span class="n">${R.filter(r=>r.area===k).length}</span></button>`).join('');
 document.querySelectorAll('#zvListing [data-area]').forEach(b => b.addEventListener('click', () => {
   st.area = b.dataset.area; st.quiz = null; st.pick = null; render();
@@ -38,24 +39,24 @@ function filtered(){
 
 function card(r){
   const a = AREAS[r.area] || {name:'', c:'#999'}, i = st.sel[r.slug] ?? 0, o = r.opts[i];
-  const badges = (r.slug===st.pick?'<span class="badge pick">Top pick for you</span>':'') +
-    (r.flags.includes('sig')?'<span class="badge sig">Signature</span>':'') +
-    (r.flags.includes('seas')?'<span class="badge seas">Seasonal</span>':'');
+  const badges = (r.slug===st.pick?`<span class="badge pick">${T('Top pick for you')}</span>`:'') +
+    (r.flags.includes('sig')?`<span class="badge sig">${T('Signature')}</span>`:'') +
+    (r.flags.includes('seas')?`<span class="badge seas">${T('Seasonal')}</span>`:'');
   return `<article class="card${r.slug===st.pick?' pick':''}" style="--c:${a.c}">
     <div class="ctop"><span class="area-dot">${a.name}</span>${badges}</div>
     <h3>${r.name}</h3>
     <p>${r.desc}</p>
     <div class="needs">${r.needs.map(n=>`<span>${NEEDS[n]||n}</span>`).join('')}</div>
-    <div class="opts" role="group" aria-label="Duration">${r.opts.length>1 ? r.opts.map(([m,p],j)=>`<button class="opt" data-slug="${r.slug}" data-i="${j}" aria-pressed="${j===i}"><b>${m} min</b><small>${eur(p)}</small></button>`).join('') : `<span class="opt" style="cursor:default"><b>${o[0]} min</b><small>${eur(o[1])}</small></span>`}</div>
-    <div class="cfoot"><a href="${r.url}">Details</a><button class="btn btn-dark" data-book="${r.slug}" data-i="${i}">Book${o[1]?` · €${o[1]}`:''}</button></div>
+    <div class="opts" role="group" aria-label="${T('Duration')}">${r.opts.length>1 ? r.opts.map(([m,p],j)=>`<button class="opt" data-slug="${r.slug}" data-i="${j}" aria-pressed="${j===i}"><b>${m} min</b><small>${eur(p)}</small></button>`).join('') : `<span class="opt" style="cursor:default"><b>${o[0]} min</b><small>${eur(o[1])}</small></span>`}</div>
+    <div class="cfoot"><a href="${r.url}">${T('Details')}</a><button class="btn btn-dark" data-book="${r.slug}" data-i="${i}">${T('Book')}${o[1]?` · ${eur(o[1])}`:''}</button></div>
   </article>`;
 }
 
 function plist(list){
   return `<table class="plist"><tbody>${list.map(r=>`<tr>
-    <td><div class="nm">${r.name}${r.flags.includes('sig')?' <span class="badge sig" style="vertical-align:4px">Signature</span>':''}<small>${r.desc}</small></div></td>
+    <td><div class="nm">${r.name}${r.flags.includes('sig')?` <span class="badge sig" style="vertical-align:4px">${T('Signature')}</span>`:''}<small>${r.desc}</small></div></td>
     <td class="pr">${r.opts.map(([m,p])=>`<span>${m} min · ${eur(p)}</span>`).join(' ')}</td>
-    <td class="bk"><button class="btn btn-dark" data-book="${r.slug}">Book</button></td></tr>`).join('')}</tbody></table>`;
+    <td class="bk"><button class="btn btn-dark" data-book="${r.slug}">${T('Book')}</button></td></tr>`).join('')}</tbody></table>`;
 }
 
 function render(){
@@ -66,20 +67,20 @@ function render(){
 
   const list = filtered(), out = $('#out');
   const active = st.area!=='all' || st.need || st.time!=='any';
-  $('#rhead').innerHTML = `<span><b>${list.length}</b> ${list.length===1?'ritual':'rituals'}${st.need?` for <b>${(NEEDS[st.need]||'').toLowerCase()}</b>`:''}</span>` +
-    (st.quiz ? `<span class="quiz-banner">Based on your answers <button class="clear" id="redo">Retake</button></span>` : '') +
-    (active ? `<button class="clear" id="clearAll">Clear filters</button>` : '');
+  $('#rhead').innerHTML = `<span><b>${list.length}</b> ${list.length===1?T('ritual'):T('rituals')}${st.need?` ${T('for')} <b>${(NEEDS[st.need]||'').toLowerCase()}</b>`:''}</span>` +
+    (st.quiz ? `<span class="quiz-banner">${T('Based on your answers')} <button class="clear" id="redo">${T('Retake')}</button></span>` : '') +
+    (active ? `<button class="clear" id="clearAll">${T('Clear filters')}</button>` : '');
 
   if (!list.length) {
-    out.innerHTML = `<div class="empty"><h3>Nothing matches yet</h3><p style="color:var(--muted);margin:0 0 18px">Try a different length of time, or ask us on WhatsApp and we'll suggest something.</p><button class="btn btn-dark" id="clearAll2">Clear filters</button></div>`;
+    out.innerHTML = `<div class="empty"><h3>${T('Nothing matches yet')}</h3><p style="color:var(--muted);margin:0 0 18px">${T("Try a different length of time, or ask us on WhatsApp and we'll suggest something.")}</p><button class="btn btn-dark" id="clearAll2">${T('Clear filters')}</button></div>`;
   } else if (st.area==='all' && !st.need && st.time==='any' && st.sort==='rec') {
     out.innerHTML = Object.entries(AREAS).map(([k,a]) => {
       const g = list.filter(r=>r.area===k); if(!g.length) return '';
       return `<section class="group" id="g-${k}">
         <div class="ghead" style="--c:${a.c}">
           <div class="gimg">${a.img?`<img src="${a.img}"${a.imgSet?` srcset="${a.imgSet}" sizes="120px"`:''} alt="" loading="lazy" onerror="this.remove()">`:''}</div>
-          <div><h2>${a.name}</h2><p>${a.intro}</p>${a.long?`<p class="long" hidden>${a.long}</p><button class="more" aria-expanded="false">Read more</button>`:''}</div>
-          <span class="cnt">${plural(g.length)}${(p=>p.length?` · from €${Math.min(...p)}`:'')(g.map(minP).filter(x=>x<999))}</span>
+          <div><h2>${a.name}</h2><p>${a.intro}</p>${a.long?`<p class="long" hidden>${a.long}</p><button class="more" aria-expanded="false">${T('Read more')}</button>`:''}</div>
+          <span class="cnt">${plural(g.length)}${(p=>p.length?` · ${T('from')} ${eur(Math.min(...p))}`:'')(g.map(minP).filter(x=>x<999))}</span>
         </div>
         ${st.view==='cards' ? `<div class="grid">${g.map(card).join('')}</div>` : plist(g)}
       </section>`;
@@ -98,7 +99,7 @@ $('#zvListing').addEventListener('click', e => {
   const opt = e.target.closest('button.opt');
   if (opt) { st.sel[opt.dataset.slug] = +opt.dataset.i; render(); return; }
   const more = e.target.closest('.ghead .more');
-  if (more) { const l = more.previousElementSibling; l.hidden = !l.hidden; more.textContent = l.hidden?'Read more':'Read less'; more.setAttribute('aria-expanded', !l.hidden); return; }
+  if (more) { const l = more.previousElementSibling; l.hidden = !l.hidden; more.textContent = l.hidden?T('Read more'):T('Read less'); more.setAttribute('aria-expanded', !l.hidden); return; }
   const bk = e.target.closest('[data-book]');
   if (bk) {
     e.preventDefault();
@@ -110,12 +111,12 @@ $('#zvListing').addEventListener('click', e => {
 // Quiz
 // Questions come from Site settings → "Help me choose" quiz. Each answer: [filter, label, small text];
 // filter is "need:<slug>", "time:<short|hour|long>" or "" (no filter).
-const Q = (D.quiz && D.quiz.length) ? D.quiz : [{q:'What needs care today?', o:Object.keys(NEEDS).map(k => ['need:'+k, NEEDS[k], ''])}];
+const Q = (D.quiz && D.quiz.length) ? D.quiz : [{q:T('What needs care today?'), o:Object.keys(NEEDS).map(k => ['need:'+k, NEEDS[k], ''])}];
 let qi = 0, ans = {};
 const dlg = $('#quiz');
 function drawQ(){
   const q = Q[qi];
-  $('#qzStep').textContent = `Question ${qi+1} of ${Q.length}`;
+  $('#qzStep').textContent = T('Question {n} of {total}', { n: qi+1, total: Q.length });
   $('#qzBar').style.width = ((qi+1)/Q.length*100)+'%';
   $('#qzQ').textContent = q.q;
   $('#qzBack').hidden = qi===0;

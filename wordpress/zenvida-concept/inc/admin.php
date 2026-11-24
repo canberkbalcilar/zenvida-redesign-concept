@@ -455,6 +455,9 @@ function zv_dashboard_guide() {
 	if ( $rit ) {
 		array_splice( $tasks, 6, 0, array( array( 'filter', 'Change the rituals page texts', 'The intro, tiles and FAQ on /rituals/.', get_edit_post_link( $rit ), 'Edit rituals page' ) ) );
 	}
+	if ( function_exists( 'zv_es_ready' ) && zv_es_ready() ) {
+		$tasks[] = array( 'translation', 'Change a Spanish text', 'Opens the site in Spanish with the translation editor: click any text on the page, type the Spanish, then Save. Prices, photos and on/off switches are shared by both languages.', home_url( '/es/?trp-edit-translation=true' ), 'Translate' );
+	}
 	echo '<ul class="zv-guide">';
 	foreach ( $tasks as $t ) {
 		printf(

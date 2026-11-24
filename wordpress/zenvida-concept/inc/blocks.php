@@ -409,7 +409,7 @@ function zv_render_listing( $a ) {
 	$initial = $zv['initialArea'];
 	if ( ! $done && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 		wp_enqueue_script( 'zv-listing', get_template_directory_uri() . '/assets/js/listing.js', array( 'zv-site' ), ZV_VERSION . '.' . filemtime( get_template_directory() . '/assets/js/listing.js' ), true );
-		wp_add_inline_script( 'zv-listing', 'window.ZV = ' . wp_json_encode( $zv ) . ';', 'before' );
+		wp_add_inline_script( 'zv-listing', 'window.ZV = ' . wp_json_encode( zv_tr_archive( $zv ) ) . ';', 'before' );
 		$done = true;
 	}
 	$min_p = function ( $r ) {

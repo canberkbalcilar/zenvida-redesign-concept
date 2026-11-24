@@ -31,7 +31,7 @@ $zv_menu     = function ( $loc, $fallback_cls = '' ) {
     <?php zv_logo(); ?>
     <?php $zv_menu( 'primary' ); ?>
     <div class="right">
-      <div class="lang" role="group" aria-label="Language"><button aria-pressed="true">EN</button><button aria-pressed="false">ES</button></div>
+      <?php zv_language_switch(); ?>
       <a class="btn btn-dark" href="<?php echo esc_url( $zv_book_url ); ?>"><?php echo zv_e( zv_opt( 'header_label' ) ); ?></a>
       <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>

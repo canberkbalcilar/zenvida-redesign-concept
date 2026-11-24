@@ -66,7 +66,7 @@ function zv_directions_js() {
 		return '';
 	}
 	$done = true;
-	return "document.addEventListener('click',function(e){var c=e.target.closest('[data-copy]');if(c){navigator.clipboard&&navigator.clipboard.writeText(c.dataset.copy).then(function(){window.zvToast&&zvToast('Address copied');});}var t=e.target.closest('[data-taxi]');if(t){var d=t.closest('.dir').nextElementSibling;d&&d.showModal();}var x=e.target.closest('[data-taxi-close]');if(x){x.closest('dialog').close();}});";
+	return "document.addEventListener('click',function(e){var c=e.target.closest('[data-copy]');if(c){navigator.clipboard&&navigator.clipboard.writeText(c.dataset.copy).then(function(){window.zvToast&&zvToast(window.zvT?zvT('Address copied'):'Address copied');});}var t=e.target.closest('[data-taxi]');if(t){var d=t.closest('.dir').nextElementSibling;d&&d.showModal();}var x=e.target.closest('[data-taxi-close]');if(x){x.closest('dialog').close();}});";
 }
 
 function zv_render_route( $a, $content ) {

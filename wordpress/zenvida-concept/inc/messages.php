@@ -49,12 +49,12 @@ function zv_receive_message() {
 
 	// Spam traps: a filled hidden field, or a form sent within 3 seconds of loading.
 	if ( ! empty( $in['website'] ) || ( isset( $in['ts'] ) && ( time() * 1000 - (int) $in['ts'] ) < 3000 ) ) {
-		wp_send_json_success( array( 'message' => zv_opt( 'contact_success' ) ) ); // look successful, save nothing
+		wp_send_json_success( array( 'message' => zv_tr( zv_opt( 'contact_success' ) ) ) ); // look successful, save nothing
 	}
 	$key   = 'zv_msg_' . md5( ( $_SERVER['REMOTE_ADDR'] ?? '' ) . wp_salt() ); // phpcs:ignore
 	$count = (int) get_transient( $key );
 	if ( $count >= 5 ) {
-		$fail( 'You have sent several messages in a short time. Please try again in an hour, or write to us on WhatsApp.' );
+		$fail( zv__( 'You have sent several messages in a short time. Please try again in an hour, or write to us on WhatsApp.' ) );
 	}
 
 	$kind    = array_key_exists( $in['kind'] ?? '', zv_message_kinds() ) ? $in['kind'] : 'contact';
@@ -64,19 +64,19 @@ function zv_receive_message() {
 	$topic   = sanitize_text_field( $in['topic'] ?? '' );
 	$message = sanitize_textarea_field( $in['message'] ?? '' );
 	if ( '' === $name ) {
-		$fail( 'Please add your name.', 'name' );
+		$fail( zv__( 'Please add your name.' ), 'name' );
 	}
 	if ( ! is_email( $email ) ) {
-		$fail( 'Please check your email address.', 'email' );
+		$fail( zv__( 'Please check your email address.' ), 'email' );
 	}
 	if ( 'contact' === $kind && '' === trim( $message ) ) {
-		$fail( 'Please write your message.', 'message' );
+		$fail( zv__( 'Please write your message.' ), 'message' );
 	}
 	if ( 'referral' === $kind ) {
 		zv_referral_check( $in, $fail );
 	}
 	if ( empty( $in['consent'] ) ) {
-		$fail( 'Please tick the box so we may keep your message to reply to you.', 'consent' );
+		$fail( zv__( 'Please tick the box so we may keep your message to reply to you.' ), 'consent' );
 	}
 	$details = array();
 	foreach ( (array) ( $in['details'] ?? array() ) as $label => $value ) {
@@ -87,11 +87,15 @@ function zv_receive_message() {
 		}
 	}
 
+	if ( 'es' === zv_lang() ) {
+		$details['Language'] = 'Spanish (sent from the Spanish website)';
+	}
+
 	$cv = array( '', '' );
 	if ( 'job' === $kind && ! empty( $_FILES['cv'] ) ) { // phpcs:ignore
 		$cv = zv_store_cv( $_FILES['cv'] ); // phpcs:ignore
 		if ( is_wp_error( $cv ) ) {
-			$fail( $cv->get_error_message(), 'cv' );
+			$fail( zv__( $cv->get_error_message() ), 'cv' );
 		}
 	}
 
@@ -104,7 +108,7 @@ function zv_receive_message() {
 		'post_content' => mb_substr( $message, 0, 5000 ),
 	) );
 	if ( ! $id || is_wp_error( $id ) ) {
-		$fail( 'Sorry, something went wrong. Please write to us on WhatsApp.' );
+		$fail( zv__( 'Sorry, something went wrong. Please write to us on WhatsApp.' ) );
 	}
 	update_post_meta( $id, 'zv_msg', array(
 		'kind'    => $kind,
@@ -144,7 +148,7 @@ function zv_receive_message() {
 	}
 
 	$thanks = array( 'gift' => zv_opt( 'gift_success' ), 'job' => zv_opt( 'job_success' ), 'referral' => zv_opt( 'referral_success' ) );
-	wp_send_json_success( array( 'message' => $thanks[ $kind ] ?? zv_opt( 'contact_success' ), 'payUrl' => 'gift' === $kind ? zv_opt( 'gift_url' ) : '' ) );
+	wp_send_json_success( array( 'message' => zv_tr( $thanks[ $kind ] ?? zv_opt( 'contact_success' ) ), 'payUrl' => 'gift' === $kind ? zv_opt( 'gift_url' ) : '' ) );
 }
 
 /* ------------------------------------------------------------- the form */

@@ -92,7 +92,7 @@ function zv_render_body_map( $a ) {
 	usort( $rituals, fn( $x, $y ) => $y['pop'] <=> $x['pop'] );
 
 	$zones = zv_body_zones();
-	$data  = array( 'zones' => array_map( fn( $z ) => array( 'label' => $z[0], 'hint' => $z[1] ), $zones ), 'rituals' => $rituals, 'count' => max( 1, (int) $a['count'] ), 'all' => zv_rituals_url() );
+	$data  = array( 'zones' => array_map( fn( $z ) => array( 'label' => zv_tr( $z[0] ), 'hint' => zv_tr( $z[1] ) ), $zones ), 'rituals' => zv_tr_rows( $rituals, array( 'name', 'area', 'desc' ) ), 'count' => max( 1, (int) $a['count'] ), 'all' => zv_rituals_url() );
 
 	// The figure: one neutral silhouette; zones are separate shapes so each can light up.
 	$zone = fn( $slug, $shape ) => '<g class="bm-zone" data-zone="' . esc_attr( $slug ) . '" role="button" tabindex="0" aria-label="' . esc_attr( $zones[ $slug ][0] ) . '">' . $shape . '</g>';

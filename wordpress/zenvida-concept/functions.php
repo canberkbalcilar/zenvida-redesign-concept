@@ -14,10 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '1.4.0' );
+define( 'ZV_VERSION', '1.5.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
+require_once __DIR__ . '/inc/i18n.php';
 require_once __DIR__ . '/inc/media.php';
 require_once __DIR__ . '/inc/blocks.php';
 require_once __DIR__ . '/inc/seed.php';
@@ -58,11 +59,11 @@ add_filter( 'document_title_parts', function ( $parts ) {
 		return $parts; // An SEO plugin manages titles.
 	}
 	if ( is_post_type_archive( 'ritual' ) ) {
-		$parts['title'] = zv_opt( 'seo_rituals' );
+		$parts['title'] = zv_tr( zv_opt( 'seo_rituals' ) );
 	} elseif ( is_singular( 'ritual' ) ) {
-		$parts['title'] = trim( get_the_title() . ' ' . zv_opt( 'seo_ritual_suffix' ) );
+		$parts['title'] = trim( zv_tr( get_the_title() ) . ' ' . zv_tr( zv_opt( 'seo_ritual_suffix' ) ) );
 	} elseif ( is_front_page() ) {
-		$parts['title'] = zv_opt( 'seo_home' );
+		$parts['title'] = zv_tr( zv_opt( 'seo_home' ) );
 	}
 	unset( $parts['tagline'] );
 	return $parts;
@@ -82,7 +83,7 @@ add_action( 'wp_head', function () {
 		$d = term_description();
 	}
 	if ( $d ) {
-		echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $d ) ) . '">' . "\n";
+		echo '<meta name="description" content="' . esc_attr( zv_tr( wp_strip_all_tags( $d ) ) ) . '">' . "\n";
 	}
 }, 1 );
 
@@ -204,10 +205,10 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'zv-fonts', 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600&display=swap', array(), null );
 	wp_enqueue_style( 'zv-site', "$uri/css/zenvida.css", array(), $ver( 'css/zenvida.css' ) );
 	wp_enqueue_script( 'zv-site', "$uri/js/site.js", array(), $ver( 'js/site.js' ), true );
-	wp_add_inline_script( 'zv-site', 'window.ZV_SITE = ' . wp_json_encode( array( 'hours' => zv_hours(), 'tz' => zv_tz(), 'whatsapp' => preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) ) ) ) . ';', 'before' );
+	wp_add_inline_script( 'zv-site', 'window.ZV_SITE = ' . wp_json_encode( array( 'hours' => zv_hours(), 'tz' => zv_tz(), 'whatsapp' => preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) ), 'lang' => zv_lang(), 'i18n' => 'es' === zv_lang() ? zv_ui_strings() : new stdClass() ) ) . ';', 'before' );
 	if ( is_singular( 'ritual' ) ) {
 		wp_enqueue_script( 'zv-single', "$uri/js/single.js", array( 'zv-site' ), $ver( 'js/single.js' ), true );
-		wp_add_inline_script( 'zv-single', 'window.ZV_SINGLE = ' . wp_json_encode( zv_ritual_data( get_queried_object() ) ) . ';', 'before' );
+		wp_add_inline_script( 'zv-single', 'window.ZV_SINGLE = ' . wp_json_encode( zv_tr_row( zv_ritual_data( get_queried_object() ), array( 'name', 'areaName', 'desc' ) ) ) . ';', 'before' );
 	}
 }, 20 );
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );

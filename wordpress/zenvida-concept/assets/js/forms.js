@@ -1,7 +1,8 @@
 /* Contact form and gift card builder. Sends to admin-ajax (action zv_message); see inc/messages.php. */
 (() => {
   const C = window.ZV_FORMS || {};
-  const eur = n => '€' + n;
+  const T = (s, v) => (window.zvT ? zvT(s, v) : s);
+  const eur = n => T('€{n}', { n });
 
   document.querySelectorAll('form[data-zv-form]').forEach(form => {
     const kind = form.dataset.zvForm;
@@ -22,12 +23,12 @@
       if (!root) return;
       const v = value();
       $('[data-gift-total]').textContent = eur(v || 0);
-      $('[data-gp="what"]').textContent = what() || 'Choose a gift';
+      $('[data-gp="what"]').textContent = what() || T('Choose a gift');
       $('[data-gp="what"]').classList.toggle('long', gift.type === 'ritual');
       $('[data-gp="to"]').textContent = detail('To') || '…';
       $('[data-gp="from"]').textContent = detail('From') || '…';
-      $('[data-gp="msg"]').textContent = detail('Card message') || 'Your message appears here.';
-      const wa = `Hi! I'd like a gift card: ${what()}${detail('To') ? ' for ' + detail('To') : ''}.`;
+      $('[data-gp="msg"]').textContent = detail('Card message') || T('Your message appears here.');
+      const wa = detail('To') ? T("Hi! I'd like a gift card: {gift} for {name}.", { gift: what(), name: detail('To') }) : T("Hi! I'd like a gift card: {gift}.", { gift: what() });
       $('[data-gift-wa]').href = 'https://wa.me/' + (C.whatsapp || '') + '?text=' + encodeURIComponent(wa);
     }
 
@@ -81,24 +82,24 @@
       form.querySelectorAll('[aria-invalid]').forEach(e => e.removeAttribute('aria-invalid'));
       const f = n => form.querySelector(`[name="${n}"]`);
       if (kind === 'gift') {
-        if (gift.type === 'amount' && (!gift.amount || gift.amount < 10)) return bad(form.querySelector('.gift-other input'), 'Please choose an amount (at least €10).');
-        if (gift.send === 'them' && !/^\S+@\S+\.\S+$/.test(detail('Recipient email'))) return bad(form.querySelector('[data-k="Recipient email"]'), 'Please add their email address.');
+        if (gift.type === 'amount' && (!gift.amount || gift.amount < 10)) return bad(form.querySelector('.gift-other input'), T('Please choose an amount (at least €10).'));
+        if (gift.send === 'them' && !/^\S+@\S+\.\S+$/.test(detail('Recipient email'))) return bad(form.querySelector('[data-k="Recipient email"]'), T('Please add their email address.'));
       }
-      if (!f('name').value.trim()) return bad(f('name'), 'Please add your name.');
-      if (!/^\S+@\S+\.\S+$/.test(f('email').value.trim())) return bad(f('email'), 'Please check your email address.');
-      if (kind === 'contact' && !f('message').value.trim()) return bad(f('message'), 'Please write your message.');
+      if (!f('name').value.trim()) return bad(f('name'), T('Please add your name.'));
+      if (!/^\S+@\S+\.\S+$/.test(f('email').value.trim())) return bad(f('email'), T('Please check your email address.'));
+      if (kind === 'contact' && !f('message').value.trim()) return bad(f('message'), T('Please write your message.'));
       if (kind === 'referral') {
-        if (!f('phone').value.trim()) return bad(f('phone'), 'Please add your phone number.');
-        if (!detail("Friend's name")) return bad(form.querySelector(`[data-k="Friend's name"]`), "Please add your friend's name.");
-        if (!/^\S+@\S+\.\S+$/.test(detail("Friend's email"))) return bad(form.querySelector(`[data-k="Friend's email"]`), "Please check your friend's email address.");
+        if (!f('phone').value.trim()) return bad(f('phone'), T('Please add your phone number.'));
+        if (!detail("Friend's name")) return bad(form.querySelector(`[data-k="Friend's name"]`), T("Please add your friend's name."));
+        if (!/^\S+@\S+\.\S+$/.test(detail("Friend's email"))) return bad(form.querySelector(`[data-k="Friend's email"]`), T("Please check your friend's email address."));
       }
       if (kind === 'job') {
         const cv = f('cv') && f('cv').files[0];
-        if (cv && cv.size > 5 * 1024 * 1024) return bad(f('cv'), 'The CV is larger than 5 MB. Please send a smaller file.');
-        if (cv && !/\.(pdf|docx?)$/i.test(cv.name)) return bad(f('cv'), 'Please send your CV as a PDF or Word file.');
-        if (!f('message').value.trim() && !cv) return bad(f('message'), 'Tell us a little about yourself, or attach your CV.');
+        if (cv && cv.size > 5 * 1024 * 1024) return bad(f('cv'), T('The CV is larger than 5 MB. Please send a smaller file.'));
+        if (cv && !/\.(pdf|docx?)$/i.test(cv.name)) return bad(f('cv'), T('Please send your CV as a PDF or Word file.'));
+        if (!f('message').value.trim() && !cv) return bad(f('message'), T('Tell us a little about yourself, or attach your CV.'));
       }
-      if (!f('consent').checked) return bad(f('consent'), 'Please tick the box so we may keep your message to reply to you.');
+      if (!f('consent').checked) return bad(f('consent'), T('Please tick the box so we may keep your message to reply to you.'));
       return true;
     }
 
@@ -110,6 +111,7 @@
       fd.append('action', 'zv_message');
       fd.append('kind', kind);
       fd.append('page', location.href);
+      fd.append('zv_lang', (window.ZV_SITE && ZV_SITE.lang) || 'en');
       if (kind === 'job') ['Experience', 'Availability', 'Languages'].forEach(k => detail(k) && fd.append(`details[${k}]`, detail(k)));
       if (kind === 'contact' || kind === 'referral') form.querySelectorAll('[data-k]').forEach(el => el.value.trim() && fd.append(`details[${el.dataset.k}]`, el.value.trim()));
       if (kind === 'referral') fd.append('topic', 'Referral: ' + detail("Friend's name"));
@@ -121,31 +123,31 @@
         fd.append('details[Delivery]', gift.send === 'them' ? 'Email to the recipient' : 'Email to the buyer');
         if (gift.send === 'them') ['Recipient email', 'Send on'].forEach(k => detail(k) && fd.append(`details[${k}]`, detail(k)));
       }
-      btn.disabled = true; say('Sending…', true);
+      btn.disabled = true; say(T('Sending…'), true);
       try {
         const r = await fetch(C.ajax, { method: 'POST', body: fd, credentials: 'same-origin' });
         const j = await r.json();
         if (!j.success) {
           btn.disabled = false;
           const fld = j.data && j.data.field ? form.querySelector(`[name="${j.data.field}"]`) : null;
-          return bad(fld, (j.data && j.data.message) || 'Sorry, something went wrong. Please try WhatsApp.');
+          return bad(fld, (j.data && j.data.message) || T('Sorry, something went wrong. Please try WhatsApp.'));
         }
         const done = document.createElement('div');
         done.className = 'zf-done';
         done.setAttribute('role', 'status');
-        done.innerHTML = '<span class="zf-tick">✓</span><h3>' + ({ gift: 'Request received', job: 'Application sent', referral: 'Referral sent' }[kind] || 'Message sent') + '</h3><p></p>';
+        done.innerHTML = '<span class="zf-tick">✓</span><h3>' + T({ gift: 'Request received', job: 'Application sent', referral: 'Referral sent' }[kind] || 'Message sent') + '</h3><p></p>';
         done.querySelector('p').textContent = j.data.message;
         if (j.data.payUrl) {
           const a = document.createElement('a');
           a.className = 'btn btn-dark'; a.href = j.data.payUrl; a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = 'Continue to payment';
+          a.textContent = T('Continue to payment');
           done.appendChild(a);
         }
         form.replaceWith(done);
         done.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } catch (err) {
         btn.disabled = false;
-        say('No connection. Please try again, or write to us on WhatsApp.', false);
+        say(T('No connection. Please try again, or write to us on WhatsApp.'), false);
       }
     });
   });

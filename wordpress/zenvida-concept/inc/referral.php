@@ -41,13 +41,13 @@ function zv_render_referral_form( $a ) {
 function zv_referral_check( $in, $fail ) {
 	$d = (array) ( $in['details'] ?? array() );
 	if ( '' === trim( (string) ( $in['phone'] ?? '' ) ) ) {
-		$fail( 'Please add your phone number.', 'phone' );
+		$fail( zv__( 'Please add your phone number.' ), 'phone' );
 	}
 	if ( '' === trim( (string) ( $d["Friend's name"] ?? '' ) ) ) {
-		$fail( "Please add your friend's name." );
+		$fail( zv__( "Please add your friend's name." ) );
 	}
 	if ( ! is_email( (string) ( $d["Friend's email"] ?? '' ) ) ) {
-		$fail( "Please check your friend's email address." );
+		$fail( zv__( "Please check your friend's email address." ) );
 	}
 }
 

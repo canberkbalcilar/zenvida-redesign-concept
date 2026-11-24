@@ -236,9 +236,9 @@ add_filter( 'document_title_parts', function ( $parts ) {
 		return $parts;
 	}
 	if ( is_post_type_archive( 'zv_event' ) ) {
-		$parts['title'] = zv_opt( 'events_title' ) . ' at ZenVida Madrid';
+		$parts['title'] = zv_tr( zv_opt( 'events_title' ) ) . ' ' . zv__( 'at ZenVida Madrid' );
 	} elseif ( is_singular( 'zv_event' ) ) {
-		$parts['title'] = get_the_title() . ' · ' . zv_event_when( zv_event( get_queried_object_id() ), true );
+		$parts['title'] = zv_tr( get_the_title() ) . ' · ' . zv_event_when( zv_event( get_queried_object_id() ), true );
 	}
 	return $parts;
 }, 20 );

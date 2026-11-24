@@ -385,6 +385,9 @@ function zv_seed( $mode = 'demo' ) {
 	}
 
 	zv_seed_journal(); // the 18 real journal posts, after the pages they link to
+	if ( zv_trp() ) {
+		zv_es_import(); // Spanish version, when TranslatePress is installed
+	}
 	flush_rewrite_rules();
 }
 

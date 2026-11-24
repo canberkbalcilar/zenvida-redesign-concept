@@ -25,6 +25,13 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.5.0 =
+* Spanish version with the free TranslatePress plugin: the whole site at /es/, English stays the main language. EN / ES switch in the header goes to the same page in the other language.
+* Ready-made Spanish for all starter content (inc/data/es.json, 1,900+ texts): pages, 19 rituals, policies, menus and the 18 journal posts (from the Spanish versions on zenvida.es). Loaded automatically, or with the "Install Spanish translations" button after installing TranslatePress. Texts the client already translated are never overwritten.
+* Booking card, quiz, body map, opening hours, forms and WhatsApp messages in Spanish, with Spanish dates (inc/data/es-ui.json). Browser titles and descriptions translated too.
+* Messages sent from the Spanish site are marked "Language: Spanish" in the inbox.
+* Dashboard guide: "Change a Spanish text" opens TranslatePress's editor on the Spanish site.
+
 = 1.4.0 =
 * Journal: the 18 Respiro posts from zenvida.es are now part of the starter content (texts, photos, headings, lists, buttons, tables, questions), with their original dates and addresses. Links to old zenvida.es pages point to the matching new pages. The 3 sample posts are gone.
 * Refer a friend: new page with a form (your details + your friend's), saved under Messages and emailed; its own terms page; link in the footer "Offers" menu. Thank-you text in Site settings.

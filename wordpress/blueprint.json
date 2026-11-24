@@ -2,11 +2,14 @@
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "meta": {
     "title": "ZenVida redesign concept",
-    "description": "ZenVida Concept theme: simple ritual form, show/hide and drag-and-drop order, every page section an editable block, quick guide on the dashboard.",
+    "description": "ZenVida Concept theme: simple ritual form, show/hide and drag-and-drop order, every page section an editable block, quick guide on the dashboard. English and Spanish (/es/) with TranslatePress.",
     "author": "canberkbalcilar"
   },
   "landingPage": "/",
-  "preferredVersions": { "php": "8.3", "wp": "latest" },
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
   "login": true,
   "steps": [
     {
@@ -20,12 +23,24 @@
       }
     },
     {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "translatepress-multilingual"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
       "step": "installTheme",
       "themeData": {
         "resource": "url",
-        "url": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.4.0"
+        "url": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.5.0"
       },
-      "options": { "activate": true }
+      "options": {
+        "activate": true
+      }
     },
     {
       "step": "runPHP",

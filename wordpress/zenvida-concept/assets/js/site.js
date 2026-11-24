@@ -1,6 +1,13 @@
 /* Site-wide behaviour. Settings from the "ZenVida" admin screen arrive in window.ZV_SITE. */
 (() => {
 const S = window.ZV_SITE || {};
+// Language: texts written by the theme's scripts come from ZV_SITE.i18n on the Spanish site.
+const I18N = S.i18n || {};
+window.zvT = (s, v) => { let t = I18N[s] || s; if (v) t = t.replace(/\{(\w+)\}/g, (_, k) => (v[k] != null ? v[k] : '')); return t; };
+window.zvLocale = S.lang === 'es' ? 'es-ES' : 'en';
+window.zvCap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+window.zvDays = [0,1,2,3,4,5,6].map(i => zvCap(new Date(2024, 0, 7 + i).toLocaleDateString(zvLocale, { weekday: 'long' }))); // Sunday first
+const T = zvT;
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
@@ -18,7 +25,7 @@ const mnav = $('#mnav'), mbtn = $('.menu-btn');
 if (mbtn && mnav) {
   const setMenu = open => {
     mnav.hidden = !open; mbtn.setAttribute('aria-expanded', open);
-    mbtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    mbtn.setAttribute('aria-label', open ? T('Close menu') : T('Open menu'));
     if (open) mnav.querySelector('a')?.focus();
   };
   mbtn.addEventListener('click', () => setMenu(mnav.hidden));
@@ -53,7 +60,7 @@ window.zvNow = () => {
 
 // Opening hours (index 0 = Sunday, values in minutes)
 const H = S.hours || [];
-const DAYN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DAYN = zvDays;
 const fmt = m => String(Math.floor((m%1440)/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
 const isClosed = d => H[d][0] === H[d][1];          // a day marked "Closed" in Site settings
 if (H.length === 7) {
@@ -62,29 +69,29 @@ if (H.length === 7) {
   // Next opening: later today, or the first day that is not closed.
   let next = '';
   if (!open) {
-    if (!isClosed(dow) && nm < o) next = `Opens today at ${fmt(o)}`;
+    if (!isClosed(dow) && nm < o) next = T('Opens today at {time}', { time: fmt(o) });
     else for (let i = 1; i <= 7; i++) {
       const d = (dow + i) % 7;
-      if (!isClosed(d)) { next = `Opens ${i === 1 ? 'tomorrow' : DAYN[d]} at ${fmt(H[d][0])}`; break; }
+      if (!isClosed(d)) { next = i === 1 ? T('Opens tomorrow at {time}', { time: fmt(H[d][0]) }) : T('Opens {day} at {time}', { day: DAYN[d], time: fmt(H[d][0]) }); break; }
     }
   }
-  const label = open ? `Open now · until ${fmt(c)}` : (next || 'Closed');
+  const label = open ? T('Open now · until {time}', { time: fmt(c) }) : (next || T('Closed'));
   $$('[data-open-now]').forEach(el => { el.textContent = label; el.classList.toggle('closed', !open); });
   $$('[data-hours-table]').forEach(t => {
-    t.innerHTML = [1,2,3,4,5,6,0].map(i => `<tr class="${i===dow?'today':''}"><td>${DAYN[i]}${i===dow?' · today':''}</td><td>${isClosed(i) ? 'Closed' : fmt(H[i][0]) + ' – ' + fmt(H[i][1])}</td></tr>`).join('');
+    t.innerHTML = [1,2,3,4,5,6,0].map(i => `<tr class="${i===dow?'today':''}"><td>${DAYN[i]}${i===dow?' · '+T('today'):''}</td><td>${isClosed(i) ? T('Closed') : fmt(H[i][0]) + ' – ' + fmt(H[i][1])}</td></tr>`).join('');
   });
   const everyDay = [0,1,2,3,4,5,6].every(d => !isClosed(d));
-  $$('[data-hours-today]').forEach(el => el.textContent = (isClosed(dow) ? 'Closed today.' : `Today: ${fmt(o)} – ${fmt(c)}.`) + (everyDay ? ' Open 7 days a week.' : ''));
+  $$('[data-hours-today]').forEach(el => el.textContent = (isClosed(dow) ? T('Closed today.') : T('Today: {open} – {close}.', { open: fmt(o), close: fmt(c) })) + (everyDay ? ' ' + T('Open 7 days a week.') : ''));
   // Quick book "When" options
   $$('[data-qb-when]').forEach(sel => {
     const opts = [];
     for (let i = 0; i < 7; i++) {
       const d = new Date(now); d.setDate(d.getDate()+i);
       if (isClosed(d.getDay()) || (i === 0 && nm > c - 90)) continue;
-      const name = i===0 ? 'Today' : i===1 ? 'Tomorrow' : d.toLocaleDateString('en',{weekday:'long'});
-      opts.push(`<option value="${i}">${name}, ${d.toLocaleDateString('en',{day:'numeric',month:'short'})}</option>`);
+      const name = i===0 ? T('Today') : i===1 ? T('Tomorrow') : DAYN[d.getDay()];
+      opts.push(`<option value="${i}">${name}, ${d.toLocaleDateString(zvLocale,{day:'numeric',month:'short'})}</option>`);
     }
-    sel.innerHTML = opts.join('') + '<option value="later">Later date…</option>';
+    sel.innerHTML = opts.join('') + '<option value="later">' + T('Later date…') + '</option>';
   });
 }
 
@@ -102,17 +109,17 @@ $$('form[data-newsletter]').forEach(f => {
   f.querySelectorAll('[data-ch]').forEach(b => b.addEventListener('click', () => {
     ch = b.dataset.ch;
     f.querySelectorAll('[data-ch]').forEach(x => x.setAttribute('aria-pressed', x === b));
-    if (ch === 'wa') { input.type = 'tel'; input.placeholder = '+34 600 000 000'; input.setAttribute('aria-label', 'WhatsApp number'); input.autocomplete = 'tel'; }
-    else { input.type = 'email'; input.placeholder = 'you@example.com'; input.setAttribute('aria-label', 'Email address'); input.autocomplete = 'email'; }
+    if (ch === 'wa') { input.type = 'tel'; input.placeholder = '+34 600 000 000'; input.setAttribute('aria-label', T('WhatsApp number')); input.autocomplete = 'tel'; }
+    else { input.type = 'email'; input.placeholder = 'you@example.com'; input.setAttribute('aria-label', T('Email address')); input.autocomplete = 'email'; }
     input.value = ''; input.focus();
   }));
   f.addEventListener('submit', e => {
     e.preventDefault();
     const v = input.value.trim();
     const valid = ch === 'email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : /^\+?[\d\s]{8,}$/.test(v);
-    if (!valid) { zvToast(ch === 'email' ? 'Please enter a valid email address.' : 'Please enter a valid WhatsApp number.'); input.focus(); return; }
-    if (!f.querySelector('[data-nconsent]').checked) { zvToast('Please tick the box to accept the privacy policy.'); return; }
-    ok.textContent = `Prototype: your welcome code would now be sent by ${ch === 'email' ? 'email' : 'WhatsApp'}.`;
+    if (!valid) { zvToast(ch === 'email' ? T('Please enter a valid email address.') : T('Please enter a valid WhatsApp number.')); input.focus(); return; }
+    if (!f.querySelector('[data-nconsent]').checked) { zvToast(T('Please tick the box to accept the privacy policy.')); return; }
+    ok.textContent = ch === 'email' ? T('Prototype: your welcome code would now be sent by email.') : T('Prototype: your welcome code would now be sent by WhatsApp.');
     ok.hidden = false;
   });
 });
@@ -133,11 +140,9 @@ $$('.story').forEach(s => {
   if (p.children.length <= 2) { b.hidden = true; return; }
   b.addEventListener('click', () => {
     const open = p.classList.toggle('clamp') === false;
-    b.textContent = open ? 'Read less' : 'Read more';
+    b.textContent = open ? T('Read less') : T('Read more');
     b.setAttribute('aria-expanded', open);
   });
 });
 
-// Language switch (visual only in the concept)
-$$('.lang button').forEach(b => b.addEventListener('click', () => $$('.lang button').forEach(x => x.setAttribute('aria-pressed', x === b))));
 })();
