@@ -22,8 +22,13 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 2. On an empty WordPress the starter content installs by itself on the next admin page: 19 rituals with prices, all pages, policy pages, menus, settings and photos (downloaded into the media library). Sample events, journal posts and the sample popup arrive as drafts.
 3. On a WordPress that already has content nothing is changed; an "Install starter content" button appears instead.
 4. Site settings: check contact details and opening hours. Install an SMTP plugin so form emails arrive reliably.
+5. Updates: new versions appear under Dashboard → Updates like any other theme update and install by themselves (Appearance → Themes → ZenVida Concept → "Disable auto-updates" to update by hand instead). An update only changes the theme files; rituals, pages, prices, photos and settings stay as they are.
 
 == Changelog ==
+
+= 1.7.0 =
+* Updates from the dashboard: when a new version is published, Dashboard → Updates and Appearance → Themes show "Update available" with what is new, and one click installs it. Automatic updates are switched on, so new versions also install by themselves within about 12 hours.
+* An update only replaces the theme files. Rituals, pages, prices, photos, messages and settings are not changed.
 
 = 1.6.0 =
 * Floating WhatsApp button in the bottom-right corner, like on the current website. Site settings → Contact: switch it on or off and set the first message that is already typed for the visitor (in Spanish on /es/).
