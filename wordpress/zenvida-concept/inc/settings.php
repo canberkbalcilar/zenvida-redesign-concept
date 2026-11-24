@@ -188,6 +188,10 @@ add_action( 'admin_init', function () {
 				if ( 'quiz' === $k ) {
 					$qs = array();
 					foreach ( (array) ( $in['quiz'] ?? array() ) as $q ) {
+						// Saved by code (starter content) rather than the form: [ 'q' => …, 'a' => [ [label, text, filter], … ] ].
+						if ( isset( $q['a'] ) && is_array( $q['a'] ) ) {
+							$q = array( 'q' => $q['q'] ?? '', 'label' => array_column( $q['a'], 0 ), 'text' => array_column( $q['a'], 1 ), 'action' => array_column( $q['a'], 2 ) );
+						}
 						$text = sanitize_text_field( $q['q'] ?? '' );
 						$ans  = array();
 						foreach ( (array) ( $q['label'] ?? array() ) as $i => $label ) {
@@ -201,6 +205,10 @@ add_action( 'admin_init', function () {
 					}
 					$out['quiz'] = $qs;
 				} elseif ( 'baths' === $k ) {
+					// Saved by code (starter content): a list of [ name, text, price, color ] rows → the form's shape.
+					if ( isset( $in['baths'][0] ) && is_array( $in['baths'][0] ) ) {
+						$in['baths'] = array( 'name' => array_column( $in['baths'], 'name' ), 'text' => array_column( $in['baths'], 'text' ), 'price' => array_column( $in['baths'], 'price' ), 'color' => array_column( $in['baths'], 'color' ) );
+					}
 					$rows = array();
 					foreach ( (array) ( $in['baths']['name'] ?? array() ) as $i => $name ) {
 						$name = sanitize_text_field( $name );

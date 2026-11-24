@@ -18,12 +18,16 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Installation ==
 
-1. Upload the theme and activate it. Activating never changes existing content or settings.
-2. Settings → Permalinks: choose "Post name".
-3. Site settings: fill in contact details and opening hours.
-4. Demo content is only imported on purpose (the online demo calls zv_seed()).
+1. Install WordPress, then Appearance → Themes → Add New → Upload Theme → zenvida-concept.zip → Activate.
+2. On an empty WordPress the starter content installs by itself on the next admin page: 19 rituals with prices, all pages, policy pages, menus, settings and photos (downloaded into the media library). Sample events, journal posts and the sample popup arrive as drafts.
+3. On a WordPress that already has content nothing is changed; an "Install starter content" button appears instead.
+4. Site settings: check contact details and opening hours. Install an SMTP plugin so form emails arrive reliably.
 
 == Changelog ==
+
+= 1.0.0 =
+* Starter content on real installs: automatic on an empty WordPress, button otherwise; photos imported into the media library; demo mode off; samples as drafts.
+* Fix: foot-bath list and quiz questions were emptied when content was saved from the admin.
 
 = 0.9.0 =
 * Work with us page: job cards and application form with private CV upload.

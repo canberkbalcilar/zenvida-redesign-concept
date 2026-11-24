@@ -1,16 +1,63 @@
 <?php
 /**
- * Demo content: areas, needs, 19 rituals, journal posts, and the Home / Rituals / Journal
- * pages built from ZenVida blocks, plus menus and settings. Runs once, on theme activation
- * (or from the Playground blueprint). Define ZV_SKIP_SEED to turn it off.
+ * Starter content: areas, needs, 19 rituals, all pages (built from ZenVida blocks), policy
+ * pages, events, journal posts, a popup, menus and settings.
+ *
+ * - Real install ("live"): runs by itself when the theme is activated on an empty WordPress,
+ *   or from the "Install starter content" button. Photos are downloaded into the media
+ *   library; sample events, journal posts and the popup arrive as drafts / switched off;
+ *   demo mode stays off.
+ * - Online demo ("demo"): the Playground blueprint calls zv_seed(); photos stay on Wix and
+ *   everything is published, with the "Redesign concept" bar.
+ * Runs once (option zv_seeded). Define ZV_SKIP_SEED to turn it off.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * A ZenVida photo by its Wix file id. After a live import the photo lives in the media
+ * library and that address is used; otherwise Wix resizes it on the fly.
+ */
 function zv_img( $id, $w = 600, $h = 450 ) {
+	$map = get_option( 'zv_local_images' );
+	if ( is_array( $map ) && ! empty( $map[ $id ] ) ) {
+		return $map[ $id ];
+	}
+	if ( ! empty( $GLOBALS['zv_import_images'] ) && ( $local = zv_localize_image( $id ) ) ) {
+		return $local;
+	}
 	return "https://static.wixstatic.com/media/$id/v1/fill/w_$w,h_$h,al_c,q_80,enc_auto/$id";
+}
+
+/** Download one ZenVida photo from Wix into the media library (once). Returns its address or ''. */
+function zv_localize_image( $id ) {
+	static $failed = array();
+	if ( isset( $failed[ $id ] ) ) {
+		return '';
+	}
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$ext = strtolower( pathinfo( $id, PATHINFO_EXTENSION ) ) ?: 'jpg';
+	$tmp = download_url( "https://static.wixstatic.com/media/$id/v1/fit/w_2400,h_2400,q_85/$id", 30 );
+	if ( is_wp_error( $tmp ) ) {
+		$failed[ $id ] = true;
+		return '';
+	}
+	$map  = (array) get_option( 'zv_local_images', array() );
+	$name = 'zenvida-photo-' . ( count( array_filter( $map ) ) + 1 ) . '.' . $ext;
+	$att  = media_handle_sideload( array( 'name' => $name, 'tmp_name' => $tmp ), 0, 'ZenVida' );
+	if ( is_wp_error( $att ) ) {
+		wp_delete_file( $tmp );
+		$failed[ $id ] = true;
+		return '';
+	}
+	update_post_meta( $att, '_wp_attachment_image_alt', 'ZenVida Foot & Body, Madrid' );
+	$map[ $id ] = wp_get_attachment_url( $att );
+	update_option( 'zv_local_images', $map );
+	return $map[ $id ];
 }
 
 /** Block array helpers for serialize_blocks(). */
@@ -35,13 +82,31 @@ function zv_faq( $items, $attrs = array() ) {
 
 require_once __DIR__ . '/seed-pages.php';
 
-function zv_seed() {
+function zv_seed( $mode = 'demo' ) {
 	if ( get_option( 'zv_seeded' ) || defined( 'ZV_SKIP_SEED' ) ) {
 		return;
 	}
-	update_option( 'zv_seeded', 1 );
+	$live = 'live' === $mode;
+	update_option( 'zv_seeded', $live ? 'live' : 'demo' );
 	update_option( 'timezone_string', 'Europe/Madrid' );
 	kses_remove_filters();
+	if ( $live ) {
+		if ( function_exists( 'set_time_limit' ) ) {
+			@set_time_limit( 300 ); // phpcs:ignore -- downloading ~10 photos
+		}
+		wp_raise_memory_limit( 'admin' );
+		$GLOBALS['zv_import_images'] = true;
+		if ( ! get_option( 'permalink_structure' ) ) {
+			update_option( 'permalink_structure', '/%postname%/' );
+		}
+		if ( in_array( get_option( 'blogname' ), array( '', 'My WordPress Website', 'WordPress', 'My Blog', 'My Site' ), true ) ) {
+			update_option( 'blogname', 'ZenVida' );
+		}
+		if ( in_array( get_option( 'blogdescription' ), array( '', 'Just another WordPress site' ), true ) ) {
+			update_option( 'blogdescription', 'Foot & Body Massage in Madrid' );
+		}
+	}
+	$sample_status = $live ? 'draft' : 'publish'; // sample journal posts and events: drafts on a real site
 
 	// WordPress's untouched sample post/page would show up in the journal and page list.
 	foreach ( array( array( 'hello-world', 'post' ), array( 'sample-page', 'page' ) ) as $d ) {
@@ -171,7 +236,7 @@ function zv_seed() {
 	foreach ( array_reverse( $posts ) as $n => $p ) {
 		$cat = term_exists( $p[1], 'category' ) ?: wp_insert_term( $p[1], 'category' );
 		$pid = wp_insert_post( array(
-			'post_status'   => 'publish',
+			'post_status'   => $sample_status,
 			'post_title'    => $p[0],
 			'post_excerpt'  => $p[3],
 			'post_date'     => gmdate( 'Y-m-d H:i:s', time() - ( 3 - $n ) * DAY_IN_SECONDS ),
@@ -245,7 +310,7 @@ function zv_seed() {
 	$foot = get_page_by_path( 'foot-massage', OBJECT, 'ritual' );
 	update_option( 'zv_settings', array_merge( zv_defaults(), array(
 		'rituals_page' => (string) $rpage,
-		'demo_mode'    => '1',
+		'demo_mode'    => $live ? '0' : '1',
 		'promo_text'   => 'Short on time? Foot Massage, 25 min for €25 · add neck & shoulders for €10',
 		'promo_link_label' => 'Book now',
 		'promo_link_url' => $foot ? get_permalink( $foot ) : $rituals_url,
@@ -297,7 +362,7 @@ function zv_seed() {
 			'<p>Thank you to everyone who came by! Short free foot massages, tea and a tour of the studio.</p>' ),
 	);
 	foreach ( $events as $ev ) {
-		$eid = wp_insert_post( wp_slash( array( 'post_type' => 'zv_event', 'post_status' => 'publish', 'post_title' => $ev[0], 'post_name' => $ev[1], 'post_content' => $ev[10] ) ) );
+		$eid = wp_insert_post( wp_slash( array( 'post_type' => 'zv_event', 'post_status' => $sample_status, 'post_title' => $ev[0], 'post_name' => $ev[1], 'post_content' => $ev[10] ) ) );
 		update_post_meta( $eid, 'zv_event', array_merge( zv_event_defaults(), array(
 			'label' => $ev[2], 'start' => $ev[3], 'end' => $ev[4], 'price' => $ev[5], 'places' => $ev[6], 'soldout' => $ev[7],
 			'image' => zv_img( $ev[8], 1200, 750 ), 'summary' => $ev[9],
@@ -307,8 +372,9 @@ function zv_seed() {
 
 	/* ---------- Sample event popup ---------- */
 	$today = new DateTimeImmutable( 'today', wp_timezone() );
-	$pop   = wp_insert_post( array( 'post_type' => 'zv_popup', 'post_status' => 'publish', 'post_title' => 'Christmas gift cards (sample)' ) );
+	$pop   = wp_insert_post( array( 'post_type' => 'zv_popup', 'post_status' => $sample_status, 'post_title' => 'Christmas gift cards (sample)' ) );
 	update_post_meta( $pop, 'zv_popup', array_merge( zv_popup_defaults(), array(
+		'active'  => $live ? '' : '1', // a real site starts with the sample popup switched off
 		'image'   => zv_img( 'b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg', 960, 600 ),
 		'eyebrow' => 'Christmas · until 6 January',
 		'heading' => 'Gift a ritual this Christmas',
@@ -500,11 +566,61 @@ function zv_deluxe_blocks( $visit_section ) {
 	);
 }
 
-// Fires on 'init' (priority 99) after the switch, so the post type and taxonomies exist.
-// Demo content is only imported on purpose (the WordPress Playground demo calls zv_seed()).
-// Activating the theme on a real site never touches its content or settings; it only
-// refreshes the permalink rules so /rituals/ and /events/ work straight away.
-add_action( 'after_switch_theme', fn() => update_option( 'zv_flush_rewrite', 1 ) );
+/**
+ * Is this WordPress empty? (No rituals, no pages of its own, at most the "Hello world" post.)
+ * Only then is starter content installed automatically.
+ */
+function zv_site_is_fresh() {
+	if ( get_posts( array( 'post_type' => 'ritual', 'post_status' => 'any', 'numberposts' => 1, 'fields' => 'ids' ) ) ) {
+		return false;
+	}
+	$pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'publish', 'numberposts' => 5, 'fields' => 'ids', 'exclude' => array( (int) get_option( 'wp_page_for_privacy_policy' ) ) ) );
+	$pages = array_filter( $pages, fn( $id ) => 'sample-page' !== get_post_field( 'post_name', $id ) );
+	return ! $pages && count( get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 2, 'fields' => 'ids' ) ) ) <= 1;
+}
+
+// Activation: refresh permalinks; on an empty WordPress, install the starter content.
+add_action( 'after_switch_theme', function () {
+	update_option( 'zv_flush_rewrite', 1 );
+	update_option( 'zv_maybe_import', 1 );
+} );
+add_action( 'admin_init', function () {
+	if ( ! get_option( 'zv_maybe_import' ) || wp_doing_ajax() ) {
+		return;
+	}
+	delete_option( 'zv_maybe_import' );
+	if ( get_option( 'zv_seeded' ) || get_option( 'zv_skip_auto_import' ) || ! current_user_can( 'switch_themes' ) || ! zv_site_is_fresh() ) {
+		return;
+	}
+	zv_seed( 'live' );
+	set_transient( 'zv_import_done', 1, HOUR_IN_SECONDS );
+}, 20 );
+
+// Not empty (or skipped)? Offer the import as a button while there are no rituals.
+add_action( 'admin_post_zv_import', function () {
+	check_admin_referer( 'zv_import' );
+	if ( ! current_user_can( 'switch_themes' ) ) {
+		wp_die( 'Not allowed.', 403 );
+	}
+	zv_seed( 'live' );
+	set_transient( 'zv_import_done', 1, HOUR_IN_SECONDS );
+	wp_safe_redirect( admin_url() );
+	exit;
+} );
+add_action( 'admin_notices', function () {
+	if ( ! current_user_can( 'switch_themes' ) ) {
+		return;
+	}
+	if ( get_transient( 'zv_import_done' ) ) {
+		delete_transient( 'zv_import_done' );
+		echo '<div class="notice notice-success is-dismissible"><p><b>ZenVida starter content is installed:</b> 19 rituals, all pages, policies, menus and photos. Sample events, journal posts and the sample popup are saved as drafts, ready for you to edit. <a href="' . esc_url( home_url( '/' ) ) . '">View the website →</a></p></div>';
+		return;
+	}
+	if ( get_option( 'zv_seeded' ) || get_posts( array( 'post_type' => 'ritual', 'post_status' => 'any', 'numberposts' => 1, 'fields' => 'ids' ) ) ) {
+		return;
+	}
+	echo '<div class="notice notice-info"><p><b>ZenVida:</b> install the starter content: 19 rituals with prices, the homepage and all pages, policy pages, menus and photos. It also sets the homepage and menus of this site.</p><p><a class="button button-primary" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=zv_import' ), 'zv_import' ) ) . '">Install starter content</a></p></div>';
+} );
 add_action( 'init', function () {
 	if ( get_option( 'zv_flush_rewrite' ) ) {
 		delete_option( 'zv_flush_rewrite' );

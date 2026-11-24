@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.9.1' );
+define( 'ZV_VERSION', '1.0.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
