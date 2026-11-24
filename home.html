@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZenVida | Reflexology & Body Massage in Madrid Centro</title>
+<meta name="description" content="Authentically Spanish foot and body massage in Madrid Centro, 3 minutes from Puerta del Sol. Reflexology, massage and facial rituals. Walk in or book online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFEF8;--cream:#F7F2E8;--sand-50:#F1EADC;--sand:#B0956A;--sand-700:#8A7350;
+  --ink:#1E1B17;--ink-2:#4A443B;--muted:#7A7266;--line:#E6DECF;--ok:#4F7A4A;
+  --radius:18px;--radius-sm:12px;
+  --shadow:0 1px 2px rgba(30,27,23,.04),0 8px 30px rgba(30,27,23,.07);
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Figtree",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h2{font-size:clamp(34px,4.4vw,50px);line-height:1.05}
+.eyebrow{font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--sand-700)}
+.lead{font-size:18px;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 24px;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;transition:transform .15s,background .2s,border-color .2s;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-dark{background:var(--ink);color:var(--paper)}
+.btn-dark:hover{background:#000}
+.btn-light{background:var(--paper);color:var(--ink)}
+.btn-light:hover{background:#fff}
+.btn-ghost{background:transparent;border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--sand)}
+.btn-glass{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.btn-glass:hover{background:rgba(255,255,255,.22)}
+.link{font-weight:600;color:var(--sand-700);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+:focus-visible{outline:2px solid var(--sand-700);outline-offset:3px}
+section.block{padding:96px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.sec-head>div{max-width:620px}
+.sec-head h2{margin-top:12px}
+.sec-head p{margin:14px 0 0}
+
+/* Concept bar, promo, header */
+.concept{background:#F1EADC;color:#4A443B;font:500 12.5px/1.4 var(--sans);text-align:center;padding:7px 16px;border-bottom:1px solid #E6DECF}
+.concept b{color:#1E1B17}.concept a{color:#8A7350;font-weight:600}
+.promo{background:var(--ink);color:#EDE6D8;font-size:13.5px;text-align:center;padding:9px 44px;position:relative}
+.promo a{color:#fff;font-weight:600}
+.promo button{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:0;color:#bdb4a4;cursor:pointer;font-size:18px;padding:6px}
+header.site{position:sticky;top:0;z-index:40;background:rgba(255,254,248,.92);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.site.scrolled{border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;gap:32px;height:68px}
+.logo{text-decoration:none;display:flex;flex-direction:column;line-height:1}
+.logo b{font:500 25px/1 var(--serif);letter-spacing:.14em}
+.logo small{font-size:9px;letter-spacing:.32em;color:var(--muted);margin-top:4px;padding-left:2px}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:14.5px}
+.nav ul a{text-decoration:none;color:var(--ink-2)}
+.nav ul a:hover{color:var(--ink)}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;font-size:12.5px;font-weight:600}
+.lang button{border:0;background:none;padding:5px 10px;border-radius:999px;cursor:pointer;color:var(--muted)}
+.lang button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.nav .btn{padding:10px 20px;font-size:14px}
+.menu-btn{display:none;background:none;border:0;padding:8px;cursor:pointer}
+
+/* Hero */
+.hero{position:relative;min-height:min(86vh,760px);display:flex;align-items:flex-end;color:#fff;background:#3b3128;overflow:hidden}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(24,19,14,.78) 0%,rgba(24,19,14,.45) 45%,rgba(24,19,14,.05) 75%),linear-gradient(0deg,rgba(24,19,14,.55),transparent 45%)}
+.hero .wrap{position:relative;z-index:1;width:100%;padding-top:96px;padding-bottom:132px}
+.hero .eyebrow{color:#E9D9BC}
+.hero h1{font-size:clamp(54px,8vw,104px);line-height:.95;margin:18px 0 20px;font-weight:500}
+.hero h1 em{font-style:italic;color:#E9D9BC}
+.hero p{font-size:19px;max-width:520px;margin:0 0 30px;color:#F3EDE2}
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+.hero-trust{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:30px;font-size:14px;color:#EDE6D8}
+.hero-trust span{display:inline-flex;align-items:center;gap:7px}
+.hero-trust .stars{color:#E3C88F;letter-spacing:1px}
+.open::before{content:"";width:7px;height:7px;border-radius:50%;background:#8CD08A;display:inline-block}
+.open.closed::before{background:#E59A7E}
+
+/* Quick book */
+.qb-wrap{position:relative;z-index:5;margin-top:-58px}
+.qb{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 50px rgba(30,27,23,.14);display:grid;grid-template-columns:1.5fr 1.1fr .8fr auto;align-items:stretch;padding:8px}
+.qf{padding:12px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;min-width:0}
+.qf:nth-child(3){border-right:0}
+.qf label{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.qf select{border:0;background:transparent;font-size:16px;font-weight:500;padding:4px 22px 2px 0;margin:0;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237A7266' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right center;background-size:14px;width:100%;text-overflow:ellipsis}
+.qf select:focus{outline:none}
+.qb .btn{border-radius:16px;padding:0 30px;margin:2px}
+.qb-note{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:14px;font-size:13.5px;color:var(--muted)}
+.qb-note span{display:inline-flex;gap:6px;align-items:center}
+.qb-note svg{width:15px;height:15px;color:var(--sand-700)}
+
+/* Areas */
+.areas{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:260px 260px;gap:14px}
+.area{position:relative;border-radius:var(--radius);overflow:hidden;text-decoration:none;color:#fff;background:var(--c)}
+.area:first-child{grid-row:1/3}
+.area img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.area:hover img{transform:scale(1.04)}
+.area::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,17,13,.72))}
+.area .t{position:absolute;left:22px;right:22px;bottom:20px;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.area b{display:block;font:500 32px/1.05 var(--serif)}
+.area:first-child b{font-size:42px}
+.area small{font-size:14px;opacity:.9}
+.area .go{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);display:grid;place-items:center;flex:0 0 auto;transition:transform .2s}
+.area:hover .go{transform:translateX(3px)}
+.area .go svg{width:16px;height:16px}
+.needs-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:28px}
+.needs-row span{font-size:14px;color:var(--muted);margin-right:6px}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:9px 15px;font-size:14px;text-decoration:none;color:var(--ink-2);transition:border-color .15s,background .15s}
+.chip:hover{border-color:var(--sand);background:var(--sand-50);color:var(--ink)}
+
+/* Signature */
+.sig{background:var(--ink);color:#EDE6D8}
+.sig h2{color:#fff}
+.sig .eyebrow{color:var(--sand)}
+.sig .sec-head p{color:#bdb4a4}
+.sig .btn-ghost{border-color:#4a443b;color:#fff}
+.sig .btn-ghost:hover{border-color:var(--sand)}
+.sig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sig-card{background:#2a2520;border:1px solid #3a342d;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
+.sig-card:hover{border-color:var(--sand-700);transform:translateY(-2px)}
+.sig-card .img{aspect-ratio:4/3;background:#3a342d;position:relative;overflow:hidden}
+.sig-card .img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.sig-card:hover .img img{transform:scale(1.04)}
+.sig-card .tag{position:absolute;left:12px;top:12px;background:rgba(30,27,23,.75);color:#EDE6D8;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;backdrop-filter:blur(4px)}
+.sig-card .body{padding:20px 20px 18px;display:flex;flex-direction:column;flex:1}
+.sig-card h3{font-size:28px;color:#fff;line-height:1.1;margin-bottom:6px}
+.sig-card p{margin:0 0 18px;font-size:14.5px;color:#bdb4a4;flex:1}
+.sig-card .foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #3a342d;padding-top:14px;font-size:14px}
+.sig-card .foot b{color:#fff;font-weight:600}
+.sig-card .foot span{color:var(--sand);font-weight:600}
+
+/* Pillars */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.pillars .photo{border-radius:24px;overflow:hidden;aspect-ratio:4/5;background:linear-gradient(135deg,#d9c8a9,#8e7653);position:relative}
+.pillars .photo img{width:100%;height:100%;object-fit:cover}
+.pillars .photo .badge{position:absolute;right:18px;bottom:18px;background:rgba(255,254,248,.95);border-radius:16px;padding:14px 18px;max-width:230px;font-size:13.5px;color:var(--ink-2)}
+.pillars .photo .badge b{display:block;font:500 34px/1 var(--serif);color:var(--ink);margin-bottom:4px}
+.pillar-list{display:grid;gap:26px;margin-top:34px}
+.pillar{display:grid;grid-template-columns:44px 1fr;gap:18px}
+.pillar .ic{width:44px;height:44px;border-radius:50%;background:var(--sand-50);display:grid;place-items:center;color:var(--sand-700)}
+.pillar .ic svg{width:21px;height:21px}
+.pillar h3{font-size:26px;margin-bottom:4px}
+.pillar p{margin:0;color:var(--ink-2)}
+
+/* First visit */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:s}
+.step{background:var(--paper);border-radius:var(--radius);padding:26px 22px;position:relative}
+.step::before{counter-increment:s;content:"0" counter(s);font:500 16px var(--serif);color:var(--sand-700);display:block;margin-bottom:26px}
+.step h3{font-size:24px;margin-bottom:6px}
+.step p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.tourist{display:flex;gap:18px;align-items:center;background:var(--paper);border:1px dashed #cdbd9e;border-radius:var(--radius);padding:18px 22px;margin-top:16px}
+.tourist .ic{font-size:26px;line-height:1}
+.tourist p{margin:0;color:var(--ink-2);font-size:15px;flex:1}
+
+/* Reviews */
+.reviews{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start}
+.score{font:500 84px/1 var(--serif)}
+.stars{color:var(--sand);letter-spacing:2px;font-size:18px}
+.rev-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rev{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.rev p{margin:10px 0 14px;font-size:15px;color:var(--ink-2)}
+.rev small{color:var(--muted)}
+.sample{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#FFF1D6;color:#8a5a00;border-radius:6px;padding:3px 7px;margin-top:14px}
+
+/* Offers */
+.offers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.offer{border:1px solid var(--line);border-radius:var(--radius);padding:24px;text-decoration:none;display:flex;flex-direction:column;gap:6px;background:var(--paper);transition:border-color .2s}
+.offer:hover{border-color:var(--sand)}
+.offer .k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.offer b{font:500 26px/1.1 var(--serif)}
+.offer p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.offer span{font-weight:600;font-size:14px;color:var(--sand-700);margin-top:12px}
+.offer.feature{background:var(--sand-50);border-color:var(--sand-50)}
+
+/* Newsletter */
+.news{background:var(--cream);border-radius:28px;padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.news h2{font-size:clamp(32px,4vw,44px)}
+.news p{margin:14px 0 0;color:var(--ink-2)}
+.news small{display:block;color:var(--muted);font-size:13px;margin-top:12px}
+.nform{display:grid;gap:12px}
+.seg{display:flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px;width:max-content}
+.seg button{border:0;background:none;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.nrow{display:flex;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 20px;align-items:center}
+.nrow input{border:0;flex:1;min-width:0;font-size:16px;background:transparent;padding:8px 0}
+.nrow input:focus{outline:none}
+.nrow:focus-within{border-color:var(--sand)}
+.nrow .btn{padding:12px 22px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)}
+.consent input{margin-top:3px;accent-color:var(--ink)}
+.nok{background:#EAF1E6;color:var(--ok);border-radius:14px;padding:14px 18px;font-weight:600}
+
+/* Journal */
+.journal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.post{text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.post .img{aspect-ratio:3/2;border-radius:var(--radius);overflow:hidden;background:var(--cream);margin-bottom:16px}
+.post .img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.post:hover .img img{transform:scale(1.04)}
+.post .k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sand-700)}
+.post h3{font-size:26px;line-height:1.15;margin:8px 0 6px}
+.post p{margin:0;color:var(--muted);font-size:14.5px}
+
+/* FAQ + Visit */
+.fv{display:grid;grid-template-columns:1.1fr 1fr;gap:56px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 36px 18px 0;font:500 22px/1.3 var(--serif);position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font:400 24px var(--sans);color:var(--sand-700)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin:0 0 18px;color:var(--ink-2);font-size:15.5px}
+.visit-card{background:var(--cream);border-radius:22px;padding:28px}
+.map-tile{display:grid;place-items:center;border-radius:var(--radius-sm);aspect-ratio:16/9;text-decoration:none;margin-bottom:22px;background:
+  linear-gradient(0deg,transparent 48%,#e3d9c6 48%,#e3d9c6 52%,transparent 52%),
+  linear-gradient(90deg,transparent 30%,#e3d9c6 30%,#e3d9c6 33%,transparent 33%),
+  linear-gradient(60deg,transparent 60%,#e3d9c6 60%,#e3d9c6 62%,transparent 62%),#EFE8DB}
+.map-tile .pin{background:var(--ink);color:#fff;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;box-shadow:var(--shadow)}
+.open-now{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;border-radius:999px;padding:6px 12px;background:#EAF1E6;color:var(--ok)}
+.open-now.closed{background:#F6E9E4;color:#9a4a2e}
+.open-now::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.hours{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:14.5px}
+.hours td{padding:7px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.hours tr.today td{font-weight:600}
+.addr{font-size:15px;color:var(--ink-2);margin:0 0 4px}
+.vrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* Footer */
+footer{background:var(--ink);color:#bdb4a4;padding:72px 0 32px;font-size:14px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px}
+footer .logo b{color:#fff}
+footer h4{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#fff;margin:0 0 14px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+footer a{text-decoration:none}
+footer a:hover{color:#fff}
+footer .about{margin:16px 0 0;max-width:300px}
+.fbottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid #3a342d;margin-top:48px;padding-top:22px;font-size:13px}
+.fbottom nav{display:flex;gap:18px;flex-wrap:wrap}
+
+.mbar{display:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;visibility:hidden;background:var(--ink);color:#fff;border-radius:14px;padding:14px 18px;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,.25);transition:all .3s;z-index:70;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
+
+@media (max-width:1040px){
+  .nav ul{display:none}.menu-btn{display:block}
+  .qb{grid-template-columns:1fr 1fr}
+  .qf:nth-child(2){border-right:0}
+  .qf:nth-child(3){border-top:1px solid var(--line);border-right:1px solid var(--line)}
+  .qb .btn{margin-top:8px}
+  .areas{grid-template-columns:1fr 1fr;grid-template-rows:300px 220px 220px}
+  .area:first-child{grid-column:1/-1;grid-row:auto}
+  .sig-grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .reviews{grid-template-columns:1fr}
+  .offers{grid-template-columns:repeat(2,1fr)}
+  .news{grid-template-columns:1fr;padding:40px}
+  .fv{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  .wrap{padding:0 16px}
+  section.block{padding:68px 0}
+  .nav{height:60px;gap:12px}
+  .nav .btn{display:none}
+  .logo b{font-size:22px}
+  .hero{min-height:auto}
+  .hero::after{background:linear-gradient(0deg,rgba(24,19,14,.85) 0%,rgba(24,19,14,.55) 55%,rgba(24,19,14,.25))}
+  .hero .wrap{padding-top:120px;padding-bottom:96px}
+  .hero p{font-size:17px}
+  .hero-ctas .btn{flex:1}
+  .qb-wrap{margin-top:-48px}
+  .qb{grid-template-columns:1fr;padding:6px}
+  .qf{border-right:0!important;border-bottom:1px solid var(--line);padding:10px 14px}
+  .qf:nth-child(3){border-top:0}
+  .qb .btn{padding:15px;margin:8px 4px 4px}
+  .areas{grid-template-columns:1fr 1fr;grid-template-rows:240px 170px 170px;gap:10px}
+  .area b{font-size:24px}.area:first-child b{font-size:32px}
+  .area .go{display:none}
+  .area small{display:none}
+  .area:first-child small{display:inline}
+  .sig-grid{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr;gap:36px}
+  .pillars .photo{aspect-ratio:4/3}
+  .steps{grid-template-columns:1fr}
+  .tourist{flex-direction:column;align-items:flex-start}
+  .rev-list{grid-template-columns:1fr}
+  .offers{grid-template-columns:1fr}
+  .news{padding:28px 20px;border-radius:22px}
+  .nrow{flex-wrap:wrap;border-radius:18px;padding:6px}
+  .nrow input{padding:10px 12px;flex-basis:100%}
+  .nrow .btn{flex:1}
+  .journal{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr;gap:32px}
+  .fgrid>div:first-child{grid-column:1/-1}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,254,248,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));gap:10px;transform:translateY(110%);transition:transform .25s}
+  .mbar.show{transform:none}
+  .mbar .btn{flex:1;padding:13px 10px;font-size:14.5px}
+  body{padding-bottom:80px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="concept"><b>Redesign concept</b> · Interactive prototype, not the live site · <a href="index.html">All concepts</a></div>
+<div class="promo">Short on time? <a href="rituals.html?area=feet">Foot Massage 25 min — €25</a> · add neck &amp; shoulders for €10
+  <button aria-label="Dismiss" onclick="this.parentElement.remove()">×</button></div>
+
+<header class="site" id="hdr">
+  <div class="wrap nav">
+    <a class="logo" href="home.html" aria-label="ZenVida home"><b>ZENVIDA</b><small>FOOT &amp; BODY</small></a>
+    <ul>
+      <li><a href="rituals.html">Rituals</a></li>
+      <li><a href="#">Experiences</a></li>
+      <li><a href="#offers">Offers &amp; Packs</a></li>
+      <li><a href="#offers">Gift Cards</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <div class="right">
+      <div class="lang" role="group" aria-label="Language"><button aria-pressed="true">EN</button><button aria-pressed="false">ES</button></div>
+      <a class="btn btn-dark" href="#book">Book now</a>
+      <button class="menu-btn" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- Hero -->
+<section class="hero">
+  <img src="https://static.wixstatic.com/media/b84849_1f76460dcaab4a9d9b293ecf6b206bf4~mv2.jpg/v1/fill/w_2000,h_1200,al_c,q_85,enc_auto/b84849_1f76460dcaab4a9d9b293ecf6b206bf4~mv2.jpg" alt="Spa foot soak with rose petals at ZenVida" onerror="this.remove()">
+  <div class="wrap">
+    <span class="eyebrow">Foot &amp; Body · Madrid Centro</span>
+    <h1>Relax. Recover.<br><em>Revive.</em></h1>
+    <p>Authentically Spanish foot and body massage, three minutes from Puerta del Sol. Walk in, or book in under a minute.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-light" href="#book">Book a ritual</a>
+      <a class="btn btn-glass" href="rituals.html">Explore all rituals</a>
+    </div>
+    <div class="hero-trust">
+      <span><span class="stars">★★★★★</span><b>5.0</b>&nbsp;from 450+ guests</span>
+      <span class="open" id="heroOpen">Open now</span>
+      <span>Walk-ins welcome</span>
+      <span>English-speaking team</span>
+    </div>
+  </div>
+</section>
+
+<!-- Quick book -->
+<div class="wrap qb-wrap" id="book">
+  <form class="qb" id="qb" aria-label="Quick booking">
+    <div class="qf">
+      <label for="qbWhat">What</label>
+      <select id="qbWhat">
+        <optgroup label="Most booked">
+          <option value="ritual:deluxe-reflexology">Deluxe Reflexology · 60 min · €60</option>
+          <option value="ritual:reflexology">Reflexology · 30 min · €40</option>
+          <option value="ritual:deep-tissue-massage">Deep Tissue Massage · from €90</option>
+        </optgroup>
+        <optgroup label="Browse by area">
+          <option value="area:feet">Feet &amp; Legs</option>
+          <option value="area:massage">Massage</option>
+          <option value="area:face">Face</option>
+          <option value="area:spa">Spa &amp; Body</option>
+        </optgroup>
+        <optgroup label="Not sure yet">
+          <option value="quiz">Help me choose</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="qf">
+      <label for="qbWhen">When</label>
+      <select id="qbWhen"></select>
+    </div>
+    <div class="qf">
+      <label for="qbWho">Guests</label>
+      <select id="qbWho">
+        <option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option>
+        <option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option>
+      </select>
+    </div>
+    <button class="btn btn-dark" type="submit">See available times</button>
+  </form>
+  <div class="qb-note">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L19 7"/></svg>€25 deposit, rest after your ritual</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L19 7"/></svg>Free changes up to 4 hours before</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L19 7"/></svg>Or simply walk in</span>
+  </div>
+</div>
+
+<!-- Areas -->
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Our rituals</span><h2>Where do you feel it today?</h2></div>
+      <a class="link" href="rituals.html">See all 19 rituals with prices</a>
+    </div>
+    <div class="areas">
+      <a class="area" href="rituals.html?area=feet" style="--c:#C9A97A"><img src="https://static.wixstatic.com/media/b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png/v1/fill/w_900,h_1100,al_c,q_80,enc_auto/b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png" alt="" loading="lazy" onerror="this.remove()"><span class="t"><span><b>Feet &amp; Legs</b><small>Reflexology from €25 · our speciality</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+      <a class="area" href="rituals.html?area=massage" style="--c:#8E9A82"><img src="https://static.wixstatic.com/media/b84849_053fa3c0ce6547089bbdce2b11a786e6~mv2.png/v1/fill/w_700,h_520,al_c,q_80,enc_auto/b84849_053fa3c0ce6547089bbdce2b11a786e6~mv2.png" alt="" loading="lazy" onerror="this.remove()"><span class="t"><span><b>Massage</b><small>13 rituals · from €80</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+      <a class="area" href="rituals.html?area=face" style="--c:#C79A8E"><img src="https://static.wixstatic.com/media/b84849_a884823698e844ed8db2619d9bece665~mv2.png/v1/fill/w_700,h_520,al_c,q_80,enc_auto/b84849_a884823698e844ed8db2619d9bece665~mv2.png" alt="" loading="lazy" onerror="this.remove()"><span class="t"><span><b>Face</b><small>Kobido &amp; facial · from €50</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+      <a class="area" href="rituals.html?area=massage&amp;need=two" style="--c:#8d4a58"><img src="https://static.wixstatic.com/media/b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg/v1/fill/w_700,h_520,al_c,q_80,enc_auto/b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="t"><span><b>For two</b><small>Couples Massage · from €220</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+      <a class="area" href="rituals.html?area=spa" style="--c:#8FA3B0"><img src="https://static.wixstatic.com/media/b84849_f8657f30cf25410c9d3a2c4b899b82f3~mv2.jpg/v1/fill/w_700,h_520,al_c,q_80,enc_auto/b84849_f8657f30cf25410c9d3a2c4b899b82f3~mv2.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="t"><span><b>Spa &amp; Body</b><small>Seasonal: Ritual Levante</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    </div>
+    <div class="needs-row">
+      <span>Or start from how you feel:</span>
+      <a class="chip" href="rituals.html?need=feet">Tired feet</a>
+      <a class="chip" href="rituals.html?need=back">Back &amp; neck</a>
+      <a class="chip" href="rituals.html?need=stress">Stress &amp; sleep</a>
+      <a class="chip" href="rituals.html?need=travel">Just landed</a>
+      <a class="chip" href="rituals.html?need=sport">Sore muscles</a>
+      <a class="chip" href="rituals.html?need=glow">Glow &amp; skin</a>
+      <a class="chip" href="rituals.html?need=preg">Pregnancy</a>
+    </div>
+  </div>
+</section>
+
+<!-- Signature -->
+<section class="block sig">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Signature rituals</span><h2>Made only here — you'll walk out on clouds</h2><p>Longer journeys that blend several techniques with Spanish botanicals. Choose one when you have time to fully switch off.</p></div>
+      <a class="btn btn-ghost" href="rituals.html">Full menu</a>
+    </div>
+    <div class="sig-grid" id="sigGrid"></div>
+  </div>
+</section>
+
+<!-- Pillars -->
+<section class="block">
+  <div class="wrap pillars">
+    <div class="photo">
+      <img src="https://static.wixstatic.com/media/b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg/v1/fill/w_1000,h_1250,al_c,q_85,enc_auto/b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg" alt="Calm ZenVida treatment room" loading="lazy" onerror="this.remove()">
+      <div class="badge"><b>3 min</b>from Puerta del Sol, in Madrid's historic centre</div>
+    </div>
+    <div>
+      <span class="eyebrow">Why ZenVida</span>
+      <h2 style="margin-top:12px">A refuge from Madrid's beautiful chaos</h2>
+      <div class="pillar-list">
+        <div class="pillar"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l8-6 8 6v10z"/><path d="M10 20v-5h4v5"/></svg></span><div><h3>Sanctuary</h3><p>A calm space to slow down, exhale and remember what it feels like to just be present — private rooms and curtained nooks.</p></div></div>
+        <div class="pillar"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg></span><div><h3>Rituals</h3><p>Wellness is a practice, not a luxury. Certified therapists restore your body, soothe your mind and refresh your spirit.</p></div></div>
+        <div class="pillar"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l7-7"/></svg></span><div><h3>Culture</h3><p>From locally harvested botanicals to premium olive oil — everything is connected to the land and stories that make Spain special.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- First visit -->
+<section class="block" style="background:var(--cream)">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="eyebrow">First time?</span><h2>How a visit works</h2></div></div>
+    <div class="steps">
+      <div class="step"><h3>Book or walk in</h3><p>Pick a time online in under a minute, or just drop by — walk-ins are always welcome.</p></div>
+      <div class="step"><h3>Arrive &amp; unwind</h3><p>Slip off your shoes. Your therapist asks about sore spots and the pressure you like.</p></div>
+      <div class="step"><h3>Your ritual</h3><p>A private room or curtained nook, Spanish botanicals, and nothing to do but breathe.</p></div>
+      <div class="step"><h3>Leave lighter</h3><p>Pay the balance after your ritual. For best results we recommend a session every two to four weeks.</p></div>
+    </div>
+    <div class="tourist">
+      <span class="ic" aria-hidden="true">✈︎</span>
+      <p><b>Visiting Madrid?</b> Our rituals are made for tired legs after a day of sightseeing or a long flight. The whole team speaks English and booking is simple.</p>
+      <a class="link" href="rituals.html?need=travel">Rituals for travellers</a>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section class="block">
+  <div class="wrap reviews">
+    <div>
+      <span class="eyebrow">Guest reviews</span>
+      <div class="score" style="margin-top:14px">5.0</div>
+      <div class="stars" aria-label="5 out of 5">★★★★★</div>
+      <p style="color:var(--muted);font-size:14px;margin:8px 0 0">From 450+ guests</p>
+      <span class="sample">Sample quotes — connect real reviews</span>
+    </div>
+    <div class="rev-list">
+      <div class="rev"><div class="stars">★★★★★</div><p>"After three days walking Madrid my feet were done. I floated out — the foot bath alone is worth it."</p><small>Guest name · Google</small></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"Booked the Couples Massage for our anniversary. Calm, beautiful room and two wonderful therapists."</p><small>Guest name · Google</small></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"I walked in on a Tuesday afternoon and was on the recliner ten minutes later. Now it's my monthly ritual."</p><small>Guest name · Google</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- Offers -->
+<section class="block" id="offers" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="eyebrow">Come back for less</span><h2>Make it a ritual</h2></div></div>
+    <div class="offers">
+      <a class="offer feature" href="#"><span class="k">Membership</span><b>€55 / month</b><p>A monthly ritual, priority booking and member discounts. No sign-on fee.</p><span>Join →</span></a>
+      <a class="offer" href="#"><span class="k">Packs</span><b>5 or 10 sessions</b><p>Zen Starter and Zen Balance. Save up to 20% on reflexology and massage.</p><span>See packs →</span></a>
+      <a class="offer" href="#"><span class="k">Gift cards</span><b>Give calm</b><p>Any ritual or amount, delivered by email in minutes.</p><span>Send a gift →</span></a>
+      <a class="offer" href="#"><span class="k">Loyalty card</span><b>Earn stamps</b><p>Every massage earns stamps toward a free ritual.</p><span>How it works →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <div class="news">
+      <div>
+        <span class="eyebrow">Respiro newsletter</span>
+        <h2 style="margin-top:12px">10% off your first ritual</h2>
+        <p>Join the ZenVida community for exclusive offers, invitations and the Respiro Journal — inspiration for a good life in Spain.</p>
+        <small>Use your discount within 2 months. Not combinable with other promotions.</small>
+      </div>
+      <form class="nform" id="nform" novalidate>
+        <div class="seg" role="group" aria-label="Send it to">
+          <button type="button" aria-pressed="true" data-ch="email">Email</button>
+          <button type="button" aria-pressed="false" data-ch="wa">WhatsApp</button>
+        </div>
+        <div class="nrow">
+          <input id="nval" type="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+          <button class="btn btn-dark" type="submit">Get my 10%</button>
+        </div>
+        <label class="consent"><input type="checkbox" id="nconsent"> I agree to receive offers and news and accept the privacy policy. Unsubscribe anytime.</label>
+        <div class="nok" id="nok" hidden>Prototype: you'd now get your welcome code by email.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Journal -->
+<section class="block" id="journal" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="eyebrow">Respiro Journal</span><h2>Slow living in Madrid</h2></div><a class="link" href="#">All stories</a></div>
+    <div class="journal">
+      <a class="post" href="#"><div class="img"><img src="https://static.wixstatic.com/media/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg/v1/fill/w_800,h_533,al_c,q_80,enc_auto/b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg" alt="" loading="lazy" onerror="this.remove()"></div><span class="k">Reflexology</span><h3>Walking Madrid? What tired feet are telling you</h3><p>Why a city made for walking is the perfect place for reflexology.</p></a>
+      <a class="post" href="#"><div class="img"><img src="https://static.wixstatic.com/media/b84849_4e8d66b9b6d145ca963603d3e50950ee~mv2.jpg/v1/fill/w_800,h_533,al_c,q_80,enc_auto/b84849_4e8d66b9b6d145ca963603d3e50950ee~mv2.jpg" alt="" loading="lazy" onerror="this.remove()"></div><span class="k">Madrid guide</span><h3>September in Madrid: the locals' secret season</h3><p>Softer light, shorter queues and the city at its best.</p></a>
+      <a class="post" href="#"><div class="img"><img src="https://static.wixstatic.com/media/b84849_3c6a459dcd71493ea41290b153870b6c~mv2.jpg/v1/fill/w_800,h_533,al_c,q_80,enc_auto/b84849_3c6a459dcd71493ea41290b153870b6c~mv2.jpg" alt="" loading="lazy" onerror="this.remove()"></div><span class="k">Mind &amp; stress</span><h3>The 5pm slump: what your body needs after work</h3><p>Small resets for the most tired hour of the day.</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ + Visit -->
+<section class="block" id="visit" style="padding-top:0">
+  <div class="wrap fv">
+    <div class="faq">
+      <span class="eyebrow">FAQ</span>
+      <h2 style="margin:12px 0 18px">Good to know</h2>
+      <details open><summary>What is ZenVida?</summary><p>A wellness studio for restorative foot reflexology and full-body massage — luxurious, culturally immersive rituals rooted in Spanish heritage.</p></details>
+      <details><summary>Do I need to book?</summary><p>No, walk-ins are welcome. Booking online guarantees your time; a €25 deposit secures it and the rest is paid after your ritual.</p></details>
+      <details><summary>What is your cancellation policy?</summary><p>Please give at least 4 hours' notice to cancel or reschedule. No-shows and late cancellations are charged 50%.</p></details>
+      <details><summary>Do you offer couples or group rituals?</summary><p>Yes. Couples Massage has two therapists in one shared room, and many rituals can be booked for groups of up to six.</p></details>
+      <details><summary>Are your rituals suitable for pregnancy?</summary><p>Our Pregnancy Massage is adapted for every trimester. Tell us you're pregnant when you book so we can guide you.</p></details>
+      <details><summary>Is ZenVida suitable for tourists?</summary><p>Absolutely. Our rituals restore tired legs and feet after exploring Madrid or a long flight. All our staff speak English.</p></details>
+    </div>
+    <div>
+      <span class="eyebrow">Visit us</span>
+      <h2 style="margin:12px 0 18px">Calle de la Cruz, 16</h2>
+      <div class="visit-card">
+        <a class="map-tile" href="https://www.google.com/maps/search/?api=1&amp;query=Calle+de+la+Cruz+16+28012+Madrid" target="_blank" rel="noopener"><span class="pin">Get directions ↗</span></a>
+        <p class="addr">Centro, 28012 Madrid · Metro Sol, 3 minutes' walk</p>
+        <p class="addr">+34 690 829 142 · hola@zenvida.es</p>
+        <div style="margin-top:16px"><span class="open-now" id="openNow">Open now</span></div>
+        <table class="hours" id="hours"></table>
+        <div class="vrow">
+          <a class="btn btn-dark" href="#book">Book a time</a>
+          <a class="btn btn-ghost" href="https://wa.me/34690829142">WhatsApp us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="logo" href="home.html"><b>ZENVIDA</b><small>FOOT &amp; BODY</small></a>
+        <p class="about">Authentically Spanish foot &amp; body massage in Madrid Centro. Walk in or book online.</p>
+      </div>
+      <div><h4>Rituals</h4><ul><li><a href="rituals.html?area=feet">Feet &amp; Legs</a></li><li><a href="rituals.html?area=massage">Massage</a></li><li><a href="rituals.html?area=face">Face</a></li><li><a href="rituals.html?area=spa">Spa &amp; Body</a></li><li><a href="rituals.html">All rituals &amp; prices</a></li></ul></div>
+      <div><h4>Offers</h4><ul><li><a href="#offers">Membership</a></li><li><a href="#offers">Packs</a></li><li><a href="#offers">Gift Cards</a></li><li><a href="#offers">Loyalty Card</a></li><li><a href="#">Refer a Friend</a></li></ul></div>
+      <div><h4>Visit</h4><ul><li><a href="#visit">Calle de la Cruz, 16</a></li><li><a href="tel:+34690829142">+34 690 829 142</a></li><li><a href="mailto:hola@zenvida.es">hola@zenvida.es</a></li><li><a href="#">About us</a></li><li><a href="#journal">Respiro Journal</a></li></ul></div>
+    </div>
+    <div class="fbottom">
+      <span>© 2026 ZenVida Foot &amp; Body · Madrid</span>
+      <nav><a href="#">Privacy</a><a href="#">Cookies</a><a href="#">Terms</a><a href="#">Booking policy</a></nav>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar"><a class="btn btn-ghost" href="https://wa.me/34690829142">WhatsApp</a><a class="btn btn-dark" href="#book">Book a ritual</a></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const IMG = (id, w=800, h=600) => `https://static.wixstatic.com/media/${id}/v1/fill/w_${w},h_${h},al_c,q_80,enc_auto/${id}`;
+const SIG = [
+  ['deluxe-reflexology','Deluxe Reflexology','Feet & Legs','Aromatherapy foot spa, reflexology and calf work, plus a neck & shoulder massage.','60 min','€60','b84849_9e0380cb868c40ad91407065069912cc~mv2.jpg','deluxe-reflexology.html'],
+  ['travel-recovery','Travel Recovery','Massage','Made for arrival day: eases jet lag, swollen feet and flight stiffness.','80 min','€120','b84849_4e8d66b9b6d145ca963603d3e50950ee~mv2.jpg','rituals.html?need=travel'],
+  ['full-body-reset','Full Body Reset','Massage','Facial and scalp massage, a slow full-body massage, then reflexology to finish.','120 min','€160','b84849_1f1fa72b2a3f4ef89474097bb85fdecc~mv2.jpg','rituals.html?need=stress'],
+  ['thai-andaluz','Thai Andaluz','Massage','Royal Thai massage with Andalusian aromatherapy oils and herbal compresses.','110 min','€145','b84849_92debe14e8e14ebd940e25f5dbcf316f~mv2.png','rituals.html?need=back'],
+  ['energy-balance','Energy Balance','Massage','Full-body massage, meridian work, Reiki and chakra balancing.','100 min','€130','b84849_3c6a459dcd71493ea41290b153870b6c~mv2.jpg','rituals.html?need=stress'],
+  ['couples-massage','Couples Massage','For two','Two therapists, one shared room — for partners, friends or family.','90 min','€220 for two','b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg','rituals.html?need=two']
+];
+$('#sigGrid').innerHTML = SIG.map(([s,n,a,d,t,p,img,url]) => `
+  <a class="sig-card" href="${url}">
+    <div class="img"><img src="${IMG(img,800,600)}" alt="${n} at ZenVida" loading="lazy" onerror="this.remove()"><span class="tag">${a}</span></div>
+    <div class="body"><h3>${n}</h3><p>${d}</p><div class="foot"><span style="color:#EDE6D8;font-weight:500">${t} · <b>${p}</b></span><span>Book →</span></div></div>
+  </a>`).join('');
+
+// Header + mobile bar
+const hdr = $('#hdr'), mbar = $('#mbar'), qb = $('#qb');
+const onScroll = () => {
+  hdr.classList.toggle('scrolled', scrollY > 10);
+  const r = qb.getBoundingClientRect();
+  mbar.classList.toggle('show', r.bottom < 0);
+};
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+// Opening hours
+const H = [[720,1290],[690,1230],[690,1230],[690,1230],[690,1290],[660,1290],[630,1290]];
+const DAYN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const fmt = m => String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const now = new Date(), dow = now.getDay(), nm = now.getHours()*60+now.getMinutes(), [o,c] = H[dow];
+const isOpen = nm >= o && nm < c;
+const label = isOpen ? `Open now · until ${fmt(c)}` : (nm < o ? `Opens today at ${fmt(o)}` : `Opens tomorrow at ${fmt(H[(dow+1)%7][0])}`);
+[$('#heroOpen'), $('#openNow')].forEach(el => { el.textContent = label; el.classList.toggle('closed', !isOpen); });
+$('#hours').innerHTML = [1,2,3,4,5,6,0].map(i => `<tr class="${i===dow?'today':''}"><td>${DAYN[i]}${i===dow?' · today':''}</td><td>${fmt(H[i][0])} – ${fmt(H[i][1])}</td></tr>`).join('');
+
+// Quick book: "When" options
+const when = $('#qbWhen');
+const opts = [];
+for (let i = 0; i < 7; i++) {
+  const d = new Date(now); d.setDate(d.getDate()+i);
+  if (i === 0 && nm > H[dow][1] - 90) continue; // too late today
+  const name = i===0 ? 'Today' : i===1 ? 'Tomorrow' : d.toLocaleDateString('en',{weekday:'long'});
+  opts.push(`<option value="${i}">${name}, ${d.toLocaleDateString('en',{day:'numeric',month:'short'})}</option>`);
+}
+when.innerHTML = opts.join('') + '<option value="later">Later date…</option>';
+
+const toastEl = $('#toast'); let tt;
+const toast = t => { toastEl.textContent = t; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(()=>toastEl.classList.remove('show'), 2800); };
+
+qb.addEventListener('submit', e => {
+  e.preventDefault();
+  const v = $('#qbWhat').value;
+  if (v === 'quiz') { location.href = 'rituals.html?quiz=1'; return; }
+  const [kind, key] = v.split(':');
+  if (kind === 'ritual' && key === 'deluxe-reflexology') { location.href = 'deluxe-reflexology.html#book'; return; }
+  if (kind === 'ritual') { toast('Prototype: opens this ritual\'s booking card with your day and guests pre-filled.'); return; }
+  location.href = `rituals.html?area=${key}`;
+});
+
+// Newsletter
+let ch = 'email';
+document.querySelectorAll('.seg [data-ch]').forEach(b => b.onclick = () => {
+  ch = b.dataset.ch;
+  document.querySelectorAll('.seg [data-ch]').forEach(x => x.setAttribute('aria-pressed', x===b));
+  const i = $('#nval');
+  if (ch === 'wa') { i.type = 'tel'; i.placeholder = '+34 600 000 000'; i.setAttribute('aria-label','WhatsApp number'); i.autocomplete = 'tel'; }
+  else { i.type = 'email'; i.placeholder = 'you@example.com'; i.setAttribute('aria-label','Email address'); i.autocomplete = 'email'; }
+  i.value = ''; i.focus();
+});
+$('#nform').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = $('#nval').value.trim();
+  const ok = ch === 'email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : /^\+?[\d\s]{8,}$/.test(v);
+  if (!ok) { toast(ch === 'email' ? 'Please enter a valid email address.' : 'Please enter a valid WhatsApp number.'); $('#nval').focus(); return; }
+  if (!$('#nconsent').checked) { toast('Please tick the box to accept the privacy policy.'); return; }
+  $('#nok').textContent = `Prototype: your welcome code would now be sent by ${ch === 'email' ? 'email' : 'WhatsApp'}.`;
+  $('#nok').hidden = false;
+});
+
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => document.querySelectorAll('.lang button').forEach(x => x.setAttribute('aria-pressed', x===b)));
+})();
+</script>
+</body>
+</html>

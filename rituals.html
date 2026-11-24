@@ -624,6 +624,13 @@ function toast(t){ toastEl.textContent = t; toastEl.classList.add('show'); clear
 
 document.querySelectorAll('.lang button').forEach(b => b.onclick = () => document.querySelectorAll('.lang button').forEach(x => x.setAttribute('aria-pressed', x===b)));
 
+// Deep links from the homepage: ?area=feet&need=travel&quiz=1
+const qp = new URLSearchParams(location.search);
+if (AREAS[qp.get('area')]) st.area = qp.get('area');
+if (NEEDS[qp.get('need')]) st.need = qp.get('need');
+if (qp.get('area') || qp.get('need')) requestAnimationFrame(() => $('#filters').scrollIntoView());
+if (qp.get('quiz')) setTimeout(openQuiz, 200);
+
 render();
 })();
 </script>
