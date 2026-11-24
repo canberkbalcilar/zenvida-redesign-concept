@@ -21,8 +21,8 @@
     function paint() {
       if (!root) return;
       const v = value();
-      $('[data-gift-total]').textContent = v ? eur(v) : '—';
-      $('[data-gp="what"]').textContent = what() || '—';
+      $('[data-gift-total]').textContent = eur(v || 0);
+      $('[data-gp="what"]').textContent = what() || 'Choose a gift';
       $('[data-gp="what"]').classList.toggle('long', gift.type === 'ritual');
       $('[data-gp="to"]').textContent = detail('To') || '…';
       $('[data-gp="from"]').textContent = detail('From') || '…';

@@ -139,7 +139,7 @@ function zv_event_grid( $rows ) {
 /* ------------------------------------------------- "Upcoming events" block */
 
 add_action( 'init', function () {
-	zv_register( 'events', 'Upcoming events', 'calendar-alt', array( 'count' => 3, 'empty' => 'New events are coming soon — follow us on Instagram to hear first.' ), 'zv_render_events', array( 'parent' => array( 'zv/section' ) ) );
+	zv_register( 'events', 'Upcoming events', 'calendar-alt', array( 'count' => 3, 'empty' => 'New events are coming soon. Follow us on Instagram to hear first.' ), 'zv_render_events', array( 'parent' => array( 'zv/section' ) ) );
 }, 20 );
 
 function zv_render_events( $a ) {

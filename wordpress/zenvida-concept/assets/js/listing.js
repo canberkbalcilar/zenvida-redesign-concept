@@ -71,7 +71,7 @@ function render(){
     (active ? `<button class="clear" id="clearAll">Clear filters</button>` : '');
 
   if (!list.length) {
-    out.innerHTML = `<div class="empty"><h3>Nothing matches yet</h3><p style="color:var(--muted);margin:0 0 18px">Try a different length of time, or ask us on WhatsApp — we'll suggest something.</p><button class="btn btn-dark" id="clearAll2">Clear filters</button></div>`;
+    out.innerHTML = `<div class="empty"><h3>Nothing matches yet</h3><p style="color:var(--muted);margin:0 0 18px">Try a different length of time, or ask us on WhatsApp and we'll suggest something.</p><button class="btn btn-dark" id="clearAll2">Clear filters</button></div>`;
   } else if (st.area==='all' && !st.need && st.time==='any' && st.sort==='rec') {
     out.innerHTML = Object.entries(AREAS).map(([k,a]) => {
       const g = list.filter(r=>r.area===k); if(!g.length) return '';

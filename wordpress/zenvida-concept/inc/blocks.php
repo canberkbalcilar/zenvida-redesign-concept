@@ -101,7 +101,7 @@ add_action( 'init', function () {
 	zv_register( 'ritual-hero', 'Rituals hero (split)', 'columns', array(
 		'eyebrow' => 'Rituals · Madrid Centro', 'title' => 'Find the ritual your <em>body</em> is asking for',
 		'text' => 'Reflexology, massage and facial rituals, 3 minutes from Puerta del Sol. Walk in anytime or book online in under a minute.',
-		'quizLabel' => 'Help me choose — 3 questions', 'btn2Label' => 'See all {count} rituals',
+		'quizLabel' => 'Help me choose: 3 questions', 'btn2Label' => 'See all {count} rituals',
 		'image' => '', 'featured' => 'deluxe-reflexology',
 	), 'zv_render_ritual_hero' );
 
@@ -125,7 +125,7 @@ add_action( 'init', function () {
 	zv_register( 'offer', 'Offer card', 'tickets-alt', array( 'kicker' => '', 'title' => '', 'text' => '', 'linkLabel' => 'Learn more →', 'url' => '', 'featured' => false ), 'zv_render_offer', array( 'parent' => array( 'zv/offers' ) ) );
 	zv_register( 'newsletter', 'Newsletter signup', 'email', array(
 		'eyebrow' => 'Respiro newsletter', 'title' => '10% off your first ritual',
-		'text' => 'Join the ZenVida community for exclusive offers, invitations and the Respiro Journal — inspiration for a good life in Spain.',
+		'text' => 'Join the ZenVida community for exclusive offers, invitations and the Respiro Journal, our inspiration for a good life in Spain.',
 		'smallprint' => 'Use your discount within 2 months. Not combinable with other promotions.',
 		'buttonLabel' => 'Get my 10%', 'consent' => 'I agree to receive offers and news and accept the privacy policy. Unsubscribe anytime.',
 	), 'zv_render_newsletter', $in_section );
@@ -140,10 +140,10 @@ add_action( 'init', function () {
 	zv_register( 'foot-map', 'Foot map', 'location-alt', array(
 		'eyebrow' => 'How reflexology works', 'title' => 'Your feet are a map of your body',
 		'text' => 'Each zone of the foot corresponds to a different part of the body. By working these points, we support natural balance and encourage deep, whole-body relaxation. Tap a zone to explore.',
-		'z1t' => 'Head & mind', 'z1d' => 'Toes — tension headaches, mental clarity',
-		'z2t' => 'Lungs & chest', 'z2d' => 'Ball of the foot — breathing, calm',
-		'z3t' => 'Stomach & digestion', 'z3d' => 'Arch — digestion, inner balance',
-		'z4t' => 'Lower back', 'z4d' => 'Heel — lower back and leg soreness',
+		'z1t' => 'Head & mind', 'z1d' => 'Toes: tension headaches, mental clarity',
+		'z2t' => 'Lungs & chest', 'z2d' => 'Ball of the foot: breathing, calm',
+		'z3t' => 'Stomach & digestion', 'z3d' => 'Arch: digestion, inner balance',
+		'z4t' => 'Lower back', 'z4d' => 'Heel: lower back and leg soreness',
 	), 'zv_render_foot_map', $in_section );
 	zv_register( 'benefits', 'Benefits', 'heart', array(), 'zv_render_wrap_inner', $in_section );
 	zv_register( 'benefit', 'Benefit', 'heart', array( 'icon' => 'wave', 'title' => '', 'text' => '' ), 'zv_render_benefit', array( 'parent' => array( 'zv/benefits' ) ) );
@@ -294,7 +294,7 @@ function zv_render_reviews( $a, $content ) {
 	return '<div class="reviews"><div>' . ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
 		. '<div class="score" style="margin-top:14px">' . zv_e( zv_opt( 'rating' ) ) . '</div><div class="stars" aria-hidden="true">★★★★★</div>'
 		. '<p style="color:var(--muted);font-size:14px;margin:8px 0 0">From ' . zv_e( zv_opt( 'rating_count' ) ) . '</p>'
-		. ( $a['showSample'] ? '<span class="sample">Sample quotes — connect real reviews</span>' : '' )
+		. ( $a['showSample'] ? '<span class="sample">Sample quotes: connect real reviews</span>' : '' )
 		. '</div><div class="rev-list">' . $content . '</div></div>';
 }
 

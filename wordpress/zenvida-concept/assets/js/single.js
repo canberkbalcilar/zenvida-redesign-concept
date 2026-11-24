@@ -81,7 +81,7 @@
     $('#dayHours').textContent = closedDay(d) ? `${DAYN[d.getDay()]} · closed` : `${DAYN[d.getDay()]} ${fmt(o)}–${fmt(c)} · Madrid time`;
     const all = slotsFor(st.day), list = st.showAll ? all : all.slice(0,8);
     const sl = $('#slots'); sl.innerHTML = '';
-    if (!all.length) sl.innerHTML = `<p style="grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)">${closedDay(d) ? 'We are closed this day — please pick another.' : 'No times left today — try tomorrow.'}</p>`;
+    if (!all.length) sl.innerHTML = `<p style="grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)">${closedDay(d) ? 'We are closed this day. Please pick another.' : 'No times left today. Try tomorrow.'}</p>`;
     list.forEach(s => {
       const b = document.createElement('button');
       b.className='slot'; b.textContent = fmt(s.m); b.disabled = s.off;
@@ -106,7 +106,7 @@
     if ($('#groupNote')) $('#groupNote').hidden = g < 2;
 
     const cta = $('#cta');
-    cta.textContent = g > 1 ? 'Arrange a group on WhatsApp' : (st.time == null ? 'Choose a time to continue' : `Continue — pay €${D*g} deposit`);
+    cta.textContent = g > 1 ? 'Arrange a group on WhatsApp' : (st.time == null ? 'Choose a time to continue' : `Continue and pay €${D*g} deposit`);
     cta.classList.toggle('btn-sand', st.time != null);
     cta.classList.toggle('btn-dark', st.time == null);
   }

@@ -67,7 +67,7 @@ function zv_box_can_save( $post_id, $field, $action ) {
 /* ------------------------------------------------------ ritual details form */
 
 add_action( 'add_meta_boxes', function () {
-	add_meta_box( 'zv_details', 'Ritual details — price, photos, category', 'zv_details_box', 'ritual', 'normal', 'high' );
+	add_meta_box( 'zv_details', 'Ritual details: price, photos, category', 'zv_details_box', 'ritual', 'normal', 'high' );
 } );
 
 /** Popularity presets shown as plain words. */
@@ -176,8 +176,8 @@ function zv_details_box( $post ) {
 			<?php endforeach; ?>
 		</p>
 		<p class="zv-checks">
-			<label><input type="checkbox" name="zv_signature" value="1" <?php checked( (bool) $m( 'zv_signature' ) ); ?>> <b>Signature</b> — badge + shown on the homepage</label>
-			<label><input type="checkbox" name="zv_seasonal" value="1" <?php checked( (bool) $m( 'zv_seasonal' ) ); ?>> <b>Seasonal</b> — badge</label>
+			<label><input type="checkbox" name="zv_signature" value="1" <?php checked( (bool) $m( 'zv_signature' ) ); ?>> <b>Signature</b>: badge, and shown on the homepage</label>
+			<label><input type="checkbox" name="zv_seasonal" value="1" <?php checked( (bool) $m( 'zv_seasonal' ) ); ?>> <b>Seasonal</b>: badge</label>
 		</p>
 		<p class="description">The sections further down this page (steps, FAQ, visit…) are edited in the editor above: click a text to change it, use + to add a question.</p>
 	</div>
@@ -428,7 +428,7 @@ add_action( 'wp_dashboard_setup', function () {
 		remove_meta_box( $w, 'dashboard', 'side' );
 	}
 	remove_action( 'welcome_panel', 'wp_welcome_panel' );
-	wp_add_dashboard_widget( 'zv_guide', 'ZenVida — what do you want to change?', 'zv_dashboard_guide' );
+	wp_add_dashboard_widget( 'zv_guide', 'ZenVida: what do you want to change?', 'zv_dashboard_guide' );
 } );
 
 function zv_dashboard_guide() {

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function zv_defaults() {
 	return array(
 		'promo_show'   => '1',
-		'promo_text'   => 'Short on time? Foot Massage 25 min — €25 · add neck & shoulders for €10',
+		'promo_text'   => 'Short on time? Foot Massage, 25 min for €25 · add neck & shoulders for €10',
 		'promo_link_label' => 'Book now',
 		'promo_link_url' => '',
 		'header_label' => 'Book now',
@@ -64,7 +64,7 @@ function zv_defaults() {
 			) ),
 		),
 		'contact_to'   => '',
-		'contact_success' => "Thank you! We'll reply within a day — usually much sooner.",
+		'contact_success' => "Thank you! We'll reply within a day, usually much sooner.",
 		'gift_success' => "Thank you! We'll email you a secure payment link within the hour (10:00–21:00). Once paid, the gift card is emailed straight away.",
 		'gift_url'     => '',
 		'job_success'  => "Thank you for applying! We read every application and reply within a week if there is a good fit.",
@@ -142,7 +142,7 @@ function zv_quiz() {
 
 /** What a quiz answer can do: filter by a need or by length, or nothing. */
 function zv_quiz_actions() {
-	$out = array( '' => '— No filter —' );
+	$out = array( '' => 'No filter' );
 	foreach ( zv_needs() as $slug => $name ) {
 		$out[ "need:$slug" ] = 'Show rituals good for: ' . $name;
 	}
@@ -258,7 +258,7 @@ function zv_settings_page() {
 	<div class="wrap zv-settings">
 		<h1>Site settings</h1>
 		<?php settings_errors(); ?>
-		<p>Everything here appears on every page — header, footer, "Visit us" sections, the "Open now" label and the booking card. Change a field and click <b>Save changes</b> at the bottom.<br>
+		<p>Everything here appears on every page: header, footer, "Visit us" sections, the "Open now" label and the booking card. Change a field and click <b>Save changes</b> at the bottom.<br>
 		Menus: <a href="<?php echo esc_url( admin_url( 'nav-menus.php' ) ); ?>">Appearance → Menus</a> · Logo: <a href="<?php echo esc_url( admin_url( 'customize.php?autofocus[section]=title_tagline' ) ); ?>">Appearance → Customize → Site Identity</a></p>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'zv_settings' ); ?>
@@ -268,7 +268,7 @@ function zv_settings_page() {
 				$row( 'promo_show', 'Promo bar', 'Show the dark bar above the header', 'checkbox' );
 				$row( 'promo_text', 'Promo text' );
 				$row( 'promo_link_label', 'Promo link text', 'Leave empty for no link.' );
-				$row( 'promo_link_url', 'Promo link goes to', 'Copy the address of a page from your browser, e.g. ' . home_url( '/rituals/' ) . ' — empty = rituals page' );
+				$row( 'promo_link_url', 'Promo link goes to', 'Copy the address of a page from your browser, e.g. ' . home_url( '/rituals/' ) . '. Empty = rituals page' );
 				$row( 'header_label', 'Header button label' );
 				$row( 'header_url', 'Header button link', 'Empty = rituals page' );
 				?>

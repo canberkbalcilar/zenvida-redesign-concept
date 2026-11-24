@@ -93,7 +93,7 @@ function zv_receive_message() {
 	}
 
 	$kinds = zv_message_kinds();
-	$title = $name . ' — ' . ( $topic ?: $kinds[ $kind ] );
+	$title = $name . ' · ' . ( $topic ?: $kinds[ $kind ] );
 	$id    = wp_insert_post( array(
 		'post_type'    => 'zv_message',
 		'post_status'  => 'publish',
@@ -247,7 +247,7 @@ add_action( 'load-post.php', function () {
 
 function zv_message_box( $post ) {
 	$m     = wp_parse_args( (array) get_post_meta( $post->ID, 'zv_msg', true ), array( 'kind' => 'contact', 'email' => '', 'phone' => '', 'topic' => '', 'details' => array(), 'page' => '', 'consent' => '' ) );
-	$name  = trim( explode( '—', $post->post_title )[0] );
+	$name  = trim( preg_split( '/\s[·—]\s/u', $post->post_title )[0] );
 	$reply = 'mailto:' . rawurlencode( $m['email'] ) . '?subject=' . rawurlencode( 'Re: ' . ( $m['topic'] ?: 'your message to ZenVida' ) );
 	$wa    = $m['phone'] ? 'https://wa.me/' . preg_replace( '/\D/', '', $m['phone'] ) : '';
 	?>
@@ -267,7 +267,7 @@ function zv_message_box( $post ) {
 			<?php if ( $wa ) : ?><a class="button" href="<?php echo esc_url( $wa ); ?>" target="_blank" rel="noopener">Reply on WhatsApp</a><?php endif; ?>
 			<a class="button-link zv-remove" href="<?php echo esc_url( get_delete_post_link( $post->ID ) ); ?>">Delete message</a>
 		</p>
-		<p class="description">Sent from <?php echo $m['page'] ? '<a href="' . esc_url( $m['page'] ) . '" target="_blank">' . esc_html( wp_parse_url( $m['page'], PHP_URL_PATH ) ?: '/' ) . '</a>' : 'the website'; ?>. The visitor agreed to us keeping it on <?php echo esc_html( $m['consent'] ); ?>. Delete messages you no longer need<?php echo ! empty( $m['cv_name'] ) ? ' — deleting it also deletes the CV' : ''; ?>.</p>
+		<p class="description">Sent from <?php echo $m['page'] ? '<a href="' . esc_url( $m['page'] ) . '" target="_blank">' . esc_html( wp_parse_url( $m['page'], PHP_URL_PATH ) ?: '/' ) . '</a>' : 'the website'; ?>. The visitor agreed to us keeping it on <?php echo esc_html( $m['consent'] ); ?>. Delete messages you no longer need<?php echo ! empty( $m['cv_name'] ) ? '. Deleting it also deletes the CV' : ''; ?>.</p>
 	</div>
 	<?php
 }

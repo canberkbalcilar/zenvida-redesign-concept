@@ -68,7 +68,7 @@ function zv_render_gift_builder( $a ) {
 				}
 				$two      = in_array( 'two', $r['flags'], true );
 				$label    = $r['name'] . ' · ' . $o[0] . ' min' . ( $two ? ' · for two' : '' );
-				$options .= '<option value="' . esc_attr( $label ) . '" data-price="' . (int) $o[1] . '">' . esc_html( $label . ' — €' . $o[1] ) . '</option>';
+				$options .= '<option value="' . esc_attr( $label ) . '" data-price="' . (int) $o[1] . '">' . esc_html( $label . ' · €' . $o[1] ) . '</option>';
 			}
 		}
 		$options .= '</optgroup>';

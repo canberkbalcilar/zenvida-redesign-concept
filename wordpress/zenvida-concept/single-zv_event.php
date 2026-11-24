@@ -21,7 +21,7 @@ $zv_icon   = fn( $p ) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentCo
 get_header();
 ?>
 <main>
-<?php if ( get_post_meta( get_the_ID(), 'zv_hidden', true ) ) : ?><div class="zv-hidden-note">This event is switched off — only you can see it because you are logged in.</div><?php endif; ?>
+<?php if ( get_post_meta( get_the_ID(), 'zv_hidden', true ) ) : ?><div class="zv-hidden-note">This event is switched off. Only you can see it, because you are logged in.</div><?php endif; ?>
 <?php if ( $zv_past ) : ?><div class="ev-ended">This event has finished. <a href="<?php echo esc_url( get_post_type_archive_link( 'zv_event' ) ); ?>">See what's coming up →</a></div><?php endif; ?>
 <div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="<?php echo esc_url( get_post_type_archive_link( 'zv_event' ) ); ?>">Events</a><span>/</span><?php the_title(); ?></nav>

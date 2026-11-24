@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '0.9.0' );
+define( 'ZV_VERSION', '0.9.1' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -87,7 +87,7 @@ function zv_basic_faq() {
 	return array(
 		array( 'Do I need to book?', 'No, walk-ins are welcome. Booking ahead guarantees your time, especially at weekends; a €25 deposit per person (€45 for rituals from €90) secures it and counts towards the price.', true ),
 		array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full." ),
-		array( 'Can I come with a friend?', 'Yes — you can relax side by side. Groups of two or more are arranged by our reception team: send us a WhatsApp or call and we will find times for everyone.' ),
+		array( 'Can I come with a friend?', 'Yes, you can relax side by side. Groups of two or more are arranged by our reception team: send us a WhatsApp or call and we will find times for everyone.' ),
 	);
 }
 

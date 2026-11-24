@@ -56,7 +56,7 @@ function zv_seed_policy_pages() {
 		array( 'h', '1. Our services' ),
 		array( 'p', 'All ZenVida treatments, add-ons, availability, durations and prices (VAT included) are shown on this website.' ),
 		array( 'h', '2. Booking' ),
-		array( 'p', 'Walk-ins are always welcome, but we recommend booking ahead — especially for weekends and holidays. You can book:' ),
+		array( 'p', 'Walk-ins are always welcome, but we recommend booking ahead, especially for weekends and holidays. You can book:' ),
 		array( 'ul', array( 'online on this website;', 'by email, phone or WhatsApp;', 'in person at the studio.' ) ),
 		array( 'h', '3. Deposits' ),
 		array( 'p', 'To secure your appointment we may ask for a booking confirmation payment. Depending on the service, its length, the size of your group and demand, this can be:' ),
@@ -76,7 +76,7 @@ function zv_seed_policy_pages() {
 	$pages['spa-rules-and-customer-information'] = array( 'Spa Rules & Customer Information', zv_doc( array(
 		$updated,
 		array( 'h', '1. Etiquette' ),
-		array( 'p', 'Please switch your phone to vibrate before you come in. We gently encourage you not to use it during your treatment — enjoy a short digital detox.' ),
+		array( 'p', 'Please switch your phone to vibrate before you come in. We gently encourage you not to use it during your treatment. Enjoy a short digital detox.' ),
 		array( 'h', '2. What to wear' ),
 		array( 'p', 'We provide bathrobes, slippers and disposable underwear. For some services, such as Thai massage, we give you suitable clothes to change into, and for reflexology we have comfortable loose trousers if you would like them.' ),
 		array( 'p', 'Full nudity is not permitted during any treatment.' ),
@@ -84,7 +84,7 @@ function zv_seed_policy_pages() {
 		array( 'p', 'We have zero tolerance for disrespectful, threatening or abusive language, sexual behaviour or harassment, discrimination, and being under the influence of drugs or alcohol. If we consider behaviour unacceptable, the service ends immediately and you will be asked to leave. See our ' . $link( 'code-of-conduct', 'Code of Conduct' ) . '.' ),
 		array( 'h', '4. Your health' ),
 		array( 'p', 'Before any service, please fill in the Customer Intake Form accurately. Your answers may lead your therapist to adapt the treatment. If you are unsure, please ask your doctor before booking.' ),
-		array( 'p', '<strong>Pregnancy:</strong> please let us know — we offer specialised treatments. We will ask you to sign an acknowledgement form and/or show medical clearance before your treatment. We cannot give full-body massages during the first three months of pregnancy.' ),
+		array( 'p', '<strong>Pregnancy:</strong> please let us know, as we offer specialised treatments. We will ask you to sign an acknowledgement form and/or show medical clearance before your treatment. We cannot give full-body massages during the first three months of pregnancy.' ),
 		array( 'p', 'Sometimes a requested service cannot be performed. Your therapist will then suggest a suitable alternative; if no service can be performed safely, you are refunded in full.' ),
 		array( 'p', 'ZenVida is a non-medical environment. Our massages, treatments and holistic practices are for your wellbeing only: they are not medical or paramedical and never replace medical advice or treatment.' ),
 		array( 'h', '5. Valuables' ),
@@ -92,7 +92,7 @@ function zv_seed_policy_pages() {
 		array( 'h', '6. Children' ),
 		array( 'p', 'Minors must be accompanied by a parent or a responsible adult.' ),
 		array( 'h', '7. In-room service (selected hotels only)' ),
-		array( 'p', 'In-room massages are available at selected partner hotels during our normal opening hours, subject to availability and confirmation — please contact us to check your hotel first.' ),
+		array( 'p', 'In-room massages are available at selected partner hotels during our normal opening hours, subject to availability and confirmation. Please contact us to check your hotel first.' ),
 		array( 'ul', array(
 			'A 50% surcharge applies to every in-room service, to cover travel time and running costs.',
 			'If we need to bring extra equipment, such as a massage table, there is an additional €50 charge.',
@@ -108,7 +108,7 @@ function zv_seed_policy_pages() {
 	$pages['code-of-conduct'] = array( 'Code of Conduct', zv_doc( array(
 		$updated,
 		array( 'p', 'This Code of Conduct keeps ZenVida safe and enjoyable for everyone. Signs inside the studio are part of our Terms &amp; Conditions and of this Code.' ),
-		array( 'p', 'If we reasonably consider that it has been breached, we may end all services immediately — including membership — without a refund, and take further action if appropriate.' ),
+		array( 'p', 'If we reasonably consider that it has been breached, we may end all services immediately, including membership, without a refund, and take further action if appropriate.' ),
 		array( 'h', '1. Damage to property' ),
 		array( 'p', 'You are responsible for any damage that you or your guests cause to ZenVida property or equipment.' ),
 		array( 'h', '2. Access and behaviour' ),
@@ -121,7 +121,7 @@ function zv_seed_policy_pages() {
 		array( 'h', '5. Phones' ),
 		array( 'p', 'Out of courtesy to other guests and our team, please do not use your phone in a way that disturbs anyone’s quiet, comfort or privacy.' ),
 		array( 'h', '6. Reviews and comments online' ),
-		array( 'p', 'Honest feedback is always welcome — please share it fairly and respectfully. Do not publish, or encourage others to publish, content that is knowingly false, misleading, defamatory, threatening or harassing, or that is meant to harm ZenVida, our team or other guests.' ),
+		array( 'p', 'Honest feedback is always welcome. Please share it fairly and respectfully. Do not publish, or encourage others to publish, content that is knowingly false, misleading, defamatory, threatening or harassing, or that is meant to harm ZenVida, our team or other guests.' ),
 		array( 'p', 'If something was not right, please tell us directly so we can look into it and put it right.' ),
 	) ) );
 
@@ -170,9 +170,9 @@ function zv_seed_policy_pages() {
 		array( 'h', '3. Legal basis' ),
 		array( 'ul', array( 'Your consent, when you fill in a contact or booking form.', 'Performing a contract: managing your appointments and billing.', 'Legal obligations, such as keeping business records.' ) ),
 		array( 'h', '4. How long we keep it' ),
-		array( 'p', 'Only as long as we need it for the purpose it was collected for, or as long as the law requires — normally 5 years for business records. [To confirm: how long job applications and CVs are kept, e.g. 12 months.]' ),
+		array( 'p', 'Only as long as we need it for the purpose it was collected for, or as long as the law requires (normally 5 years for business records). [To confirm: how long job applications and CVs are kept, e.g. 12 months.]' ),
 		array( 'h', '5. Who we share it with' ),
-		array( 'p', 'Nobody, unless the law requires it or it is needed to give you the service you asked for — for example our online booking tool, membership and loyalty card management, and our email provider.' ),
+		array( 'p', 'Nobody, unless the law requires it or it is needed to give you the service you asked for, for example our online booking tool, membership and loyalty card management, and our email provider.' ),
 		array( 'h', '6. Your rights' ),
 		array( 'p', 'You can ask to:' ),
 		array( 'ul', array( 'see the personal data we hold about you;', 'correct or delete it;', 'restrict or object to how we use it;', 'receive it in a portable format.' ) ),
@@ -189,9 +189,9 @@ function zv_seed_policy_pages() {
 		array( 'p', 'Cookies are small text files that a website saves on your device. Similar technologies, such as your browser’s local storage, work in the same way. They help a website work properly, remember your choices and understand how it is used.' ),
 		array( 'h', '2. What this website uses' ),
 		array( 'ul', array(
-			'<strong>Necessary:</strong> to keep the website working and secure — for example, signing in to the admin area (our team only).',
+			'<strong>Necessary:</strong> to keep the website working and secure, for example signing in to the admin area (our team only).',
 			'<strong>Preferences:</strong> stored in your browser, for example to remember that you closed an offer window so we do not show it again.',
-			'<strong>Analytics:</strong> to understand how visitors use the website (for example Google Analytics) — only with your consent. [To confirm when analytics is installed.]',
+			'<strong>Analytics:</strong> to understand how visitors use the website (for example Google Analytics), only with your consent. [To confirm when analytics is installed.]',
 			'<strong>Third parties:</strong> embedded content or social media features may set their own cookies. [To confirm: web fonts will be served from our own server.]',
 		) ),
 		array( 'h', '3. Your choices' ),
@@ -229,10 +229,10 @@ function zv_seed_group_and_jobs_pages() {
 		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'How it works', 'title' => 'Four simple steps' ), array( zv_b( 'zv/steps', array(), array(
 			$step( 'Tell us', 'How many of you, the day and time you would like, and which rituals.' ),
 			$step( 'We plan it', 'We match therapists and rooms so you are treated at the same time.' ),
-			$step( 'Confirm', 'A deposit per person may be needed to hold the times — we tell you the amount.' ),
+			$step( 'Confirm', 'A deposit per person may be needed to hold the times. We tell you the amount.' ),
 			$step( 'Arrive together', 'Come 15 minutes early so everyone can fill in a short health form.' ),
 		) ) ) ),
-		zv_sec( array( 'eyebrow' => 'Why a group ritual?', 'title' => 'Made for celebrations — and tired feet', 'text' => 'Most of our groups are friends, families and colleagues marking something: a birthday, a hen or bachelorette party, or a pause between museums when everyone’s feet have had enough of Madrid.' ), array(
+		zv_sec( array( 'eyebrow' => 'Why a group ritual?', 'title' => 'Made for celebrations, and for tired feet', 'text' => 'Most of our groups are friends, families and colleagues marking something: a birthday, a hen or bachelorette party, or a pause between museums when everyone’s feet have had enough of Madrid.' ), array(
 			zv_b( 'zv/split', array(), array(
 				zv_b( 'zv/contact-form', array( 'topics' => 'Group appointment, Birthday, Hen / bachelorette party, Team or company, Other', 'buttonLabel' => 'Send group request' ) ),
 				zv_b( 'zv/visit', array( 'eyebrow' => '', 'layout' => 'card' ) ),
@@ -253,7 +253,7 @@ function zv_seed_group_and_jobs_pages() {
 		) ),
 		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'Open roles', 'title' => 'Who we are looking for' ), array( zv_b( 'zv/jobs', array(), array(
 			$job( 'Massage therapist', 'Full or part time · Madrid Centro', 'Swedish, deep tissue and Thai massage for locals and travellers.', "Certified massage training\nExperience with full-body massage\nSpanish and English" ),
-			$job( 'Reflexologist', 'Full or part time · Madrid Centro', 'Foot reflexology and our Deluxe Reflexology ritual — our speciality.', "Reflexology training\nCalm, warm way with guests\nSpanish and English" ),
+			$job( 'Reflexologist', 'Full or part time · Madrid Centro', 'Foot reflexology and our Deluxe Reflexology ritual, our speciality.', "Reflexology training\nCalm, warm way with guests\nSpanish and English" ),
 			$job( 'Reception & guest care', 'Part time · weekends', 'The first smile our guests see: bookings, WhatsApp, welcomes and gift cards.', "Spanish and English\nOrganised and friendly\nBooking software experience is a plus" ),
 		) ) ) ),
 		zv_sec( array( 'anchor' => 'apply', 'eyebrow' => 'Apply', 'title' => 'Send your application', 'text' => 'Tell us a little about yourself. We read every application and reply if there is a good fit.' ), array( zv_b( 'zv/job-form' ) ) ),

@@ -174,7 +174,7 @@
       Side('Reviews', F.toggle(p, 'showSample', 'Show "sample quotes" label'), F.note('Score and guest count come from ZenVida settings.')),
       h('div', bp, h('div', null, RT(p, 'eyebrow', 'span', 'eyebrow', 'Eyebrow', true), h('div', { className: 'score' }, E.rating), h('div', { className: 'stars' }, '★★★★★'),
         h('p', { style: { color: 'var(--muted)', fontSize: '14px', margin: '8px 0 0' } }, 'From ' + E.ratingCount),
-        a.showSample && h('span', { className: 'sample' }, 'Sample quotes — connect real reviews')), h('div', ip)));
+        a.showSample && h('span', { className: 'sample' }, 'Sample quotes: connect real reviews')), h('div', ip)));
   }, true);
   reg('review', function (p) {
     return h(Fragment, null, Side('Review', F.num(p, 'stars', 'Stars', 1, 5)),

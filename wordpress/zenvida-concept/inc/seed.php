@@ -55,12 +55,12 @@ function zv_seed() {
 	$areas = array(
 		'feet-legs' => array( 'Feet & Legs', '#C9A97A', zv_img( 'b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png' ),
 			'Tension that starts in the feet rarely stays there. Reflexology and Spanish aromatherapy, in a plush recliner in your own curtained nook.',
-			'Our treatments work pressure points along the soles and calves to ease heaviness, boost circulation and help your whole body recover — ideal after a day exploring the city or on your feet at work.' ),
+			'Our treatments work pressure points along the soles and calves to ease heaviness, boost circulation and help your whole body recover. Ideal after a day exploring the city or on your feet at work.' ),
 		'massage'   => array( 'Massage', '#8E9A82', zv_img( 'b84849_053fa3c0ce6547089bbdce2b11a786e6~mv2.png' ),
-			'Full-body massage in private rooms — for deep muscular relief, gentle relaxation or renewed energy.',
+			'Full-body massage in private rooms, for deep muscular relief, gentle relaxation or renewed energy.',
 			'Our therapists adapt every massage to your needs, to restore balance, release deep-seated tension, improve circulation and help you move more freely.' ),
 		'face'      => array( 'Face', '#C79A8E', zv_img( 'b84849_a884823698e844ed8db2619d9bece665~mv2.png' ),
-			'Lymphatic facial work, Japanese Kobido and deep muscle release — always including neck, shoulders and décolletage.',
+			'Lymphatic facial work, Japanese Kobido and deep muscle release, always including neck, shoulders and décolletage.',
 			"Facial massage stimulates circulation, collagen and lymphatic flow to ease puffiness and jaw tension and bring back your skin's natural glow, with Spanish aromatherapy and organic creams." ),
 		'spa'       => array( 'Spa & Body', '#8FA3B0', zv_img( 'b84849_f8657f30cf25410c9d3a2c4b899b82f3~mv2.jpg' ),
 			"Seasonal body treatments made with Spain's natural ingredients.",
@@ -111,9 +111,9 @@ function zv_seed() {
 		array( 'energy-balance', 'Energy Balance', 'massage', 'Full-body massage, meridian work, Reiki and chakra balancing.', '100:130', 'stress', 'sig', 6, 'b84849_3c6a459dcd71493ea41290b153870b6c~mv2.jpg' ),
 		array( 'thai-andaluz', 'Thai Andaluz', 'massage', 'Royal Thai massage with Andalusian aromatherapy oils and herbal compresses.', '110:145', 'back,stress', 'sig', 7, 'b84849_92debe14e8e14ebd940e25f5dbcf316f~mv2.png' ),
 		array( 'full-body-reset', 'Full Body Reset', 'massage', 'Facial and scalp massage, a slow full-body massage, then reflexology to finish.', '120:160', 'stress,travel', 'sig', 8, 'b84849_1f1fa72b2a3f4ef89474097bb85fdecc~mv2.jpg' ),
-		array( 'couples-massage', 'Couples Massage', 'massage', 'Two therapists, one shared room — for partners, friends or family. Price for two.', '90:220, 120:280', 'two', 'sig,two', 7, 'b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg' ),
+		array( 'couples-massage', 'Couples Massage', 'massage', 'Two therapists, one shared room for partners, friends or family. Price for two.', '90:220, 120:280', 'two', 'sig,two', 7, 'b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg' ),
 		array( 'classic-facial-massage', 'Classic Facial Massage', 'face', 'Soft, soothing face and neck massage to reduce puffiness and refresh your skin.', '45:50, 60:70', 'glow,stress', '', 6, '' ),
-		array( 'kobido-facial-massage', 'Kobido Facial Massage', 'face', 'The Japanese lifting technique for firmer, brighter skin — a natural facelift.', '45:60, 60:80', 'glow', '', 7, '' ),
+		array( 'kobido-facial-massage', 'Kobido Facial Massage', 'face', 'The Japanese lifting technique for firmer, brighter skin: a natural facelift.', '45:60, 60:80', 'glow', '', 7, '' ),
 		array( 'ritual-levante', 'Ritual Levante', 'spa', 'Full-body scrub with Mar Menor salt, olive pit and almond oil. No massage needed.', '50:', 'glow', 'seas', 5, '' ),
 	);
 
@@ -135,7 +135,7 @@ function zv_seed() {
 			'post_name'    => $slug,
 			'menu_order'   => $order + 1,
 			'post_excerpt' => $deluxe
-				? 'Our signature 60-minute ritual: an aromatherapy herbal foot spa, deep reflexology for the feet and calves, and a neck, shoulder and upper-back massage — a complete release from head to toe.'
+				? 'Our signature 60-minute ritual: an aromatherapy herbal foot spa, deep reflexology for the feet and calves, and a neck, shoulder and upper-back massage. A complete release from head to toe.'
 				: $desc,
 			'post_content' => wp_slash( serialize_blocks( $blocks ) ),
 		) );
@@ -175,7 +175,7 @@ function zv_seed() {
 			'post_title'    => $p[0],
 			'post_excerpt'  => $p[3],
 			'post_date'     => gmdate( 'Y-m-d H:i:s', time() - ( 3 - $n ) * DAY_IN_SECONDS ),
-			'post_content'  => wp_slash( serialize_blocks( array( zv_p( $p[3] ), zv_p( 'Sample article for the redesign concept — the real Respiro Journal posts would appear here.' ) ) ) ),
+			'post_content'  => wp_slash( serialize_blocks( array( zv_p( $p[3] ), zv_p( 'Sample article for the redesign concept. The real Respiro Journal posts would appear here.' ) ) ) ),
 			'post_category' => array( is_array( $cat ) ? (int) $cat['term_id'] : (int) $cat ),
 		) );
 		update_post_meta( $pid, 'zv_image', zv_img( $p[2], 1200, 800 ) );
@@ -193,7 +193,7 @@ function zv_seed() {
 		zv_sec( array( 'eyebrow' => 'Gift cards', 'title' => 'Give an hour of <em>calm</em>', 'text' => 'Any ritual or any amount, emailed in minutes. Valid for 12 months at our studio in Madrid Centro.' ), array( zv_b( 'zv/gift-builder' ) ) ),
 		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'How it works', 'title' => 'Simple for you, lovely to receive' ), array( zv_b( 'zv/steps', array(), array(
 			$step( 'Choose', 'An amount, or a specific ritual like Deluxe Reflexology or the Couples Massage.' ),
-			$step( 'Personalise', 'Add their name and a few words. We print nothing — it is all digital.' ),
+			$step( 'Personalise', 'Add their name and a few words. We print nothing: it is all digital.' ),
 			$step( 'We email it', 'To you, or straight to them on the day you choose: birthdays, anniversaries, Christmas morning.' ),
 			$step( 'They book', 'Online, on WhatsApp or by walking in. Valid for 12 months.' ),
 		) ) ) ),
@@ -210,26 +210,26 @@ function zv_seed() {
 			$pack( array( 'kicker' => 'Zen Balance', 'title' => '10 sessions of 60 min', 'price' => '€480', 'was' => '€600', 'save' => 'Save 20%', 'items' => "Ten 60-minute rituals: reflexology or massage\nShare with family and friends\nValid for 12 months\nFree foot-bath upgrade every visit", 'btnLabel' => 'Get Zen Balance', 'note' => 'Most popular with people who live in Madrid', 'featured' => true ) ),
 			$pack( array( 'kicker' => 'Zen Starter', 'title' => '5 sessions of 60 min', 'price' => '€255', 'was' => '€300', 'save' => 'Save 15%', 'items' => "Five 60-minute rituals: reflexology or massage\nShare with family and friends\nValid for 6 months", 'btnLabel' => 'Get Zen Starter' ) ),
 		) ) ) ),
-		zv_sec( array( 'anchor' => 'membership', 'background' => 'cream', 'eyebrow' => 'Membership', 'title' => 'A monthly ritual, for less', 'text' => 'For regulars who want an hour for themselves every month — with priority booking and member prices on everything else.' ), array( zv_b( 'zv/packs', array(), array(
+		zv_sec( array( 'anchor' => 'membership', 'background' => 'cream', 'eyebrow' => 'Membership', 'title' => 'A monthly ritual, for less', 'text' => 'For regulars who want an hour for themselves every month, with priority booking and member prices on everything else.' ), array( zv_b( 'zv/packs', array(), array(
 			$pack( array( 'kicker' => 'Monthly', 'title' => 'One ritual a month', 'price' => '€55 / month', 'items' => "One 60-minute ritual every month\n15% off extra rituals and products\nPriority booking, also at weekends\nNo sign-on fee · cancel any time", 'btnLabel' => 'Become a member', 'featured' => true ) ),
 			$pack( array( 'kicker' => 'Monthly for two', 'title' => 'Side by side, every month', 'price' => '€99 / month', 'items' => "One 60-minute Couples ritual every month\n15% off extra rituals for both of you\nNo sign-on fee · cancel any time", 'btnLabel' => 'Become members' ) ),
 		) ) ) ),
 		zv_sec( array( 'anchor' => 'loyalty', 'eyebrow' => 'Loyalty card', 'title' => 'Every visit counts' ), array( zv_b( 'zv/steps', array(), array(
-			$step( 'Ask for a card', 'Free at the studio, or added to your booking — no app needed.' ),
+			$step( 'Ask for a card', 'Free at the studio, or added to your booking. No app needed.' ),
 			$step( 'Collect stamps', 'One stamp for every ritual of 45 minutes or more.' ),
 			$step( 'Eighth visit', 'Your next 60-minute ritual is on us.' ),
 			$step( 'Your birthday', 'A free foot-bath upgrade in your birthday month.' ),
 		) ) ) ),
 		zv_sec( array( 'padTop' => false ), array( zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Looking for a present?</strong> Gift cards for any ritual or amount, emailed in minutes.', 'price' => '', 'linkLabel' => 'Send a gift card', 'linkUrl' => get_permalink( $gift_page ) ) ) ) ),
 		zv_sec( array( 'background' => 'cream' ), array( zv_faq( array(
-			array( 'Can I share my pack?', 'Yes — packs can be used by family and friends. Just tell us the name of the pack holder when you book.', true ),
+			array( 'Can I share my pack?', 'Yes, packs can be used by family and friends. Just tell us the name of the pack holder when you book.', true ),
 			array( 'Can I use a pack for any ritual?', 'Any ritual of the same length. For a longer ritual you pay the difference at the studio.' ),
 			array( 'How do I pay?', 'At the studio by card or cash, or we send you a secure payment link.' ),
 			array( 'Can I cancel my membership?', 'Any time, with no fee. Rituals already paid for stay valid until the end of that month.' ),
 		), array( 'eyebrow' => 'Questions', 'title' => 'Good to know' ) ) ) ),
 	) );
 	$contact_page = $page( 'Contact', 'contact', array(
-		zv_sec( array( 'eyebrow' => 'Contact', 'title' => "We'd love to hear from you", 'text' => 'Questions about rituals, groups or gift cards? Write to us here — or send a WhatsApp for the quickest answer.' ), array( zv_b( 'zv/split', array(), array(
+		zv_sec( array( 'eyebrow' => 'Contact', 'title' => "We'd love to hear from you", 'text' => 'Questions about rituals, groups or gift cards? Write to us here, or send a WhatsApp for the quickest answer.' ), array( zv_b( 'zv/split', array(), array(
 			zv_b( 'zv/contact-form' ),
 			zv_b( 'zv/visit', array( 'eyebrow' => '', 'layout' => 'card' ) ),
 		) ) ) ),
@@ -246,7 +246,7 @@ function zv_seed() {
 	update_option( 'zv_settings', array_merge( zv_defaults(), array(
 		'rituals_page' => (string) $rpage,
 		'demo_mode'    => '1',
-		'promo_text'   => 'Short on time? Foot Massage 25 min — €25 · add neck & shoulders for €10',
+		'promo_text'   => 'Short on time? Foot Massage, 25 min for €25 · add neck & shoulders for €10',
 		'promo_link_label' => 'Book now',
 		'promo_link_url' => $foot ? get_permalink( $foot ) : $rituals_url,
 	) ) );
@@ -364,19 +364,19 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 			) ),
 			zv_b( 'zv/need-chips' ),
 		) ),
-		zv_sec( array( 'background' => 'dark', 'eyebrow' => 'Signature rituals', 'title' => "Made only here — you'll walk out on clouds", 'text' => 'Longer journeys that blend several techniques with Spanish botanicals. Choose one when you have time to fully switch off.', 'linkLabel' => 'Full menu', 'linkUrl' => $rituals_url, 'linkStyle' => 'button' ), array(
+		zv_sec( array( 'background' => 'dark', 'eyebrow' => 'Signature rituals', 'title' => "Made only here. You'll walk out on clouds", 'text' => 'Longer journeys that blend several techniques with Spanish botanicals. Choose one when you have time to fully switch off.', 'linkLabel' => 'Full menu', 'linkUrl' => $rituals_url, 'linkStyle' => 'button' ), array(
 			zv_b( 'zv/signature' ),
 		) ),
 		zv_sec( array(), array(
 			zv_b( 'zv/pillars', array( 'title' => "A refuge from Madrid's beautiful chaos" ), array(
-				zv_b( 'zv/pillar', array( 'icon' => 'home', 'title' => 'Sanctuary', 'text' => 'A calm space to slow down, exhale and remember what it feels like to just be present — private rooms and curtained nooks.' ) ),
+				zv_b( 'zv/pillar', array( 'icon' => 'home', 'title' => 'Sanctuary', 'text' => 'A calm space to slow down, exhale and remember what it feels like to just be present, in private rooms and curtained nooks.' ) ),
 				zv_b( 'zv/pillar', array( 'icon' => 'heart', 'title' => 'Rituals', 'text' => 'Wellness is a practice, not a luxury. Certified therapists restore your body, soothe your mind and refresh your spirit.' ) ),
-				zv_b( 'zv/pillar', array( 'icon' => 'leaf', 'title' => 'Culture', 'text' => 'From locally harvested botanicals to premium olive oil — everything is connected to the land and stories that make Spain special.' ) ),
+				zv_b( 'zv/pillar', array( 'icon' => 'leaf', 'title' => 'Culture', 'text' => 'From locally harvested botanicals to premium olive oil, everything is connected to the land and stories that make Spain special.' ) ),
 			) ),
 		) ),
 		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'First time?', 'title' => 'How a visit works' ), array(
 			zv_b( 'zv/steps', array(), array(
-				zv_b( 'zv/step', array( 'title' => 'Book or walk in', 'text' => 'Pick a time online in under a minute, or just drop by — walk-ins are always welcome.' ) ),
+				zv_b( 'zv/step', array( 'title' => 'Book or walk in', 'text' => 'Pick a time online in under a minute, or just drop by. Walk-ins are always welcome.' ) ),
 				zv_b( 'zv/step', array( 'title' => 'Arrive & unwind', 'text' => 'Slip off your shoes. Your therapist asks about sore spots and the pressure you like.' ) ),
 				zv_b( 'zv/step', array( 'title' => 'Your ritual', 'text' => 'A private room or curtained nook, Spanish botanicals, and nothing to do but breathe.' ) ),
 				zv_b( 'zv/step', array( 'title' => 'Leave lighter', 'text' => 'Pay the balance after your ritual. For best results we recommend a session every two to four weeks.' ) ),
@@ -384,7 +384,7 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 			zv_b( 'zv/callout', array( 'text' => '<strong>Visiting Madrid?</strong> Our rituals are made for tired legs after a day of sightseeing or a long flight. The whole team speaks English and booking is simple.', 'linkLabel' => 'Rituals for travellers', 'linkUrl' => add_query_arg( 'need', 'travel', $rituals_url ) ) ),
 		) ),
 		zv_sec( array(), array( zv_reviews_block( array(
-			'After three days walking Madrid my feet were done. I floated out — the foot bath alone is worth it.',
+			'After three days walking Madrid my feet were done. I floated out, and the foot bath alone is worth it.',
 			'Booked the Couples Massage for our anniversary. Calm, beautiful room and two wonderful therapists.',
 			"I walked in on a Tuesday afternoon and was on the recliner ten minutes later. Now it's my monthly ritual.",
 		) ) ) ),
@@ -395,7 +395,7 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 		zv_sec( array( 'anchor' => 'visit', 'padTop' => false ), array(
 			zv_b( 'zv/split', array(), array(
 				zv_faq( array(
-					array( 'What is ZenVida?', 'A wellness studio for restorative foot reflexology and full-body massage — luxurious, culturally immersive rituals rooted in Spanish heritage.', true ),
+					array( 'What is ZenVida?', 'A wellness studio for restorative foot reflexology and full-body massage: luxurious, culturally immersive rituals rooted in Spanish heritage.', true ),
 					array( 'Do I need to book?', 'No, walk-ins are welcome. Booking online guarantees your time; a €25 deposit secures it and the rest is paid after your ritual.' ),
 					array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full." ),
 					array( 'Do you offer couples or group rituals?', 'Yes. Couples Massage has two therapists in one shared room, and many rituals can be booked for groups of up to six.' ),
@@ -434,7 +434,7 @@ function zv_rituals_blocks() {
 		zv_sec( array( 'background' => 'cream', 'anchor' => 'visit' ), array(
 			zv_b( 'zv/split', array(), array(
 				zv_faq( array(
-					array( 'Do I need to book?', 'No — walk in anytime. Booking online guarantees your time and lets you choose your therapist.', true ),
+					array( 'Do I need to book?', 'No, walk in anytime. Booking online guarantees your time and lets you choose your therapist.', true ),
 					array( 'Which ritual should I choose first?', 'For tired feet after walking Madrid, start with Deluxe Reflexology. For back and neck tension, try Deep Tissue or Thai. Not sure? Use "Help me choose" above.' ),
 					array( "What's the difference between reflexology and massage?", 'Massage works the muscles directly. Reflexology works pressure points on the feet that connect to the whole body, for deep, whole-body relaxation.' ),
 					array( 'Can I come with friends or my partner?', 'Yes. Couples Massage has two therapists in one shared room, and several rituals can be booked for small groups.' ),
@@ -452,7 +452,7 @@ function zv_deluxe_blocks( $visit_section ) {
 				zv_b( 'zv/step', array( 'title' => 'Welcome', 'text' => 'A short chat about how you feel, any sore spots, and the pressure you prefer.' ) ),
 				zv_b( 'zv/step', array( 'title' => 'Herbal foot spa', 'text' => 'A warm Spanish aromatherapy soak softens the skin and lets the muscles let go.' ) ),
 				zv_b( 'zv/step', array( 'title' => 'Reflexology', 'text' => 'Precise pressure on the reflex zones of your feet and calves to release tension across the body.' ) ),
-				zv_b( 'zv/step', array( 'title' => 'Upper-body release', 'text' => 'We finish with a neck, shoulder and upper-back massage — the places city stress hides.' ) ),
+				zv_b( 'zv/step', array( 'title' => 'Upper-body release', 'text' => 'We finish with a neck, shoulder and upper-back massage, where city stress hides.' ) ),
 			) ),
 		) ),
 		zv_sec( array(), array( zv_b( 'zv/foot-map' ) ) ),
@@ -473,7 +473,7 @@ function zv_deluxe_blocks( $visit_section ) {
 			) ),
 		) ),
 		zv_sec( array( 'padTop' => false ), array(
-			zv_b( 'zv/story', array( 'eyebrow' => 'An ancient practice', 'title' => 'Used for thousands of years in China and India', 'quote' => 'Your body works as one connected system — and your feet are the map.' ), array(
+			zv_b( 'zv/story', array( 'eyebrow' => 'An ancient practice', 'title' => 'Used for thousands of years in China and India', 'quote' => 'Your body works as one connected system, and your feet are the map.' ), array(
 				zv_p( "Foot reflexology focuses on specific pressure points on the feet and calves that correspond to different parts of the body, including the head, lungs, stomach and lower back. By working these reflex zones with precise podal reflexology techniques, we support the body's natural balance." ),
 				zv_p( 'The principle is simple: when stress or tension builds up, it shows up throughout the body. Reflexology uses the feet as a map to identify and release that tension.' ),
 				zv_p( 'Reflexology also supports the connection between physical and emotional wellbeing. Working specific pressure points can reduce tension, ease anxiety and lead to a feeling of calm and mental clarity.' ),
@@ -482,16 +482,16 @@ function zv_deluxe_blocks( $visit_section ) {
 		) ),
 		zv_sec( array( 'background' => 'cream' ), array(
 			zv_reviews_block( array(
-				'After three days walking Madrid my feet were done. I floated out of here — the foot bath alone is worth it.',
+				'After three days walking Madrid my feet were done. I floated out of here, and the foot bath alone is worth it.',
 				'Booked for four of us before a wedding. Calm room, lovely therapists, and the neck massage was a bonus.',
 				"Best sleep I've had in weeks. I'm coming back monthly as they recommended.",
 			) ),
-			zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Short on time? Foot Massage — 25 min.</strong> A quick, relaxing foot massage. Add neck & shoulders for 10 min (+€10).', 'price' => '€25', 'linkLabel' => 'View ritual', 'linkUrl' => get_permalink( get_page_by_path( 'foot-massage', OBJECT, 'ritual' ) ) ?: zv_rituals_url() ) ),
+			zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Short on time? Foot Massage, 25 min.</strong> A quick, relaxing foot massage. Add neck & shoulders for 10 min (+€10).', 'price' => '€25', 'linkLabel' => 'View ritual', 'linkUrl' => get_permalink( get_page_by_path( 'foot-massage', OBJECT, 'ritual' ) ) ?: zv_rituals_url() ) ),
 		) ),
 		zv_sec( array( 'eyebrow' => 'FAQ', 'title' => 'Good to know' ), array( zv_faq( array(
-			array( 'What is foot reflexology?', 'It applies targeted pressure to specific reflex zones on the feet that correspond to different organs and systems throughout the body — supporting balance, circulation and whole-body relaxation.', true ),
-			array( 'How is it different from a foot massage?', 'A foot massage relaxes the muscles and tissue of the foot itself. Reflexology works on pressure points that correspond to the rest of the body, aiming for whole-body balance and wellbeing — not just local relaxation.' ),
-			array( 'How does the deposit work?', 'You pay a €25 deposit per guest by card when you book. The rest — plus any foot bath upgrade — is paid at the studio after your treatment.' ),
+			array( 'What is foot reflexology?', 'It applies targeted pressure to specific reflex zones on the feet that correspond to different organs and systems throughout the body, supporting balance, circulation and whole-body relaxation.', true ),
+			array( 'How is it different from a foot massage?', 'A foot massage relaxes the muscles and tissue of the foot itself. Reflexology works on pressure points that correspond to the rest of the body, aiming for whole-body balance and wellbeing, not just local relaxation.' ),
+			array( 'How does the deposit work?', 'You pay a €25 deposit per guest by card when you book. The rest, plus any foot bath upgrade, is paid at the studio after your treatment.' ),
 			array( 'What is your cancellation policy?', "Please give at least 4 hours' notice to cancel or reschedule. Appointments cancelled with less notice, or missed, are charged in full." ),
 			array( 'Can I book for a group?', "Yes. Set the number of guests (2–6) in the booking box and we'll schedule your treatments together." ),
 			array( 'How often should I come?', 'We recommend every two weeks or monthly for best results, though this can vary with your needs.' ),
