@@ -31,6 +31,7 @@ $zv_col = function ( $loc ) {
 <?php if ( ! is_singular( array( 'ritual', 'zv_event' ) ) ) : ?>
 <div class="mbar" id="mbar"><a class="btn btn-ghost" href="<?php echo esc_url( 'https://wa.me/' . preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) ) ); ?>">WhatsApp</a><a class="btn btn-dark" href="<?php echo esc_url( is_post_type_archive( 'ritual' ) || is_tax( 'area' ) ? '#results' : ( zv_opt( 'header_url' ) ?: zv_rituals_url() ) ); ?>"><?php echo zv_e( zv_opt( 'header_label' ) ); ?></a></div>
 <?php endif; ?>
+<?php zv_whatsapp_float(); ?>
 <div class="toast" id="toast" role="status"></div>
 <?php wp_footer(); ?>
 </body>

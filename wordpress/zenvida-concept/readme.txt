@@ -25,6 +25,10 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.6.0 =
+* Floating WhatsApp button in the bottom-right corner, like on the current website. Site settings → Contact: switch it on or off and set the first message that is already typed for the visitor (in Spanish on /es/).
+* On phones it moves above the "Book" bar, or steps aside where that bar already has WhatsApp. Hidden while an offer popup is open, and on ritual pages next to the booking card (which has its own "Ask on WhatsApp").
+
 = 1.5.0 =
 * Spanish version with the free TranslatePress plugin: the whole site at /es/, English stays the main language. EN / ES switch in the header goes to the same page in the other language.
 * Ready-made Spanish for all starter content (inc/data/es.json, 1,900+ texts): pages, 19 rituals, policies, menus and the 18 journal posts (from the Spanish versions on zenvida.es). Loaded automatically, or with the "Install Spanish translations" button after installing TranslatePress. Texts the client already translated are never overwritten.

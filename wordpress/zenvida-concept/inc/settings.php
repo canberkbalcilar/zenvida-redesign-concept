@@ -20,6 +20,8 @@ function zv_defaults() {
 		'phone'        => '+34 690 829 142',
 		'email'        => 'hola@zenvida.es',
 		'whatsapp'     => '34690829142',
+		'wa_float'     => '1',
+		'wa_text'      => 'Hi ZenVida! I have a question.',
 		'maps_url'     => 'https://www.google.com/maps/search/?api=1&query=Calle+de+la+Cruz+16+28012+Madrid',
 		'rating'       => '5.0',
 		'rating_count' => '450+ guests',
@@ -223,7 +225,7 @@ add_action( 'admin_init', function () {
 						}
 					}
 					$out['baths'] = $rows;
-				} elseif ( in_array( $k, array( 'promo_show', 'demo_mode' ), true ) ) {
+				} elseif ( in_array( $k, array( 'promo_show', 'demo_mode', 'wa_float' ), true ) ) {
 					$out[ $k ] = empty( $in[ $k ] ) ? '0' : '1';
 				} elseif ( 'contact_to' === $k ) {
 					$out[ $k ] = sanitize_email( $in[ $k ] ?? '' );
@@ -290,6 +292,8 @@ function zv_settings_page() {
 				$row( 'phone', 'Phone' );
 				$row( 'email', 'Email' );
 				$row( 'whatsapp', 'WhatsApp number', 'International format, digits only, e.g. 34690829142' );
+				$row( 'wa_float', 'WhatsApp button', 'Show the round WhatsApp button in the bottom-right corner of every page.', 'checkbox' );
+				$row( 'wa_text', 'First WhatsApp message', 'Already typed for the visitor when the chat opens. Leave empty for none.' );
 				$row( 'maps_url', 'Google Maps link' );
 				?>
 			</table>
