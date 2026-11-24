@@ -256,7 +256,7 @@ function zv_seed( $mode = 'demo' ) {
 	$pack = fn( $a ) => zv_b( 'zv/pack', $a );
 	$step = fn( $t, $x ) => zv_b( 'zv/step', array( 'title' => $t, 'text' => $x ) );
 	$gift_page = $page( 'Gift Cards', 'gift-cards', array(
-		zv_sec( array( 'eyebrow' => 'Gift cards', 'title' => 'Give an hour of <em>calm</em>', 'text' => 'Any ritual or any amount, emailed in minutes. Valid for 12 months at our studio in Madrid Centro.', 'linkLabel' => 'I already have a gift card', 'linkUrl' => home_url( '/redeem-gift-card/' ) ), array( zv_b( 'zv/gift-builder' ) ) ),
+		zv_sec( array( 'eyebrow' => 'Gift cards', 'title' => 'Give an hour of <em>calm</em>', 'text' => 'Any ritual or any amount, emailed in minutes. Valid for 12 months at our studio in Madrid Centro.' ), array( zv_b( 'zv/gift-builder' ) ) ),
 		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'How it works', 'title' => 'Simple for you, lovely to receive' ), array( zv_b( 'zv/steps', array(), array(
 			$step( 'Choose', 'An amount, or a specific ritual like Deluxe Reflexology or the Couples Massage.' ),
 			$step( 'Personalise', 'Add their name and a few words. We print nothing: it is all digital.' ),
@@ -295,10 +295,11 @@ function zv_seed( $mode = 'demo' ) {
 		), array( 'eyebrow' => 'Questions', 'title' => 'Good to know' ) ) ) ),
 	) );
 	$contact_page = $page( 'Contact', 'contact', array(
-		zv_sec( array( 'eyebrow' => 'Contact', 'title' => "We'd love to hear from you", 'text' => 'Questions about rituals, groups or gift cards? Write to us here, or send a WhatsApp for the quickest answer.', 'linkLabel' => 'How to find us', 'linkUrl' => home_url( '/how-to-find-us/' ) ), array( zv_b( 'zv/split', array(), array(
+		zv_sec( array( 'eyebrow' => 'Contact', 'title' => "We'd love to hear from you", 'text' => 'Questions about rituals, groups or gift cards? Write to us here, or send a WhatsApp for the quickest answer.', 'linkLabel' => 'How to find us', 'linkUrl' => '#find-us' ), array( zv_b( 'zv/split', array(), array(
 			zv_b( 'zv/contact-form' ),
-			zv_b( 'zv/visit', array( 'eyebrow' => '', 'layout' => 'card' ) ),
+			zv_b( 'zv/visit', array( 'eyebrow' => '', 'layout' => 'card', 'showMap' => false ) ),
 		) ) ) ),
+		...zv_findus_sections(),
 	) );
 	$journal     = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Journal', 'post_name' => 'journal' ) );
 	$home        = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Home', 'post_name' => 'home', 'post_content' => wp_slash( serialize_blocks( zv_home_blocks( $rituals_url, $term_url ) ) ) ) );
@@ -321,8 +322,6 @@ function zv_seed( $mode = 'demo' ) {
 	$legal  = zv_seed_policy_pages();
 	$extra  = zv_seed_group_and_jobs_pages();
 	$plink  = fn( $slug ) => get_permalink( $legal[ $slug ] );
-	$findus = zv_seed_findus_page();
-	$redeem = zv_seed_redeem_page( $gift_page );
 
 	/* ---------- Menus ---------- */
 	$home_url = home_url( '/' );
@@ -339,8 +338,7 @@ function zv_seed( $mode = 'demo' ) {
 	zv_seed_menu( 'Offers', 'footer-2', array( array( 'Membership', get_permalink( $offers_page ) . '#membership' ), array( 'Packs', get_permalink( $offers_page ) . '#packs' ), array( 'Gift Cards', get_permalink( $gift_page ) ), array( 'Loyalty Card', get_permalink( $offers_page ) . '#loyalty' ) ) );
 	zv_seed_menu( 'Customer info', 'footer-3', array(
 		array( 'Contact us', get_permalink( $contact_page ) ),
-		array( 'How to find us', get_permalink( $findus ) ),
-		array( 'I have a gift card', get_permalink( $redeem ) ),
+		array( 'How to find us', get_permalink( $contact_page ) . '#find-us' ),
 		array( 'Group appointments', get_permalink( $extra['group'] ) ),
 		array( 'Reservations policy', $plink( 'reservations-policy' ) ),
 		array( 'Spa rules', $plink( 'spa-rules-and-customer-information' ) ),

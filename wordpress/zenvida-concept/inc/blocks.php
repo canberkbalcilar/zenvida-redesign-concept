@@ -135,7 +135,7 @@ add_action( 'init', function () {
 	zv_register( 'faq-item', 'Question', 'editor-help', array( 'question' => '', 'answer' => '', 'open' => false ), 'zv_render_faq_item', array( 'parent' => array( 'zv/faq' ) ) );
 	zv_register( 'visit', 'Visit us', 'location', array(
 		'eyebrow' => 'Visit us', 'title' => '', 'layout' => 'card',
-		'bookLabel' => 'Book a time', 'bookUrl' => '', 'waLabel' => 'WhatsApp us',
+		'bookLabel' => 'Book a time', 'bookUrl' => '', 'waLabel' => 'WhatsApp us', 'showMap' => true,
 	), 'zv_render_visit', array( 'parent' => array( 'zv/section', 'zv/split' ) ) );
 	zv_register( 'foot-map', 'Foot map', 'location-alt', array(
 		'eyebrow' => 'How reflexology works', 'title' => 'Your feet are a map of your body',
@@ -363,7 +363,7 @@ function zv_render_visit( $a ) {
 		. '<div style="margin-top:16px"><span class="open-now" data-open-now></span></div>'
 		. '<table class="hours" data-hours-table>' . zv_hours_rows() . '</table>'
 		. '<div class="vrow">' . zv_btn( $a['bookLabel'], $a['bookUrl'] ?: zv_rituals_url(), 'dark' ) . zv_btn( $a['waLabel'], 'https://wa.me/' . preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) ), 'ghost' ) . '</div>';
-	$map  = '<a class="map-tile" href="' . esc_url( zv_opt( 'maps_url' ) ) . '" target="_blank" rel="noopener"><span class="pin">Get directions ↗</span></a>';
+	$map  = $a['showMap'] ? '<a class="map-tile" href="' . esc_url( zv_opt( 'maps_url' ) ) . '" target="_blank" rel="noopener"><span class="pin">Get directions ↗</span></a>' : '';
 	return '<div class="visit">' . ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
 		. ( ( $a['title'] ?: zv_opt( 'address1' ) ) ? '<h2>' . zv_e( $a['title'] ?: zv_opt( 'address1' ) ) . '</h2>' : '' )
 		. '<div class="visit-card' . ( $wide ? ' wide' : '' ) . '">' . ( $wide ? $map . '<div>' . $info . '</div>' : $map . $info ) . '</div></div>';

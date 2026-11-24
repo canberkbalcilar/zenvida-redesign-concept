@@ -25,6 +25,9 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.2.0 =
+* How to find us merged into the Contact page (Getting here section, #find-us); I have a gift card page removed. Old addresses redirect.
+
 = 1.1.0 =
 * Body map block: tap an area of the body to see the rituals that help there ("Where it helps" per ritual).
 * How to find us page: route steps with photos, Google / Apple Maps, copy address, show-to-taxi card.

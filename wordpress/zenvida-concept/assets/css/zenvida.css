@@ -949,3 +949,5 @@ dialog.taxi::backdrop{background:rgba(30,27,23,.6)}
 .route-body p{margin:0;font-size:14.5px;color:var(--ink-2)}
 @media (max-width:1040px){.route{grid-template-columns:repeat(2,minmax(0,1fr))}.dir{grid-template-columns:1fr}}
 @media (max-width:760px){.route{grid-template-columns:1fr}.route-img{aspect-ratio:16/9}.dir-addr{font-size:28px}.dir-map{min-height:220px}.dir-btns .btn{flex:1 1 auto}}
+
+.dir+.taxi+.route,.dir+.route{margin-top:40px}

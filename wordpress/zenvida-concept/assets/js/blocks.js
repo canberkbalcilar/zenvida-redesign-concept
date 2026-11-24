@@ -272,7 +272,8 @@
     F.text(p, 'eyebrow', 'Eyebrow'), F.text(p, 'title', 'Title'),
     F.select(p, 'layout', 'Layout', [['card', 'Card (for two columns)'], ['wide', 'Wide']]),
     F.text(p, 'bookLabel', 'Book button'), F.text(p, 'bookUrl', 'Book link', 'Empty = rituals page'), F.text(p, 'waLabel', 'WhatsApp button'),
-  ], 'Address, phone, email, WhatsApp and opening hours are edited once in Appearance → ZenVida settings.');
+    F.toggle(p, 'showMap', 'Show the map'),
+  ], 'Address, phone, email, WhatsApp and opening hours are edited once in Site settings.');
 
   reg('foot-map', function (p) {
     const zones = [1, 2, 3, 4].map(i => h('li', { key: i }, h('button', { type: 'button', 'aria-pressed': i === 1 ? 'true' : 'false' },

@@ -84,51 +84,39 @@ function zv_render_route_step( $a ) {
 		. '<div class="route-body"><h3>' . zv_e( $a['title'] ) . '</h3><p>' . zv_k( $a['text'] ) . '</p></div></li>';
 }
 
-/** Page content for the starter content. */
-function zv_seed_findus_page() {
+/** "Getting here" and "Before you come" sections, used on the Contact page. */
+function zv_findus_sections() {
 	$step = fn( $icon, $t, $x, $time = '' ) => zv_b( 'zv/route-step', array( 'icon' => $icon, 'title' => $t, 'text' => $x, 'time' => $time ) );
-	return wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'How to find us', 'post_name' => 'how-to-find-us', 'post_content' => wp_slash( serialize_blocks( array(
-		zv_sec( array( 'eyebrow' => 'Getting here', 'title' => 'Three minutes from <em>Sol</em>', 'text' => 'Right in the centre of Madrid. Open the route on your phone, or follow the steps below.' ), array( zv_b( 'zv/directions' ) ) ),
-		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'Step by step', 'title' => 'From Sol to our door' ), array( zv_b( 'zv/route', array(), array(
-			$step( 'pin', 'Take the metro to Sol', 'Lines 1, 2 and 3 and the Cercanías trains all stop at Sol, the very heart of Madrid.' ),
-			$step( 'walk', 'Walk to Calle de la Cruz', 'From Puerta del Sol it is about three minutes on foot. Open the route for the exact turns.', '3 min' ),
-			$step( 'home', 'Find number 16', 'Our door is at Calle de la Cruz, 16.' ),
-			$step( 'clock', 'Arrive 15 minutes early', 'Time to check in, fill in a short health form and slip off your shoes.' ),
-		) ) ) ),
-		zv_sec( array(), array( zv_b( 'zv/split', array(), array(
-			zv_faq( array(
-				array( 'Can I just walk in?', 'Yes, walk-ins are always welcome. Booking ahead guarantees your time, especially at weekends.', true ),
-				array( 'How early should I arrive?', '15 minutes before your appointment, to check in and fill in the Customer Intake Form.' ),
-				array( 'I am running late. What should I do?', 'Send us a WhatsApp. Your treatment may be shorter if you arrive late, so let us know as soon as you can.' ),
-			), array( 'eyebrow' => 'Good to know', 'title' => 'Before you come' ) ),
-			zv_b( 'zv/visit', array( 'eyebrow' => '', 'layout' => 'card' ) ),
-		) ) ) ),
-	) ) ) ) );
+	return array(
+		zv_sec( array( 'background' => 'cream', 'anchor' => 'find-us', 'eyebrow' => 'Getting here', 'title' => 'Three minutes from <em>Sol</em>', 'text' => 'Right in the centre of Madrid. Open the route on your phone, or follow the steps below.' ), array(
+			zv_b( 'zv/directions' ),
+			zv_b( 'zv/route', array(), array(
+				$step( 'pin', 'Take the metro to Sol', 'Lines 1, 2 and 3 and the Cercanías trains all stop at Sol, the very heart of Madrid.' ),
+				$step( 'walk', 'Walk to Calle de la Cruz', 'From Puerta del Sol it is about three minutes on foot. Open the route for the exact turns.', '3 min' ),
+				$step( 'home', 'Find number 16', 'Our door is at Calle de la Cruz, 16.' ),
+				$step( 'clock', 'Arrive 15 minutes early', 'Time to check in, fill in a short health form and slip off your shoes.' ),
+			) ),
+		) ),
+		zv_sec( array(), array( zv_faq( array(
+			array( 'Can I just walk in?', 'Yes, walk-ins are always welcome. Booking ahead guarantees your time, especially at weekends.', true ),
+			array( 'How early should I arrive?', '15 minutes before your appointment, to check in and fill in the Customer Intake Form.' ),
+			array( 'I am running late. What should I do?', 'Send us a WhatsApp. Your treatment may be shorter if you arrive late, so let us know as soon as you can.' ),
+		), array( 'eyebrow' => 'Good to know', 'title' => 'Before you come' ) ) ) ),
+	);
 }
 
-/** "I have a gift card": how to use it, book with it, ask about it. */
-function zv_seed_redeem_page( $gift_page ) {
-	$wa   = 'https://wa.me/' . preg_replace( '/\D/', '', zv_opt( 'whatsapp' ) ) . '?text=' . rawurlencode( 'Hi! I have a ZenVida gift card and would like to book. My code is: ' );
-	$step = fn( $t, $x ) => zv_b( 'zv/step', array( 'title' => $t, 'text' => $x ) );
-	return wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'I have a gift card', 'post_name' => 'redeem-gift-card', 'post_content' => wp_slash( serialize_blocks( array(
-		zv_sec( array( 'eyebrow' => 'Gift cards', 'title' => 'Someone gave you <em>calm</em>', 'text' => 'Lucky you. Here is how to use your ZenVida gift card, in four easy steps.' ), array(
-			zv_b( 'zv/steps', array(), array(
-				$step( 'Find your code', 'It is in the gift card email, and on the PDF if you printed it.' ),
-				$step( 'Choose your ritual', 'Any ritual you like. If it costs more than your card, you simply pay the difference at the studio.' ),
-				$step( 'Book your time', 'Send us a WhatsApp or call with your code, or walk in and show your card at reception.' ),
-				$step( 'Enjoy', 'Arrive 15 minutes early and show your card when you check in.' ),
-			) ),
-			zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Ready to book?</strong> Send us your code on WhatsApp and we will find a time for you.', 'price' => '', 'linkLabel' => 'Book on WhatsApp', 'linkUrl' => $wa ) ),
-		) ),
-		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'Questions about your card', 'title' => 'Check your balance or ask us anything' ), array( zv_b( 'zv/split', array(), array(
-			zv_b( 'zv/contact-form', array( 'topics' => 'Book with my gift card, Check my balance, My card has expired, Something else', 'codeLabel' => 'Gift card code', 'buttonLabel' => 'Send' ) ),
-			zv_faq( array(
-				array( 'How long is my gift card valid?', '12 months from the day it was sent. The date is on your card.', true ),
-				array( 'Can I choose a different ritual?', 'Yes. Your card can be used for any ritual; if the new one costs more, you pay the difference at the studio.' ),
-				array( 'I lost my code. What can I do?', 'Write to us with the name or email of the person who bought the card, and we will look it up.' ),
-				array( 'Can I book for two people?', 'Yes. Groups of two or more are arranged by our team, so send us a WhatsApp or call.' ),
-			), array( 'eyebrow' => '', 'title' => 'Good to know' ) ),
-		) ) ) ),
-		zv_sec( array( 'padTop' => false ), array( zv_b( 'zv/callout', array( 'icon' => '', 'text' => '<strong>Want to give one too?</strong> Gift cards for any ritual or amount, emailed in minutes.', 'price' => '', 'linkLabel' => 'Send a gift card', 'linkUrl' => get_permalink( $gift_page ) ) ) ) ),
-	) ) ) ) );
-}
+// Addresses of pages that were merged or removed keep working.
+add_action( 'template_redirect', function () {
+	if ( ! is_404() ) {
+		return;
+	}
+	$path = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ); // phpcs:ignore
+	$map  = array(
+		'how-to-find-us'   => array( 'contact', '#find-us' ),
+		'redeem-gift-card' => array( 'gift-cards', '' ),
+	);
+	if ( isset( $map[ $path ] ) && ( $page = get_page_by_path( $map[ $path ][0] ) ) ) {
+		wp_safe_redirect( get_permalink( $page ) . $map[ $path ][1], 301 );
+		exit;
+	}
+} );
