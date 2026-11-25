@@ -455,9 +455,9 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 		) ),
 		zv_sec( array(), array(
 			zv_b( 'zv/pillars', array( 'title' => "A refuge from Madrid's beautiful chaos" ), array(
-				zv_b( 'zv/pillar', array( 'icon' => 'home', 'title' => 'Sanctuary', 'text' => 'A calm space to slow down, exhale and remember what it feels like to just be present, in private rooms and curtained nooks.' ) ),
-				zv_b( 'zv/pillar', array( 'icon' => 'heart', 'title' => 'Rituals', 'text' => 'Wellness is a practice, not a luxury. Certified therapists restore your body, soothe your mind and refresh your spirit.' ) ),
-				zv_b( 'zv/pillar', array( 'icon' => 'leaf', 'title' => 'Culture', 'text' => 'From locally harvested botanicals to premium olive oil, everything is connected to the land and stories that make Spain special.' ) ),
+				zv_b( 'zv/pillar', array( 'icon' => 'sanctuary', 'title' => 'Sanctuary', 'text' => 'A calm space to slow down, exhale and remember what it feels like to just be present, in private rooms and curtained nooks.' ) ),
+				zv_b( 'zv/pillar', array( 'icon' => 'ritual', 'title' => 'Rituals', 'text' => 'Wellness is a practice, not a luxury. Certified therapists restore your body, soothe your mind and refresh your spirit.' ) ),
+				zv_b( 'zv/pillar', array( 'icon' => 'culture', 'title' => 'Culture', 'text' => 'From locally harvested botanicals to premium olive oil, everything is connected to the land and stories that make Spain special.' ) ),
 			) ),
 		) ),
 		zv_sec( array( 'background' => 'cream', 'eyebrow' => 'First time?', 'title' => 'How a visit works' ), array(

@@ -14,10 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '1.8.0' );
+define( 'ZV_VERSION', '1.9.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
+require_once __DIR__ . '/inc/brand.php';
 require_once __DIR__ . '/inc/i18n.php';
 require_once __DIR__ . '/inc/media.php';
 require_once __DIR__ . '/inc/blocks.php';
@@ -222,7 +223,10 @@ add_action( 'enqueue_block_editor_assets', function () {
 		'rating'      => zv_opt( 'rating' ),
 		'ratingCount' => zv_opt( 'rating_count' ),
 		'footSvg'     => zv_foot_svg(),
-		'icons'       => array_combine( $n = array( 'home', 'heart', 'leaf', 'wave', 'moon', 'walk', 'star', 'pin', 'clock', 'award', 'users', 'check', 'arrow' ), array_map( 'zv_icon', $n ) ),
+		'icons'       => array_merge(
+			array_combine( $n = array( 'home', 'heart', 'leaf', 'wave', 'moon', 'walk', 'star', 'pin', 'clock', 'award', 'users', 'check', 'arrow' ), array_map( 'zv_icon', $n ) ),
+			array_combine( $b = array_keys( zv_brand_icons() ), array_map( fn( $k ) => zv_brand_svg( 'icon-' . $k ), $b ) )
+		),
 		'img'         => array(
 			'hero'     => zv_img( 'b84849_1f76460dcaab4a9d9b293ecf6b206bf4~mv2.jpg', 2000, 1200 ),
 			'room'     => zv_img( 'b84849_f89b8ba73adb4a0f9025817ccebf6178~mv2.jpg', 1200, 960 ),
@@ -332,14 +336,14 @@ function zv_archive_data() {
 	);
 }
 
-/** Logo: the uploaded one (Customize → Site Identity), otherwise the ZenVida wordmark. */
-function zv_logo() {
+/** Logo: the uploaded one (Customize → Site Identity), otherwise the ZenVida primary logo (brand SVG). */
+function zv_logo( $tone = 'dark' ) {
 	$id = (int) get_theme_mod( 'custom_logo' );
 	echo '<a class="logo" href="' . esc_url( home_url( '/' ) ) . '" aria-label="' . esc_attr( get_bloginfo( 'name' ) ) . ' home">';
 	if ( $id ) {
 		echo wp_get_attachment_image( $id, 'medium', false, array( 'class' => 'logo-img', 'alt' => get_bloginfo( 'name' ) ) );
 	} else {
-		echo '<b>ZENVIDA</b><small>FOOT &amp; BODY</small>';
+		echo '<img class="logo-brand" src="' . esc_url( get_template_directory_uri() . '/assets/brand/logo-primary-' . ( 'ivory' === $tone ? 'ivory' : 'dark' ) . '.svg' ) . '" width="150" height="37" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '">';
 	}
 	echo '</a>';
 }

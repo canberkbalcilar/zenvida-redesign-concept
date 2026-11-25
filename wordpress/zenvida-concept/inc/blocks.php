@@ -276,7 +276,11 @@ function zv_render_pillars( $a, $content ) {
 }
 
 function zv_render_pillar( $a ) {
-	return '<div class="pillar"><span class="ic">' . zv_icon( $a['icon'] ) . '</span><div><h3>' . zv_e( $a['title'] ) . '</h3><p>' . zv_k( $a['text'] ) . '</p></div></div>';
+	// The brand pillars use the brand's own storytelling icons.
+	$brand = array( 'sanctuary' => 'sanctuary', 'ritual' => 'ritual', 'rituals' => 'ritual', 'culture' => 'culture' );
+	$key   = isset( zv_brand_icons()[ $a['icon'] ] ) ? $a['icon'] : ( $brand[ strtolower( trim( wp_strip_all_tags( $a['title'] ) ) ) ] ?? '' );
+	$icon  = $key ? zv_brand_svg( 'icon-' . $key ) : zv_icon( $a['icon'] );
+	return '<div class="pillar' . ( $key ? ' brand' : '' ) . '"><span class="ic">' . $icon . '</span><div><h3>' . zv_e( $a['title'] ) . '</h3><p>' . zv_k( $a['text'] ) . '</p></div></div>';
 }
 
 function zv_render_step( $a ) {
@@ -493,7 +497,7 @@ function zv_foot_svg() {
 		. '<ellipse class="sole" cx="93" cy="38" rx="12" ry="15"/><ellipse class="sole" cx="119" cy="38" rx="11" ry="13"/><ellipse class="sole" cx="142" cy="48" rx="10" ry="12"/><ellipse class="sole" cx="161" cy="66" rx="9" ry="11"/>'
 		. '<g class="z" data-z="head"><ellipse cx="58" cy="51" rx="17" ry="21"/><ellipse cx="93" cy="38" rx="11" ry="14"/><ellipse cx="119" cy="38" rx="10" ry="12"/><ellipse cx="142" cy="48" rx="9" ry="11"/><ellipse cx="161" cy="66" rx="8" ry="10"/></g>'
 		. '<ellipse class="z" data-z="lungs" cx="103" cy="124" rx="56" ry="32"/><ellipse class="z" data-z="stomach" cx="100" cy="226" rx="42" ry="50"/><ellipse class="z" data-z="back" cx="104" cy="378" rx="42" ry="38"/>'
-		. '<g fill="#5E4D33" font-family="Figtree" font-size="13" font-weight="600" text-anchor="middle" pointer-events="none"><text x="58" y="56">1</text><text x="103" y="129">2</text><text x="100" y="231">3</text><text x="104" y="383">4</text></g></svg>';
+		. '<g fill="#474746" font-family="Figtree" font-size="13" font-weight="600" text-anchor="middle" pointer-events="none"><text x="58" y="56">1</text><text x="103" y="129">2</text><text x="100" y="231">3</text><text x="104" y="383">4</text></g></svg>';
 }
 
 function zv_render_benefit( $a ) {

@@ -39,7 +39,7 @@
   const Side = (title, ...fields) => h(InspectorControls, null, h(PanelBody, { title, initialOpen: true }, ...fields.filter(Boolean)));
 
   const BTN = [['dark', 'Dark'], ['light', 'Light'], ['glass', 'Glass (on photos)'], ['ghost', 'Outline'], ['sand', 'Sand']];
-  const ICONS = [['home', 'House'], ['heart', 'Heart'], ['leaf', 'Leaf'], ['wave', 'Waves'], ['moon', 'Moon'], ['walk', 'Walking'], ['star', 'Star'], ['pin', 'Location'], ['clock', 'Clock'], ['award', 'Award'], ['users', 'People'], ['check', 'Check']];
+  const ICONS = [['sanctuary', 'Brand: Sanctuary'], ['ritual', 'Brand: Ritual'], ['culture', 'Brand: Culture'], ['herbal', 'Brand: Herbal spring'], ['hands', 'Brand: Hands massage'], ['sun', 'Brand: Sun'], ['home', 'House'], ['heart', 'Heart'], ['leaf', 'Leaf'], ['wave', 'Waves'], ['moon', 'Moon'], ['walk', 'Walking'], ['star', 'Star'], ['pin', 'Location'], ['clock', 'Clock'], ['award', 'Award'], ['users', 'People'], ['check', 'Check']];
   const COLORS = [['#C9A97A', 'Sand'], ['#8E9A82', 'Sage'], ['#C79A8E', 'Rose'], ['#8d4a58', 'Plum'], ['#8FA3B0', 'Sky'], ['#4A443B', 'Ink']];
 
   const reg = (name, edit, inner) => registerBlockType('zv/' + name, {

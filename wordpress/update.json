@@ -1,10 +1,21 @@
 {
-  "version": "1.8.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.8.0",
+  "version": "1.9.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.9.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.9.0",
+      "items": [
+        "ZenVida brand identity (Brand Guidelines, December 2025): the primary logo in the header (black) and footer (ivory), and the isotype as the browser and home-screen icon. A logo uploaded in Customize still takes priority.",
+        "Brand colours only: Black #191919, Ivory #fffef8 and Narvik #e8e4da with their tints. Gold accents and coloured labels are now black, brand greys or Narvik.",
+        "Brand storytelling icons for Sanctuary, Ritual and Culture on the homepage (also on existing sites), plus Herbal spring, Hands massage and Sun in the editor's icon list.",
+        "The brand isotype as a light line texture behind cream sections (flat digital version, 4 KB).",
+        "Ready for the brand fonts: with averta-pe-regular.woff2, averta-pe-semibold.woff2, averta-pe-bold.woff2 and riccione-regular.woff2 in wp-content/uploads/zenvida-fonts/ the site uses Averta PE for text and Riccione for titles.",
+        "Phones: the round WhatsApp button no longer covers the booking widget's Continue button on the Rituals & Prices page."
+      ]
+    },
     {
       "version": "1.8.0",
       "items": [
@@ -45,14 +56,6 @@
       "items": [
         "Journal: the 18 Respiro posts from zenvida.es are now part of the starter content (texts, photos, headings, lists, buttons, tables, questions), with their original dates and addresses. Links to old zenvida.es pages point to the matching new pages. The 3 sample posts are gone.",
         "Refer a friend: new page with a form (your details + your friend's), saved under Messages and emailed; its own terms page; link in the footer \"Offers\" menu. Thank-you text in Site settings."
-      ]
-    },
-    {
-      "version": "1.3.0",
-      "items": [
-        "Keyboard and screen readers: quiz, popups and booking card work fully with the keyboard (arrow keys for durations, foot bath and days; focus kept on the chosen time; Esc closes and returns focus). Skip link, visible focus rings everywhere, mobile menu closes with Esc.",
-        "Duplicate: copy a ritual, event or popup as a draft from the list (or from the ritual form).",
-        "Rituals → Change prices: raise or lower prices for all rituals, one area or picked ones, by % or €, with rounding. Apply now or from a date (00:00 Madrid). Live preview, cancel scheduled changes, undo applied ones."
       ]
     }
   ]

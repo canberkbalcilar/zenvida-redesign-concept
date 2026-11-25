@@ -13,7 +13,7 @@ $zv_col = function ( $loc ) {
   <div class="wrap">
     <div class="fgrid">
       <div>
-        <?php zv_logo(); ?>
+        <?php zv_logo( 'ivory' ); ?>
         <p class="about"><?php echo zv_e( zv_opt( 'footer_about' ) ); ?></p>
         <p class="fcontact">
           <a href="<?php echo esc_url( zv_opt( 'maps_url' ) ); ?>" target="_blank" rel="noopener"><?php echo zv_e( zv_opt( 'address1' ) ); ?>, Madrid</a><br>

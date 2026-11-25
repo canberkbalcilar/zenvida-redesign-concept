@@ -26,6 +26,14 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.9.0 =
+* ZenVida brand identity (Brand Guidelines, December 2025): the primary logo in the header (black) and footer (ivory), and the isotype as the browser and home-screen icon. A logo uploaded in Customize still takes priority.
+* Brand colours only: Black #191919, Ivory #fffef8 and Narvik #e8e4da with their tints. Gold accents and coloured labels are now black, brand greys or Narvik.
+* Brand storytelling icons for Sanctuary, Ritual and Culture on the homepage (also on existing sites), plus Herbal spring, Hands massage and Sun in the editor's icon list.
+* The brand isotype as a light line texture behind cream sections (flat digital version, 4 KB).
+* Ready for the brand fonts: with averta-pe-regular.woff2, averta-pe-semibold.woff2, averta-pe-bold.woff2 and riccione-regular.woff2 in wp-content/uploads/zenvida-fonts/ the site uses Averta PE for text and Riccione for titles.
+* Phones: the round WhatsApp button no longer covers the booking widget's Continue button on the Rituals & Prices page.
+
 = 1.8.0 =
 * Online booking with ZenVida's own booking widget, the same one as on zenvida.es: live free times, client details and the card deposit. Ritual pages show it opened on that ritual, and the duration buttons switch it (for example 60 or 90 minutes).
 * New "Rituals & Prices" page, at the same address as on Wix, with the full booking menu. The header "Book now" button goes there. A "Booking widget" block can be added to any page (full menu, one service, one category or group booking).
