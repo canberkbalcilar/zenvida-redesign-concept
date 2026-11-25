@@ -26,6 +26,10 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.11.0 =
+* Reviews slide sideways: the newest 10 Google reviews (3 to 20, set in the Reviews block), three at a time on desktop, two on tablets and one on phones, with arrows and swipe. The next card peeks in on phones.
+* Cards stay the same height; long reviews show 6 lines, the full text is on Google.
+
 = 1.10.0 =
 * Google reviews from ZenVida's own Business Profile. Site settings → Google reviews: paste the OAuth client from Google Cloud, connect the Google account that manages the profile, and choose which reviews to show (5 stars, 4 and 5 stars, or all; always with a written comment, newest first).
 * The Reviews block shows the newest Google reviews with an "All reviews on Google" link. The rating and the number of reviews everywhere on the site come from Google ("4.9 from 450+ Google reviews"), in Spanish on /es/.

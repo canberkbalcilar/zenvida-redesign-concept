@@ -168,7 +168,7 @@
   });
 
   reg('reviews', function (p) {
-    const gSide = Side('Google reviews', F.toggle(p, 'google', 'Show the newest Google reviews when Google is connected (Site settings → Google reviews)'), F.num(p, 'count', 'How many Google reviews', 1, 6), F.note('The reviews below are shown when Google is not connected.'));
+    const gSide = Side('Google reviews', F.toggle(p, 'google', 'Show the newest Google reviews when Google is connected (Site settings → Google reviews)'), F.num(p, 'count', 'How many Google reviews (they slide sideways)', 3, 20), F.note('The reviews below are shown when Google is not connected.'));
     const a = p.attributes, bp = useBlockProps({ className: 'reviews' });
     const ip = useInnerBlocksProps({ className: 'rev-list' }, { allowedBlocks: ['zv/review'], template: [['zv/review'], ['zv/review'], ['zv/review']], renderAppender: () => h(InnerBlocks.ButtonBlockAppender) });
     return h(Fragment, null,

@@ -30,3 +30,7 @@
 .zvw-placeholder{display:grid;gap:6px;place-items:center;text-align:center;min-height:260px;border:1px dashed #c9b991;border-radius:22px;background:#fbf8f1;padding:24px;color:#4a443b}
 .zvw-placeholder b{font-size:18px}
 .zvw-placeholder em{color:#8a4b00}
+
+/* Reviews: in the editor the typed reviews stay in a simple grid */
+.editor-styles-wrapper .rev-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}
+.editor-styles-wrapper .rev-list .rev{flex:none}

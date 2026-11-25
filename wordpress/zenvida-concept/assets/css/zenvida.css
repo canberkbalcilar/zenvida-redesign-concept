@@ -179,8 +179,21 @@ section.block.bg-dark{background:var(--ink);color:#E8E7E1}
 .reviews{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start}
 .score{font:500 84px/1 var(--serif)}
 .stars{color:var(--sand);letter-spacing:2px;font-size:18px}
-.rev-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.rev{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+/* Reviews slide sideways: 3 at a time on desktop, 2 on tablets, 1 and a bit on phones */
+.rev-wrap{min-width:0}
+.rev-list{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;border-radius:var(--radius)}
+.rev-list::-webkit-scrollbar{display:none}
+.rev-list:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+.rev{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex:0 0 calc((100% - 28px) / 3);scroll-snap-align:start;display:flex;flex-direction:column}
+.rev small{margin-top:auto}
+.rev-nav{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.rev-nav[hidden]{display:none}
+.rev-nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,opacity .2s}
+.rev-nav button:hover:not(:disabled){border-color:var(--ink)}
+.rev-nav button:disabled{opacity:.35;cursor:default}
+@media (max-width:1040px){.rev{flex-basis:calc((100% - 14px) / 2)}}
+@media (max-width:640px){.rev{flex-basis:86%}}
+.rev-list .rev p{display:-webkit-box;-webkit-line-clamp:6;line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}   /* long reviews: 6 lines, so the cards stay even (full text on Google) */
 .rev p{margin:10px 0 14px;font-size:15px;color:var(--ink-2)}
 .rev small{color:var(--muted)}
 .sample{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#F3F2ED;color:#646462;border-radius:6px;padding:3px 7px;margin-top:14px}

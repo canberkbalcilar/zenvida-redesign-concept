@@ -236,7 +236,7 @@ function zv_g_reviews_html( $n ) {
 			? array( 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' )[ (int) gmdate( 'n', $r['time'] ) - 1 ] . ' ' . gmdate( 'Y', $r['time'] )
 			: gmdate( 'F Y', $r['time'] );
 		$html .= '<div class="rev" data-no-translation><div class="stars" role="img" aria-label="' . esc_attr( $r['stars'] . ' / 5' ) . '">' . str_repeat( '★', $r['stars'] ) . '</div>'
-			. '<p>' . esc_html( wp_trim_words( $text, 60 ) ) . '</p><small>' . esc_html( $r['name'] . ' · Google · ' . $date ) . '</small></div>';
+			. '<p>' . esc_html( wp_trim_words( $text, 48 ) ) . '</p><small>' . esc_html( $r['name'] . ' · Google · ' . $date ) . '</small></div>';
 	}
 	return $html;
 }

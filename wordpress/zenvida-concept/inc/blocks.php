@@ -119,7 +119,7 @@ add_action( 'init', function () {
 	zv_register( 'steps', 'Steps', 'editor-ol', array(), 'zv_render_wrap_inner', $in_section );
 	zv_register( 'step', 'Step', 'marker', array( 'title' => '', 'text' => '' ), 'zv_render_step', array( 'parent' => array( 'zv/steps' ) ) );
 	zv_register( 'callout', 'Callout', 'megaphone', array( 'icon' => '✈︎', 'text' => '', 'price' => '', 'linkLabel' => '', 'linkUrl' => '' ), 'zv_render_callout', $in_section );
-	zv_register( 'reviews', 'Reviews', 'format-quote', array( 'eyebrow' => 'Guest reviews', 'showSample' => true, 'google' => true, 'count' => 3 ), 'zv_render_reviews', $in_section );
+	zv_register( 'reviews', 'Reviews', 'format-quote', array( 'eyebrow' => 'Guest reviews', 'showSample' => true, 'google' => true, 'count' => 10 ), 'zv_render_reviews', $in_section );
 	zv_register( 'review', 'Review', 'testimonial', array( 'text' => '', 'author' => 'Guest name', 'source' => 'Google', 'stars' => 5 ), 'zv_render_review', array( 'parent' => array( 'zv/reviews' ) ) );
 	zv_register( 'offers', 'Offer cards', 'money-alt', array(), 'zv_render_wrap_inner', $in_section );
 	zv_register( 'offer', 'Offer card', 'tickets-alt', array( 'kicker' => '', 'title' => '', 'text' => '', 'linkLabel' => 'Learn more →', 'url' => '', 'featured' => false ), 'zv_render_offer', array( 'parent' => array( 'zv/offers' ) ) );
@@ -301,7 +301,9 @@ function zv_render_reviews( $a, $content ) {
 		. '<div class="score" style="margin-top:14px">' . zv_e( zv_opt( 'rating' ) ) . '</div><div class="stars" aria-hidden="true">★★★★★</div>'
 		. '<p style="color:var(--muted);font-size:14px;margin:8px 0 0">' . zv_rating_from( true ) . '</p>'
 		. ( $live ? ( $maps ? '<p class="g-all"><a class="link" href="' . esc_url( $maps ) . '" target="_blank" rel="noopener">' . zv_e( zv__( 'All reviews on Google' ) ) . '</a></p>' : '' ) : ( $a['showSample'] ? '<span class="sample">Sample quotes: connect real reviews</span>' : '' ) )
-		. '</div><div class="rev-list">' . ( $live ?: $content ) . '</div></div>';
+		. '</div><div class="rev-wrap" data-carousel><div class="rev-list" tabindex="0" role="region" aria-label="' . esc_attr( zv__( 'Guest reviews' ) ) . '">' . ( $live ?: $content ) . '</div>'
+		. '<div class="rev-nav" hidden><button type="button" class="rev-prev" aria-label="' . esc_attr( zv__( 'Previous reviews' ) ) . '"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>'
+		. '<button type="button" class="rev-next" aria-label="' . esc_attr( zv__( 'More reviews' ) ) . '"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div></div>';
 }
 
 function zv_render_review( $a ) {

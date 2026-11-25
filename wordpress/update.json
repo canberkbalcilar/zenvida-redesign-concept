@@ -1,10 +1,17 @@
 {
-  "version": "1.10.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.10.0",
+  "version": "1.11.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.11.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.11.0",
+      "items": [
+        "Reviews slide sideways: the newest 10 Google reviews (3 to 20, set in the Reviews block), three at a time on desktop, two on tablets and one on phones, with arrows and swipe. The next card peeks in on phones.",
+        "Cards stay the same height; long reviews show 6 lines, the full text is on Google."
+      ]
+    },
     {
       "version": "1.10.0",
       "items": [
@@ -48,16 +55,6 @@
       "items": [
         "Floating WhatsApp button in the bottom-right corner, like on the current website. Site settings → Contact: switch it on or off and set the first message that is already typed for the visitor (in Spanish on /es/).",
         "On phones it moves above the \"Book\" bar, or steps aside where that bar already has WhatsApp. Hidden while an offer popup is open, and on ritual pages next to the booking card (which has its own \"Ask on WhatsApp\")."
-      ]
-    },
-    {
-      "version": "1.5.0",
-      "items": [
-        "Spanish version with the free TranslatePress plugin: the whole site at /es/, English stays the main language. EN / ES switch in the header goes to the same page in the other language.",
-        "Ready-made Spanish for all starter content (inc/data/es.json, 1,900+ texts): pages, 19 rituals, policies, menus and the 18 journal posts (from the Spanish versions on zenvida.es). Loaded automatically, or with the \"Install Spanish translations\" button after installing TranslatePress. Texts the client already translated are never overwritten.",
-        "Booking card, quiz, body map, opening hours, forms and WhatsApp messages in Spanish, with Spanish dates (inc/data/es-ui.json). Browser titles and descriptions translated too.",
-        "Messages sent from the Spanish site are marked \"Language: Spanish\" in the inbox.",
-        "Dashboard guide: \"Change a Spanish text\" opens TranslatePress's editor on the Spanish site."
       ]
     }
   ]

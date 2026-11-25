@@ -164,4 +164,24 @@ $$('[data-widget-durations]').forEach(group => {
   });
 });
 
+// Reviews carousel: arrows move one card; swipe and keyboard scroll as usual
+$$('[data-carousel]').forEach(box => {
+  const track = box.querySelector('.rev-list'), nav = box.querySelector('.rev-nav');
+  if (!track || !nav) return;
+  const prev = nav.querySelector('.rev-prev'), next = nav.querySelector('.rev-next');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const step = () => { const c = track.querySelector('.rev'); return c ? c.getBoundingClientRect().width + 14 : track.clientWidth; };
+  const sync = () => {
+    const more = track.scrollWidth > track.clientWidth + 2;
+    nav.hidden = !more;
+    prev.disabled = track.scrollLeft < 4;
+    next.disabled = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
+  };
+  prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: still ? 'auto' : 'smooth' }));
+  next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: still ? 'auto' : 'smooth' }));
+  track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+  addEventListener('resize', sync);
+  sync();
+});
+
 })();
