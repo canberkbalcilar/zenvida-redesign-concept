@@ -87,6 +87,8 @@ function zv_defaults() {
 		'widget_api'   => 'https://zenvida-api-gateway-daa7d74i.ew.gateway.dev',
 		'gtm_id'       => '',
 		'rituals_page' => '',
+		'club_left'    => '',
+		'club_total'   => '40',
 	);
 }
 
@@ -255,6 +257,11 @@ add_action( 'admin_init', function () {
 					if ( '' !== $v && '' === $out[ $k ] ) {
 						add_settings_error( 'zv_settings', 'zv_gtm', 'The Google Tag Manager ID was not saved: it looks like GTM-XXXXXXX. Your other changes were saved.' );
 					}
+				} elseif ( 'club_left' === $k ) {
+					$v         = trim( (string) ( $in[ $k ] ?? '' ) );
+					$out[ $k ] = '' === $v ? '' : (string) absint( $v );
+				} elseif ( 'club_total' === $k ) {
+					$out[ $k ] = (string) ( absint( $in[ $k ] ?? 40 ) ?: 40 );
 				} elseif ( 'social' === $k ) {
 					$lines     = array_filter( array_map( fn( $l ) => esc_url_raw( trim( $l ) ), preg_split( '/[\r\n]+/', (string) ( $in[ $k ] ?? '' ) ) ) );
 					$out[ $k ] = implode( "\n", $lines );
@@ -388,6 +395,13 @@ function zv_settings_page() {
 				$row( 'job_success', 'Thank-you text (job application)', '', 'textarea' );
 				$row( 'referral_success', 'Thank-you text (refer a friend)', '', 'textarea' );
 				$row( 'gift_url', 'Gift card payment page (optional)', 'If your booking system sells gift cards online, paste its link: visitors see a "Continue to payment" button after sending the request.' );
+				?>
+			</table>
+			<h2 class="title">Siesta Club</h2>
+			<table class="form-table" role="presentation">
+				<?php
+				$row( 'club_left', 'Founding places left', 'Shown on the Siesta Club page ("12 of 40 founding places left"). Update it when a place is sold. Empty = "Only 40 founding places", without a count.' );
+				$row( 'club_total', 'Founding places in total', 'Usually 40.' );
 				?>
 			</table>
 			<h2 class="title">Events page</h2>

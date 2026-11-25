@@ -26,6 +26,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.15.0 =
+* New Siesta Club page (/siesta-club/), added automatically and linked in the footer Offers menu: the founding membership with Gold and Platinum plans (6 or 12 months), member benefits, Founding Member perks, how it works, ways to pay, key dates, FAQ, and a "Reserve your place" calculator that shows what is paid today and sends the choice on WhatsApp. In Spanish on /es/.
+* Every text, price and list is editable in the page's blocks; prices live in the plans block only. Places left: Appearance → ZenVida settings → Siesta Club.
+* The old address /membership now leads to the Siesta Club page.
+
 = 1.14.0 =
 * Structured data for Google and AI search on every page, written by the theme from your content: the studio (address, opening hours, phone, WhatsApp, price range, Google rating and the Google reviews shown on the page), breadcrumbs, the rituals as services with their prices, the full price list, packs and memberships, the gift card, events, journal posts and every FAQ. In Spanish on /es/.
 * Rank Math (or Yoast) keeps titles, descriptions, Open Graph and the sitemap; its own schema is switched off so Google sees one consistent set. Rituals and events that are switched off stay out of the Rank Math sitemap.

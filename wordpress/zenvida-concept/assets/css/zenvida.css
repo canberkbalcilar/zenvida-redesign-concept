@@ -1077,3 +1077,231 @@ a.r-rate:hover .r-rate-n{text-decoration:underline}
 .rev .hl{font-weight:600;color:var(--ink)}
 section.block.r-reviews{padding-bottom:0}   /* the FAQ section below brings its own space */
 #reviews{scroll-margin-top:96px}   /* the rating line jumps here; clear of the sticky header */
+/* ------------------------------------------------------------------ Siesta Club */
+.screen-reader-text{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.club-hero{background:#1C1A17;color:var(--ivory);padding:56px 0 104px}
+.club-hero-in{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.club-hero .eyebrow,.club-join .eyebrow{color:#E3A68F}
+.club-hero h1{font:500 clamp(40px,5.4vw,76px)/1.02 var(--serif);margin:18px 0 0;color:var(--ivory)}
+.club-hero h1 em,.club-join h2 em{color:#E3A68F}
+.club-hero .lead{color:#CFC6B4;max-width:520px;margin:20px 0 0}
+.club-places{margin-top:26px}
+.club-dots{display:grid;grid-template-columns:repeat(20,10px);gap:7px}
+.club-dots i{width:10px;height:10px;border-radius:50%;background:#E3A68F}
+.club-dots i.taken{background:#5A544C}
+.club-places p{margin:10px 0 0;font-size:14.5px;color:var(--ivory)}
+.club-places p b{font-weight:600}
+.club-places p span{color:#B9B5AA}
+.club-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.club-ctas .btn{padding:16px 28px;font-size:16px}
+.club-hero .btn-ghost,.club-join .btn-ghost{color:var(--ivory);border-color:#5A544C}
+.club-hero .btn-ghost:hover{border-color:var(--ivory)}
+.club-hero-media{position:relative}
+.club-hero-media>img{width:100%;height:520px;object-fit:cover;border-radius:20px;display:block}
+.club-badge{position:absolute;left:14px;top:14px;background:#1C1A17;color:#E3A68F;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:8px 12px;border-radius:999px}
+.club-card{position:absolute;left:-28px;bottom:-40px;width:300px;height:188px;border-radius:16px;background:#2A2724;border:1px solid #4A453F;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;color:var(--ivory);box-shadow:0 18px 40px rgba(0,0,0,.28)}
+.club-card-iso{position:absolute;right:-36px;bottom:-40px;width:170px;height:auto;color:#E3A68F;opacity:.22}
+.club-card-top,.club-card-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative}
+.club-card-top{align-items:flex-start}
+.club-card-top img{width:96px;height:auto}
+.club-card span{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#E3A68F}
+.club-card-bottom span{color:#CFC6B4}
+.club-card b{font:400 34px/1 var(--serif)}
+.club-card b small{font-size:16px;color:#B9B5AA}
+.club-bar{display:none}
+
+.club-facts{border-bottom:1px solid var(--line)}
+.club-facts .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding-top:40px;padding-bottom:40px}
+.club-facts .wrap>div{display:flex;align-items:center;gap:16px}
+.club-facts b{font:500 52px/1 var(--serif)}
+.club-facts span{font-size:15px;line-height:1.4;color:var(--ink-2);max-width:210px}
+
+.club-term{display:inline-grid;grid-template-columns:repeat(2,140px);padding:4px;background:var(--sand-50);border-radius:999px;margin-bottom:28px}
+.club-term button{height:46px;border:0;border-radius:999px;background:transparent;font:600 15px var(--sans);color:var(--ink);cursor:pointer}
+.club-term button[aria-checked="true"]{background:var(--ink);color:var(--ivory)}
+.club-term button:focus-visible{outline:3px solid #A4533B;outline-offset:2px}
+.club-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.club-plan{background:var(--sand-50);border:1px solid var(--line);border-radius:22px;padding:36px;display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden}
+.club-plan.is-dark{background:#1C1A17;color:var(--ivory);border-color:#1C1A17}
+.club-plan-iso{position:absolute;right:-60px;top:-50px;width:260px;height:auto;color:#E3A68F;opacity:.12;pointer-events:none}
+.club-plan>*{position:relative}
+.club-plan>.club-plan-iso{position:absolute}
+.club-plan header{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.club-plan h3{font:600 40px/1 var(--serif)}
+.club-plan header span{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.club-plan.is-dark header span{color:#E3A68F}
+.club-plan-lead{margin:0;font-size:17px}
+.club-price>div{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.club-price b{font:500 60px/1 var(--serif)}
+.club-price span{font-size:15px;color:var(--muted)}
+.club-price small{display:block;margin-top:8px;font-size:14.5px;color:var(--ink-2)}
+.club-plan.is-dark .club-price span{color:#B9B5AA}
+.club-plan.is-dark .club-price small{color:#CFC6B4}
+.club-plan ul{list-style:none;margin:0;padding:22px 0 0;border-top:1px solid #E1DCD0;display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.45;flex:1}
+.club-plan.is-dark ul{border-color:#3A3632}
+.club-plan li{display:flex;gap:12px}
+.ck{width:18px;height:18px;flex:none;margin-top:2px;color:#A4533B}
+.club-plan.is-dark .ck{color:#E3A68F}
+.club-plan .btn{width:100%;padding:16px 24px;font-size:16px}
+.club-fine{font-size:13px;line-height:1.5;color:var(--muted);margin:20px 0 0}
+.bg-dark .club-fine,.club-join .club-fine{color:#B9B5AA}
+.club-join .club-fine a{color:#E3A68F}
+
+.club-fit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.club-fit-card{border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:10px}
+.club-fit-card.is-strong{border-color:var(--ink)}
+.club-fit-card .q{font:italic 500 26px/1.15 var(--serif)}
+.club-fit-card p{margin:0;font-size:15px;line-height:1.5;color:var(--ink-2)}
+.club-fit-card p b{color:var(--ink)}
+.club-fit-card .link{margin-top:auto}
+
+.club-benefits{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
+.club-benefits>*{min-width:0}
+.club-benefits.has-img{grid-template-columns:minmax(0,1fr) minmax(0,2fr);align-items:stretch}
+.club-benefits figure{margin:0}
+.club-benefits figure img{width:100%;height:100%;min-height:320px;object-fit:cover;border-radius:18px;display:block}
+.club-table-box{background:var(--paper);border-radius:18px;overflow-x:auto}
+.club-table{width:100%;border-collapse:collapse;min-width:520px}
+.club-table th,.club-table td{padding:18px 24px;border-bottom:1px solid var(--line);text-align:left;font-size:15px;line-height:1.4;vertical-align:middle}
+.club-table thead th{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.club-table thead th+th,.club-table td{text-align:center}
+.club-table tbody th{font-weight:400}
+.club-table td{font-weight:600;width:160px}
+.club-table td .ck{display:inline-block;margin:0}
+.club-table .no{color:var(--muted)}
+.club-table-box .club-fine{padding:0 24px 18px}
+
+.club-perks{display:grid;gap:40px}
+.club-perks.has-card{grid-template-columns:320px minmax(0,1fr);align-items:start}
+.club-perks .club-card{position:relative;left:auto;bottom:auto;box-shadow:none}
+.club-perk-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px}
+.club-perk{display:flex;gap:18px;padding:26px 0;border-top:1px solid #3A3632}
+.club-perk svg{width:26px;height:26px;flex:none;color:#E3A68F;margin-top:2px}
+.club-perk b{font-size:17px;font-weight:600;color:var(--ivory)}
+.club-perk p{margin:6px 0 0;font-size:15px;line-height:1.5;color:#CFC6B4}
+
+.club-rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 40px}
+.club-rules li{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:24px 0;border-top:1px solid var(--line)}
+.club-rules .n{font:500 28px/1 var(--serif);color:#A4533B}
+.club-rules b{font-size:17px;font-weight:600}
+.club-rules p{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--ink-2)}
+
+.club-pay{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.club-pay h3{font:500 36px/1.1 var(--serif);margin:0 0 12px}
+.club-pay-box{border:1px solid var(--line);border-radius:22px;padding:36px}
+.club-pay-box ul{list-style:none;margin:0;padding:0}
+.club-pay-box li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+.club-pay-box li div{display:flex;flex-direction:column;gap:3px}
+.club-pay-box b{font-size:16px}
+.club-pay-box li span{font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.club-pay-box em{font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--ivory);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.club-dates{background:var(--sand-50);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.club-dates>img{width:100%;height:200px;object-fit:cover;display:block}
+.club-dates>div{padding:28px 36px 36px}
+.club-dates ol{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.club-dates li{display:grid;grid-template-columns:20px 1fr;gap:12px;font-size:15px;line-height:1.45}
+.club-dates li i{width:10px;height:10px;border-radius:50%;margin-top:6px;background:var(--ink);box-sizing:border-box}
+.club-dates li.is-past{color:var(--muted)}
+.club-dates li.is-past i{background:#B9B5AA}
+.club-dates li.is-now i{background:#A4533B}
+.club-dates li.is-now strong{color:#A4533B}
+.club-dates li.is-next i{background:transparent;border:1.5px solid var(--ink)}
+
+.club-join{background:#1C1A17;color:var(--ivory);padding:96px 0}
+.club-join-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);grid-template-areas:"copy calc" "info calc";gap:0 56px;align-items:start}
+.club-join-copy{grid-area:copy}
+.club-calc{grid-area:calc}
+.club-join-info{grid-area:info}
+.club-join h2{font:500 clamp(40px,5vw,60px)/1 var(--serif);margin:14px 0 0;color:var(--ivory)}
+.club-join .lead{color:#CFC6B4;max-width:480px;margin:18px 0 0}
+.club-contact{margin:28px 0 0}
+.club-contact div{padding:18px 0;border-top:1px solid #3A3632}
+.club-contact div:last-child{border-bottom:1px solid #3A3632}
+.club-contact dt{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#E3A68F}
+.club-contact dd{margin:4px 0 0;font-size:18px}
+.club-contact a{color:var(--ivory);text-decoration:none}
+.club-contact a:hover{text-decoration:underline}
+.club-calc{background:var(--paper);color:var(--ink);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.club-calc fieldset{border:0;margin:0;padding:0;min-width:0}
+.club-calc legend{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;padding:0}
+.club-row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.club-col{display:flex;flex-direction:column;gap:8px}
+.club-opt{position:relative;display:block;cursor:pointer}
+.club-opt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.club-opt input:focus-visible+span{outline:3px solid #A4533B;outline-offset:2px}
+.club-opt-plan{display:flex;flex-direction:column;gap:4px;min-height:104px;padding:14px;border-radius:14px;border:1.5px solid var(--line);box-sizing:border-box}
+.club-opt-plan b{font:600 24px/1 var(--serif)}
+.club-opt-plan small{font-size:12.5px;line-height:1.35;color:var(--ink-2)}
+.club-opt-plan em{font-style:normal;font-weight:600;font-size:15px;margin-top:auto}
+.club-opt input:checked+.club-opt-plan{background:#1C1A17;color:var(--ivory);border-color:#1C1A17}
+.club-opt input:checked+.club-opt-plan small{color:#CFC6B4}
+.club-seg{background:var(--sand-50);border-radius:999px;padding:4px;gap:0}
+.club-opt.is-term span{display:grid;place-items:center;height:44px;border-radius:999px;font-weight:600;font-size:14px}
+.club-opt.is-term input:checked+span{background:var(--ink);color:var(--ivory)}
+.club-opt-pay{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:12px;min-height:58px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);box-sizing:border-box}
+.club-opt-pay i{width:18px;height:18px;border-radius:50%;border:1.5px solid #B9B5AA;box-sizing:border-box}
+.club-opt-pay>span{display:flex;flex-direction:column;gap:2px}
+.club-opt-pay b{font-size:14.5px;font-weight:600}
+.club-opt-pay small{font-size:12.5px;color:var(--muted)}
+.club-opt-pay em{font-style:normal;font-weight:600;font-size:14px}
+.club-opt input:checked+.club-opt-pay{border-color:var(--ink)}
+.club-opt input:checked+.club-opt-pay i{border:6px solid var(--ink)}
+.club-sum{background:var(--sand-50);border-radius:14px;padding:14px 16px}
+.club-sum ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.club-sum li{display:flex;justify-content:space-between;font-size:14px}
+.club-sum li span{color:var(--ink-2)}
+.club-sum p{margin:8px 0 0;font-size:12.5px;line-height:1.4;color:var(--muted)}
+.club-calc .club-wa{background:var(--ink);color:var(--ivory);padding:16px 24px;font-size:16px;white-space:normal}
+.club-calc .club-wa:hover{background:#000}
+.club-calc-fine{margin:-6px 0 0;text-align:center;font-size:12.5px;color:var(--muted)}
+
+@media (max-width:1040px){
+  .club-rules{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .club-perks.has-card{grid-template-columns:1fr}
+  .club-perks .club-card{margin:0 auto}
+}
+@media (max-width:900px){
+  .club-hero{padding:0 0 40px}
+  .club-hero-in{grid-template-columns:1fr;gap:24px;padding:0 12px}
+  .club-hero-copy{padding:0 12px}
+  .club-hero-media{order:-1}
+  .club-hero-media>img{height:240px;border-radius:14px}
+  .club-hero-media .club-card{display:none}
+  .club-badge{top:auto;bottom:12px;left:12px}
+  .club-hero h1{font-size:40px;line-height:1.04;margin-top:14px}
+  .club-hero .lead{font-size:15.5px}
+  .club-ctas{flex-direction:column}
+  .club-ctas .btn{width:100%;box-sizing:border-box}
+  .club-cards,.club-fit,.club-pay,.club-benefits.has-img,.club-perk-list,.club-join-in{grid-template-columns:1fr}
+  .club-benefits figure img{min-height:0;height:220px}
+  .club-term{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .club-plan{padding:26px 20px}
+  .club-plan h3{font-size:32px}
+  .club-price b{font-size:46px}
+  .club-pay-box,.club-dates>div{padding:24px 20px}
+  .club-join{padding:56px 0}
+  .club-join-in{grid-template-areas:"copy" "calc" "info";gap:28px}
+  .club-calc{padding:18px}
+  .club-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:56;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--paper);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .25s}
+  .club-bar.is-on{transform:none}
+  .club-bar div{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .club-bar b{font-size:14px}
+  .club-bar span{font-size:12.5px;color:var(--muted)}
+  .club-bar .btn{padding:14px 22px}
+  html:has(.club-bar.is-on) .wa-float{bottom:calc(92px + env(safe-area-inset-bottom))}
+  html:has(.club-bar) .mbar{display:none}   /* the page has its own bottom bar */
+}
+@media (max-width:640px){
+  .club-dots{grid-template-columns:repeat(20,8px);gap:5px}
+  .club-dots i{width:8px;height:8px}
+  .club-facts .wrap{gap:8px;padding-top:28px;padding-bottom:28px}
+  .club-facts .wrap>div{flex-direction:column;gap:4px;text-align:center}
+  .club-facts b{font-size:34px}
+  .club-facts span{font-size:12px;line-height:1.35}
+  .club-rules{grid-template-columns:1fr}
+  .club-table th,.club-table td{padding:14px 14px;font-size:14px}
+  .club-table{min-width:0}
+  .club-table td{width:84px}
+  .club-table thead th{font-size:11px;letter-spacing:.1em}
+}
+@media (prefers-reduced-motion:reduce){.club-bar{transition:none}}

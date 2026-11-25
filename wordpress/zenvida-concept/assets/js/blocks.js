@@ -335,4 +335,48 @@
           h('span', null, what + (a.group ? ' · group booking' : '') + (a.welcome ? ' · welcome screen' : '')),
           W.on ? null : h('em', null, 'Online booking is switched off in Site settings: visitors see a WhatsApp button.')))));
   });
+
+  /* ---------- Siesta Club (inc/siesta.php). Lists: one item per line, fields separated with "|". ---------- */
+  const PLACES = 'Places left: Appearance → ZenVida settings → Siesta Club.';
+  ssrBlock('club-hero', 'Siesta Club hero', p => [
+    F.text(p, 'eyebrow', 'Eyebrow'), F.area(p, 'title', 'Title', 'Use <em>…</em> for the light-coloured words.'), F.area(p, 'text', 'Text'),
+    F.img(p, 'image', 'Photo'), F.text(p, 'badge', 'Label on the photo'), F.text(p, 'placesNote', 'Next to the places count'),
+    F.text(p, 'btn1Label', 'Button 1'), F.text(p, 'btn1Url', 'Button 1 link'), F.text(p, 'btn2Label', 'Button 2'), F.text(p, 'btn2Url', 'Button 2 link'),
+    F.text(p, 'cardNo', 'Number on the member card'),
+    F.text(p, 'barText', 'Phone bottom bar: small text', 'Empty = "From €… a month", the lowest monthly price of the plans.'), F.text(p, 'barLabel', 'Phone bottom bar: button'),
+  ], PLACES);
+  ssrBlock('club-facts', 'Siesta Club facts', p => [F.area(p, 'items', 'Facts', 'One per line: number | text')]);
+  ssrBlock('club-plans', 'Siesta Club plans', p => [
+    F.text(p, 'discount', 'Discount when paid in full (%)'),
+    F.text(p, 'p1Name', 'Plan 1 name'), F.text(p, 'p1Tag', 'Plan 1 label'), F.text(p, 'p1Lead', 'Plan 1 one-liner'),
+    F.text(p, 'p1Price6', 'Plan 1 price, 6 months (€, numbers only)'), F.text(p, 'p1Price12', 'Plan 1 price, 12 months (€, numbers only)'),
+    F.area(p, 'p1Items', 'Plan 1 includes', 'One per line'), F.text(p, 'p1Btn', 'Plan 1 button'),
+    F.text(p, 'p2Name', 'Plan 2 name'), F.text(p, 'p2Tag', 'Plan 2 label'), F.text(p, 'p2Lead', 'Plan 2 one-liner'),
+    F.text(p, 'p2Price6', 'Plan 2 price, 6 months (€, numbers only)'), F.text(p, 'p2Price12', 'Plan 2 price, 12 months (€, numbers only)'),
+    F.area(p, 'p2Items', 'Plan 2 includes', 'One per line'), F.text(p, 'p2Btn', 'Plan 2 button'),
+    F.area(p, 'note', 'Small print'),
+  ], 'The monthly price, the paid-in-full price and the join calculator are worked out from these prices.');
+  ssrBlock('club-fit', 'Which is right for you', p => [F.area(p, 'items', 'Cards', 'One per line: quote | plan | text | link label | link')]);
+  ssrBlock('club-table', 'Benefits table', p => [
+    F.text(p, 'head', 'Column titles', 'benefit | plan 1 | plan 2'),
+    F.area(p, 'rows', 'Rows', 'One per line: benefit | plan 1 | plan 2. Write yes for a tick, no for a dash.'),
+    F.area(p, 'note', 'Small print'), F.img(p, 'image', 'Photo beside the table (optional)'),
+  ]);
+  ssrBlock('club-perks', 'Founding Member perks', p => [
+    F.area(p, 'items', 'Perks', 'One per line: icon | title | text. Icons: tag, pause, gift, sliders, sparkle, ticket, heart, star.'),
+    F.toggle(p, 'showCard', 'Show the member card'), F.text(p, 'cardNo', 'Number on the member card'),
+  ]);
+  ssrBlock('club-rules', 'How it works', p => [F.area(p, 'items', 'Rules', 'One per line: title | text'), F.area(p, 'note', 'Small print')]);
+  ssrBlock('club-pay', 'Payment and dates', p => [
+    F.text(p, 'payTitle', 'Payment title'), F.area(p, 'payItems', 'Payment options', 'One per line: title | text | badge (optional)'), F.area(p, 'payNote', 'Payment small print'),
+    F.text(p, 'datesTitle', 'Dates title'), F.area(p, 'dates', 'Dates', 'One per line: date | text | past, now or next'), F.text(p, 'nowLabel', 'Label on the current date'),
+    F.img(p, 'image', 'Photo above the dates'),
+  ]);
+  ssrBlock('club-join', 'Siesta Club join', p => [
+    F.area(p, 'title', 'Title', 'Use <em>…</em> for the light-coloured words.'), F.area(p, 'text', 'Text'),
+    F.text(p, 'two', 'Two payments (%)', 'e.g. 40, 60'), F.text(p, 'three', 'Three payments (%)', 'e.g. 40, 30, 30'),
+    F.text(p, 'twoLimit', 'Note for two payments'), F.text(p, 'threeLimit', 'Note for three payments'),
+    F.text(p, 'btnLabel', 'Button'), F.text(p, 'fine', 'Under the button'), F.area(p, 'legal', 'Small print'),
+    F.text(p, 'termsLabel', 'Terms link text'), F.text(p, 'termsUrl', 'Terms link'),
+  ], 'Prices come from the Siesta Club plans block on this page. WhatsApp, email and address come from Site settings. ' + PLACES);
 })(window.wp);

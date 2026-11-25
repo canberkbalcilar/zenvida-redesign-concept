@@ -1,10 +1,18 @@
 {
-  "version": "1.14.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.14.0",
+  "version": "1.15.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.15.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.15.0",
+      "items": [
+        "New Siesta Club page (/siesta-club/), added automatically and linked in the footer Offers menu: the founding membership with Gold and Platinum plans (6 or 12 months), member benefits, Founding Member perks, how it works, ways to pay, key dates, FAQ, and a \"Reserve your place\" calculator that shows what is paid today and sends the choice on WhatsApp. In Spanish on /es/.",
+        "Every text, price and list is editable in the page's blocks; prices live in the plans block only. Places left: Appearance → ZenVida settings → Siesta Club.",
+        "The old address /membership now leads to the Siesta Club page."
+      ]
+    },
     {
       "version": "1.14.0",
       "items": [
@@ -41,17 +49,6 @@
         "The Reviews block shows the newest Google reviews with an \"All reviews on Google\" link. The rating and the number of reviews everywhere on the site come from Google (\"4.9 from 450+ Google reviews\"), in Spanish on /es/.",
         "Reviewers are shown as first name and last initial. On the Spanish site, reviews written in Spanish show in the guest's own words.",
         "Updated once a day, or with \"Update now\". Without a connection the reviews and numbers typed in the editor are shown, as before."
-      ]
-    },
-    {
-      "version": "1.9.0",
-      "items": [
-        "ZenVida brand identity (Brand Guidelines, December 2025): the primary logo in the header (black) and footer (ivory), and the isotype as the browser and home-screen icon. A logo uploaded in Customize still takes priority.",
-        "Brand colours only: Black #191919, Ivory #fffef8 and Narvik #e8e4da with their tints. Gold accents and coloured labels are now black, brand greys or Narvik.",
-        "Brand storytelling icons for Sanctuary, Ritual and Culture on the homepage (also on existing sites), plus Herbal spring, Hands massage and Sun in the editor's icon list.",
-        "The brand isotype as a light line texture behind cream sections (flat digital version, 4 KB).",
-        "Ready for the brand fonts: with averta-pe-regular.woff2, averta-pe-semibold.woff2, averta-pe-bold.woff2 and riccione-regular.woff2 in wp-content/uploads/zenvida-fonts/ the site uses Averta PE for text and Riccione for titles.",
-        "Phones: the round WhatsApp button no longer covers the booking widget's Continue button on the Rituals & Prices page."
       ]
     }
   ]

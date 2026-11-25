@@ -36,7 +36,7 @@
       "step": "installTheme",
       "themeData": {
         "resource": "url",
-        "url": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.14.0"
+        "url": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.15.0"
       },
       "options": {
         "activate": true
