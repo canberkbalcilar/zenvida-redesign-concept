@@ -46,6 +46,7 @@ get_header();
       <div class="intro">
         <span class="eyebrow"><?php echo esc_html( $zv_r['areaName'] ); ?></span>
         <h1><?php the_title(); ?></h1>
+        <?php echo zv_ritual_rating_line(); // phpcs:ignore ?>
         <?php if ( $zv_lead ) : ?><p class="lead"><?php echo esc_html( $zv_lead ); ?></p><?php endif; ?>
         <div class="meta">
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><?php echo esc_html( $zv_length ); ?></span>
@@ -173,6 +174,7 @@ get_header();
 </div>
 
 <?php the_content(); ?>
+<?php echo empty( $GLOBALS['zv_ritual_reviews_done'] ) ? zv_ritual_reviews_section( get_the_ID() ) : ''; // phpcs:ignore ?>
 </main>
 
 <div class="mbar" id="mbar">

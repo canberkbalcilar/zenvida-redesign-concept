@@ -1,10 +1,17 @@
 {
-  "version": "1.12.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.12.0",
+  "version": "1.13.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.13.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.13.0",
+      "items": [
+        "Ritual pages: the Google rating under the ritual name (\"4.9 · 600+ Google reviews\"), linking to a new reviews section just before the FAQ.",
+        "The section shows the Google reviews that mention the ritual (\"What guests say about Reflexology\"), with the matching words in bold. With fewer than two such reviews it shows the newest reviews (\"What guests say about ZenVida\"). Sliding cards, as on the homepage. In Spanish on /es/."
+      ]
+    },
     {
       "version": "1.12.0",
       "items": [
@@ -48,13 +55,6 @@
         "Site settings, \"Online booking\": switch the widget on or off, Google Tag Manager ID (the widget reports bookings to Google Ads, Analytics and Meta), widget addresses.",
         "Sites updated from an earlier version: the rituals are connected and the page is added automatically.",
         "The booking system only answers requests from zenvida.es. On another address, such as a test domain, the widget can't load the menu until ZenVida's developer adds that address. The online demo keeps the prototype booking card for this reason."
-      ]
-    },
-    {
-      "version": "1.7.0",
-      "items": [
-        "Updates from the dashboard: when a new version is published, Dashboard → Updates and Appearance → Themes show \"Update available\" with what is new, and one click installs it. Automatic updates are switched on, so new versions also install by themselves within about 12 hours.",
-        "An update only replaces the theme files. Rituals, pages, prices, photos, messages and settings are not changed."
       ]
     }
   ]

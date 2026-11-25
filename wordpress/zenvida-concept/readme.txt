@@ -26,6 +26,10 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.13.0 =
+* Ritual pages: the Google rating under the ritual name ("4.9 · 600+ Google reviews"), linking to a new reviews section just before the FAQ.
+* The section shows the Google reviews that mention the ritual ("What guests say about Reflexology"), with the matching words in bold. With fewer than two such reviews it shows the newest reviews ("What guests say about ZenVida"). Sliding cards, as on the homepage. In Spanish on /es/.
+
 = 1.12.0 =
 * New theme versions now arrive within the hour: the theme checks for updates every hour (WordPress itself only checks twice a day) and installs a new version by itself when automatic updates are on.
 * Dashboard → Updates always shows the newest version, without waiting.

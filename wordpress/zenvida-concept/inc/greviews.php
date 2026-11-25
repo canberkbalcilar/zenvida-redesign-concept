@@ -229,16 +229,141 @@ function zv_g_reviews_html( $n ) {
 	if ( ! $list ) {
 		return '';
 	}
+	return implode( '', array_map( 'zv_g_card', $list ) );
+}
+
+/** One review card. $words: stems to highlight (ritual pages). */
+function zv_g_card( $r, $words = array() ) {
 	$html = '';
-	foreach ( $list as $r ) {
+	foreach ( array( $r ) as $r ) {
 		$text  = 'es' === zv_lang() && zv_g_spanish( $r['original'] ) ? $r['original'] : $r['text']; // Spanish site: the guest's own words when they wrote in Spanish
 		$date  = 'es' === zv_lang()
 			? array( 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' )[ (int) gmdate( 'n', $r['time'] ) - 1 ] . ' ' . gmdate( 'Y', $r['time'] )
 			: gmdate( 'F Y', $r['time'] );
 		$html .= '<div class="rev" data-no-translation><div class="stars" role="img" aria-label="' . esc_attr( $r['stars'] . ' / 5' ) . '">' . str_repeat( '★', $r['stars'] ) . '</div>'
-			. '<p>' . esc_html( wp_trim_words( $text, 48 ) ) . '</p><small>' . esc_html( $r['name'] . ' · Google · ' . $date ) . '</small></div>';
+			. '<p>' . zv_g_mark( esc_html( wp_trim_words( $text, 48 ) ), $words ) . '</p><small>' . esc_html( $r['name'] . ' · Google · ' . $date ) . '</small></div>';
 	}
 	return $html;
+}
+
+/** Bold the words that tie a review to the ritual (already escaped text in, HTML out). */
+function zv_g_mark( $html, $words ) {
+	if ( ! $words ) {
+		return $html;
+	}
+	$re = '/\\b(' . implode( '|', array_map( fn( $w ) => preg_quote( $w, '/' ), $words ) ) . ')[\\p{L}]*/iu';
+	return preg_replace( $re, '<b class="hl">$0</b>', $html, 3 );
+}
+
+/** The sliding strip of review cards with its arrows (homepage block and ritual pages). */
+function zv_rev_carousel( $cards ) {
+	$l = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
+	$r = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+	return '<div class="rev-wrap" data-carousel><div class="rev-list" tabindex="0" role="region" aria-label="' . esc_attr( zv__( 'Guest reviews' ) ) . '">' . $cards . '</div>'
+		. '<div class="rev-nav" hidden><button type="button" class="rev-prev" aria-label="' . esc_attr( zv__( 'Previous reviews' ) ) . '">' . $l . '</button>'
+		. '<button type="button" class="rev-next" aria-label="' . esc_attr( zv__( 'More reviews' ) ) . '">' . $r . '</button></div></div>';
+}
+
+/* ----------------------------------------------------- on ritual pages */
+
+/**
+ * Words that tie a review to a ritual (English and Spanish stems). Google reviews are about the
+ * whole studio, so the ritual page shows the ones that mention this ritual.
+ */
+function zv_ritual_review_words( $post ) {
+	$map = array(
+		'reflexology'                => array( 'reflexolog', 'foot', 'feet', 'pies' ),
+		'deluxe-reflexology'         => array( 'reflexolog', 'foot spa', 'foot bath', 'feet', 'pies' ),
+		'foot-massage'               => array( 'foot massage', 'feet', 'pies', 'masaje de pies' ),
+		'couples-massage'            => array( 'couple', 'pareja', 'anniversary', 'aniversario', 'partner', 'husband', 'wife', 'boyfriend', 'girlfriend', 'novi' ),
+		'deep-tissue-massage'        => array( 'deep tissue', 'tejido profundo', 'descontracturante' ),
+		'swedish-massage'            => array( 'swedish', 'sueco', 'relajante' ),
+		'thai-massage'               => array( 'thai', 'tailand' ),
+		'thai-andaluz'               => array( 'thai andaluz', 'thai', 'tailand' ),
+		'sports-massage'             => array( 'sport', 'deportiv', 'marathon', 'maratón', 'running', 'gym' ),
+		'lomi-lomi-massage'          => array( 'lomi' ),
+		'lymphatic-drainage-massage' => array( 'lymph', 'linf', 'drenaje', 'drainage' ),
+		'pregnancy-massage'          => array( 'pregnan', 'embaraz', 'prenatal' ),
+		'kobido-facial-massage'      => array( 'kobido', 'facial', 'face' ),
+		'classic-facial-massage'     => array( 'facial', 'face', 'cara' ),
+		'combined-massage'           => array( 'combined', 'combinado' ),
+		'full-body-reset'            => array( 'full body reset', 'full body' ),
+		'travel-recovery'            => array( 'flight', 'jet lag', 'jetlag', 'vuelo', 'travel' ),
+		'energy-balance'             => array( 'reiki', 'energy', 'energ', 'chakra' ),
+		'ritual-levante'             => array( 'levante', 'scrub', 'exfolia' ),
+	);
+	$post  = get_post( $post );
+	$words = $map[ $post->post_name ] ?? array();
+	if ( ! $words ) { // a ritual added later: its own name, without the generic words
+		$stop  = array( 'massage', 'masaje', 'ritual', 'classic', 'the', 'and' );
+		$words = array_values( array_diff( preg_split( '/[\s&]+/u', mb_strtolower( get_the_title( $post ) ) ), $stop ) );
+		$words = array_filter( $words, fn( $w ) => mb_strlen( $w ) >= 4 );
+	}
+	return array_values( $words );
+}
+
+/** Reviews for a ritual page: [ cards, about this ritual? ]; matching reviews first, else the newest. */
+function zv_ritual_reviews( $post, $n = 10 ) {
+	$all = zv_g_pick( 100 );
+	if ( ! $all ) {
+		return array( array(), false );
+	}
+	$words = zv_ritual_review_words( $post );
+	$norm  = fn( $s ) => mb_strtolower( remove_accents( $s ) );
+	$hit   = array_filter( $all, function ( $r ) use ( $words, $norm ) {
+		$t = $norm( $r['text'] . ' ' . $r['original'] );
+		foreach ( $words as $w ) {
+			if ( false !== strpos( $t, $norm( $w ) ) ) {
+				return true;
+			}
+		}
+		return false;
+	} );
+	if ( count( $hit ) >= 2 ) {
+		return array( array_slice( array_values( $hit ), 0, $n ), $words );
+	}
+	return array( array_slice( $all, 0, $n ), false );
+}
+
+/** The "What guests say about …" section of a ritual page ('' without Google reviews). */
+function zv_ritual_reviews_section( $post ) {
+	list( $list, $words ) = zv_ritual_reviews( $post );
+	if ( ! $list ) {
+		return '';
+	}
+	$name  = zv_tr( html_entity_decode( get_the_title( $post ), ENT_QUOTES, 'UTF-8' ) );
+	$title = $words ? zv__( 'What guests say about {ritual}', array( 'ritual' => $name ) ) : zv__( 'What guests say about ZenVida' );
+	$maps  = zv_g_data()['maps'] ?? '';
+	$cards = implode( '', array_map( fn( $r ) => zv_g_card( $r, $words ?: array() ), $list ) );
+	return '<section class="block bg-paper r-reviews" id="reviews"><div class="wrap"><div class="reviews"><div data-no-translation>'
+		. '<span class="eyebrow">' . zv_e( zv__( 'Guest reviews' ) ) . '</span>'
+		. '<h2 class="r-rev-title">' . zv_e( $title ) . '</h2>'
+		. '<div class="r-rev-score"><b>' . zv_e( zv_opt( 'rating' ) ) . '</b><span class="stars" aria-hidden="true">★★★★★</span></div>'
+		. '<p class="r-rev-from">' . zv_rating_from( true ) . '</p>'
+		. ( $maps ? '<p class="g-all"><a class="link" href="' . esc_url( $maps ) . '" target="_blank" rel="noopener">' . zv_e( zv__( 'All reviews on Google' ) ) . '</a></p>' : '' )
+		. '</div>' . zv_rev_carousel( $cards ) . '</div></div></section>';
+}
+
+// Place it before the FAQ of the ritual page (or at the end when the page has no FAQ).
+add_filter( 'render_block', function ( $html, $block ) {
+	static $done = false;
+	if ( $done || 'zv/section' !== ( $block['blockName'] ?? '' ) || ! is_singular( 'ritual' ) || ! in_the_loop() ) {
+		return $html;
+	}
+	$has_faq = false !== strpos( serialize_blocks( $block['innerBlocks'] ?? array() ), 'wp:zv/faq' );
+	if ( ! $has_faq ) {
+		return $html;
+	}
+	$done                          = true;
+	$GLOBALS['zv_ritual_reviews_done'] = true;
+	return zv_ritual_reviews_section( get_the_ID() ) . $html;
+}, 10, 2 );
+
+/** Rating line under the ritual title, linking to the reviews below. */
+function zv_ritual_rating_line() {
+	$has = zv_g_data() && zv_g_pick( 1 );
+	$txt = '<span class="stars" aria-hidden="true">★★★★★</span><b>' . zv_e( zv_opt( 'rating' ) ) . '</b><span class="r-rate-n">' . zv_e( zv_opt( 'rating_count' ) ) . '</span>';
+	return $has ? '<a class="r-rate" href="#reviews" data-no-translation>' . $txt . '</a>' : '<span class="r-rate">' . $txt . '</span>';
 }
 
 /* --------------------------------------------------------------- admin */

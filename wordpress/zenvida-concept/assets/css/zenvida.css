@@ -1063,3 +1063,17 @@ footer.site :focus-visible,.bg-dark :focus-visible,.promo :focus-visible,.pack.f
 /* Foot-bath colour dots: brand neutrals (different lightness keeps them apart) */
 .bath .dot{filter:grayscale(1)}
 .g-all{margin:14px 0 0;font-size:14px}
+/* Ritual pages: rating line under the title and the reviews section */
+.r-rate{display:inline-flex;align-items:center;gap:8px;margin:2px 0 14px;font-size:14px;color:var(--ink-2);text-decoration:none}
+.r-rate .stars{font-size:15px;letter-spacing:1px;color:var(--ink)}
+.r-rate b{color:var(--ink)}
+.r-rate .r-rate-n::before{content:"·";margin-right:8px}
+a.r-rate:hover .r-rate-n{text-decoration:underline}
+.r-rev-title{font:500 clamp(30px,3.4vw,40px)/1.08 var(--serif);margin:12px 0 18px}
+.r-rev-score{display:flex;align-items:center;gap:10px}
+.r-rev-score b{font:500 44px/1 var(--serif)}
+.r-rev-score .stars{font-size:16px;letter-spacing:1px}
+.r-rev-from{color:var(--muted);font-size:14px;margin:8px 0 0}
+.rev .hl{font-weight:600;color:var(--ink)}
+section.block.r-reviews{padding-bottom:0}   /* the FAQ section below brings its own space */
+#reviews{scroll-margin-top:96px}   /* the rating line jumps here; clear of the sticky header */
