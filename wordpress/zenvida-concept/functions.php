@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '1.18.0' );
+define( 'ZV_VERSION', '1.19.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -199,6 +199,43 @@ add_action( 'template_redirect', function () {
 		exit;
 	}
 } );
+
+/* -------------------------------------------------------------------------
+ * Rituals filters are #anchors: rewrite links saved in pages as /rituals/?need=x (once).
+ * ---------------------------------------------------------------------- */
+add_action( 'init', function () {
+	if ( '1' === get_option( 'zv_hash_links' ) || wp_installing() ) {
+		return;
+	}
+	update_option( 'zv_hash_links', '1', false );
+	global $wpdb;
+	$ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_status IN ('publish','draft','private','future') AND (post_content LIKE '%?need=%' OR post_content LIKE '%?area=%' OR post_content LIKE '%?quiz=%')" );
+	foreach ( $ids as $id ) {
+		$c = (string) get_post_field( 'post_content', $id );
+		$n = preg_replace( '#(/rituals/?)\?(?:need|area)=([a-z0-9-]+)#i', '$1#$2', $c );
+		$n = preg_replace( '#(/rituals/?)\?quiz=1#i', '$1#quiz', $n );
+		if ( $n !== $c ) {
+			$wpdb->update( $wpdb->posts, array( 'post_content' => $n ), array( 'ID' => $id ) );
+			clean_post_cache( $id );
+		}
+	}
+}, 33 );
+
+/* -------------------------------------------------------------------------
+ * Canonical address for pages WordPress gives none (rituals, areas, events, journal),
+ * until an SEO plugin takes over. Singular pages already have WordPress's own.
+ * ---------------------------------------------------------------------- */
+add_action( 'wp_head', function () {
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || is_singular() || is_search() || is_404() || ! function_exists( 'zv_sd_current_url' ) ) {
+		return;
+	}
+	$url = zv_sd_current_url();
+	$pg  = (int) get_query_var( 'paged' );
+	if ( $pg > 1 ) {
+		$url = trailingslashit( $url ) . 'page/' . $pg . '/';
+	}
+	echo '<link rel="canonical" href="' . esc_url( zv_sd_url( $url ) ) . '">' . "\n";
+}, 5 );
 
 /* -------------------------------------------------------------------------
  * Main menu dropdowns: a small button after a link that has sub-items.

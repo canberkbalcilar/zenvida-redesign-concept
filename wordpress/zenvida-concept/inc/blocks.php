@@ -41,9 +41,9 @@ function zv_icon( $name ) {
 	return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">' . ( $p[ $name ] ?? $p['star'] ) . '</svg>';
 }
 
-function zv_rituals_url( $args = array() ) {
-	$url = get_post_type_archive_link( 'ritual' ) ?: home_url( '/' );
-	return $args ? add_query_arg( $args, $url ) : $url;
+/** The rituals page. Filters are #anchors on it (/rituals/#feet), never ?query URLs, so no duplicate pages. */
+function zv_rituals_url() {
+	return get_post_type_archive_link( 'ritual' ) ?: home_url( '/' );
 }
 
 /**
@@ -207,7 +207,7 @@ function zv_render_quick_book( $a ) {
 		}
 	}
 	return '<div class="wrap qb-wrap" id="book" data-mbar-anchor><form class="qb" data-quick-book aria-label="Quick booking">'
-		. '<div class="qf"><label for="qbWhat">What</label><select id="qbWhat" data-qb-what><optgroup label="Most booked">' . $opts . '</optgroup><optgroup label="Browse by area">' . $areas . '</optgroup><optgroup label="Not sure yet"><option value="' . esc_url( zv_rituals_url( array( 'quiz' => 1 ) ) ) . '">Help me choose</option></optgroup></select></div>'
+		. '<div class="qf"><label for="qbWhat">What</label><select id="qbWhat" data-qb-what><optgroup label="Most booked">' . $opts . '</optgroup><optgroup label="Browse by area">' . $areas . '</optgroup><optgroup label="Not sure yet"><option value="' . esc_url( zv_rituals_url() . '#quiz' ) . '">Help me choose</option></optgroup></select></div>'
 		. '<div class="qf"><label for="qbWhen">When</label><select id="qbWhen" data-qb-when><option>Today</option></select></div>'
 		. '<div class="qf"><label for="qbWho">Guests</label><select id="qbWho">' . implode( '', array_map( fn( $n ) => "<option value=\"$n\">$n guest" . ( $n > 1 ? 's' : '' ) . '</option>', range( 1, 6 ) ) ) . '</select></div>'
 		. '<button class="btn btn-dark" type="submit">' . zv_e( $a['buttonLabel'] ) . '</button></form>'
@@ -251,7 +251,7 @@ function zv_render_area_tile( $a ) {
 function zv_render_need_chips( $a ) {
 	$out = '<div class="needs-row">' . ( $a['label'] ? '<span>' . zv_e( $a['label'] ) . '</span>' : '' );
 	foreach ( zv_needs() as $slug => $name ) {
-		$out .= '<a class="chip" href="' . esc_url( zv_rituals_url( array( 'need' => $slug ) ) ) . '">' . zv_e( $name ) . '</a>';
+		$out .= '<a class="chip" href="' . esc_url( zv_rituals_url() . '#' . $slug ) . '">' . zv_e( $name ) . '</a>';
 	}
 	return $out . '</div>';
 }

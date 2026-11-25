@@ -445,7 +445,7 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 				$tile( 'Feet & Legs', 'Reflexology from €25 · our speciality', $term_url( 'feet-legs' ), zv_img( 'b84849_bc97f0d7591f40d3a0dce6cb229264c7~mv2.png', 900, 1100 ), '#C9A97A' ),
 				$tile( 'Massage', '13 rituals · from €80', $term_url( 'massage' ), zv_img( 'b84849_053fa3c0ce6547089bbdce2b11a786e6~mv2.png', 700, 520 ), '#8E9A82' ),
 				$tile( 'Face', 'Kobido & facial · from €50', $term_url( 'face' ), zv_img( 'b84849_a884823698e844ed8db2619d9bece665~mv2.png', 700, 520 ), '#C79A8E' ),
-				$tile( 'For two', 'Couples Massage · from €220', add_query_arg( 'need', 'two', $rituals_url ), zv_img( 'b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg', 700, 520 ), '#8d4a58' ),
+				$tile( 'For two', 'Couples Massage · from €220', $rituals_url . '#two', zv_img( 'b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg', 700, 520 ), '#8d4a58' ),
 				$tile( 'Spa & Body', 'Seasonal: Ritual Levante', $term_url( 'spa' ), zv_img( 'b84849_f8657f30cf25410c9d3a2c4b899b82f3~mv2.jpg', 700, 520 ), '#8FA3B0' ),
 			) ),
 			zv_b( 'zv/need-chips' ),
@@ -467,7 +467,7 @@ function zv_home_blocks( $rituals_url, $term_url ) {
 				zv_b( 'zv/step', array( 'title' => 'Your ritual', 'text' => 'A private room or curtained nook, Spanish botanicals, and nothing to do but breathe.' ) ),
 				zv_b( 'zv/step', array( 'title' => 'Leave lighter', 'text' => 'Pay the balance after your ritual. For best results we recommend a session every two to four weeks.' ) ),
 			) ),
-			zv_b( 'zv/callout', array( 'text' => '<strong>Visiting Madrid?</strong> Our rituals are made for tired legs after a day of sightseeing or a long flight. The whole team speaks English and booking is simple.', 'linkLabel' => 'Rituals for travellers', 'linkUrl' => add_query_arg( 'need', 'travel', $rituals_url ) ) ),
+			zv_b( 'zv/callout', array( 'text' => '<strong>Visiting Madrid?</strong> Our rituals are made for tired legs after a day of sightseeing or a long flight. The whole team speaks English and booking is simple.', 'linkLabel' => 'Rituals for travellers', 'linkUrl' => $rituals_url . '#travel' ) ),
 		) ),
 		zv_sec( array(), array( zv_reviews_block( array(
 			'After three days walking Madrid my feet were done. I floated out, and the foot bath alone is worth it.',

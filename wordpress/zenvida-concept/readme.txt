@@ -26,6 +26,10 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.19.0 =
+* No duplicate rituals pages for Google: the "how you feel" chips, "For two", "Rituals for travellers" and "Help me choose" now link to /rituals/#feet, #two, #quiz… instead of /rituals/?need=… addresses. Links already saved in pages are updated automatically.
+* A canonical address on the rituals, area, events and journal pages (until an SEO plugin such as Rank Math takes over), in English and Spanish.
+
 = 1.18.0 =
 * Ritual pages: one reviews section. The page's own Guest reviews section now shows the reviews about that ritual, instead of a second section appearing below it.
 * Cleaner, more meaningful HTML for search engines and AI assistants: every page has exactly one h1 (pages without a hero get the page name as a hidden h1); heading levels no longer skip (footer column titles, event and journal cards, the quiz question); reviews are marked up as quotations with author, source and date; sections without a title are plain blocks; inline styles moved to the stylesheet.

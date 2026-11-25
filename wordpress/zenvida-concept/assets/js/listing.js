@@ -151,12 +151,19 @@ $('#qzClose').onclick = () => dlg.close();
 $('#qzBack').onclick = () => { qi--; drawQ(); };
 dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 
-// Deep links: ?area=feet-legs&need=travel&quiz=1
-const qp = new URLSearchParams(location.search);
-if (AREAS[qp.get('area')]) st.area = qp.get('area');
-if (NEEDS[qp.get('need')]) st.need = qp.get('need');
-if (qp.get('area') || qp.get('need')) requestAnimationFrame(() => $('#filters').scrollIntoView());
-if (qp.get('quiz')) setTimeout(openQuiz, 200);
+// Deep links are #anchors (/rituals/#feet, #feet-legs, #quiz): one URL for search engines, any filter for people
+function fromHash(first) {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h) return;
+  if (h === 'quiz') { setTimeout(openQuiz, 200); return; }
+  if (NEEDS[h]) { st.need = h; st.quiz = null; st.pick = null; }
+  else if (AREAS[h]) st.area = h;
+  else return;
+  if (!first) render();
+  requestAnimationFrame(() => $('#filters').scrollIntoView());
+}
+fromHash(true);
+addEventListener('hashchange', () => fromHash(false));
 
 render();
 })();
