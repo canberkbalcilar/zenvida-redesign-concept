@@ -66,11 +66,11 @@ footer.site .logo-brand{width:170px}
 .mnav .btn{display:flex;margin-top:16px;width:100%;font:600 15px var(--sans);border-bottom:0}
 
 /* ---------- Sections ---------- */
-section.block{padding:96px 0}
-section.block.pt0{padding-top:0}
-section.block.bg-cream{background:var(--cream) url(../brand/bg-isotype.svg) center/cover no-repeat}   /* brand isotype texture, flat digital version (4 KB) */
-section.block.bg-dark{background:var(--ink);color:#E8E7E1}
-.bg-dark h2,.bg-dark h3{color:#fff}
+.block{padding:96px 0}
+.block.pt0{padding-top:0}
+.block.bg-cream{background:var(--cream) url(../brand/bg-isotype.svg) center/cover no-repeat}   /* brand isotype texture, flat digital version (4 KB) */
+.block.bg-dark{background:var(--ink);color:#E8E7E1}
+.bg-dark h1,.bg-dark h2,.bg-dark h3{color:#fff}
 .bg-dark .eyebrow{color:var(--narvik)}
 .bg-dark .sec-head p{color:#B6B5B1}
 .bg-dark .btn-ghost{border-color:#454544;color:#fff}
@@ -78,7 +78,8 @@ section.block.bg-dark{background:var(--ink);color:#E8E7E1}
 .bg-dark .link{color:var(--narvik)}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px}
 .sec-head>div{max-width:640px}
-.sec-head h2{margin-top:12px}
+.sec-head h2,.sec-head h1{margin-top:12px}
+.sec-head h1{font-size:clamp(34px,4.4vw,50px);line-height:1.05}
 .sec-head p{margin:14px 0 0}
 .block .wrap>p,.block .wrap>ul,.block .wrap>ol{max-width:760px;color:var(--ink-2)}
 .block .wrap>.wp-block-heading{margin:0 0 16px}
@@ -177,15 +178,20 @@ section.block.bg-dark{background:var(--ink);color:#E8E7E1}
 
 /* ---------- Reviews ---------- */
 .reviews{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start}
-.score{font:500 84px/1 var(--serif)}
+.score{font:500 84px/1 var(--serif);margin:14px 0 0}
+.rev-from{color:var(--muted);font-size:14px;margin:8px 0 0}
+.reviews h2.eyebrow{margin:0}
+h2.ed-label{font:400 13.5px/1.4 var(--sans);letter-spacing:0;margin:0}
 .stars{color:var(--sand);letter-spacing:2px;font-size:18px}
 /* Reviews slide sideways: 3 at a time on desktop, 2 on tablets, 1 and a bit on phones */
 .rev-wrap{min-width:0}
-.rev-list{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;border-radius:var(--radius)}
+.rev-list{list-style:none;margin:0;padding:0;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;border-radius:var(--radius)}
 .rev-list::-webkit-scrollbar{display:none}
 .rev-list:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
 .rev{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex:0 0 calc((100% - 28px) / 3);scroll-snap-align:start;display:flex;flex-direction:column}
-.rev small{margin-top:auto}
+.rev figure{margin:0;display:flex;flex-direction:column;height:100%}
+.rev blockquote{margin:0}
+.rev figcaption{margin-top:auto;font-size:.8em}
 .rev-nav{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 .rev-nav[hidden]{display:none}
 .rev-nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,opacity .2s}
@@ -193,9 +199,10 @@ section.block.bg-dark{background:var(--ink);color:#E8E7E1}
 .rev-nav button:disabled{opacity:.35;cursor:default}
 @media (max-width:1040px){.rev{flex-basis:calc((100% - 14px) / 2)}}
 @media (max-width:640px){.rev{flex-basis:86%}}
-.rev-list .rev p{display:-webkit-box;-webkit-line-clamp:6;line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}   /* long reviews: 6 lines, so the cards stay even (full text on Google) */
+.rev-list .rev blockquote p{display:-webkit-box;-webkit-line-clamp:6;line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}   /* long reviews: 6 lines, so the cards stay even (full text on Google) */
 .rev p{margin:10px 0 14px;font-size:15px;color:var(--ink-2)}
-.rev small{color:var(--muted)}
+.rev figcaption{color:var(--muted)}
+.rev cite{font-style:normal}
 .sample{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#F3F2ED;color:#646462;border-radius:6px;padding:3px 7px;margin-top:14px}
 
 /* ---------- Offers ---------- */
@@ -234,7 +241,7 @@ section.block.bg-dark{background:var(--ink);color:#E8E7E1}
 .post .img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
 .post:hover .img img{transform:scale(1.04)}
 .post .k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sand-700)}
-.post h3{font-size:26px;line-height:1.15;margin:8px 0 6px}
+.post h3,.post .jc-title{font-size:26px;line-height:1.15;margin:8px 0 6px}
 .post p{margin:0;color:var(--muted);font-size:14.5px}
 
 /* ---------- FAQ + Visit ---------- */
@@ -370,7 +377,7 @@ dialog.quiz::backdrop{background:rgba(25,25,25,.45);backdrop-filter:blur(3px)}
 .qz-bar{flex:1;height:4px;background:var(--line);border-radius:4px;overflow:hidden}
 .qz-bar i{display:block;height:100%;background:var(--sand);transition:width .3s}
 .qz-x{background:none;border:0;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;padding:4px}
-.qz h3{font-size:32px;margin:10px 0 18px}
+.qz h2,.qz h3{font-size:32px;margin:10px 0 18px}
 .qz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .qz-opts button{border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px;text-align:left;cursor:pointer;font-size:15px;font-weight:500}
 .qz-opts button:hover{border-color:var(--sand);background:var(--cream)}
@@ -527,7 +534,7 @@ footer.site{background:var(--ink);color:#B6B5B1;padding:72px 0 32px;font-size:14
 .fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px}
 footer.site .logo b{color:#fff}
 @media (max-width:640px){.logo-brand{width:122px}}
-footer.site h4{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#fff;margin:0 0 14px}
+footer.site h4,footer.site .f-title{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#fff;margin:0 0 14px}
 footer.site ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 footer.site a{text-decoration:none}
 footer.site a:hover{color:#fff}
@@ -576,7 +583,7 @@ html:has(.mbar.show) .single-ritual .wa-float{opacity:1;pointer-events:auto;tran
 @media (max-width:760px){
   html{scroll-padding-top:200px}
   .wrap{padding:0 16px}
-  section.block{padding:68px 0}
+  .block{padding:68px 0}
   .nav{height:60px;gap:12px}
   .nav .right>.btn{display:none}
   .logo b{font-size:22px}
@@ -735,7 +742,7 @@ dialog.zvp-center::backdrop{background:rgba(25,25,25,.5);backdrop-filter:blur(3p
 .ev-badge{position:absolute;right:14px;top:14px;background:var(--ink);color:#fff;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600}
 .ev-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
 .ev .k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sand-700)}
-.ev h3{font:500 27px/1.12 var(--serif);margin:8px 0 6px}
+.ev h2,.ev h3{font:500 27px/1.12 var(--serif);margin:8px 0 6px}
 .ev p{margin:0 0 16px;color:var(--muted);font-size:14.5px}
 .ev-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
 .ev-foot .go{color:var(--sand-700);white-space:nowrap}
@@ -1075,7 +1082,7 @@ a.r-rate:hover .r-rate-n{text-decoration:underline}
 .r-rev-score .stars{font-size:16px;letter-spacing:1px}
 .r-rev-from{color:var(--muted);font-size:14px;margin:8px 0 0}
 .rev .hl{font-weight:600;color:var(--ink)}
-section.block.r-reviews{padding-bottom:0}   /* the FAQ section below brings its own space */
+.block.r-reviews{padding-bottom:0}   /* the FAQ section below brings its own space */
 #reviews{scroll-margin-top:96px}   /* the rating line jumps here; clear of the sticky header */
 /* ------------------------------------------------------------------ Siesta Club */
 .screen-reader-text{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}

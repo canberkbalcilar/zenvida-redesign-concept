@@ -4,7 +4,7 @@ $zv_col = function ( $loc ) {
 		return;
 	}
 	$menu = wp_get_nav_menu_object( get_nav_menu_locations()[ $loc ] );
-	echo '<div><h4>' . esc_html( $menu ? $menu->name : '' ) . '</h4>';
+	echo '<div><h2 class="f-title">' . esc_html( $menu ? $menu->name : '' ) . '</h2>';
 	wp_nav_menu( array( 'theme_location' => $loc, 'container' => false, 'depth' => 1, 'fallback_cb' => false ) );
 	echo '</div>';
 };

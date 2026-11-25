@@ -144,7 +144,7 @@ function zv_render_club_cover( $a ) {
 }
 
 function zv_render_club_intro( $a ) {
-	return '<section class="ed-intro"><div class="ed-wrap ed-grid">' . zv_ed_label( $a['label'] )
+	return '<section class="ed-intro"><div class="ed-wrap ed-grid">' . ( '' !== trim( $a['label'] ) ? '<h2 class="ed-label">' . zv_e( $a['label'] ) . '</h2>' : '' )
 		. '<div class="ed-intro-copy"><p class="ed-statement">' . zv_k( $a['statement'] ) . '</p>'
 		. ( $a['text'] ? '<p class="ed-body">' . zv_k( $a['text'] ) . '</p>' : '' ) . '</div></div></section>';
 }
@@ -202,7 +202,7 @@ function zv_render_club_forty( $a ) {
 	}
 	return '<section class="ed-forty"><div class="ed-wrap ed-forty-in"><div class="ed-forty-head">' . zv_ed_label( $a['chapter'] )
 		. '<b class="ed-big" aria-hidden="true">' . (int) $total . '</b>'
-		. ( $a['lead'] ? '<p class="ed-tag">' . zv_k( $a['lead'] ) . '</p>' : '' ) . '</div>'
+		. ( $a['lead'] ? '<h2 class="ed-tag">' . zv_k( $a['lead'] ) . '</h2>' : '' ) . '</div>'
 		. '<ol class="ed-perks">' . $items . '</ol></div></section>';
 }
 

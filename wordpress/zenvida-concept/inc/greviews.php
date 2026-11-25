@@ -243,8 +243,9 @@ function zv_g_card( $r, $words = array() ) {
 		if ( function_exists( 'zv_sd_add' ) ) {
 			zv_sd_add( 'review', array( 'id' => $r['id'] ?? md5( $r['name'] . $r['time'] ), 'name' => $r['name'], 'stars' => $r['stars'], 'time' => $r['time'], 'text' => wp_trim_words( $text, 48 ) ) );
 		}
-		$html .= '<div class="rev" data-no-translation><div class="stars" role="img" aria-label="' . esc_attr( $r['stars'] . ' / 5' ) . '">' . str_repeat( '★', $r['stars'] ) . '</div>'
-			. '<p>' . zv_g_mark( esc_html( wp_trim_words( $text, 48 ) ), $words ) . '</p><small>' . esc_html( $r['name'] . ' · Google · ' . $date ) . '</small></div>';
+		$html .= '<li class="rev" data-no-translation><figure><div class="stars" role="img" aria-label="' . esc_attr( $r['stars'] . ' / 5' ) . '">' . str_repeat( '★', $r['stars'] ) . '</div>'
+			. '<blockquote><p>' . zv_g_mark( esc_html( wp_trim_words( $text, 48 ) ), $words ) . '</p></blockquote>'
+			. '<figcaption>' . esc_html( $r['name'] ) . ' · <cite>Google</cite> · <time datetime="' . esc_attr( gmdate( 'Y-m-d', $r['time'] ) ) . '">' . esc_html( $date ) . '</time></figcaption></figure></li>';
 	}
 	return $html;
 }
@@ -262,7 +263,7 @@ function zv_g_mark( $html, $words ) {
 function zv_rev_carousel( $cards ) {
 	$l = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
 	$r = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
-	return '<div class="rev-wrap" data-carousel><div class="rev-list" tabindex="0" role="region" aria-label="' . esc_attr( zv__( 'Guest reviews' ) ) . '">' . $cards . '</div>'
+	return '<div class="rev-wrap" data-carousel><ul class="rev-list" tabindex="0" aria-label="' . esc_attr( zv__( 'Guest reviews' ) ) . '">' . $cards . '</ul>'
 		. '<div class="rev-nav" hidden><button type="button" class="rev-prev" aria-label="' . esc_attr( zv__( 'Previous reviews' ) ) . '">' . $l . '</button>'
 		. '<button type="button" class="rev-next" aria-label="' . esc_attr( zv__( 'More reviews' ) ) . '">' . $r . '</button></div></div>';
 }
@@ -347,19 +348,26 @@ function zv_ritual_reviews_section( $post ) {
 		. '</div>' . zv_rev_carousel( $cards ) . '</div></div></section>';
 }
 
-// Place it before the FAQ of the ritual page (or at the end when the page has no FAQ).
+// One reviews section per ritual page: the page's own Reviews section turns into "What guests say
+// about {ritual}"; a page without one gets the section just before its FAQ.
 add_filter( 'render_block', function ( $html, $block ) {
-	static $done = false;
-	if ( $done || 'zv/section' !== ( $block['blockName'] ?? '' ) || ! is_singular( 'ritual' ) || ! in_the_loop() ) {
+	if ( ! empty( $GLOBALS['zv_ritual_reviews_done'] ) || 'zv/section' !== ( $block['blockName'] ?? '' ) || ! is_singular( 'ritual' ) || ! in_the_loop() ) {
 		return $html;
 	}
-	$has_faq = false !== strpos( serialize_blocks( $block['innerBlocks'] ?? array() ), 'wp:zv/faq' );
-	if ( ! $has_faq ) {
-		return $html;
+	$inner = serialize_blocks( $block['innerBlocks'] ?? array() );
+	if ( false !== strpos( $inner, 'wp:zv/reviews' ) ) {
+		$own = zv_ritual_reviews_section( get_the_ID() );
+		if ( '' === $own ) {
+			return $html; // no Google reviews yet: keep the page's own section
+		}
+		$GLOBALS['zv_ritual_reviews_done'] = true;
+		return $own;
 	}
-	$done                          = true;
-	$GLOBALS['zv_ritual_reviews_done'] = true;
-	return zv_ritual_reviews_section( get_the_ID() ) . $html;
+	if ( false !== strpos( $inner, 'wp:zv/faq' ) && false === strpos( (string) get_post_field( 'post_content', get_the_ID() ), 'wp:zv/reviews' ) ) {
+		$GLOBALS['zv_ritual_reviews_done'] = true;
+		return zv_ritual_reviews_section( get_the_ID() ) . $html;
+	}
+	return $html;
 }, 10, 2 );
 
 /** Rating line under the ritual title, linking to the reviews below. */

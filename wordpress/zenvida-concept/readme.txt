@@ -26,6 +26,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.18.0 =
+* Ritual pages: one reviews section. The page's own Guest reviews section now shows the reviews about that ritual, instead of a second section appearing below it.
+* Cleaner, more meaningful HTML for search engines and AI assistants: every page has exactly one h1 (pages without a hero get the page name as a hidden h1); heading levels no longer skip (footer column titles, event and journal cards, the quiz question); reviews are marked up as quotations with author, source and date; sections without a title are plain blocks; inline styles moved to the stylesheet.
+* The homepage title reads "Relax. Recover. Revive." with its spaces.
+
 = 1.17.0 =
 * Dropdown menus: items placed under another item in Appearance → Menus (main menu) now open from a small arrow, on hover or with the keyboard on desktop, and under their parent in the phone menu.
 * Phone menu: the Book now button text is centred.

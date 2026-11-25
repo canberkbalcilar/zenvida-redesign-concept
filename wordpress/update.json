@@ -1,10 +1,18 @@
 {
-  "version": "1.17.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.17.0",
+  "version": "1.18.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.18.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.18.0",
+      "items": [
+        "Ritual pages: one reviews section. The page's own Guest reviews section now shows the reviews about that ritual, instead of a second section appearing below it.",
+        "Cleaner, more meaningful HTML for search engines and AI assistants: every page has exactly one h1 (pages without a hero get the page name as a hidden h1); heading levels no longer skip (footer column titles, event and journal cards, the quiz question); reviews are marked up as quotations with author, source and date; sections without a title are plain blocks; inline styles moved to the stylesheet.",
+        "The homepage title reads \"Relax. Recover. Revive.\" with its spaces."
+      ]
+    },
     {
       "version": "1.17.0",
       "items": [
@@ -41,13 +49,6 @@
       "items": [
         "Ritual pages: the Google rating under the ritual name (\"4.9 · 600+ Google reviews\"), linking to a new reviews section just before the FAQ.",
         "The section shows the Google reviews that mention the ritual (\"What guests say about Reflexology\"), with the matching words in bold. With fewer than two such reviews it shows the newest reviews (\"What guests say about ZenVida\"). Sliding cards, as on the homepage. In Spanish on /es/."
-      ]
-    },
-    {
-      "version": "1.12.0",
-      "items": [
-        "New theme versions now arrive within the hour: the theme checks for updates every hour (WordPress itself only checks twice a day) and installs a new version by itself when automatic updates are on.",
-        "Dashboard → Updates always shows the newest version, without waiting."
       ]
     }
   ]

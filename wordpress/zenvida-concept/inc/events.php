@@ -127,7 +127,7 @@ function zv_event_card( $row ) {
 		. '<div class="ev-img">' . zv_image( $img, array( 'sizes' => ZV_SIZES_CARD ) )
 		. ( $s ? '<span class="ev-date"><b>' . esc_html( wp_date( 'j', $s ) ) . '</b>' . esc_html( wp_date( 'M', $s ) ) . '</span>' : '' )
 		. ( $badge ? '<span class="ev-badge">' . zv_e( $badge ) . '</span>' : '' ) . '</div>'
-		. '<div class="ev-body"><span class="k">' . zv_e( implode( ' · ', $meta ) ) . '</span><h3>' . zv_e( get_the_title( $p ) ) . '</h3>'
+		. '<div class="ev-body"><span class="k">' . zv_e( implode( ' · ', $meta ) ) . '</span><h2>' . zv_e( get_the_title( $p ) ) . '</h2>'
 		. ( $e['summary'] ? '<p>' . zv_e( $e['summary'] ) . '</p>' : '' )
 		. '<div class="ev-foot"><span>' . zv_e( implode( ' · ', $foot ) ) . '</span><span class="go">Details →</span></div></div></a>';
 }

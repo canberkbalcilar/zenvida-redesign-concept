@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* ---------------------------------------------------------------- helpers */
 
 function zv_e( $s ) { return esc_html( (string) $s ); }
-function zv_k( $s ) { return wp_kses( (string) $s, array( 'em' => array(), 'strong' => array(), 'b' => array(), 'i' => array(), 'br' => array(), 'a' => array( 'href' => true, 'target' => true, 'rel' => true ) ) ); }
+function zv_k( $s ) { return wp_kses( (string) preg_replace( '/(?<=\S)<br\s*\/?>/i', ' <br>', (string) $s ), array( 'em' => array(), 'strong' => array(), 'b' => array(), 'i' => array(), 'br' => array(), 'a' => array( 'href' => true, 'target' => true, 'rel' => true ) ) ); }
 
 function zv_btn( $label, $url, $style = 'dark', $extra = '' ) {
 	if ( '' === trim( (string) $label ) ) {
@@ -224,15 +224,22 @@ function zv_section_head( $a ) {
 	}
 	return '<div class="sec-head"><div>'
 		. ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
-		. ( $a['title'] ? '<h2>' . zv_k( $a['title'] ) . '</h2>' : '' )
+		. ( $a['title'] ? zv_heading( zv_k( $a['title'] ) ) : '' )
 		. ( $a['text'] ? '<p class="lead">' . zv_k( $a['text'] ) . '</p>' : '' )
 		. '</div>' . $link . '</div>';
+}
+
+/** A section title (h2; the page's h1 is its hero, or the page name: see page.php). */
+function zv_heading( $html ) {
+	return '<h2>' . $html . '</h2>';
 }
 
 function zv_render_section( $a, $content ) {
 	$cls = 'block bg-' . sanitize_html_class( $a['background'] ) . ( $a['padTop'] ? '' : ' pt0' );
 	$id  = $a['anchor'] ? ' id="' . esc_attr( $a['anchor'] ) . '"' : '';
-	return '<section class="' . $cls . '"' . $id . '><div class="wrap">' . zv_section_head( $a ) . $content . '</div></section>';
+	$head = zv_section_head( $a );
+	$tag  = '' === $head ? 'div' : 'section';
+	return '<' . $tag . ' class="' . $cls . '"' . $id . '><div class="wrap">' . $head . $content . '</div></' . $tag . '>';
 }
 
 function zv_render_area_tile( $a ) {
@@ -297,16 +304,18 @@ function zv_render_callout( $a ) {
 function zv_render_reviews( $a, $content ) {
 	$live = ! empty( $a['google'] ) && function_exists( 'zv_g_reviews_html' ) ? zv_g_reviews_html( max( 1, (int) $a['count'] ) ) : '';
 	$maps = $live ? ( zv_g_data()['maps'] ?? '' ) : '';
-	return '<div class="reviews"><div>' . ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
-		. '<div class="score" style="margin-top:14px">' . zv_e( zv_opt( 'rating' ) ) . '</div><div class="stars" aria-hidden="true">★★★★★</div>'
-		. '<p style="color:var(--muted);font-size:14px;margin:8px 0 0">' . zv_rating_from( true ) . '</p>'
+	return '<div class="reviews"><div>' . ( $a['eyebrow'] ? '<h2 class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</h2>' : '' )
+		. '<p class="score"><span class="screen-reader-text">' . zv_e( zv__( 'Rating' ) ) . ' </span>' . zv_e( zv_opt( 'rating' ) ) . '<span class="screen-reader-text"> / 5</span></p><div class="stars" aria-hidden="true">★★★★★</div>'
+		. '<p class="rev-from">' . zv_rating_from( true ) . '</p>'
 		. ( $live ? ( $maps ? '<p class="g-all"><a class="link" href="' . esc_url( $maps ) . '" target="_blank" rel="noopener">' . zv_e( zv__( 'All reviews on Google' ) ) . '</a></p>' : '' ) : ( $a['showSample'] ? '<span class="sample">Sample quotes: connect real reviews</span>' : '' ) )
 		. '</div>' . zv_rev_carousel( $live ?: $content ) . '</div>';
 }
 
 function zv_render_review( $a ) {
 	$n = max( 1, min( 5, (int) $a['stars'] ) );
-	return '<div class="rev"><div class="stars">' . str_repeat( '★', $n ) . '</div><p>' . zv_k( $a['text'] ) . '</p><small>' . zv_e( $a['author'] . ( $a['source'] ? ' · ' . $a['source'] : '' ) ) . '</small></div>';
+	return '<li class="rev"><figure><div class="stars" role="img" aria-label="' . esc_attr( $n . ' / 5' ) . '">' . str_repeat( '★', $n ) . '</div>'
+		. '<blockquote><p>' . zv_k( $a['text'] ) . '</p></blockquote>'
+		. '<figcaption>' . zv_e( $a['author'] ) . ( $a['source'] ? ' · <cite>' . zv_e( $a['source'] ) . '</cite>' : '' ) . '</figcaption></figure></li>';
 }
 
 function zv_render_offer( $a ) {
@@ -332,7 +341,7 @@ function zv_post_image( $id, $w = 800, $h = 533 ) {
 	return $img ?: (string) get_post_meta( $id, 'zv_image', true );
 }
 
-function zv_journal_cards( $posts ) {
+function zv_journal_cards( $posts, $tag = 'h3' ) {
 	$out = '';
 	foreach ( $posts as $p ) {
 		$cat = get_the_category( $p->ID );
@@ -340,7 +349,7 @@ function zv_journal_cards( $posts ) {
 		$out .= '<a class="post" href="' . esc_url( get_permalink( $p ) ) . '"><div class="img">'
 			. zv_image( $img, array( 'sizes' => ZV_SIZES_CARD ) ) . '</div>'
 			. ( $cat ? '<span class="k">' . zv_e( $cat[0]->name ) . '</span>' : '' )
-			. '<h3>' . zv_e( get_the_title( $p ) ) . '</h3><p>' . zv_e( wp_trim_words( get_the_excerpt( $p ), 18 ) ) . '</p></a>';
+			. '<' . $tag . ' class="jc-title">' . zv_e( get_the_title( $p ) ) . '</' . $tag . '><p>' . zv_e( wp_trim_words( get_the_excerpt( $p ), 18 ) ) . '</p></a>';
 	}
 	return '<div class="journal">' . $out . '</div>';
 }
@@ -472,7 +481,7 @@ function zv_render_listing( $a ) {
 	  <div class="qz">
 	    <div class="qz-top"><div class="qz-bar" aria-hidden="true"><i id="qzBar" style="width:33%"></i></div><button class="qz-x" id="qzClose" aria-label="Close the quiz">×</button></div>
 	    <span class="eyebrow" id="qzStep">Question 1 of 3</span>
-	    <h3 id="qzQ" tabindex="-1"></h3>
+	    <h2 id="qzQ" tabindex="-1"><?php echo zv_e( zv_tr( zv_quiz()[0]['q'] ?? '' ) ); ?></h2>
 	    <div class="qz-opts" id="qzOpts" role="group" aria-labelledby="qzQ"></div>
 	    <button class="qz-back" id="qzBack" hidden>← Back</button>
 	  </div>
