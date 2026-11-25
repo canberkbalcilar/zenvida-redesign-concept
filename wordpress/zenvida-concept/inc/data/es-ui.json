@@ -166,5 +166,13 @@
 "Two payments": "Dos pagos",
 "Three payments": "Tres pagos",
 "Email": "Email",
-"Visit": "Visítanos"
+"Visit": "Visítanos",
+"{left} of {total} founding places remain.": "Quedan {left} de {total} plazas de socio fundador.",
+"Benefit": "Ventaja",
+"Membership": "Membresía",
+"Length": "Duración",
+"Payment": "Pago",
+"At once": "Un solo pago",
+"In two": "En dos pagos",
+"In three": "En tres pagos"
 }

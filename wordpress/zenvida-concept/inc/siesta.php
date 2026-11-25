@@ -456,31 +456,13 @@ function zv_seed_siesta_page() {
 	if ( get_page_by_path( 'siesta-club' ) ) {
 		return 0;
 	}
-	$faq = array(
-		array( 'When does my plan start?', 'On the day of your first ritual, or when your 14 days to change your mind end, whichever comes first. During those 14 days you can enjoy up to 2 rituals a week.' ),
-		array( 'Can I move from Gold to Platinum?', 'Yes, at any time. You pay the difference for the months left, and your plan keeps its original end date.' ),
-		array( 'I bought a pack recently. Does it count?', 'If you join within 30 days of buying a pack, the value of your unused sessions can be credited against your plan.' ),
-		array( 'What if I travel?', 'Pause your plan for 2 weeks on a 6-month plan, or 4 weeks on a 12-month plan.' ),
-		array( 'How do I book my rituals?', 'On WhatsApp or at reception, up to 7 days ahead. Your therapist, pressure, oils and tea are noted for every visit.' ),
-	);
 	$id = wp_insert_post( array(
 		'post_type'    => 'page',
 		'post_status'  => 'publish',
 		'post_title'   => 'Siesta Club',
 		'post_name'    => 'siesta-club',
 		'post_excerpt' => 'Siesta Club: unlimited massages in Madrid Centro for 40 Founding Members. Gold and Platinum plans, prepaid for 6 or 12 months.',
-		'post_content' => wp_slash( serialize_blocks( array(
-			zv_b( 'zv/club-hero' ),
-			zv_b( 'zv/club-facts' ),
-			zv_sec( array( 'anchor' => 'plans', 'eyebrow' => 'Two ways to belong', 'title' => 'Gold or Platinum?', 'text' => 'Both are prepaid and unlimited within fair use: one ritual a day, booked up to 7 days ahead.' ), array( zv_b( 'zv/club-plans' ) ) ),
-			zv_sec( array( 'padTop' => false, 'title' => 'Which is right for you?' ), array( zv_b( 'zv/club-fit' ) ) ),
-			zv_sec( array( 'background' => 'cream', 'eyebrow' => 'More than treatments', 'title' => 'A club, not a card', 'text' => 'Evenings, workshops and guest passes that make ZenVida yours, and someone else’s first visit.' ), array( zv_b( 'zv/club-table', array( 'image' => zv_img( 'b84849_c9b0f029c3b049788e35b0fcc213cf7b~mv2.jpg', 900, 1100 ) ) ) ) ),
-			zv_sec( array( 'background' => 'dark', 'eyebrow' => 'Only for the first 40', 'title' => 'Every Founding Member also gets' ), array( zv_b( 'zv/club-perks' ) ) ),
-			zv_sec( array( 'eyebrow' => 'How it works', 'title' => 'Simple, fair, <em>yours</em>' ), array( zv_b( 'zv/club-rules' ) ) ),
-			zv_sec( array( 'padTop' => false ), array( zv_b( 'zv/club-pay' ) ) ),
-			zv_sec( array( 'background' => 'cream', 'eyebrow' => 'FAQ', 'title' => 'Good to know' ), array( zv_faq( $faq ) ) ),
-			zv_b( 'zv/club-join' ),
-		) ) ),
+		'post_content' => wp_slash( serialize_blocks( zv_siesta_editorial_blocks() ) ),
 	) );
 	return $id;
 }

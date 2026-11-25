@@ -26,6 +26,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.16.0 =
+* Siesta Club page, new editorial layout: a full-width photo cover, a large opening statement, Gold and Platinum as magazine spreads with prices set in large type, a details table, a full-width photo, "the first forty" perks, the terms in brief, the FAQ and a "Reserve a place" section with the calculator. Works on phones; Spanish on /es/.
+* The page switches to the new layout by itself on update. If the page was edited by hand, it is kept as it is and the new layout is added as a draft page ("Siesta Club, new layout").
+* Every section is its own block, editable from the block sidebar; the calculator takes its prices from the Gold and Platinum blocks.
+
 = 1.15.0 =
 * New Siesta Club page (/siesta-club/), added automatically and linked in the footer Offers menu: the founding membership with Gold and Platinum plans (6 or 12 months), member benefits, Founding Member perks, how it works, ways to pay, key dates, FAQ, and a "Reserve your place" calculator that shows what is paid today and sends the choice on WhatsApp. In Spanish on /es/.
 * Every text, price and list is editable in the page's blocks; prices live in the plans block only. Places left: Appearance → ZenVida settings → Siesta Club.

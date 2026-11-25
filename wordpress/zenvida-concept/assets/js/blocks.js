@@ -379,4 +379,34 @@
     F.text(p, 'btnLabel', 'Button'), F.text(p, 'fine', 'Under the button'), F.area(p, 'legal', 'Small print'),
     F.text(p, 'termsLabel', 'Terms link text'), F.text(p, 'termsUrl', 'Terms link'),
   ], 'Prices come from the Siesta Club plans block on this page. WhatsApp, email and address come from Site settings. ' + PLACES);
+
+  /* ---------- Siesta Club, editorial layout (inc/siesta-editorial.php) ---------- */
+  const EM = 'Use <em>…</em> for the italic words.';
+  ssrBlock('club-cover', 'Siesta Club cover', p => [
+    F.img(p, 'image', 'Photo (full width)'), F.area(p, 'title', 'Title', EM), F.area(p, 'info', 'Small text on the right', 'One line per line'),
+    F.text(p, 'linkLabel', 'Link'), F.text(p, 'linkUrl', 'Link address'),
+  ]);
+  ssrBlock('club-intro', 'Statement', p => [F.text(p, 'label', 'Small label'), F.area(p, 'statement', 'Statement (large)'), F.area(p, 'text', 'Text')]);
+  ssrBlock('club-plan', 'Membership', p => [
+    F.text(p, 'chapter', 'Chapter number', 'e.g. I. Empty = none.'), F.text(p, 'name', 'Name'), F.text(p, 'tagline', 'Italic line'), F.area(p, 'text', 'Text'),
+    F.text(p, 'price6', 'Price, 6 months (€, numbers only)'), F.text(p, 'label6', 'Label for 6 months'),
+    F.text(p, 'price12', 'Price, 12 months (€, numbers only)'), F.text(p, 'label12', 'Label for 12 months'),
+    F.text(p, 'note', 'Small print'), F.text(p, 'btnLabel', 'Link'),
+    F.img(p, 'image', 'Photo'), F.select(p, 'side', 'Photo on the', [['left', 'Left'], ['right', 'Right']]), F.toggle(p, 'dark', 'Dark background'),
+  ], 'The Reserve block at the bottom of the page uses these prices.');
+  ssrBlock('club-details', 'Details table', p => [
+    F.text(p, 'chapter', 'Chapter number'), F.text(p, 'title', 'Title'), F.text(p, 'head', 'Column titles', 'plan 1 | plan 2'),
+    F.area(p, 'rows', 'Rows', 'One per line: benefit | plan 1 | plan 2'), F.area(p, 'note', 'Small print'),
+  ]);
+  ssrBlock('club-pause', 'Full-width photo', p => [F.img(p, 'image', 'Photo'), F.text(p, 'caption', 'Caption')]);
+  ssrBlock('club-forty', 'The first forty', p => [
+    F.text(p, 'chapter', 'Chapter number'), F.text(p, 'lead', 'Italic line'), F.area(p, 'items', 'Perks', 'One per line: title | text'),
+  ], 'The large number is the total of founding places in Site settings → Siesta Club.');
+  ssrBlock('club-terms', 'Terms, briefly', p => [F.text(p, 'chapter', 'Chapter number'), F.text(p, 'title', 'Title'), F.area(p, 'items', 'Terms', 'One per line: bold start | rest of the sentence')]);
+  ssrBlock('club-reserve', 'Reserve a place', p => [
+    F.text(p, 'chapter', 'Chapter number'), F.area(p, 'title', 'Title'), F.img(p, 'image', 'Photo'),
+    F.text(p, 'discount', 'Discount when paid at once (%)'), F.text(p, 'two', 'Two payments (%)', 'e.g. 40, 60'), F.text(p, 'three', 'Three payments (%)', 'e.g. 40, 30, 30'),
+    F.text(p, 'twoLimit', 'Note for two payments'), F.text(p, 'threeLimit', 'Note for three payments'),
+    F.text(p, 'btnLabel', 'Button'), F.text(p, 'fine', 'Under the button'), F.text(p, 'termsLabel', 'Terms link text'), F.text(p, 'termsUrl', 'Terms link'),
+  ], 'Memberships and prices come from the Membership blocks on this page. Places left: Appearance → ZenVida settings → Siesta Club.');
 })(window.wp);
