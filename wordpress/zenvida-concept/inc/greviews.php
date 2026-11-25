@@ -240,6 +240,9 @@ function zv_g_card( $r, $words = array() ) {
 		$date  = 'es' === zv_lang()
 			? array( 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' )[ (int) gmdate( 'n', $r['time'] ) - 1 ] . ' ' . gmdate( 'Y', $r['time'] )
 			: gmdate( 'F Y', $r['time'] );
+		if ( function_exists( 'zv_sd_add' ) ) {
+			zv_sd_add( 'review', array( 'id' => $r['id'] ?? md5( $r['name'] . $r['time'] ), 'name' => $r['name'], 'stars' => $r['stars'], 'time' => $r['time'], 'text' => wp_trim_words( $text, 48 ) ) );
+		}
 		$html .= '<div class="rev" data-no-translation><div class="stars" role="img" aria-label="' . esc_attr( $r['stars'] . ' / 5' ) . '">' . str_repeat( '★', $r['stars'] ) . '</div>'
 			. '<p>' . zv_g_mark( esc_html( wp_trim_words( $text, 48 ) ), $words ) . '</p><small>' . esc_html( $r['name'] . ' · Google · ' . $date ) . '</small></div>';
 	}

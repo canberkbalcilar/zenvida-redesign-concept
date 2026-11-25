@@ -1,10 +1,18 @@
 {
-  "version": "1.13.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.13.0",
+  "version": "1.14.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.14.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.14.0",
+      "items": [
+        "Structured data for Google and AI search on every page, written by the theme from your content: the studio (address, opening hours, phone, WhatsApp, price range, Google rating and the Google reviews shown on the page), breadcrumbs, the rituals as services with their prices, the full price list, packs and memberships, the gift card, events, journal posts and every FAQ. In Spanish on /es/.",
+        "Rank Math (or Yoast) keeps titles, descriptions, Open Graph and the sitemap; its own schema is switched off so Google sees one consistent set. Rituals and events that are switched off stay out of the Rank Math sitemap.",
+        "Site settings → Contact: new \"Map coordinates\" and \"Social profiles\" fields for Google."
+      ]
+    },
     {
       "version": "1.13.0",
       "items": [
@@ -44,17 +52,6 @@
         "The brand isotype as a light line texture behind cream sections (flat digital version, 4 KB).",
         "Ready for the brand fonts: with averta-pe-regular.woff2, averta-pe-semibold.woff2, averta-pe-bold.woff2 and riccione-regular.woff2 in wp-content/uploads/zenvida-fonts/ the site uses Averta PE for text and Riccione for titles.",
         "Phones: the round WhatsApp button no longer covers the booking widget's Continue button on the Rituals & Prices page."
-      ]
-    },
-    {
-      "version": "1.8.0",
-      "items": [
-        "Online booking with ZenVida's own booking widget, the same one as on zenvida.es: live free times, client details and the card deposit. Ritual pages show it opened on that ritual, and the duration buttons switch it (for example 60 or 90 minutes).",
-        "New \"Rituals & Prices\" page, at the same address as on Wix, with the full booking menu. The header \"Book now\" button goes there. A \"Booking widget\" block can be added to any page (full menu, one service, one category or group booking).",
-        "Ritual details, section 5 \"Online booking\": choose the ritual's service in the booking system. It warns when a duration or a price does not match. Rituals without a service show a \"Book on WhatsApp\" card.",
-        "Site settings, \"Online booking\": switch the widget on or off, Google Tag Manager ID (the widget reports bookings to Google Ads, Analytics and Meta), widget addresses.",
-        "Sites updated from an earlier version: the rituals are connected and the page is added automatically.",
-        "The booking system only answers requests from zenvida.es. On another address, such as a test domain, the widget can't load the menu until ZenVida's developer adds that address. The online demo keeps the prototype booking card for this reason."
       ]
     }
   ]

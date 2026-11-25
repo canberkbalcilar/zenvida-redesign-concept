@@ -26,6 +26,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.14.0 =
+* Structured data for Google and AI search on every page, written by the theme from your content: the studio (address, opening hours, phone, WhatsApp, price range, Google rating and the Google reviews shown on the page), breadcrumbs, the rituals as services with their prices, the full price list, packs and memberships, the gift card, events, journal posts and every FAQ. In Spanish on /es/.
+* Rank Math (or Yoast) keeps titles, descriptions, Open Graph and the sitemap; its own schema is switched off so Google sees one consistent set. Rituals and events that are switched off stay out of the Rank Math sitemap.
+* Site settings → Contact: new "Map coordinates" and "Social profiles" fields for Google.
+
 = 1.13.0 =
 * Ritual pages: the Google rating under the ritual name ("4.9 · 600+ Google reviews"), linking to a new reviews section just before the FAQ.
 * The section shows the Google reviews that mention the ritual ("What guests say about Reflexology"), with the matching words in bold. With fewer than two such reviews it shows the newest reviews ("What guests say about ZenVida"). Sliding cards, as on the homepage. In Spanish on /es/.

@@ -188,38 +188,36 @@ function zv_event_gcal( $p, $e ) {
 	), 'https://calendar.google.com/calendar/render' );
 }
 
-// Google can show the event (date, place, price) in search results.
-add_action( 'wp_head', function () {
-	if ( ! is_singular( 'zv_event' ) ) {
-		return;
-	}
-	$p = get_queried_object();
+/** The event for Google (date, place, price): a node of the page's structured data (inc/schema.php). */
+function zv_event_schema( $p ) {
 	$e = zv_event( $p->ID );
 	list( $s, $x ) = zv_event_times( $e );
 	if ( ! $s ) {
-		return;
+		return null;
 	}
+	$url  = zv_sd_url( get_permalink( $p ) );
+	$own  = ! $e['location'];
 	$data = array(
-		'@context'            => 'https://schema.org',
 		'@type'               => 'Event',
-		'name'                => zv_event_name( $p ),
+		'@id'                 => $url . '#event',
+		'name'                => zv_sd_text( zv_event_name( $p ) ),
 		'startDate'           => wp_date( 'c', $s ),
 		'endDate'             => wp_date( 'c', $x ),
 		'eventStatus'         => 'https://schema.org/EventScheduled',
 		'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
-		'location'            => array( '@type' => 'Place', 'name' => 'ZenVida', 'address' => zv_event_location( $e ) ),
-		'description'         => $e['summary'] ?: wp_trim_words( wp_strip_all_tags( $p->post_content ), 40 ),
-		'organizer'           => array( '@type' => 'Organization', 'name' => 'ZenVida', 'url' => home_url( '/' ) ),
-		'url'                 => get_permalink( $p ),
+		'location'            => $own ? array( '@type' => 'Place', 'name' => 'ZenVida', 'address' => zv_sd_address() ) : array( '@type' => 'Place', 'name' => $e['location'], 'address' => $e['location'] ),
+		'description'         => zv_sd_text( $e['summary'] ?: wp_trim_words( wp_strip_all_tags( $p->post_content ), 40 ) ),
+		'organizer'           => array( '@id' => zv_sd_id( 'business' ) ),
+		'url'                 => $url,
 	);
 	if ( $e['image'] ) {
 		$data['image'] = array( $e['image'] );
 	}
 	if ( preg_match( '/(\d+(?:[.,]\d+)?)/', (string) $e['price'], $m ) || preg_match( '/free|gratis/i', (string) $e['price'] ) ) {
-		$data['offers'] = array( '@type' => 'Offer', 'price' => isset( $m[1] ) ? str_replace( ',', '.', $m[1] ) : '0', 'priceCurrency' => 'EUR', 'url' => get_permalink( $p ), 'availability' => $e['soldout'] ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock' );
+		$data['offers'] = array( '@type' => 'Offer', 'price' => isset( $m[1] ) ? str_replace( ',', '.', $m[1] ) : '0', 'priceCurrency' => 'EUR', 'url' => $url, 'availability' => $e['soldout'] ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock', 'validFrom' => get_post_time( 'c', true, $p ) );
 	}
-	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP ) . '</script>' . "\n";
-} );
+	return $data;
+}
 
 // Hidden events are not shown to visitors.
 add_action( 'template_redirect', function () {

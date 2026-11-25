@@ -23,6 +23,8 @@ function zv_defaults() {
 		'wa_float'     => '1',
 		'wa_text'      => 'Hi ZenVida! I have a question.',
 		'maps_url'     => 'https://www.google.com/maps/search/?api=1&query=Calle+de+la+Cruz+16+28012+Madrid',
+		'geo'          => '',
+		'social'       => "https://www.instagram.com/zenvida.spain/\nhttps://facebook.com/ZenVidaSpain",
 		'rating'       => '5.0',
 		'rating_count' => '450+ guests',
 		'hours_mon'    => '11:30-20:30',
@@ -253,6 +255,15 @@ add_action( 'admin_init', function () {
 					if ( '' !== $v && '' === $out[ $k ] ) {
 						add_settings_error( 'zv_settings', 'zv_gtm', 'The Google Tag Manager ID was not saved: it looks like GTM-XXXXXXX. Your other changes were saved.' );
 					}
+				} elseif ( 'social' === $k ) {
+					$lines     = array_filter( array_map( fn( $l ) => esc_url_raw( trim( $l ) ), preg_split( '/[\r\n]+/', (string) ( $in[ $k ] ?? '' ) ) ) );
+					$out[ $k ] = implode( "\n", $lines );
+				} elseif ( 'geo' === $k ) {
+					$v         = sanitize_text_field( $in[ $k ] ?? '' );
+					$out[ $k ] = preg_match( '/^\s*(-?\d{1,2}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)\s*$/', $v, $m ) ? $m[1] . ', ' . $m[2] : '';
+					if ( '' !== trim( $v ) && '' === $out[ $k ] ) {
+						add_settings_error( 'zv_settings', 'zv_geo', 'The map coordinates were not saved: write them like 40.41520, -3.70210. Your other changes were saved.' );
+					}
 				} elseif ( 'rituals_page' === $k ) {
 					$out[ $k ] = isset( $in[ $k ] ) ? (string) absint( $in[ $k ] ) : ( $out[ $k ] ?? '' );
 				} else {
@@ -307,6 +318,8 @@ function zv_settings_page() {
 				$row( 'wa_float', 'WhatsApp button', 'Show the round WhatsApp button in the bottom-right corner of every page.', 'checkbox' );
 				$row( 'wa_text', 'First WhatsApp message', 'Already typed for the visitor when the chat opens. Leave empty for none.' );
 				$row( 'maps_url', 'Google Maps link' );
+				$row( 'geo', 'Map coordinates', 'For Google. In Google Maps, right-click the ZenVida pin and click the numbers at the top to copy them, e.g. 40.41520, -3.70210' );
+				$row( 'social', 'Social profiles', 'One link per line (Instagram, Facebook, TikTok…). Tells Google these accounts belong to ZenVida.', 'textarea' );
 				?>
 			</table>
 			<h2 class="title">Opening hours</h2>
@@ -420,7 +433,8 @@ function zv_settings_page() {
 			</div>
 			<?php endfor; ?>
 			<h2 class="title">Google</h2>
-			<p>How the pages appear in Google search results. (If you install Yoast SEO or Rank Math, these are ignored and the plugin takes over.)</p>
+			<p>How the pages appear in Google search results. (If you install Yoast SEO or Rank Math, these titles and descriptions are ignored and the plugin takes over.)<br>
+			Structured data for Google (the studio, rituals and prices, rating and reviews, events, FAQ) is always written by the theme from your content; the SEO plugin's own schema is switched off so there is only one.</p>
 			<table class="form-table" role="presentation">
 				<?php
 				$row( 'seo_home', 'Homepage title' );
