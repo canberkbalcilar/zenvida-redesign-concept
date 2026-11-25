@@ -26,6 +26,10 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.12.0 =
+* New theme versions now arrive within the hour: the theme checks for updates every hour (WordPress itself only checks twice a day) and installs a new version by itself when automatic updates are on.
+* Dashboard → Updates always shows the newest version, without waiting.
+
 = 1.11.0 =
 * Reviews slide sideways: the newest 10 Google reviews (3 to 20, set in the Reviews block), three at a time on desktop, two on tablets and one on phones, with arrows and swipe. The next card peeks in on phones.
 * Cards stay the same height; long reviews show 6 lines, the full text is on Google.

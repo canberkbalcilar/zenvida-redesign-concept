@@ -1,10 +1,17 @@
 {
-  "version": "1.11.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.11.0",
+  "version": "1.12.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.12.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.12.0",
+      "items": [
+        "New theme versions now arrive within the hour: the theme checks for updates every hour (WordPress itself only checks twice a day) and installs a new version by itself when automatic updates are on.",
+        "Dashboard → Updates always shows the newest version, without waiting."
+      ]
+    },
     {
       "version": "1.11.0",
       "items": [
@@ -48,13 +55,6 @@
       "items": [
         "Updates from the dashboard: when a new version is published, Dashboard → Updates and Appearance → Themes show \"Update available\" with what is new, and one click installs it. Automatic updates are switched on, so new versions also install by themselves within about 12 hours.",
         "An update only replaces the theme files. Rituals, pages, prices, photos, messages and settings are not changed."
-      ]
-    },
-    {
-      "version": "1.6.0",
-      "items": [
-        "Floating WhatsApp button in the bottom-right corner, like on the current website. Site settings → Contact: switch it on or off and set the first message that is already typed for the visitor (in Spanish on /es/).",
-        "On phones it moves above the \"Book\" bar, or steps aside where that bar already has WhatsApp. Hidden while an offer popup is open, and on ritual pages next to the booking card (which has its own \"Ask on WhatsApp\")."
       ]
     }
   ]

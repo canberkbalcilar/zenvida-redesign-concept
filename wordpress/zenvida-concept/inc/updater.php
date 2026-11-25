@@ -45,8 +45,8 @@ add_filter( 'update_themes_' . wp_parse_url( ZV_CONCEPTS_URL, PHP_URL_HOST ), fu
 	if ( 'ZenVida Concept' !== ( $theme_data['Name'] ?? '' ) ) {
 		return $update;
 	}
-	// "Check again" on Dashboard → Updates always reads the newest file.
-	$info = zv_update_info( ! empty( $_GET['force-check'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+	// Dashboard → Updates (and "Check again"), and the hourly check, always read the newest file.
+	$info = zv_update_info( ! empty( $_GET['force-check'] ) || 'update-core.php' === ( $GLOBALS['pagenow'] ?? '' ) || doing_action( 'zv_update_hourly' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 	if ( ! $info ) {
 		return $update;
 	}
@@ -120,4 +120,28 @@ add_action( 'admin_init', function () {
 // A new version is in place: read update.json again next time.
 add_action( 'upgrader_process_complete', function () {
 	delete_site_transient( 'zv_update_info' );
+} );
+
+/*
+ * Hourly check. WordPress itself looks for updates only twice a day, so a new theme version
+ * could take up to 12 hours to arrive. Every hour the theme reads update.json; when there is
+ * a newer version it refreshes WordPress's update list and, with automatic updates on for
+ * this theme, installs it straight away (the same automatic updater WordPress uses).
+ */
+add_action( 'init', function () {
+	if ( ! wp_next_scheduled( 'zv_update_hourly' ) ) {
+		wp_schedule_event( time() + 5 * MINUTE_IN_SECONDS, 'hourly', 'zv_update_hourly' );
+	}
+} );
+
+add_action( 'zv_update_hourly', function () {
+	$info = zv_update_info( true );
+	if ( ! $info || ! version_compare( $info['version'], ZV_VERSION, '>' ) ) {
+		return;
+	}
+	delete_site_transient( 'update_themes' );
+	wp_update_themes();
+	if ( in_array( get_template(), (array) get_site_option( 'auto_update_themes', array() ), true ) && function_exists( 'wp_maybe_auto_update' ) ) {
+		wp_maybe_auto_update();
+	}
 } );
