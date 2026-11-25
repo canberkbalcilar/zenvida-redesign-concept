@@ -26,6 +26,12 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.10.0 =
+* Google reviews from ZenVida's own Business Profile. Site settings → Google reviews: paste the OAuth client from Google Cloud, connect the Google account that manages the profile, and choose which reviews to show (5 stars, 4 and 5 stars, or all; always with a written comment, newest first).
+* The Reviews block shows the newest Google reviews with an "All reviews on Google" link. The rating and the number of reviews everywhere on the site come from Google ("4.9 from 450+ Google reviews"), in Spanish on /es/.
+* Reviewers are shown as first name and last initial. On the Spanish site, reviews written in Spanish show in the guest's own words.
+* Updated once a day, or with "Update now". Without a connection the reviews and numbers typed in the editor are shown, as before.
+
 = 1.9.0 =
 * ZenVida brand identity (Brand Guidelines, December 2025): the primary logo in the header (black) and footer (ivory), and the isotype as the browser and home-screen icon. A logo uploaded in Customize still takes priority.
 * Brand colours only: Black #191919, Ivory #fffef8 and Narvik #e8e4da with their tints. Gold accents and coloured labels are now black, brand greys or Narvik.

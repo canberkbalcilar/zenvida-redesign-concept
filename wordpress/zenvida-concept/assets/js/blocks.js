@@ -168,10 +168,12 @@
   });
 
   reg('reviews', function (p) {
+    const gSide = Side('Google reviews', F.toggle(p, 'google', 'Show the newest Google reviews when Google is connected (Site settings → Google reviews)'), F.num(p, 'count', 'How many Google reviews', 1, 6), F.note('The reviews below are shown when Google is not connected.'));
     const a = p.attributes, bp = useBlockProps({ className: 'reviews' });
     const ip = useInnerBlocksProps({ className: 'rev-list' }, { allowedBlocks: ['zv/review'], template: [['zv/review'], ['zv/review'], ['zv/review']], renderAppender: () => h(InnerBlocks.ButtonBlockAppender) });
     return h(Fragment, null,
-      Side('Reviews', F.toggle(p, 'showSample', 'Show "sample quotes" label'), F.note('Score and guest count come from ZenVida settings.')),
+      Side('Reviews', F.toggle(p, 'showSample', 'Show "sample quotes" label'), F.note('Score and review count come from Site settings, or from Google once it is connected.')),
+      gSide,
       h('div', bp, h('div', null, RT(p, 'eyebrow', 'span', 'eyebrow', 'Eyebrow', true), h('div', { className: 'score' }, E.rating), h('div', { className: 'stars' }, '★★★★★'),
         h('p', { style: { color: 'var(--muted)', fontSize: '14px', margin: '8px 0 0' } }, 'From ' + E.ratingCount),
         a.showSample && h('span', { className: 'sample' }, 'Sample quotes: connect real reviews')), h('div', ip)));

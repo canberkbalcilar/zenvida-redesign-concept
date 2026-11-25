@@ -1,10 +1,19 @@
 {
-  "version": "1.9.0",
-  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.9.0",
+  "version": "1.10.0",
+  "package": "https://canberkbalcilar.github.io/zenvida-redesign-concept/wordpress/zenvida-concept.zip?v=1.10.0",
   "requires": "6.4",
   "requires_php": "8.0",
   "tested": "6.9",
   "notes": [
+    {
+      "version": "1.10.0",
+      "items": [
+        "Google reviews from ZenVida's own Business Profile. Site settings → Google reviews: paste the OAuth client from Google Cloud, connect the Google account that manages the profile, and choose which reviews to show (5 stars, 4 and 5 stars, or all; always with a written comment, newest first).",
+        "The Reviews block shows the newest Google reviews with an \"All reviews on Google\" link. The rating and the number of reviews everywhere on the site come from Google (\"4.9 from 450+ Google reviews\"), in Spanish on /es/.",
+        "Reviewers are shown as first name and last initial. On the Spanish site, reviews written in Spanish show in the guest's own words.",
+        "Updated once a day, or with \"Update now\". Without a connection the reviews and numbers typed in the editor are shown, as before."
+      ]
+    },
     {
       "version": "1.9.0",
       "items": [
@@ -49,13 +58,6 @@
         "Booking card, quiz, body map, opening hours, forms and WhatsApp messages in Spanish, with Spanish dates (inc/data/es-ui.json). Browser titles and descriptions translated too.",
         "Messages sent from the Spanish site are marked \"Language: Spanish\" in the inbox.",
         "Dashboard guide: \"Change a Spanish text\" opens TranslatePress's editor on the Spanish site."
-      ]
-    },
-    {
-      "version": "1.4.0",
-      "items": [
-        "Journal: the 18 Respiro posts from zenvida.es are now part of the starter content (texts, photos, headings, lists, buttons, tables, questions), with their original dates and addresses. Links to old zenvida.es pages point to the matching new pages. The 3 sample posts are gone.",
-        "Refer a friend: new page with a form (your details + your friend's), saved under Messages and emailed; its own terms page; link in the footer \"Offers\" menu. Thank-you text in Site settings."
       ]
     }
   ]

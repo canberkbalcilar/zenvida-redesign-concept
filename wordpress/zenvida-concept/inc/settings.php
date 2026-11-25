@@ -98,9 +98,11 @@ function zv_opt( $key ) {
 	$d        = zv_defaults();
 	$required = array( 'header_label', 'whatsapp', 'seo_home', 'seo_rituals', 'events_title' );
 	if ( is_array( $o ) && array_key_exists( $key, $o ) && ( '' !== $o[ $key ] || ! in_array( $key, $required, true ) ) ) {
-		return $o[ $key ];
+		$v = $o[ $key ];
+	} else {
+		$v = $d[ $key ] ?? '';
 	}
-	return $d[ $key ] ?? '';
+	return apply_filters( 'zv_opt', $v, $key ); // e.g. the Google rating (inc/greviews.php)
 }
 
 /**
@@ -320,7 +322,7 @@ function zv_settings_page() {
 			<table class="form-table" role="presentation">
 				<?php
 				$row( 'rating', 'Average rating' );
-				$row( 'rating_count', 'Rating count', 'e.g. 450+ guests' );
+				$row( 'rating_count', 'Rating count', 'e.g. 450+ guests. Both are replaced by the live Google numbers once Google reviews are connected.' );
 				$row( 'footer_about', 'Footer text', '', 'textarea' );
 				$row( 'copyright', 'Copyright line', 'The year is added automatically.' );
 				?>

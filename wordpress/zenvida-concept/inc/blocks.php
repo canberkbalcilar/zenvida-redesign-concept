@@ -119,7 +119,7 @@ add_action( 'init', function () {
 	zv_register( 'steps', 'Steps', 'editor-ol', array(), 'zv_render_wrap_inner', $in_section );
 	zv_register( 'step', 'Step', 'marker', array( 'title' => '', 'text' => '' ), 'zv_render_step', array( 'parent' => array( 'zv/steps' ) ) );
 	zv_register( 'callout', 'Callout', 'megaphone', array( 'icon' => '✈︎', 'text' => '', 'price' => '', 'linkLabel' => '', 'linkUrl' => '' ), 'zv_render_callout', $in_section );
-	zv_register( 'reviews', 'Reviews', 'format-quote', array( 'eyebrow' => 'Guest reviews', 'showSample' => true ), 'zv_render_reviews', $in_section );
+	zv_register( 'reviews', 'Reviews', 'format-quote', array( 'eyebrow' => 'Guest reviews', 'showSample' => true, 'google' => true, 'count' => 3 ), 'zv_render_reviews', $in_section );
 	zv_register( 'review', 'Review', 'testimonial', array( 'text' => '', 'author' => 'Guest name', 'source' => 'Google', 'stars' => 5 ), 'zv_render_review', array( 'parent' => array( 'zv/reviews' ) ) );
 	zv_register( 'offers', 'Offer cards', 'money-alt', array(), 'zv_render_wrap_inner', $in_section );
 	zv_register( 'offer', 'Offer card', 'tickets-alt', array( 'kicker' => '', 'title' => '', 'text' => '', 'linkLabel' => 'Learn more →', 'url' => '', 'featured' => false ), 'zv_render_offer', array( 'parent' => array( 'zv/offers' ) ) );
@@ -168,7 +168,7 @@ function zv_render_hero( $a ) {
 	$img   = $a['image'] ?: zv_img( 'b84849_1f76460dcaab4a9d9b293ecf6b206bf4~mv2.jpg', 2000, 1200 );
 	$trust = '';
 	if ( $a['showRating'] ) {
-		$trust .= '<span><span class="stars">★★★★★</span><b>' . zv_e( zv_opt( 'rating' ) ) . '</b>&nbsp;from ' . zv_e( zv_opt( 'rating_count' ) ) . '</span>';
+		$trust .= '<span><span class="stars">★★★★★</span><b>' . zv_e( zv_opt( 'rating' ) ) . '</b>&nbsp;' . zv_rating_from() . '</span>';
 	}
 	if ( $a['showOpen'] ) {
 		$trust .= '<span class="open" data-open-now>Open 7 days a week</span>';
@@ -295,11 +295,13 @@ function zv_render_callout( $a ) {
 }
 
 function zv_render_reviews( $a, $content ) {
+	$live = ! empty( $a['google'] ) && function_exists( 'zv_g_reviews_html' ) ? zv_g_reviews_html( max( 1, (int) $a['count'] ) ) : '';
+	$maps = $live ? ( zv_g_data()['maps'] ?? '' ) : '';
 	return '<div class="reviews"><div>' . ( $a['eyebrow'] ? '<span class="eyebrow">' . zv_e( $a['eyebrow'] ) . '</span>' : '' )
 		. '<div class="score" style="margin-top:14px">' . zv_e( zv_opt( 'rating' ) ) . '</div><div class="stars" aria-hidden="true">★★★★★</div>'
-		. '<p style="color:var(--muted);font-size:14px;margin:8px 0 0">From ' . zv_e( zv_opt( 'rating_count' ) ) . '</p>'
-		. ( $a['showSample'] ? '<span class="sample">Sample quotes: connect real reviews</span>' : '' )
-		. '</div><div class="rev-list">' . $content . '</div></div>';
+		. '<p style="color:var(--muted);font-size:14px;margin:8px 0 0">' . zv_rating_from( true ) . '</p>'
+		. ( $live ? ( $maps ? '<p class="g-all"><a class="link" href="' . esc_url( $maps ) . '" target="_blank" rel="noopener">' . zv_e( zv__( 'All reviews on Google' ) ) . '</a></p>' : '' ) : ( $a['showSample'] ? '<span class="sample">Sample quotes: connect real reviews</span>' : '' ) )
+		. '</div><div class="rev-list">' . ( $live ?: $content ) . '</div></div>';
 }
 
 function zv_render_review( $a ) {
@@ -397,7 +399,7 @@ function zv_render_ritual_hero( $a ) {
 		. ( $a['text'] ? '<p class="lead">' . zv_k( $a['text'] ) . '</p>' : '' )
 		. '<div class="hero-ctas"><button class="btn btn-dark" type="button" data-open-quiz>' . zv_e( $a['quizLabel'] ) . '</button>'
 		. zv_btn( str_replace( '{count}', (string) $cnt, $a['btn2Label'] ), '#results', 'ghost' ) . '</div>'
-		. '<div class="trust"><span><span class="stars">★★★★★</span><b>' . zv_e( zv_opt( 'rating' ) ) . '</b>&nbsp;from ' . zv_e( zv_opt( 'rating_count' ) ) . '</span>'
+		. '<div class="trust"><span><span class="stars">★★★★★</span><b>' . zv_e( zv_opt( 'rating' ) ) . '</b>&nbsp;' . zv_rating_from() . '</span>'
 		. '<span>' . zv_icon( 'pin' ) . zv_e( zv_opt( 'address1' ) ) . '</span><span class="open" data-open-now>Open 7 days a week</span></div></div>'
 		. '<div class="hero-img">' . zv_image( $img, array( 'sizes' => ZV_SIZES_HALF, 'eager' => true ) )
 		. ( $f ? '<div class="float"><div><small style="color:var(--muted)">Most booked</small><b>' . zv_e( $f['name'] ) . '</b></div><span style="color:var(--ink-2)">' . (int) $f['opts'][0][0] . ' min · ' . zv_e( zv_eur( $f['opts'][0][1] ) ) . '</span><a href="' . esc_url( $f['url'] . '#book' ) . '">Book →</a></div>' : '' )

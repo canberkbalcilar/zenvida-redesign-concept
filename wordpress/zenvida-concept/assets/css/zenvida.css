@@ -1049,3 +1049,4 @@ footer.site :focus-visible,.bg-dark :focus-visible,.promo :focus-visible,.pack.f
 
 /* Foot-bath colour dots: brand neutrals (different lightness keeps them apart) */
 .bath .dot{filter:grayscale(1)}
+.g-all{margin:14px 0 0;font-size:14px}
