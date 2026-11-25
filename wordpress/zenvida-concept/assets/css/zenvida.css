@@ -63,7 +63,7 @@ footer.site .logo-brand{width:170px}
 .mnav{border-top:1px solid var(--line);background:var(--paper)}
 .mnav ul{list-style:none;margin:0;padding:8px 0 16px}
 .mnav a{display:block;padding:12px 0;text-decoration:none;font:500 22px var(--serif);border-bottom:1px solid var(--line)}
-.mnav .btn{margin-top:16px;width:100%;font:600 15px var(--sans);border-bottom:0}
+.mnav .btn{display:flex;margin-top:16px;width:100%;font:600 15px var(--sans);border-bottom:0}
 
 /* ---------- Sections ---------- */
 section.block{padding:96px 0}
@@ -1454,3 +1454,25 @@ section.block.r-reviews{padding-bottom:0}   /* the FAQ section below brings its 
   .ed-sum li b{font-size:24px}
   .ed-btn{align-self:stretch;justify-content:center}
 }
+/* ------------------------------------------------------------- menu dropdowns */
+.nav ul li{position:relative;display:flex;align-items:center;gap:2px}
+.nav ul .current-menu-ancestor>a{color:var(--ink)}
+.sub-toggle{display:grid;place-items:center;width:24px;height:24px;margin-right:-6px;border:0;background:none;color:var(--ink-2);cursor:pointer;border-radius:4px;padding:0}
+.sub-toggle svg{transition:transform .2s}
+.sub-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+.sub-toggle:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.nav ul .sub-menu{display:none;position:absolute;top:100%;left:-18px;z-index:45;min-width:230px;flex-direction:column;gap:0;padding:10px 0;margin-top:10px;background:var(--paper);border:1px solid var(--line);box-shadow:0 14px 30px rgba(25,25,25,.08)}
+.nav ul .sub-menu::before{content:"";position:absolute;left:0;right:0;top:-11px;height:11px}   /* keeps hover alive across the gap */
+.nav ul .sub-menu li{display:block}
+.nav ul .sub-menu a{display:block;padding:9px 18px;white-space:nowrap;font-size:14.5px}
+.nav ul .sub-menu a:hover{background:var(--sand-50)}
+.nav ul .sub-menu .current-menu-item>a{box-shadow:none;color:var(--ink);font-weight:500}
+.nav ul li:hover>.sub-menu,.nav ul li:focus-within>.sub-menu,.nav ul li.open>.sub-menu{display:flex}
+.mnav li.menu-item-has-children{display:grid;grid-template-columns:1fr 48px;align-items:stretch}
+.mnav li.menu-item-has-children>a{grid-column:1}
+.mnav .sub-toggle{grid-column:2;width:48px;height:auto;margin:0;border-bottom:1px solid var(--line);border-radius:0;color:var(--ink)}
+.mnav .sub-toggle svg{width:18px;height:18px}
+.mnav .sub-menu{grid-column:1/-1;display:none;padding:2px 0 10px 16px}
+.mnav li.open>.sub-menu{display:block}
+.mnav .sub-menu a{font-size:19px;padding:10px 0;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){.sub-toggle svg{transition:none}}

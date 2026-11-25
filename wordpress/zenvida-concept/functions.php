@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '1.16.0' );
+define( 'ZV_VERSION', '1.17.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -199,6 +199,17 @@ add_action( 'template_redirect', function () {
 		exit;
 	}
 } );
+
+/* -------------------------------------------------------------------------
+ * Main menu dropdowns: a small button after a link that has sub-items.
+ * ---------------------------------------------------------------------- */
+add_filter( 'walker_nav_menu_start_el', function ( $html, $item, $depth, $args ) {
+	if ( 0 !== $depth || 'primary' !== ( $args->theme_location ?? '' ) || ! in_array( 'menu-item-has-children', (array) $item->classes, true ) ) {
+		return $html;
+	}
+	$label = zv__( 'Show submenu: {name}', array( 'name' => wp_strip_all_tags( $item->title ) ) );
+	return $html . '<button type="button" class="sub-toggle" aria-expanded="false" aria-label="' . esc_attr( $label ) . '"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>';
+}, 10, 4 );
 
 /* -------------------------------------------------------------------------
  * Front-end assets

@@ -174,5 +174,6 @@
 "Payment": "Pago",
 "At once": "Un solo pago",
 "In two": "En dos pagos",
-"In three": "En tres pagos"
+"In three": "En tres pagos",
+"Show submenu: {name}": "Mostrar submenú: {name}"
 }

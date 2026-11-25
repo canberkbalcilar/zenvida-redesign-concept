@@ -32,6 +32,25 @@ if (mbtn && mnav) {
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !mnav.hidden) { setMenu(false); mbtn.focus(); } });
 }
 
+// Menu dropdowns: the arrow button opens a parent's sub-items (hover also works on desktop)
+$$('.sub-toggle').forEach(btn => {
+  const li = btn.parentElement;
+  const set = open => { li.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); };
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = !li.classList.contains('open');
+    $$('.nav li.open').forEach(o => { if (o !== li) { o.classList.remove('open'); o.querySelector('.sub-toggle')?.setAttribute('aria-expanded', 'false'); } });
+    set(open);
+  });
+  li.addEventListener('keydown', e => { if (e.key === 'Escape' && li.classList.contains('open')) { set(false); btn.focus(); } });
+  // A parent that only groups items (empty or "#" link) opens its list instead of jumping to the top.
+  const a = li.querySelector(':scope > a');
+  if (a && /^#?$/.test(a.getAttribute('href') || '')) a.addEventListener('click', e => { e.preventDefault(); btn.click(); });
+});
+document.addEventListener('click', e => {
+  $$('.nav li.open').forEach(li => { if (!li.contains(e.target)) { li.classList.remove('open'); li.querySelector('.sub-toggle')?.setAttribute('aria-expanded', 'false'); } });
+});
+
 // Mobile bar: hidden while an anchor (quick book / booking card / filters) is on screen
 const mbar = $('#mbar');
 const anchors = $$('[data-mbar-anchor]');

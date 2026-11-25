@@ -2,7 +2,7 @@
 $zv_book_url = zv_book_url();
 $zv_menu     = function ( $loc, $fallback_cls = '' ) {
 	if ( has_nav_menu( $loc ) ) {
-		wp_nav_menu( array( 'theme_location' => $loc, 'container' => false, 'depth' => 1, 'fallback_cb' => false ) );
+		wp_nav_menu( array( 'theme_location' => $loc, 'container' => false, 'depth' => 2, 'fallback_cb' => false ) ); // two levels: dropdowns
 	} else {
 		echo '<ul><li><a href="' . esc_url( zv_rituals_url() ) . '">Rituals</a></li><li><a href="#visit">Visit</a></li></ul>';
 	}

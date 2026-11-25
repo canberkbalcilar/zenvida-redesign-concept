@@ -26,6 +26,10 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.17.0 =
+* Dropdown menus: items placed under another item in Appearance → Menus (main menu) now open from a small arrow, on hover or with the keyboard on desktop, and under their parent in the phone menu.
+* Phone menu: the Book now button text is centred.
+
 = 1.16.0 =
 * Siesta Club page, new editorial layout: a full-width photo cover, a large opening statement, Gold and Platinum as magazine spreads with prices set in large type, a details table, a full-width photo, "the first forty" perks, the terms in brief, the FAQ and a "Reserve a place" section with the calculator. Works on phones; Spanish on /es/.
 * The page switches to the new layout by itself on update. If the page was edited by hand, it is kept as it is and the new layout is added as a draft page ("Siesta Club, new layout").
