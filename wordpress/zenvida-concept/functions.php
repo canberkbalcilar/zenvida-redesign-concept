@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZV_VERSION', '1.19.0' );
+define( 'ZV_VERSION', '1.20.0' );
 define( 'ZV_CONCEPTS_URL', 'https://canberkbalcilar.github.io/zenvida-redesign-concept/' );
 
 require_once __DIR__ . '/inc/settings.php';
@@ -39,6 +39,7 @@ require_once __DIR__ . '/inc/greviews.php';
 require_once __DIR__ . '/inc/schema.php';
 require_once __DIR__ . '/inc/siesta.php';
 require_once __DIR__ . '/inc/siesta-editorial.php';
+require_once __DIR__ . '/inc/seo-meta.php';
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -79,8 +80,10 @@ add_action( 'wp_head', function () {
 	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
 		return;
 	}
-	$d = '';
-	if ( is_front_page() ) {
+	$d = function_exists( 'zv_seo_meta' ) ? zv_seo_meta( 'description' ) : '';
+	if ( '' !== $d ) {
+		// the page's own Google description (inc/seo-meta.php)
+	} elseif ( is_front_page() ) {
 		$d = zv_opt( 'seo_home_desc' );
 	} elseif ( is_singular( 'ritual' ) ) {
 		$d = get_post_meta( get_queried_object_id(), 'zv_desc', true );

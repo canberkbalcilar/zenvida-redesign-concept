@@ -26,6 +26,11 @@ Theme for ZenVida Foot & Body, Madrid. Built so that non-technical editors manag
 
 == Changelog ==
 
+= 1.20.0 =
+* Google title and description for every page, ritual, area, event and journal post, in English and Spanish. They are stored in Rank Math's own fields, so Rank Math shows and keeps them once installed. Texts someone already typed are never replaced.
+* A "Google search: title & description" box under the editor and on the area screen, with a character counter (title up to 60, description 150 to 160).
+* Rituals and Events page titles and descriptions in Appearance → ZenVida settings → Google.
+
 = 1.19.0 =
 * No duplicate rituals pages for Google: the "how you feel" chips, "For two", "Rituals for travellers" and "Help me choose" now link to /rituals/#feet, #two, #quiz… instead of /rituals/?need=… addresses. Links already saved in pages are updated automatically.
 * A canonical address on the rituals, area, events and journal pages (until an SEO plugin such as Rank Math takes over), in English and Spanish.

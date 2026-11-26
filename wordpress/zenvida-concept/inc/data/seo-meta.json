@@ -1,0 +1,285 @@
+{
+ "version": "1",
+ "pages": [
+  {
+   "path": "/",
+   "title": "Massage & Foot Reflexology in Madrid Centro | ZenVida",
+   "description": "Massage and foot reflexology in Madrid, three minutes from Puerta del Sol. Open every day: walk in or book online. Rated 4.9 by more than 600 guests on Google."
+  },
+  {
+   "path": "/rituals/",
+   "title": "Massages in Madrid: Every Ritual & Price | ZenVida",
+   "description": "Every massage in Madrid we offer, with prices from €25: reflexology, Thai, deep tissue, facials and more. Filter by what hurts or the time you have, then book."
+  },
+  {
+   "path": "/rituals/massage/",
+   "title": "Massage in Madrid Centro, 3 Min from Sol | ZenVida",
+   "description": "Massage in Madrid Centro: Swedish, deep tissue, Thai, sports and more, in private rooms on Calle de la Cruz. 60 or 90 minutes from €80. Walk in or book today."
+  },
+  {
+   "path": "/rituals/feet-legs/",
+   "title": "Foot Reflexology & Foot Massage in Madrid | ZenVida",
+   "description": "Foot reflexology in Madrid for tired feet after a day in the city, plus foot massage from €25, in a reclining chair of your own. Three minutes from Sol."
+  },
+  {
+   "path": "/rituals/face/",
+   "title": "Facial Massage in Madrid: Kobido & Classic | ZenVida",
+   "description": "Facial massage in Madrid, hands only, no machines: Japanese Kobido for a lifted look or a classic facial to calm puffy skin. 45 or 60 minutes from €50, by Sol."
+  },
+  {
+   "path": "/rituals/spa/",
+   "title": "Body Scrub & Spa Rituals in Madrid Centro | ZenVida",
+   "description": "A body scrub in Madrid with Mar Menor salt, olive stone and almond oil, for soft skin without spending the whole day at a spa. A short walk from Puerta del Sol."
+  },
+  {
+   "path": "/rituals/feet-legs/foot-massage/",
+   "title": "Foot Massage in Madrid, 25 Min for €25 | ZenVida",
+   "description": "Short on time? A 25-minute foot massage in Madrid for €25, three minutes from Sol. Add neck and shoulders for €10. No booking needed: just walk in as you pass."
+  },
+  {
+   "path": "/rituals/feet-legs/reflexology/",
+   "title": "Foot Reflexology in Madrid, 30 Min €40 | ZenVida",
+   "description": "Foot reflexology in Madrid: pressure on the reflex points of your feet and calves to rest tired legs and quiet a busy head. 30 minutes for €40, by Sol."
+  },
+  {
+   "path": "/rituals/feet-legs/deluxe-reflexology/",
+   "title": "Deluxe Reflexology with Foot Spa in Madrid | ZenVida",
+   "description": "Our signature reflexology in Madrid: an aromatherapy foot bath, reflexology and calf work, then a neck and shoulder massage. 60 minutes for €60, close to Sol."
+  },
+  {
+   "path": "/rituals/massage/travel-recovery/",
+   "title": "Jet Lag Massage in Madrid: Travel Recovery | ZenVida",
+   "description": "Just landed? A jet lag massage in Madrid made for arrival day: 80 minutes for swollen feet and legs stiff from the flight. €120, three minutes from Sol."
+  },
+  {
+   "path": "/rituals/massage/full-body-reset/",
+   "title": "Full Body Reset: 2-Hour Massage in Madrid | ZenVida",
+   "description": "A two-hour full body massage in Madrid, head to toe: facial and scalp massage, a slow full-body massage, then reflexology to finish. €160, close to Sol."
+  },
+  {
+   "path": "/rituals/massage/thai-andaluz/",
+   "title": "Thai Andaluz: Thai Massage & Oils in Madrid | ZenVida",
+   "description": "A Thai massage with oil in Madrid you will not find elsewhere: royal Thai technique, Andalusian aromatherapy oils and warm herbal compresses. 110 min for €145."
+  },
+  {
+   "path": "/rituals/massage/couples-massage/",
+   "title": "Couples Massage in Madrid, Same Room | ZenVida",
+   "description": "Couples massage in Madrid with two therapists in one shared room, for partners, friends or family. 90 minutes, €220 for the two of you, three minutes from Sol."
+  },
+  {
+   "path": "/rituals/massage/energy-balance/",
+   "title": "Energy Balance: Massage & Reiki in Madrid | ZenVida",
+   "description": "A Reiki massage in Madrid for days when you feel scattered: full-body massage, meridian work, Reiki and chakra balancing. 100 minutes for €130, close to Sol."
+  },
+  {
+   "path": "/rituals/massage/deep-tissue-massage/",
+   "title": "Deep Tissue Massage in Madrid, from €90 | ZenVida",
+   "description": "Deep tissue massage in Madrid: firm, slow pressure for knots, stiff shoulders and the back pain of long days sitting. 60 minutes €90 or 90 minutes €130, by Sol."
+  },
+  {
+   "path": "/rituals/massage/swedish-massage/",
+   "title": "Swedish Relaxing Massage in Madrid, from €80 | ZenVida",
+   "description": "A Swedish relaxing massage in Madrid: long, flowing strokes from head to toe to lower stress and sleep better tonight. 60 minutes €80 or 90 minutes €110."
+  },
+  {
+   "path": "/rituals/massage/thai-massage/",
+   "title": "Thai Massage in Madrid Centro, from €90 | ZenVida",
+   "description": "Thai massage in Madrid: stretching and steady pressure to release the tension of screens and long hours sitting. 60 minutes €90 or 90 minutes €125, near Sol."
+  },
+  {
+   "path": "/rituals/massage/combined-massage/",
+   "title": "Combined Massage in Madrid: 90 Min, €115 | ZenVida",
+   "description": "A combined massage in Madrid: deep tissue, Swedish and reflexology in one session, mixed around how you feel today. 90 minutes for €115, three minutes from Sol."
+  },
+  {
+   "path": "/rituals/massage/sports-massage/",
+   "title": "Sports Massage in Madrid, from €90 | ZenVida",
+   "description": "Sports massage in Madrid before or after training, a match or a race: firm work on legs, back and shoulders. 60 minutes €90 or 90 minutes €125, close to Sol."
+  },
+  {
+   "path": "/rituals/massage/lomi-lomi-massage/",
+   "title": "Lomi Lomi Massage in Madrid, from €80 | ZenVida",
+   "description": "Lomi Lomi massage in Madrid: Hawaiian forearm strokes with warm Spanish oils, slow like waves. 60 minutes €80 or 90 minutes €110, three minutes from Sol."
+  },
+  {
+   "path": "/rituals/massage/lymphatic-drainage-massage/",
+   "title": "Lymphatic Drainage Massage in Madrid | ZenVida",
+   "description": "Lymphatic drainage massage in Madrid: gentle, rhythmic work to reduce fluid retention and feel lighter. 60 minutes €80 or 90 minutes €110, close to Sol."
+  },
+  {
+   "path": "/rituals/massage/pregnancy-massage/",
+   "title": "Pregnancy Massage in Madrid, Every Trimester | ZenVida",
+   "description": "Pregnancy massage in Madrid, adapted to each trimester to ease back pain, swollen ankles and tired legs, so you can rest for an hour. 60 minutes €90, near Sol."
+  },
+  {
+   "path": "/rituals/face/kobido-facial-massage/",
+   "title": "Kobido Facial Massage in Madrid, from €60 | ZenVida",
+   "description": "Kobido facial in Madrid: the Japanese hands-only lifting massage for firmer, brighter skin, a natural facelift. 45 minutes €60 or 60 minutes €80, close to Sol."
+  },
+  {
+   "path": "/rituals/face/classic-facial-massage/",
+   "title": "Facial Massage in Madrid, from €50 | ZenVida",
+   "description": "A classic facial massage in Madrid for face and neck: brings down puffiness and wakes up tired skin before a dinner. 45 minutes €50 or 60 minutes €70, near Sol."
+  },
+  {
+   "path": "/rituals/spa/ritual-levante/",
+   "title": "Ritual Levante: Body Scrub in Madrid | ZenVida",
+   "description": "A full body scrub in Madrid with Mar Menor salt, olive stone and almond oil, inspired by the Spanish east coast. Soft skin, no massage needed. Close to Sol."
+  },
+  {
+   "path": "/rituals-and-prices/",
+   "title": "Book a Massage in Madrid: Times & Prices | ZenVida",
+   "description": "Book a massage in Madrid in a minute: see free times for every ritual, hold yours with a small deposit and pay the rest after your treatment. Close to Sol."
+  },
+  {
+   "path": "/offers/",
+   "title": "Massage Packs & Monthly Plans in Madrid | ZenVida",
+   "description": "Massage packs in Madrid to come back for less: 5 or 10 sessions you can share with family and friends, and a monthly ritual from €55. Three minutes from Sol."
+  },
+  {
+   "path": "/gift-cards/",
+   "title": "Massage Gift Card in Madrid, Sent by Email | ZenVida",
+   "description": "A massage gift card in Madrid for any ritual or amount, emailed to you within the hour. Massage, reflexology or a facial, valid for 12 months, close to Sol."
+  },
+  {
+   "path": "/siesta-club/",
+   "title": "Siesta Club: Unlimited Massage Membership Madrid | ZenVida",
+   "description": "A massage membership in Madrid with only 40 founding places: unlimited massages for 6 or 12 months. Gold from €1,494; Platinum adds facials and weekends."
+  },
+  {
+   "path": "/contact/",
+   "title": "Contact ZenVida: Massage Studio near Sol, Madrid",
+   "description": "Contact ZenVida at Calle de la Cruz 16, three minutes from Puerta del Sol. Call or WhatsApp +34 690 829 142, or send us an email. We are open every day."
+  },
+  {
+   "path": "/group-appointments/",
+   "title": "Group Massage in Madrid: Hen Parties & Friends | ZenVida",
+   "description": "Group massage in Madrid for two or more at the same time: birthdays, hen parties, colleagues or a family treat. Tell us the day; we plan rooms and therapists."
+  },
+  {
+   "path": "/events/",
+   "title": "Wellness Workshops & Events in Madrid | ZenVida",
+   "description": "Wellness workshops in Madrid: small reflexology classes, open days and seasonal evenings at our studio near Sol. Learn something new about caring for yourself."
+  },
+  {
+   "path": "/events/christmas-gift-card-week/",
+   "title": "Christmas Massage Gift in Madrid, 2 to 15 Dec | ZenVida",
+   "description": "A Christmas massage gift in Madrid: buy any gift card from 2 to 15 December and we add a free foot bath for the person you give it to. Emailed in minutes."
+  },
+  {
+   "path": "/events/reflexology-for-beginners/",
+   "title": "Reflexology Workshop for Beginners in Madrid | ZenVida",
+   "description": "A reflexology workshop in Madrid for beginners, Sunday 6 December, 18:30 to 20:00: the basic foot map and three simple techniques to relax the people you love."
+  },
+  {
+   "path": "/events/couples-evening/",
+   "title": "Couples Massage Evening in Madrid, 20 Dec | ZenVida",
+   "description": "A couples massage in Madrid after hours, Sunday 20 December: side by side, with cava and the studio quiet just for the two of you. Limited places, near Sol."
+  },
+  {
+   "path": "/events/autumn-open-day/",
+   "title": "Autumn Open Day: Free Foot Massage in Madrid | ZenVida",
+   "description": "A free foot massage in Madrid at our autumn open day, 4 November: 10 minutes each, tea and a look around the studio near Sol. It has ended, see what comes next."
+  },
+  {
+   "path": "/journal/",
+   "title": "Respiro Wellness Journal: Slow Living in Madrid | ZenVida",
+   "description": "Respiro, our wellness journal about Madrid: reflexology, stress, seasonal food and the quieter side of the city, written by the people who run ZenVida near Sol."
+  },
+  {
+   "path": "/5pm-slump-workday-fatigue-body-needs/",
+   "title": "The 5pm Slump: What Your Body Is Telling You | ZenVida",
+   "description": "Heavy shoulders and a foggy head? The 5pm slump explained: why workday tiredness builds up in the body, and small pauses that help before it costs you sleep."
+  },
+  {
+   "path": "/walking-madrid-tired-feet-reflexology/",
+   "title": "Tired Feet After Walking Madrid? What Helps | ZenVida",
+   "description": "Tired feet after a day in Madrid? Cobblestones, museums and Gran Vía add up. What your feet need at the end of the day, from a warm foot bath to reflexology."
+  },
+  {
+   "path": "/la-pausa-business-of-slowing-down/",
+   "title": "La Pausa: The Business of Slowing Down | ZenVida",
+   "description": "On slowing down: why ZenVida said no to a September marketing push built on urgency, and what running a calm business in the middle of Madrid really means."
+  },
+  {
+   "path": "/whats-in-season-september/",
+   "title": "What's in Season in Madrid in September | ZenVida",
+   "description": "What's in season in Madrid in September, and why it matters: the market stalls change after summer, and eating with the season helps you find your rhythm again."
+  },
+  {
+   "path": "/september-in-madrid-the-locals-secret-season/",
+   "title": "September in Madrid: The Locals' Secret Season | ZenVida",
+   "description": "September in Madrid brings low golden light, quieter streets and full terraces again. Why so many madrileños love this month most, and how to enjoy it like one."
+  },
+  {
+   "path": "/walk-in-morning-vuelta-al-cole-reflexology/",
+   "title": "Vuelta al Cole Morning: A Walk-In Just for You | ZenVida",
+   "description": "The vuelta al cole morning: kids back at school and the house quiet at last. After a summer of schedules and sunscreen, what to do with that first free morning."
+  },
+  {
+   "path": "/respiro-zenvida-wellness-journal/",
+   "title": "Meet Respiro, Our Madrid Wellness Journal | ZenVida",
+   "description": "We could not find a wellness journal about real life in Madrid, so we made one. Every month Respiro covers stress, sleep, feet and the slower side of the city."
+  },
+  {
+   "path": "/la-pausa-why-we-refused-to-look-like-everyone-elses-spa/",
+   "title": "Spa Design: Why We Refused to Look Like the Rest | ZenVida",
+   "description": "Spa design, the ZenVida way: co-founder Sara Delpopolo on Spanish roots, natural materials and a calm studio in Madrid that does not copy the usual spa look."
+  },
+  {
+   "path": "/walk-in-what-to-do-before-shopping/",
+   "title": "Before Shopping on Gran Vía, Walk In for Your Feet | ZenVida",
+   "description": "A full day of shopping on Gran Vía ahead? Start with your feet. A short foot massage near Sol makes all the difference between hour two and hour six of it."
+  },
+  {
+   "path": "/wellness-raices-reflexology-event/",
+   "title": "Wellness Roots: Mindfulness Event in Madrid | ZenVida",
+   "description": "A mindfulness event in Madrid with Starbox Experiences and The Mindfulness Journey: an afternoon to reconnect and reset, with guided practice and reflexology."
+  },
+  {
+   "path": "/refer-a-friend/",
+   "title": "Refer a Friend: Extra Minutes for Members | ZenVida",
+   "description": "Refer a friend to ZenVida: for every friend who becomes a member, you get an extra 10 minutes on your rituals. Members only, and here is how it all works."
+  },
+  {
+   "path": "/refer-a-friend-terms-and-conditions/",
+   "title": "Refer a Friend: Terms & Conditions | ZenVida",
+   "description": "Refer a friend terms: who can refer, which new members count, what you earn and when the extra time is added to your ZenVida membership plan in Madrid."
+  },
+  {
+   "path": "/reservations-policy/",
+   "title": "Reservations Policy: Deposits & Cancellations | ZenVida",
+   "description": "Our reservations policy in plain words: walk-ins, the deposit that holds your time, the notice you need to change or cancel, and what happens if you are late."
+  },
+  {
+   "path": "/spa-rules-and-customer-information/",
+   "title": "Spa Rules & What to Know Before You Visit | ZenVida",
+   "description": "Our spa rules before your first visit: phones on silent, when to arrive, what to bring and how we keep the studio calm for all. Short, friendly and clear."
+  },
+  {
+   "path": "/code-of-conduct/",
+   "title": "Code of Conduct | ZenVida Foot & Body, Madrid",
+   "description": "Our code of conduct keeps ZenVida safe, respectful and calm for guests and therapists: what we expect in the studio, and what happens if lines are crossed."
+  },
+  {
+   "path": "/work-with-us/",
+   "title": "Massage Therapist Jobs in Madrid | ZenVida",
+   "description": "Massage therapist jobs in Madrid: we are looking for therapists, reflexologists and hosts who love what they do. A calm studio, and we teach our rituals."
+  },
+  {
+   "path": "/privacy-policy/",
+   "title": "Privacy Policy | ZenVida Foot & Body, Madrid",
+   "description": "Our privacy policy: how ZenVida uses your data when you book, write to us or buy a gift card, how long we keep it and how to exercise your rights under GDPR."
+  },
+  {
+   "path": "/cookies-policy/",
+   "title": "Cookies Policy | ZenVida Foot & Body, Madrid",
+   "description": "Our cookies policy: which cookies the ZenVida website uses, what each one does, and how to accept, reject or change your choice from the banner or your browser."
+  },
+  {
+   "path": "/terms-of-use/",
+   "title": "Website Terms of Use & Legal Notice | ZenVida",
+   "description": "The terms of use and legal notice of the ZenVida website under Spanish law (LSSI-CE): who we are, how you may use the site, our content and the rules."
+  }
+ ]
+}

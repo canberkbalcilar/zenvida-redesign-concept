@@ -78,9 +78,11 @@ function zv_defaults() {
 		'events_empty' => 'New events are coming soon. Follow us on Instagram or sign up to the newsletter to hear first.',
 		'seo_home'     => 'Reflexology & Body Massage in Madrid Centro',
 		'seo_home_desc' => 'Foot reflexology and body massage rituals in Madrid Centro, 3 minutes from Sol. Open 7 days, walk in or book online.',
-		'seo_rituals'  => 'Massage & Reflexology Rituals in Madrid',
+		'seo_rituals'  => 'Massages in Madrid: Every Ritual & Price | ZenVida',
 		'seo_rituals_desc' => 'All ZenVida rituals with prices: reflexology, foot, back and body massage, couples rituals. Filter by area and how you feel.',
 		'seo_ritual_suffix' => 'in Madrid Centro',
+		'seo_events_title' => '',
+		'seo_events_desc'  => '',
 		'demo_mode'    => '0', // the demo import switches it on; a real install starts without it
 		'widget_on'    => '1',
 		'widget_js'    => 'https://storage.googleapis.com/zenvida-widget-staging/zenvida-widget.js',
@@ -453,8 +455,10 @@ function zv_settings_page() {
 				<?php
 				$row( 'seo_home', 'Homepage title' );
 				$row( 'seo_home_desc', 'Homepage description', '', 'textarea' );
-				$row( 'seo_rituals', 'Rituals page title' );
-				$row( 'seo_rituals_desc', 'Rituals page description', '', 'textarea' );
+				$row( 'seo_rituals', 'Rituals page title', 'The whole title as Google shows it, up to 60 characters, e.g. "Massages in Madrid: Every Ritual & Price | ZenVida".' );
+				$row( 'seo_rituals_desc', 'Rituals page description', '150 to 160 characters.', 'textarea' );
+				$row( 'seo_events_title', 'Events page title', 'The whole title as Google shows it. Empty = the events page heading.' );
+				$row( 'seo_events_desc', 'Events page description', '150 to 160 characters.', 'textarea' );
 				$row( 'seo_ritual_suffix', 'Added after each ritual name', 'e.g. "Deluxe Reflexology in Madrid Centro"' );
 				?>
 			</table>
